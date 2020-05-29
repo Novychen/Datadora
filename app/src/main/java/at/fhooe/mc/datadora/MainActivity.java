@@ -12,7 +12,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.i("test", "Hello world this is the test form Gerald!");
+        Log.i("test", "Hello world this is the test form Gerald!/n" +
+                "Hello from Ines");
+
 
 
     }
