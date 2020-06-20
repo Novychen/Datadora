@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">Datadora</string>
+
+    // Error Messages
+    <string name="NumberInvalid">This number is invalid</string>
+    <string name="EmptyNumber">Please enter a number</string>
+    <string name="Overflow">Overflow</string>
+    <string name="Underflow">Underflow</string>
+
+    // Stack Activity
+    <string name="Stack_Activity_Text_return">Return Value</string>
+    <string name="Stack_Activity_Text_peek">peek</string>
+    <string name="Stack_Activity_Text_size">size</string>
+    <string name="Stack_Activity_Text_empty">isEmpty</string>
+    <string name="Stack_Activity_Text_clear">clear</string>
+    <string name="Stack_Activity_Text_random">random</string>
+
+    <string name="Stack_Activity_Full">Stack is full</string>
+    <string name="Stack_Activity_Empty">Stack is empty</string>
+
+    <string name="Stack_Activity_Text_push">push</string>
+    <string name="Stack_Activity_Text_pop">pop</string>
+    <string name="Stack_Activity_Text_input">…</string>
+    <string name="datastructure_action_settings">Settings</string>
+    <string name="datastructure_action_modeSwitch">Switch modes</string>
+    <string name="datastructure_action_save">Save</string>
+
+
 </resources>
