@@ -33,6 +33,10 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         View view = mBinding.getRoot();
         setContentView(view);
 
+        /**
+         * The used Icons are NOT final - the toolbar was inserted for defining the right proportions and can be changed
+         */
+
         // setup Toolbar
         Toolbar myToolbar = mBinding.StackActivityToolbar;
         setSupportActionBar(myToolbar);
