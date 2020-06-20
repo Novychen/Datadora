@@ -1,6 +1,7 @@
 package at.fhooe.mc.datadora;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,13 +22,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View view = mBinding.getRoot();
         setContentView(view);
 
+        // setup Toolbar
+        Toolbar myToolbar = mBinding.mainActivityToolbar;
+        setSupportActionBar(myToolbar);
+
         mBinding.MainActivityButtonStack.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v == mBinding.MainActivityButtonStack) {
-            Intent i = new Intent();
+            Intent i = new Intent(this, StackActivity.class);
             startActivity(i);
         }
     }
