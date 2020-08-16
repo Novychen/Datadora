@@ -110,6 +110,12 @@ public class StackView extends View {
     // the current secondary color of the currently used theme
     // int mSecondaryColor = getResources().getColor(R.color.secondaryColor, this.getContext().getTheme());
 
+    // the current primary color of the currently used theme - for text
+    int mPrimaryColorText = getResources().getColor(R.color.primaryTextColor, this.getContext().getTheme());
+
+    // the current secondary color of the currently used theme - for text
+    int mSecondaryColorText = getResources().getColor(R.color.secondaryTextColor, this.getContext().getTheme());
+
     Paint mStackItemPaint = new Paint();
     Paint mStackItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
@@ -155,75 +161,12 @@ public class StackView extends View {
      * Initializes the key components such as Paint, the PropertyHolders for the animations as well as the animation itself
      */
     private void init() {
-        mStackItemPaint.setColor(getResources().getColor(R.color.primaryColor, this.getContext().getTheme()));
+        mStackItemPaint.setColor(mPrimaryColor);
         mStackItemPaint.setStyle(Paint.Style.STROKE);
         mStackItemPaint.setStrokeWidth(6);
 
-        mStackItemTextPaint.setColor(Color.BLACK);
+        mStackItemTextPaint.setColor(mSecondaryColorText);
         mStackItemTextPaint.setTextSize(55);
-
-        PropertyValuesHolder propertyTranslateYPush = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_PUSH, (int) (-mMaxHeightStack - 200), 0);
-        PropertyValuesHolder propertyAlphaPush = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_PUSH, 0, 255);
-
-        PropertyValuesHolder propertyTranslateYPop = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_POP, 0, (int) (-mMaxHeightStack - 200));
-        PropertyValuesHolder propertyAlphaPop = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_POP, 255, 0);
-
-        mAnimatorPush.setValues(propertyTranslateYPush, propertyAlphaPush);
-        mAnimatorPush.setDuration(700);
-        mAnimatorPush.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorPush.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYPush = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_PUSH);
-                mAlphaPush = (int) animation.getAnimatedValue(PROPERTY_ALPHA_PUSH);
-                invalidate();
-            }
-        });
-
-        mAnimatorPop.setValues(propertyTranslateYPop, propertyAlphaPop);
-        mAnimatorPop.setDuration(700);
-        mAnimatorPop.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorPop.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYPop = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_POP);
-                mAlphaPop = (int) animation.getAnimatedValue(PROPERTY_ALPHA_POP);
-                invalidate();
-            }
-        });
-
-//        mAnimatorPeekBorder = ValueAnimator.ofObject(new ArgbEvaluator(), mPrimaryColor, mSecondaryColor);
-//        mAnimatorPeekBorder.setDuration(2000);
-//        mAnimatorPeekBorder.setInterpolator(new AccelerateDecelerateInterpolator());
-//        mAnimatorPeekBorder.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//            @Override
-//            public void onAnimationUpdate(ValueAnimator animation) {
-//                mColorBorder = (int) animation.getAnimatedValue();
-//                invalidate();
-//            }
-//        });
-
-        mAnimatorPeekArea = ValueAnimator.ofObject(new ArgbEvaluator(), Color.WHITE, mPrimaryColor);
-        mAnimatorPeekArea.setDuration(1000);
-        mAnimatorPeekArea.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorPeekArea.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mColorAreaPeek = (int) animation.getAnimatedValue();
-                invalidate();
-            }
-        });
-
-        mAnimatorPeekText = ValueAnimator.ofObject(new ArgbEvaluator(),Color.BLACK, Color.WHITE);
-        mAnimatorPeekText.setDuration(1000);
-        mAnimatorPeekText.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorPeekText.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mColorTextPeek = (int) animation.getAnimatedValue();
-                invalidate();
-            }
-        });
     }
 
     protected void init(StackActivity _activity) {
@@ -274,9 +217,9 @@ public class StackView extends View {
     }
 
     /**
-     * clears the stack
+     * creates a random stack
      */
-    protected void random(Vector<Integer> stack) {
+    protected void random(Vector<Integer> _stack) {
         mStackNumbers.clear();
         mStack.clear();
         mPeek = false;
@@ -285,9 +228,9 @@ public class StackView extends View {
         mRandom = true;
         mPop = false;
         mPush = false;
-        mRandomStack = stack;
+        mRandomStack = _stack;
         mAnimatorPush.setDuration(350);
-        push(stack.get(mPosition));
+        push(_stack.get(mPosition));
         mPosition++;
     }
 
@@ -323,10 +266,10 @@ public class StackView extends View {
     /**
      * adds a element to the stack
      */
-    protected void push(int value) {
+    protected void push(int _value) {
         RectF r = new RectF();
         mStack.add(r);
-        mStackNumbers.add(value);
+        mStackNumbers.add(_value);
 
         if (mMaxHeightStack <= (mMaxWidthStack / 4) * mScale * mStack.size()) {
             mScale = mScale / 1.2f;
@@ -343,25 +286,25 @@ public class StackView extends View {
     /**
      * checks in what range the current max value is and changes the scale value for the boxes accordingly
      *
-     * @param value the maximum value of the current stack
-     * @param push  true if a value was pushed, false if it was poped
+     * @param _value the maximum value of the current stack
+     * @param _push  true if a value was pushed, false if it was poped
      */
-    private void changeBoxSize(int value, boolean push) {
+    private void changeBoxSize(int _value, boolean _push) {
         int val;
-        if (value > 999999999) {
+        if (_value > 999999999) {
             val = 6;
-        } else if (value > 99999999) {
+        } else if (_value > 99999999) {
             val = 5;
-        } else if (value > 9999999) {
+        } else if (_value > 9999999) {
             val = 4;
-        } else if (value > 999999) {
+        } else if (_value > 999999) {
             val = 3;
-        } else if (value > 99999) {
+        } else if (_value > 99999) {
             val = 2;
-        } else if (value > 9999) {
+        } else if (_value > 9999) {
             mResize = 40 * 2;
             return;
-        } else if (value > 999) {
+        } else if (_value > 999) {
             mResize = 40;
             return;
         } else {
@@ -369,29 +312,93 @@ public class StackView extends View {
             return;
         }
 
-        if (!push) {
+        if (!_push) {
             val++;
         }
         mResize = 40 * val;
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int _w, int _h, int _oldW, int _oldH) {
+        super.onSizeChanged(_w, _h, _oldW, _oldH);
         // Account for padding
         float xpad = (float) (getPaddingLeft() + getPaddingRight());
         float ypad = (float) (getPaddingTop() + getPaddingBottom());
 
         // size of parent of this view
-        mMaxHeightStack = (float) h - ypad - 6;
-        mMaxWidthStack = (float) w - xpad - 6;
+        mMaxHeightStack = (float) _h - ypad - 6;
+        mMaxWidthStack = (float) _w - xpad - 6;
         mScale = 1;
+
+        PropertyValuesHolder propertyTranslateYPush = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_PUSH, (int) (-200), 0);
+        PropertyValuesHolder propertyAlphaPush = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_PUSH, 0, 255);
+
+        PropertyValuesHolder propertyTranslateYPop = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_POP, 0, (int) (-200));
+        PropertyValuesHolder propertyAlphaPop = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_POP, 255, 0);
+
+        mAnimatorPush.setValues(propertyTranslateYPush, propertyAlphaPush);
+        mAnimatorPush.setDuration(700);
+        mAnimatorPush.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorPush.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mTranslateYPush = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_PUSH);
+                mAlphaPush = (int) animation.getAnimatedValue(PROPERTY_ALPHA_PUSH);
+                invalidate();
+            }
+        });
+
+        mAnimatorPop.setValues(propertyTranslateYPop, propertyAlphaPop);
+        mAnimatorPop.setDuration(700);
+        mAnimatorPop.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorPop.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mTranslateYPop = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_POP);
+                mAlphaPop = (int) animation.getAnimatedValue(PROPERTY_ALPHA_POP);
+                invalidate();
+            }
+        });
+
+//        mAnimatorPeekBorder = ValueAnimator.ofObject(new ArgbEvaluator(), mPrimaryColor, mSecondaryColor);
+//        mAnimatorPeekBorder.setDuration(2000);
+//        mAnimatorPeekBorder.setInterpolator(new AccelerateDecelerateInterpolator());
+//        mAnimatorPeekBorder.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                mColorBorder = (int) animation.getAnimatedValue();
+//                invalidate();
+//            }
+//        });
+
+        mAnimatorPeekArea = ValueAnimator.ofObject(new ArgbEvaluator(), Color.WHITE, mPrimaryColor);
+        mAnimatorPeekArea.setDuration(1000);
+        mAnimatorPeekArea.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorPeekArea.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mColorAreaPeek = (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+
+        mAnimatorPeekText = ValueAnimator.ofObject(new ArgbEvaluator(),mSecondaryColorText, mPrimaryColorText);
+        mAnimatorPeekText.setDuration(1000);
+        mAnimatorPeekText.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorPeekText.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mColorTextPeek = (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+
         invalidate();
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    protected void onDraw(Canvas _canvas) {
+        super.onDraw(_canvas);
         for (int i = 0; i < mStackNumbers.size(); i++) {
             if (i == mStackNumbers.size() - 1) {  // only animate the last object - translate box + text and change the alpha
                 if (mPush) {
@@ -406,7 +413,7 @@ public class StackView extends View {
                     mStack.get(i).top = (int) (mMaxHeightStack - ((mMaxWidthStack / 4) + (mMaxWidthStack / 4 * i)) * mScale);
                     mStackItemPaint.setColor(mColorAreaPeek);
                     mStackItemPaint.setStyle(Paint.Style.FILL);
-                    canvas.drawRoundRect(mStack.get(i), mRadius, mRadius, mStackItemPaint);
+                    _canvas.drawRoundRect(mStack.get(i), mRadius, mRadius, mStackItemPaint);
                     mStackItemPaint.setColor(mPrimaryColor);
                     mStackItemPaint.setStyle(Paint.Style.STROKE);
                     mStackItemTextPaint.setColor(mColorTextPeek);
@@ -415,7 +422,7 @@ public class StackView extends View {
                 mStack.get(i).top = (int) (mMaxHeightStack - ((mMaxWidthStack / 4) + (mMaxWidthStack / 4 * i)) * mScale);
                 mStackItemTextPaint.setAlpha(255);
                 mStackItemPaint.setAlpha(255);
-                mStackItemTextPaint.setColor(Color.BLACK);
+                mStackItemTextPaint.setColor(mSecondaryColorText);
                 mStackItemPaint.setColor(mPrimaryColor);
             }
             // save the size of the text ("box" around the text) in mBounds
@@ -427,8 +434,8 @@ public class StackView extends View {
             mStack.get(i).bottom = (int) (mStack.get(i).top + ((mMaxWidthStack / 4) * mScale) - 10);
 
             // get BoundingBox from Text & draw Text + StackItem
-            canvas.drawText(mStackNumbers.get(i).toString(), getExactCenterX(mStack.get(i)) - mBounds.exactCenterX(), (getExactCenterY(mStack.get(i)) - mBounds.exactCenterY()), mStackItemTextPaint);
-            canvas.drawRoundRect(mStack.get(i), mRadius, mRadius, mStackItemPaint);
+            _canvas.drawText(mStackNumbers.get(i).toString(), getExactCenterX(mStack.get(i)) - mBounds.exactCenterX(), (getExactCenterY(mStack.get(i)) - mBounds.exactCenterY()), mStackItemTextPaint);
+            _canvas.drawRoundRect(mStack.get(i), mRadius, mRadius, mStackItemPaint);
         }
 
         if (mPop && mAlphaPop == 0 && !mClear) { // Animation of pop is over -> remove element

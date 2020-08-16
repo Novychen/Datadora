@@ -1,5 +1,6 @@
 package at.fhooe.mc.datadora;
 
+import android.animation.ArgbEvaluator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -7,7 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
+
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -17,23 +20,52 @@ import androidx.annotation.Nullable;
 import java.util.Vector;
 
 /**
- * Class StackView, implements the animation for the stack in normal mode
+ * Class QueueView, implements the animation for the Queue in normal mode
  */
 public class QueueView extends View {
 
-    private static final String PROPERTY_TRANSLATE_X = "PROPERTY_TRANSLATE_X";
-    private static final String PROPERTY_TRANSLATE_Y = "PROPERTY_TRANSLATE_Y";
-    private static final String PROPERTY_ALPHA = "PROPERTY_ALPHA";
-    private static final String TAG = "QueueView :: ";
+    private static final String PROPERTY_TRANSLATE_Y_ENQUEUE = "PROPERTY_TRANSLATE_Y_ENQUEUE";
+    private static final String PROPERTY_TRANSLATE_Y_DEQUEUE = "PROPERTY_TRANSLATE_Y_DEQUEUE";
+    private static final String PROPERTY_ALPHA_ENQUEUE = "PROPERTY_ALPHA_ENQUEUE";
+    private static final String PROPERTY_ALPHA_DEQUEUE = "PROPERTY_ALPHA_DEQUEUE";
 
-    // Animator for the enqueued element
+    private static final String TAG = "QueueView : ";
+
+    // Booleans that check which is the current operation
+    boolean mDequeue, mEnqueue, mPeek, mSize, mClear, mRandom;
+
+    // int that counts how often the operator enqueued was used (by operator random)
+    int mPosition;
+
+    // int that specifies the radius of the corners of the drawn rectangles
+    int mRadius = 4;
+
+    // Vector that gets the random generated Queue
+    Vector<Integer> mRandomQueue = new Vector<>();
+
+    // Animator for the last enqueued element
     ValueAnimator mAnimatorEnqueue = new ValueAnimator();
 
-    // Animator for the dequeued element
+    // Animator for the last dequeued element
     ValueAnimator mAnimatorDequeue = new ValueAnimator();
 
+    // Animator for the operation peek (for the border of one item)
+    // ValueAnimator mAnimatorPeekBorder = new ValueAnimator();
+
+    // Animator for the operation peek (for the area of one item)
+    ValueAnimator mAnimatorPeekArea = new ValueAnimator();
+
+    // Animator for the operation peek (for the text of one item)
+    ValueAnimator mAnimatorPeekText = new ValueAnimator();
+
+    // Animator for the operation peek (for the area of one item)
+    ValueAnimator mAnimatorSizeArea = new ValueAnimator();
+
+    // Animator for the operation peek (for the text of one item)
+    ValueAnimator mAnimatorSizeText = new ValueAnimator();
+
     // Vector that contains all Rects, that are drawn
-    Vector<Rect> mQueue = new Vector<>();
+    Vector<RectF> mQueue = new Vector<>();
 
     // Vector that contains all Integers, that are drawn / the user put in
     Vector<Integer> mQueueNumbers = new Vector<>();
@@ -41,31 +73,61 @@ public class QueueView extends View {
     // Rect in order to save the TextBounds from the current number
     Rect mBounds = new Rect();
 
-    // factor for the change of height of the stack item boxes, when the stack is too high
+    // factor for the change of height of the Queue item boxes, when the Queue is too high
     float mScale = 1;
 
-    // factor for the change of width of the stack item boxes, when the number is to big for the current width
+    // factor for the change of width of the Queue item boxes, when the number is to big for the current width
     int mResize = 1;
 
-    // the current translation on the x-axis - used for the animation
-    int mTranslateX;
+    // the current translation on the y-axis - used for the enqueue animation
+    int mTranslateYEnqueue;
 
-    // the current translation on the y-axis - used for the animation
-    int mTranslateY;
+    // the current translation on the y-axis - used for the dequeue animation
+    int mTranslateYDequeue;
 
-    // the current alpha value - used for the animation
-    int mAlpha;
+    // the current alpha value - used for the enqueue animation
+    int mAlphaEnqueue;
 
-    boolean mDequeued;
+    // the current alpha value - used for the dequeue animation
+    int mAlphaDequeue;
+
+    // the current color value - used for peek animation (for the border of one item)
+    // int mColorBorder;
+
+    // the current color value - used for peek animation (for the area of one item)
+    int mColorAreaPeek;
+
+    // the current color value - used for peek animation (for the text of one item)
+    int mColorTextPeek;
+
+    // the current color value - used for peek animation (for the area of one item)
+    int mColorAreaSize;
+
+    // the current color value - used for peek animation (for the text of one item)
+    int mColorTextSize;
+
+    // the current primary color of the currently used theme
+    int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
+
+    // the current secondary color of the currently used theme
+    // int mSecondaryColor = getResources().getColor(R.color.secondaryColor, this.getContext().getTheme());
+
+    // the current primary color of the currently used theme - for text
+    int mPrimaryColorText = getResources().getColor(R.color.primaryTextColor, this.getContext().getTheme());
+
+    // the current secondary color of the currently used theme - for text
+    int mSecondaryColorText = getResources().getColor(R.color.secondaryTextColor, this.getContext().getTheme());
+
     Paint mQueueItemPaint = new Paint();
     Paint mQueueItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    // current width of the StackView within the layout
+    // current width of the QueueView within the layout
     float mMaxWidthQueue;
 
-    // current height of the StackView within the layout
+    // current height of the QueueView within the layout
     float mMaxHeightQueue;
 
+    private QueueActivity mQueueActivity;
 
     public QueueView(Context context) {
         super(context);
@@ -82,15 +144,10 @@ public class QueueView extends View {
         init();
     }
 
-    public QueueView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     /**
-     * gets the current maximum out of the mStackNumbers Vector
+     * gets the current maximum out of the mQueueNumbers Vector
      *
-     * @return the maximum int of the mStackNumbers Vector
+     * @return the maximum int of the mQueueNumbers Vector
      */
     private int getMax() {
         int max = 0;
@@ -106,49 +163,98 @@ public class QueueView extends View {
      * Initializes the key components such as Paint, the PropertyHolders for the animations as well as the animation itself
      */
     private void init() {
-        mQueueItemPaint.setColor(getResources().getColor(R.color.primaryColor, this.getContext().getTheme()));
+        mQueueItemPaint.setColor(mPrimaryColor);
         mQueueItemPaint.setStyle(Paint.Style.STROKE);
         mQueueItemPaint.setStrokeWidth(6);
 
-        mQueueItemTextPaint.setColor(Color.BLACK);
+        mQueueItemTextPaint.setColor(mSecondaryColorText);
         mQueueItemTextPaint.setTextSize(55);
 
-        PropertyValuesHolder propertyTranslateX = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_X, (int) (-mMaxWidthQueue - 100), 0);
-        PropertyValuesHolder propertyTranslateY = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y, (int) (-mMaxHeightQueue - 100), 0);
-        PropertyValuesHolder propertyAlphaPush = PropertyValuesHolder.ofInt(PROPERTY_ALPHA, 0, 255);
 
-        mAnimatorDequeue.setValues(propertyTranslateX);
-        mAnimatorDequeue.setDuration(1000);
-        mAnimatorDequeue.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorDequeue.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateX = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_X);
-                invalidate();
-            }
-        });
+    }
 
-        mAnimatorEnqueue.setValues(propertyTranslateY, propertyAlphaPush);
-        mAnimatorEnqueue.setDuration(1000);
-        mAnimatorEnqueue.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorEnqueue.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateY = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y);
-                mAlpha = (int) animation.getAnimatedValue(PROPERTY_ALPHA);
-                invalidate();
-            }
-        });
+    protected void init(QueueActivity _activity) {
+        mQueueActivity = _activity;
     }
 
     /**
-     * removes a element from the stack
+     * marks the latest element of the queue
      */
-    protected void dequeue() {
-        mDequeued = true;
-        mAnimatorDequeue.start();
+    protected void peek() {
+        //mAnimatorPeekBorder.start();
+        mAnimatorPeekText.start();
+        mAnimatorPeekArea.start();
+        mPeek = true;
+        mSize = false;
+        mClear = false;
+        mRandom = false;
+        mDequeue = false;
+        mEnqueue = false;
         invalidate();
+    }
 
+    /**
+     * shows the size of the queue - goes from one item to next and counts them
+     */
+    protected void size() {
+        //TODO: Still in progress
+        mPeek = false;
+        mSize = true;
+        mClear = false;
+        mRandom = false;
+        mDequeue = false;
+        mEnqueue = false;
+    }
+
+    /**
+     * clears the queue
+     */
+    protected void clear() {
+        mPeek = false;
+        mSize = false;
+        mClear = true;
+        mRandom = false;
+        mDequeue = true;
+        mEnqueue = false;
+        mAnimatorDequeue.setDuration(200);
+        mAnimatorDequeue.start();
+    }
+
+    /**
+     * creates a random queue
+     */
+    protected void random(Vector<Integer> _queue) {
+        mQueueNumbers.clear();
+        mQueue.clear();
+        mPeek = false;
+        mSize = false;
+        mClear = false;
+        mRandom = true;
+        mDequeue = false;
+        mEnqueue = false;
+        mRandomQueue = _queue;
+        mAnimatorEnqueue.setDuration(350);
+        enqueue(_queue.get(mPosition));
+        mPosition++;
+    }
+
+    /**
+     * prepares the view for the Dequeue
+     */
+    protected void preDequeue() {
+        mPeek = false;
+        mSize = false;
+        mClear = false;
+        mRandom = false;
+        mDequeue = true;
+        mEnqueue = false;
+        mAnimatorDequeue.start();
+    }
+
+    /**
+     * removes a element from the Queue
+     */
+    private void dequeue() {
         mQueue.removeElementAt(0);
         mQueueNumbers.removeElementAt(0);
 
@@ -162,27 +268,47 @@ public class QueueView extends View {
     }
 
     /**
+     * adds a element to the Queue
+     */
+    protected void enqueue(int _value) {
+        RectF r = new RectF();
+        mQueue.add(r);
+        mQueueNumbers.add(_value);
+
+        if (mMaxHeightQueue <= (mMaxWidthQueue / 4) * mScale * mQueue.size()) {
+            mScale = mScale / 1.2f;
+        }
+        changeBoxSize(getMax(), true);
+        mPeek = false;
+        mSize = false;
+        mClear = false;
+        mDequeue = false;
+        mEnqueue = true;
+        mAnimatorEnqueue.start();
+    }
+
+    /**
      * checks in what range the current max value is and changes the scale value for the boxes accordingly
      *
-     * @param value the maximum value of the current stack
-     * @param push  true if a value was pushed, false if it was poped
+     * @param _value the maximum _value of the current Queue
+     * @param _enqueue  true if a _value was pushed, false if it was dequeued
      */
-    private void changeBoxSize(int value, boolean push) {
+    private void changeBoxSize(int _value, boolean _enqueue) {
         int val;
-        if (value > 999999999) {
+        if (_value > 999999999) {
             val = 6;
-        } else if (value > 99999999) {
+        } else if (_value > 99999999) {
             val = 5;
-        } else if (value > 9999999) {
+        } else if (_value > 9999999) {
             val = 4;
-        } else if (value > 999999) {
+        } else if (_value > 999999) {
             val = 3;
-        } else if (value > 99999) {
+        } else if (_value > 99999) {
             val = 2;
-        } else if (value > 9999) {
+        } else if (_value > 9999) {
             mResize = 40 * 2;
             return;
-        } else if (value > 999) {
+        } else if (_value > 999) {
             mResize = 40;
             return;
         } else {
@@ -190,75 +316,188 @@ public class QueueView extends View {
             return;
         }
 
-        if (!push) {
+        if (!_enqueue) {
             val++;
         }
         mResize = 40 * val;
     }
 
-
-    /**
-     * adds a element to the stack
-     */
-    protected void enqueue(int value) {
-
-        Rect r = new Rect();
-        mQueue.add(r);
-        mQueueNumbers.add(value);
-
-        if (mMaxHeightQueue <= (mMaxWidthQueue / 4) * mScale * mQueue.size()) {
-            mScale = mScale / 1.2f;
-        }
-
-        changeBoxSize(getMax(), true);
-        mDequeued = false;
-        mAnimatorEnqueue.start();
-        invalidate();
-    }
-
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int _w, int _h, int _oldW, int _oldH) {
+        super.onSizeChanged(_w, _h, _oldW, _oldH);
         // Account for padding
         float xpad = (float) (getPaddingLeft() + getPaddingRight());
         float ypad = (float) (getPaddingTop() + getPaddingBottom());
 
         // size of parent of this view
-        mMaxHeightQueue = (float) h - ypad - 6;
-        mMaxWidthQueue = (float) w - xpad - 6;
+        mMaxHeightQueue = (float) _h - ypad - 6;
+        mMaxWidthQueue = (float) _w - xpad - 6;
         mScale = 1;
+
+        PropertyValuesHolder propertyTranslateYEnqueue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_ENQUEUE, (int) (- 200), 0);
+        PropertyValuesHolder propertyAlphaEnqueue = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_ENQUEUE, 0, 255);
+
+        PropertyValuesHolder propertyTranslateYDequeue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_DEQUEUE, 0, (int)  (-(mMaxWidthQueue / 4 ) * mScale));
+        PropertyValuesHolder propertyAlphaDequeue = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_DEQUEUE, 255, 0);
+
+        mAnimatorEnqueue.setValues(propertyTranslateYEnqueue, propertyAlphaEnqueue);
+        mAnimatorEnqueue.setDuration(700);
+        mAnimatorEnqueue.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorEnqueue.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mTranslateYEnqueue = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_ENQUEUE);
+                mAlphaEnqueue = (int) animation.getAnimatedValue(PROPERTY_ALPHA_ENQUEUE);
+                invalidate();
+            }
+        });
+
+        mAnimatorDequeue.setValues(propertyTranslateYDequeue, propertyAlphaDequeue);
+        mAnimatorDequeue.setDuration(700);
+        mAnimatorDequeue.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorDequeue.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mTranslateYDequeue = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_DEQUEUE);
+                mAlphaDequeue = (int) animation.getAnimatedValue(PROPERTY_ALPHA_DEQUEUE);
+                invalidate();
+            }
+        });
+
+//        mAnimatorPeekBorder = ValueAnimator.ofObject(new ArgbEvaluator(), mPrimaryColor, mSecondaryColor);
+//        mAnimatorPeekBorder.setDuration(2000);
+//        mAnimatorPeekBorder.setInterpolator(new AccelerateDecelerateInterpolator());
+//        mAnimatorPeekBorder.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                mColorBorder = (int) animation.getAnimatedValue();
+//                invalidate();
+//            }
+//        });
+
+        mAnimatorPeekArea = ValueAnimator.ofObject(new ArgbEvaluator(), Color.WHITE, mPrimaryColor);
+        mAnimatorPeekArea.setDuration(1000);
+        mAnimatorPeekArea.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorPeekArea.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mColorAreaPeek = (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+
+        mAnimatorPeekText = ValueAnimator.ofObject(new ArgbEvaluator(), mSecondaryColorText, mPrimaryColorText);
+        mAnimatorPeekText.setDuration(1000);
+        mAnimatorPeekText.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorPeekText.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mColorTextPeek = (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+
         invalidate();
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        for (int i = 0; i < mQueue.size(); i++) {
+    protected void onDraw(Canvas _canvas) {
+        super.onDraw(_canvas);
+        for (int i = 0; i < mQueueNumbers.size(); i++) {
+            if(i == 0 && !mEnqueue){
+                if (mDequeue) {
+                    mQueue.get(i).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * i)) * mScale) - mTranslateYDequeue;
+                        mQueueItemTextPaint.setAlpha(mAlphaDequeue);
+                        mQueueItemPaint.setAlpha(mAlphaDequeue);
 
-            // only animate the last object - translate box + text and change the alpha
-            if (i == mQueue.size() - 1 && !mDequeued) {
-                mQueue.get(i).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * i)) * mScale) + mTranslateY;
-                mQueue.get(i).left = (int) ((mMaxWidthQueue / 2) - (mMaxWidthQueue / 8) - (mResize / 2));
-                mQueueItemTextPaint.setAlpha(mAlpha);
-                mQueueItemPaint.setAlpha(mAlpha);
-            } else if (i == 0 && mDequeued) {
-                mQueue.get(i).left = (int) ((mMaxWidthQueue / 2) - (mMaxWidthQueue / 8) - (mResize / 2) - mTranslateX);
+                }  else if(mPeek){
+                    mQueue.get(i).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * i)) * mScale);
+                    mQueueItemPaint.setColor(mColorAreaPeek);
+                    mQueueItemPaint.setStyle(Paint.Style.FILL);
+                    _canvas.drawRoundRect(mQueue.get(i), mRadius, mRadius, mQueueItemPaint);
+                    mQueueItemPaint.setColor(mPrimaryColor);
+                    mQueueItemPaint.setStyle(Paint.Style.STROKE);
+                    mQueueItemTextPaint.setColor(mColorTextPeek);
+                }
+            } else if (i == mQueueNumbers.size() - 1) {  // only animate the last object - translate box + text and change the alpha
+                if (mEnqueue) {
+                    mQueue.get(i).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * i)) * mScale) + mTranslateYEnqueue;
+                    mQueueItemTextPaint.setAlpha(mAlphaEnqueue);
+                    mQueueItemPaint.setAlpha(mAlphaEnqueue);
+                } else  if (mDequeue) {
+                    mQueue.get(i).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * i)) * mScale) - mTranslateYDequeue;
+                    mQueueItemTextPaint.setAlpha(255);
+                    mQueueItemPaint.setAlpha(255);
+                }
             } else {
-                mQueue.get(i).left = (int) ((mMaxWidthQueue / 2) - (mMaxWidthQueue / 8) - (mResize / 2));
-                mQueue.get(i).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * i)) * mScale);
+                if (mDequeue) {
+                    mQueue.get(i).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * i)) * mScale) - mTranslateYDequeue;
+                } else {
+                    mQueue.get(i).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * i)) * mScale);
+                }
                 mQueueItemTextPaint.setAlpha(255);
                 mQueueItemPaint.setAlpha(255);
+                mQueueItemTextPaint.setColor(Color.BLACK);
+                mQueueItemPaint.setColor(mPrimaryColor);
             }
             // save the size of the text ("box" around the text) in mBounds
             mQueueItemTextPaint.getTextBounds(mQueueNumbers.get(i).toString(), 0, mQueueNumbers.get(i).toString().length(), mBounds);
 
-            // set Stack item size
+            // set Queue item size
+            mQueue.get(i).left = (int) ((mMaxWidthQueue / 2) - (mMaxWidthQueue / 8) - (mResize / 2));
             mQueue.get(i).right = (int) (mQueue.get(i).left + (mMaxWidthQueue / 4) + mResize);
             mQueue.get(i).bottom = (int) (mQueue.get(i).top + ((mMaxWidthQueue / 4) * mScale) - 10);
 
-            // get BoundingBox from Text & draw Text + StackItem
-            canvas.drawText(mQueueNumbers.get(i).toString(), mQueue.get(i).exactCenterX() - mBounds.exactCenterX(), (mQueue.get(i).exactCenterY() - mBounds.exactCenterY()), mQueueItemTextPaint);
-            canvas.drawRect(mQueue.get(i), mQueueItemPaint);
+
+            // get BoundingBox from Text & draw Text + QueueItem
+            _canvas.drawText(mQueueNumbers.get(i).toString(), getExactCenterX(mQueue.get(i)) - mBounds.exactCenterX(), (getExactCenterY(mQueue.get(i)) - mBounds.exactCenterY()), mQueueItemTextPaint);
+            _canvas.drawRoundRect(mQueue.get(i), mRadius, mRadius, mQueueItemPaint);
         }
+
+        if (mDequeue && mAlphaDequeue == 0 && !mClear) { // Animation of dequeue is over -> remove element
+            dequeue();
+            mDequeue = false;
+        } else if (mClear && mQueueNumbers.isEmpty()) { // clear operation is finished
+            mDequeue = false;
+            mClear = false;
+            mQueueActivity.setPressedRandom(false);
+            mQueueActivity.showEmpty();
+            mAnimatorDequeue.setDuration(700);
+            mPosition = 0;
+        } else if (mClear && mDequeue && mAlphaDequeue == 0) { // clear operation is ongoing - animation is finished - remove last element
+            dequeue();
+            mAnimatorDequeue.start();
+        } else if (mRandom && mRandomQueue.size() == mQueueNumbers.size()) { // random operation is finished
+            mRandom = false;
+            mAnimatorEnqueue.setDuration(700);
+            mQueueActivity.setPressedRandom(false);
+            mPosition = 0;
+        } else if (mRandom && mAlphaEnqueue == 255) { // random animation for element is finished - add next element
+            enqueue(mRandomQueue.get(mPosition));
+            mPosition++;
+        }  else if (mSize) { // random animation for element is finished - add next element
+            mQueueActivity.showSize();
+            mQueueActivity.setPressedRandom(false);
+        } else if (mPeek) { // random animation for element is finished - add next element
+            mQueueActivity.setPressedRandom(false);
+        }
+    }
+
+    /**
+     * Get the exact Center from the given RectF in the x-Axis
+     * @param _rect the RectF, which center is wanted
+     * @return the center of the given RectF
+     */
+    private float getExactCenterX(RectF _rect) {
+        return ((_rect.right - _rect.left) / 2) + _rect.left;
+    }
+
+    /**
+     * Get the exact Center from the given RectF in the y-Axis
+     * @param _rect the RectF, which center is wanted
+     * @return the center of the given RectF
+     */
+    private float getExactCenterY(RectF _rect) {
+        return ((_rect.bottom - _rect.top) / 2) + _rect.top;
     }
 }

@@ -10,47 +10,44 @@
     // All Data structures Activity
     <string name="All_Data_Activity_Stack">Stack</string>
     <string name="All_Data_Activity_Queue">Queue</string>
-    <string name="All_Data_Activity_Text_return">Return Value</string>
-    <string name="All_Data_Activity_Text_random">random</string>
-    <string name="All_Data_Activity_Text_clear">clear</string>
+
+    <string name="All_Data_Activity_Text_Return">Return Value</string>
+    <string name="All_Data_Activity_Text_Random">random</string>
+    <string name="All_Data_Activity_Text_Clear">clear</string>
+
+    <string name="All_Data_Activity_True">true</string>
+    <string name="All_Data_Activity_False">false</string>
+
+    <string name="All_Data_Activity_Text_Animation">Please wait till the animation is over :)</string>
 
     // Stack Activity
-    <string name="Stack_Activity_Text_peek">peek</string>
-    <string name="Stack_Activity_Text_size">size</string>
-    <string name="Stack_Activity_Text_empty">isEmpty</string>
+    <string name="Stack_Activity_Text_Peek">peek</string>
+    <string name="Stack_Activity_Text_Size">size</string>
+    <string name="Stack_Activity_Text_Empty">isEmpty</string>
 
     <string name="Stack_Activity_Full">Stack is full</string>
     <string name="Stack_Activity_Empty">Stack is empty</string>
 
-    <string name="Stack_Activity_True">true</string>
-    <string name="Stack_Activity_False">false</string>
-    <string name="Stack_Activity_Default_Value">0</string>
-
-
-    <string name="Stack_Activity_Text_push">push</string>
-    <string name="Stack_Activity_Text_pop">pop</string>
-    <string name="Stack_Activity_Text_input">…</string>
+    <string name="Stack_Activity_Text_Push">push</string>
+    <string name="Stack_Activity_Text_Pop">pop</string>
 
     // Queue Activity
-    <string name="Queue_Activity_Text_peek">peek</string>
-    <string name="Queue_Activity_Text_size">size</string>
-    <string name="Queue_Activity_Text_empty">isEmpty</string>
+    <string name="Queue_Activity_Text_Peek">peek</string>
+    <string name="Queue_Activity_Text_Size">size</string>
+    <string name="Queue_Activity_Text_Empty">isEmpty</string>
 
     <string name="Queue_Activity_Full">Queue is full</string>
     <string name="Queue_Activity_Empty">Queue is empty</string>
 
-    <string name="Queue_Activity_Text_dequeue">dequeue</string>
-    <string name="Queue_Activity_Text_enqueue">enqueue</string>
-    <string name="Queue_Activity_Text_input">…</string>
+    <string name="Queue_Activity_Text_Dequeue">dequeue</string>
+    <string name="Queue_Activity_Text_Enqueue">enqueue</string>
 
     // Toolbar
-    <string name="datastructure_action_settings">Settings</string>
-    <string name="datastructure_action_modeSwitch">Switch modes</string>
-    <string name="datastructure_action_save">Save</string>
+    <string name="Toolbar_Action_Settings">Settings</string>
+    <string name="Toolbar_Action_ModeSwitch">Switch modes</string>
+    <string name="Toolbar_action_Save">Save</string>
 
     // Slider
-    <string name="slider_current_value">Current value: </string>
-    <string name="WaitTillAnimationOver">Please wait till the animation is over :)</string>
-
-
+    <string name="Slider_Current_Value">Current value: </string>
+    <string name="Slider_Default_Value">0</string>
 </resources>

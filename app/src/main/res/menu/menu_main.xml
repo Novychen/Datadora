@@ -3,5 +3,5 @@
     <item
         android:id="@+id/main_menu_settings"
         android:icon="@drawable/ic_settings"
-        android:title="@string/datastructure_action_settings" />
+        android:title="@string/Toolbar_Action_Settings" />
 </menu>

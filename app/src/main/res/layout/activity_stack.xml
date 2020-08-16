@@ -50,7 +50,7 @@
         style="@style/Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/All_Data_Activity_Text_return"
+        android:text="@string/All_Data_Activity_Text_Return"
         app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Box_Return"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Box_Return"
         app:layout_constraintTop_toTopOf="@+id/Stack_Activity_Box_Return" />
@@ -79,7 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/Stack_Activity_Text_peek"
+                android:text="@string/Stack_Activity_Text_Peek"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -90,7 +90,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/Stack_Activity_Text_size"
+                android:text="@string/Stack_Activity_Text_Size"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Peek"
                 app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Button_Peek"
                 app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Button_Peek" />
@@ -101,7 +101,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/Stack_Activity_Text_empty"
+                android:text="@string/Stack_Activity_Text_Empty"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Size"
                 app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Button_Size"
                 app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Button_Size" />
@@ -112,7 +112,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/All_Data_Activity_Text_clear"
+                android:text="@string/All_Data_Activity_Text_Clear"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Size"
                 app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Button_Size"
                 app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Button_Empty" />
@@ -123,7 +123,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/All_Data_Activity_Text_random"
+                android:text="@string/All_Data_Activity_Text_Random"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Clear"
                 app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Button_Clear"
                 app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Button_Clear" />
@@ -133,7 +133,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="64dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="64dp"
                 app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Random"
@@ -160,7 +160,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
-        android:text="@string/Stack_Activity_Text_push"
+        android:text="@string/Stack_Activity_Text_Push"
         app:layout_constraintBottom_toTopOf="@+id/Stack_Activity_Line"
         app:layout_constraintEnd_toStartOf="@+id/Stack_Activity_Button_Pop"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Guideline" />
@@ -172,7 +172,7 @@
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
-        android:text="@string/Stack_Activity_Text_pop"
+        android:text="@string/Stack_Activity_Text_Pop"
         app:layout_constraintBottom_toBottomOf="@+id/Stack_Activity_Button_Push"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Stack_Activity_Button_Push"
@@ -224,7 +224,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/Stack_Activity_Default_Value"
+        android:text="@string/Slider_Default_Value"
         app:layout_constraintBaseline_toBaselineOf="@+id/Stack_Activity_CurrentValue"
         app:layout_constraintStart_toEndOf="@+id/Stack_Activity_CurrentValue" />
 
@@ -233,7 +233,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="@string/slider_current_value"
+        android:text="@string/Slider_Current_Value"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_ViewContainer"
         app:layout_constraintTop_toTopOf="@+id/Stack_Activity_InputSlider" />
 

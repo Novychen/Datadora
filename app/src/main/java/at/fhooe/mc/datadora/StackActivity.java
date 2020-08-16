@@ -167,7 +167,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
                     showEmpty();
                 }
             } else {
-                Toast.makeText(this, R.string.WaitTillAnimationOver, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
             }
         } else if (v == mBinding.StackActivityButtonSize) {
             if(!mPressedRandom) {
@@ -179,13 +179,13 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
                     showEmpty();
                 }
             } else {
-                Toast.makeText(this, R.string.WaitTillAnimationOver, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
             }
         } else if (v == mBinding.StackActivityButtonEmpty) {
             if (!mStack.isEmpty()) {
-                mBinding.StackActivityReturnValue.setText(R.string.Stack_Activity_False);
+                mBinding.StackActivityReturnValue.setText(R.string.All_Data_Activity_False);
             } else {
-                mBinding.StackActivityReturnValue.setText(R.string.Stack_Activity_True);
+                mBinding.StackActivityReturnValue.setText(R.string.All_Data_Activity_True);
             }
         } else if (v == mBinding.StackActivityButtonClear) {
             mBinding.StackActivityReturnValue.setText("");
@@ -205,7 +205,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
                 makeInVisible();
                 mBinding.StackActivityStackView.random(mStack);
             } else {
-                Toast.makeText(this, R.string.WaitTillAnimationOver, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
             }
         }
     }
