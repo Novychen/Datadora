@@ -5,13 +5,11 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -32,7 +30,7 @@ public class QueueView extends View {
     private static final String TAG = "QueueView : ";
 
     // Booleans that check which is the current operation
-    boolean mDequeue, mEnqueue, mPeek, mSize, mClear, mRandom;
+    boolean mDequeue, mEnqueue, mPeek, mClear, mRandom;
 
     // int that counts how often the operator enqueued was used (by operator random)
     int mPosition;
@@ -58,11 +56,11 @@ public class QueueView extends View {
     // Animator for the operation peek (for the text of one item)
     ValueAnimator mAnimatorPeekText = new ValueAnimator();
 
-    // Animator for the operation peek (for the area of one item)
-    ValueAnimator mAnimatorSizeArea = new ValueAnimator();
+    // PropertyValuesHolder for the move animation of the operation dequeue
+    PropertyValuesHolder mPropertyTranslateYDequeue;
 
-    // Animator for the operation peek (for the text of one item)
-    ValueAnimator mAnimatorSizeText = new ValueAnimator();
+    // PropertyValuesHolder for the alpha animation of the operation dequeue
+    PropertyValuesHolder mPropertyAlphaDequeue;
 
     // Vector that contains all Rects, that are drawn
     Vector<RectF> mQueue = new Vector<>();
@@ -100,23 +98,17 @@ public class QueueView extends View {
     // the current color value - used for peek animation (for the text of one item)
     int mColorTextPeek;
 
-    // the current color value - used for peek animation (for the area of one item)
-    int mColorAreaSize;
-
-    // the current color value - used for peek animation (for the text of one item)
-    int mColorTextSize;
-
     // the current primary color of the currently used theme
     int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
 
-    // the current secondary color of the currently used theme
-    // int mSecondaryColor = getResources().getColor(R.color.secondaryColor, this.getContext().getTheme());
+    // the current surface color of the currently used theme
+    int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
 
-    // the current primary color of the currently used theme - for text
-    int mPrimaryColorText = getResources().getColor(R.color.primaryTextColor, this.getContext().getTheme());
+    // the current colorOnPrimary color of the currently used theme - for text
+    int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
 
-    // the current secondary color of the currently used theme - for text
-    int mSecondaryColorText = getResources().getColor(R.color.secondaryTextColor, this.getContext().getTheme());
+    // the current colorOnSurface color of the currently used theme - for text
+    int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
 
     Paint mQueueItemPaint = new Paint();
     Paint mQueueItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -167,10 +159,8 @@ public class QueueView extends View {
         mQueueItemPaint.setStyle(Paint.Style.STROKE);
         mQueueItemPaint.setStrokeWidth(6);
 
-        mQueueItemTextPaint.setColor(mSecondaryColorText);
+        mQueueItemTextPaint.setColor(mOnSurfaceColor);
         mQueueItemTextPaint.setTextSize(55);
-
-
     }
 
     protected void init(QueueActivity _activity) {
@@ -181,11 +171,9 @@ public class QueueView extends View {
      * marks the latest element of the queue
      */
     protected void peek() {
-        //mAnimatorPeekBorder.start();
         mAnimatorPeekText.start();
         mAnimatorPeekArea.start();
         mPeek = true;
-        mSize = false;
         mClear = false;
         mRandom = false;
         mDequeue = false;
@@ -194,24 +182,10 @@ public class QueueView extends View {
     }
 
     /**
-     * shows the size of the queue - goes from one item to next and counts them
-     */
-    protected void size() {
-        //TODO: Still in progress
-        mPeek = false;
-        mSize = true;
-        mClear = false;
-        mRandom = false;
-        mDequeue = false;
-        mEnqueue = false;
-    }
-
-    /**
      * clears the queue
      */
     protected void clear() {
         mPeek = false;
-        mSize = false;
         mClear = true;
         mRandom = false;
         mDequeue = true;
@@ -227,7 +201,6 @@ public class QueueView extends View {
         mQueueNumbers.clear();
         mQueue.clear();
         mPeek = false;
-        mSize = false;
         mClear = false;
         mRandom = true;
         mDequeue = false;
@@ -243,7 +216,6 @@ public class QueueView extends View {
      */
     protected void preDequeue() {
         mPeek = false;
-        mSize = false;
         mClear = false;
         mRandom = false;
         mDequeue = true;
@@ -280,7 +252,6 @@ public class QueueView extends View {
         }
         changeBoxSize(getMax(), true);
         mPeek = false;
-        mSize = false;
         mClear = false;
         mDequeue = false;
         mEnqueue = true;
@@ -320,6 +291,9 @@ public class QueueView extends View {
             val++;
         }
         mResize = 40 * val;
+
+        mPropertyTranslateYDequeue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_DEQUEUE, 0, (int)  (-(mMaxWidthQueue / 4 ) * mScale));
+        mAnimatorDequeue.setValues(mPropertyTranslateYDequeue, mPropertyAlphaDequeue);
     }
 
     @Override
@@ -334,11 +308,11 @@ public class QueueView extends View {
         mMaxWidthQueue = (float) _w - xpad - 6;
         mScale = 1;
 
-        PropertyValuesHolder propertyTranslateYEnqueue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_ENQUEUE, (int) (- 200), 0);
+        PropertyValuesHolder propertyTranslateYEnqueue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_ENQUEUE, -200, 0);
         PropertyValuesHolder propertyAlphaEnqueue = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_ENQUEUE, 0, 255);
 
-        PropertyValuesHolder propertyTranslateYDequeue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_DEQUEUE, 0, (int)  (-(mMaxWidthQueue / 4 ) * mScale));
-        PropertyValuesHolder propertyAlphaDequeue = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_DEQUEUE, 255, 0);
+        mPropertyTranslateYDequeue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_DEQUEUE, 0, (int)  (-(mMaxWidthQueue / 4 ) * mScale));
+        mPropertyAlphaDequeue = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_DEQUEUE, 255, 0);
 
         mAnimatorEnqueue.setValues(propertyTranslateYEnqueue, propertyAlphaEnqueue);
         mAnimatorEnqueue.setDuration(700);
@@ -352,7 +326,7 @@ public class QueueView extends View {
             }
         });
 
-        mAnimatorDequeue.setValues(propertyTranslateYDequeue, propertyAlphaDequeue);
+        mAnimatorDequeue.setValues(mPropertyTranslateYDequeue, mPropertyAlphaDequeue);
         mAnimatorDequeue.setDuration(700);
         mAnimatorDequeue.setInterpolator(new AccelerateDecelerateInterpolator());
         mAnimatorDequeue.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -375,7 +349,7 @@ public class QueueView extends View {
 //            }
 //        });
 
-        mAnimatorPeekArea = ValueAnimator.ofObject(new ArgbEvaluator(), Color.WHITE, mPrimaryColor);
+        mAnimatorPeekArea = ValueAnimator.ofObject(new ArgbEvaluator(), mSurfaceColor, mPrimaryColor);
         mAnimatorPeekArea.setDuration(1000);
         mAnimatorPeekArea.setInterpolator(new AccelerateDecelerateInterpolator());
         mAnimatorPeekArea.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -386,7 +360,7 @@ public class QueueView extends View {
             }
         });
 
-        mAnimatorPeekText = ValueAnimator.ofObject(new ArgbEvaluator(), mSecondaryColorText, mPrimaryColorText);
+        mAnimatorPeekText = ValueAnimator.ofObject(new ArgbEvaluator(), mOnSurfaceColor, mOnPrimaryColor);
         mAnimatorPeekText.setDuration(1000);
         mAnimatorPeekText.setInterpolator(new AccelerateDecelerateInterpolator());
         mAnimatorPeekText.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -403,12 +377,16 @@ public class QueueView extends View {
     @Override
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
+        onDrawNormalMode(_canvas);
+    }
+
+    private void onDrawNormalMode(Canvas _canvas) {
         for (int i = 0; i < mQueueNumbers.size(); i++) {
             if(i == 0 && !mEnqueue){
                 if (mDequeue) {
                     mQueue.get(i).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * i)) * mScale) - mTranslateYDequeue;
-                        mQueueItemTextPaint.setAlpha(mAlphaDequeue);
-                        mQueueItemPaint.setAlpha(mAlphaDequeue);
+                    mQueueItemTextPaint.setAlpha(mAlphaDequeue);
+                    mQueueItemPaint.setAlpha(mAlphaDequeue);
 
                 }  else if(mPeek){
                     mQueue.get(i).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * i)) * mScale);
@@ -437,7 +415,7 @@ public class QueueView extends View {
                 }
                 mQueueItemTextPaint.setAlpha(255);
                 mQueueItemPaint.setAlpha(255);
-                mQueueItemTextPaint.setColor(Color.BLACK);
+                mQueueItemTextPaint.setColor(mOnSurfaceColor);
                 mQueueItemPaint.setColor(mPrimaryColor);
             }
             // save the size of the text ("box" around the text) in mBounds
@@ -448,7 +426,6 @@ public class QueueView extends View {
             mQueue.get(i).right = (int) (mQueue.get(i).left + (mMaxWidthQueue / 4) + mResize);
             mQueue.get(i).bottom = (int) (mQueue.get(i).top + ((mMaxWidthQueue / 4) * mScale) - 10);
 
-
             // get BoundingBox from Text & draw Text + QueueItem
             _canvas.drawText(mQueueNumbers.get(i).toString(), getExactCenterX(mQueue.get(i)) - mBounds.exactCenterX(), (getExactCenterY(mQueue.get(i)) - mBounds.exactCenterY()), mQueueItemTextPaint);
             _canvas.drawRoundRect(mQueue.get(i), mRadius, mRadius, mQueueItemPaint);
@@ -457,10 +434,10 @@ public class QueueView extends View {
         if (mDequeue && mAlphaDequeue == 0 && !mClear) { // Animation of dequeue is over -> remove element
             dequeue();
             mDequeue = false;
+            mQueueActivity.setPressedDequeue(false);
         } else if (mClear && mQueueNumbers.isEmpty()) { // clear operation is finished
             mDequeue = false;
             mClear = false;
-            mQueueActivity.setPressedRandom(false);
             mQueueActivity.showEmpty();
             mAnimatorDequeue.setDuration(700);
             mPosition = 0;
@@ -475,11 +452,6 @@ public class QueueView extends View {
         } else if (mRandom && mAlphaEnqueue == 255) { // random animation for element is finished - add next element
             enqueue(mRandomQueue.get(mPosition));
             mPosition++;
-        }  else if (mSize) { // random animation for element is finished - add next element
-            mQueueActivity.showSize();
-            mQueueActivity.setPressedRandom(false);
-        } else if (mPeek) { // random animation for element is finished - add next element
-            mQueueActivity.setPressedRandom(false);
         }
     }
 

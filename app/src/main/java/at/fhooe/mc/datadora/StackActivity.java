@@ -2,12 +2,14 @@ package at.fhooe.mc.datadora;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.google.android.material.slider.LabelFormatter;
@@ -18,7 +20,7 @@ import java.util.Vector;
 
 import at.fhooe.mc.datadora.databinding.ActivityStackBinding;
 
-public class StackActivity extends AppCompatActivity implements View.OnClickListener {
+public class StackActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "StackActivity : ";
     private ActivityStackBinding mBinding;
@@ -29,7 +31,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     //TODO: Styles, Themes, ...!!
     //TODO: Resize - animation (?) -> Animation clear -> too ugly when many elements
     //TODO: ENUM for operations (?)
-    //TODO: Blocked UI while animation -> thats ok?
+    //TODO: Theme is constant!
 
     /* Stores the integer values, that the user put it - is only for testing purposes,
      * feel free to change the way this data is stored - just remember that you have to
@@ -37,6 +39,8 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
      */
     private Vector<Integer> mStack = new Vector<>();
     private boolean mPressedRandom;
+    private boolean mPressedPop;
+
 
     public boolean getPressedRandom() {
         return mPressedRandom;
@@ -44,6 +48,14 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
 
     public void setPressedRandom(boolean _pressedRandom) {
         mPressedRandom = _pressedRandom;
+    }
+
+    public boolean gePressedPop() {
+        return mPressedPop;
+    }
+
+    public void setPressedPop(boolean _pressedPop) {
+        mPressedPop = _pressedPop;
     }
 
     @Override
@@ -58,9 +70,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         decorView.setSystemUiVisibility(uiOptions);
 
         mBinding.StackActivityStackView.init(this);
-        /*
-         * The used Icons are NOT final - the toolbar was inserted for defining the right proportions and can be changed
-         */
 
         // set up the slider
         Slider slider = mBinding.StackActivityInputSlider;
@@ -95,6 +104,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         mBinding.StackActivityButtonEmpty.setOnClickListener(this);
         mBinding.StackActivityButtonClear.setOnClickListener(this);
         mBinding.StackActivityButtonRandom.setOnClickListener(this);
+        mBinding.StackActivitySwitch.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -120,6 +130,10 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         super.onPause();
     }
 
+
+    @Override
+    protected void onStop() { super.onStop(); }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -128,85 +142,22 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-
-        if (v == mBinding.StackActivityButtonPush) {
-            if (isInputValid()) {
-                // parse the input to an int and store it into the stack (mStack), then let it be drawn by the StackView
-                mStack.add((int) mBinding.StackActivityInputSlider.getValue());
-                mBinding.StackActivityReturnValue.setText("");
-                mBinding.StackActivityStackView.push((int) mBinding.StackActivityInputSlider.getValue());
-                makeInVisible();
-            }
-        } else if (v == mBinding.StackActivityButtonPop) {
-            if (!mStack.isEmpty()) {
-                //delete the last element of the stack (mStack), then let it be (visually) removed by the StackView
-                mBinding.StackActivityReturnValue.setText(String.format("%s", mStack.get(mStack.size() - 1).toString()));
-                mStack.removeElementAt(mStack.size() - 1);
-                mBinding.StackActivityStackView.prePop();
-                makeInVisible();
-                if (mStack.isEmpty()) {
-                    showEmpty();
-                }
-            } else {
-                Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
-                mBinding.StackActivityReturnValue.setText("");
-                showEmpty();
-            }
-        } else if(v == mBinding.StackActivityButtonPeek) {
-            if(!mPressedRandom) {
-                if (!mStack.isEmpty()) {
-                    mBinding.StackActivityStackView.peek();
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            mBinding.StackActivityReturnValue.setText(String.format("%s",  mBinding.StackActivityStackView.mStackNumbers.get( mBinding.StackActivityStackView.mStackNumbers.size() - 1).toString()));
-                        }
-                    }, 500);
-                } else {
-                    Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
-                    mBinding.StackActivityReturnValue.setText("");
-                    showEmpty();
-                }
-            } else {
-                Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
-            }
-        } else if (v == mBinding.StackActivityButtonSize) {
-            if(!mPressedRandom) {
-                mBinding.StackActivityReturnValue.setText("");
-                if (!mStack.isEmpty()) {
-                    mBinding.StackActivityStackView.size();
-                } else {
-                    mBinding.StackActivityReturnValue.setText("0");
-                    showEmpty();
-                }
-            } else {
-                Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
-            }
-        } else if (v == mBinding.StackActivityButtonEmpty) {
-            if (!mStack.isEmpty()) {
-                mBinding.StackActivityReturnValue.setText(R.string.All_Data_Activity_False);
-            } else {
-                mBinding.StackActivityReturnValue.setText(R.string.All_Data_Activity_True);
-            }
-        } else if (v == mBinding.StackActivityButtonClear) {
-            mBinding.StackActivityReturnValue.setText("");
-
-            if (!mStack.isEmpty()) {
-                mBinding.StackActivityStackView.clear();
-                mStack.clear();
-            } else {
-                Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
-                showEmpty();
-            }
-        } else if (v == mBinding.StackActivityButtonRandom) {
-            if (!mPressedRandom) {
+        if (!mPressedPop && !mPressedRandom) {
+            if (v == mBinding.StackActivityButtonPush) {
+                push();
+            } else if (v == mBinding.StackActivityButtonPop) {
+                mPressedPop = true;
+                pop();
+            } else if(v == mBinding.StackActivityButtonPeek) { peek();
+            } else if (v == mBinding.StackActivityButtonSize) { size();
+            } else if (v == mBinding.StackActivityButtonEmpty) { isEmpty();
+            } else if (v == mBinding.StackActivityButtonClear) { clear();
+            } else if (v == mBinding.StackActivityButtonRandom) {
                 mPressedRandom = true;
-                mBinding.StackActivityReturnValue.setText("");
-                createRandomStack();
-                makeInVisible();
-                mBinding.StackActivityStackView.random(mStack);
-            } else {
-                Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
+                random();
             }
+        } else {
+            Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -252,14 +203,114 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
      * @return true if the input is valid, false if its not
      */
     private boolean isInputValid() {
-        if (mStack.size() > 15) {
+        if (mStack.size() > 14) {
             Toast.makeText(this, R.string.Overflow, Toast.LENGTH_SHORT).show();
             showFull();
             return false;
-        } else if (mStack.size() == 15) {
+        } else if (mStack.size() == 14) {
             showFull();
         }
         return true;
+    }
+
+    /**
+     * This method handles the operation push
+     */
+    private void push(){
+        if (isInputValid()) {
+            // parse the input to an int and store it into the stack (mStack), then let it be drawn by the StackView
+            mStack.add((int) mBinding.StackActivityInputSlider.getValue());
+            mBinding.StackActivityReturnValue.setText("");
+            mBinding.StackActivityStackView.push((int) mBinding.StackActivityInputSlider.getValue());
+            makeInVisible();
+        }
+    }
+
+    /**
+     * This method handles the operation pop
+     */
+    private void pop(){
+        if (!mStack.isEmpty()) {
+            //delete the last element of the stack (mStack), then let it be (visually) removed by the StackView
+            mBinding.StackActivityReturnValue.setText(String.format("%s", mStack.get(mStack.size() - 1).toString()));
+            mStack.removeElementAt(mStack.size() - 1);
+            mBinding.StackActivityStackView.prePop();
+            makeInVisible();
+            if (mStack.isEmpty()) {
+                showEmpty();
+            }
+        } else {
+            Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
+            mBinding.StackActivityReturnValue.setText("");
+            showEmpty();
+        }
+    }
+
+    /**
+     * This method handles the operation peek
+     */
+    private void peek(){
+        if (!mStack.isEmpty()) {
+            mBinding.StackActivityStackView.peek();
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    mBinding.StackActivityReturnValue.setText(String.format("%s",  mBinding.StackActivityStackView.mStackNumbers.get( mBinding.StackActivityStackView.mStackNumbers.size() - 1).toString()));
+                }
+            }, 500);
+        } else {
+            Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
+            mBinding.StackActivityReturnValue.setText("");
+            showEmpty();
+        }
+    }
+
+    /**
+     * This method handles the operation size
+     */
+    private void size(){
+        mBinding.StackActivityReturnValue.setText("");
+        if (!mStack.isEmpty()) {
+            showSize();
+        } else {
+            mBinding.StackActivityReturnValue.setText("0");
+            showEmpty();
+        }
+    }
+
+    /**
+     * This method handles the operation isEmpty
+     */
+    private void isEmpty(){
+        if (!mStack.isEmpty()) {
+            mBinding.StackActivityReturnValue.setText(R.string.All_Data_Activity_False);
+        } else {
+            mBinding.StackActivityReturnValue.setText(R.string.All_Data_Activity_True);
+        }
+    }
+
+    /**
+     * This method handles the operation clear
+     */
+    private void clear(){
+        mBinding.StackActivityReturnValue.setText("");
+        if (!mStack.isEmpty()) {
+            mBinding.StackActivityStackView.clear();
+            mStack.clear();
+        } else {
+            Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
+            showEmpty();
+        }
+    }
+
+    /**
+     * This method handles the operation random
+     */
+    private void random(){
+        mPressedRandom = true;
+        mBinding.StackActivityReturnValue.setText("");
+        createRandomStack();
+        makeInVisible();
+        mBinding.StackActivityStackView.random(mStack);
     }
 
     /**
@@ -280,5 +331,15 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+
+    @Override
+    public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
+        if (_isChecked) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 }

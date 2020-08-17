@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/Surface"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -19,7 +20,7 @@
 
     <ImageView
         android:id="@+id/Stack_Activity_Box_Return"
-        style="@style/Button.Return"
+        style="@style/Return"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -30,7 +31,7 @@
 
     <TextView
         android:id="@+id/Stack_Activity_ReturnValue"
-        style="@style/Text"
+        style="@style/Primary.Text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -47,7 +48,7 @@
 
     <TextView
         android:id="@+id/Stack_Activity_ReturnText"
-        style="@style/Text"
+        style="@style/Primary.Text.Return"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/All_Data_Activity_Text_Return"
@@ -138,11 +139,11 @@
                 app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Random"
                 app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Button_Random"
-                app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Button_Random"
-                app:srcCompat="@drawable/ic_check" />
+                app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Button_Random" />
 
             <TextView
                 android:id="@+id/Stack_Activity_FlowText"
+                style="@style/Surface.Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -156,26 +157,23 @@
     <Button
         android:id="@+id/Stack_Activity_Button_Push"
         style="@style/Button"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:text="@string/Stack_Activity_Text_Push"
         app:layout_constraintBottom_toTopOf="@+id/Stack_Activity_Line"
-        app:layout_constraintEnd_toStartOf="@+id/Stack_Activity_Button_Pop"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Guideline" />
 
     <Button
         android:id="@+id/Stack_Activity_Button_Pop"
         style="@style/Button"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
         android:text="@string/Stack_Activity_Text_Pop"
         app:layout_constraintBottom_toBottomOf="@+id/Stack_Activity_Button_Push"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Stack_Activity_Button_Push"
         app:layout_constraintTop_toTopOf="@+id/Stack_Activity_Button_Push" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -205,12 +203,12 @@
         android:id="@+id/Stack_Activity_ViewContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/Stack_Activity_InputValue"
         app:layout_constraintEnd_toStartOf="@+id/Stack_Activity_ScrollViewButtons"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_InputSlider"
-        app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Switch">
 
         <at.fhooe.mc.datadora.StackView
             android:id="@+id/Stack_Activity_StackView"
@@ -221,6 +219,7 @@
 
     <TextView
         android:id="@+id/Stack_Activity_InputValue"
+        style="@style/Surface.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -230,12 +229,23 @@
 
     <TextView
         android:id="@+id/Stack_Activity_CurrentValue"
+        style="@style/Surface.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/Slider_Current_Value"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_ViewContainer"
         app:layout_constraintTop_toTopOf="@+id/Stack_Activity_InputSlider" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/Stack_Activity_Switch"
+        style="@style/AppTheme.Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/Stack_Activity_Guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Toolbar" />
 
     <ImageView
         android:id="@+id/Stack_Activity_Line"

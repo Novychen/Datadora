@@ -10,7 +10,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -30,7 +29,7 @@ public class StackView extends View {
     private static final String TAG = "StackView : ";
 
     // Booleans that check which is the current operation
-    boolean mPop, mPush, mPeek, mSize, mClear, mRandom;
+    boolean mPop, mPush, mPeek, mClear, mRandom;
 
     // int that counts how often the operator pushed was used (by operator random)
     int mPosition;
@@ -47,20 +46,11 @@ public class StackView extends View {
     // Animator for the last pushed element
     ValueAnimator mAnimatorPop = new ValueAnimator();
 
-    // Animator for the operation peek (for the border of one item)
-    // ValueAnimator mAnimatorPeekBorder = new ValueAnimator();
-
     // Animator for the operation peek (for the area of one item)
     ValueAnimator mAnimatorPeekArea = new ValueAnimator();
 
     // Animator for the operation peek (for the text of one item)
     ValueAnimator mAnimatorPeekText = new ValueAnimator();
-
-    // Animator for the operation peek (for the area of one item)
-    ValueAnimator mAnimatorSizeArea = new ValueAnimator();
-
-    // Animator for the operation peek (for the text of one item)
-    ValueAnimator mAnimatorSizeText = new ValueAnimator();
 
     // Vector that contains all Rects, that are drawn
     Vector<RectF> mStack = new Vector<>();
@@ -89,32 +79,23 @@ public class StackView extends View {
     // the current alpha value - used for the pop animation
     int mAlphaPop;
 
-    // the current color value - used for peek animation (for the border of one item)
-    // int mColorBorder;
-
     // the current color value - used for peek animation (for the area of one item)
     int mColorAreaPeek;
 
     // the current color value - used for peek animation (for the text of one item)
     int mColorTextPeek;
 
-    // the current color value - used for peek animation (for the area of one item)
-    int mColorAreaSize;
-
-    // the current color value - used for peek animation (for the text of one item)
-    int mColorTextSize;
-
     // the current primary color of the currently used theme
     int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
 
-    // the current secondary color of the currently used theme
-    // int mSecondaryColor = getResources().getColor(R.color.secondaryColor, this.getContext().getTheme());
+    // the current surface color of the currently used theme
+    int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
 
-    // the current primary color of the currently used theme - for text
-    int mPrimaryColorText = getResources().getColor(R.color.primaryTextColor, this.getContext().getTheme());
+    // the current colorOnPrimary color of the currently used theme - for text
+    int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
 
-    // the current secondary color of the currently used theme - for text
-    int mSecondaryColorText = getResources().getColor(R.color.secondaryTextColor, this.getContext().getTheme());
+    // the current colorOnSurface color of the currently used theme - for text
+    int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
 
     Paint mStackItemPaint = new Paint();
     Paint mStackItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -165,7 +146,7 @@ public class StackView extends View {
         mStackItemPaint.setStyle(Paint.Style.STROKE);
         mStackItemPaint.setStrokeWidth(6);
 
-        mStackItemTextPaint.setColor(mSecondaryColorText);
+        mStackItemTextPaint.setColor(mOnSurfaceColor);
         mStackItemTextPaint.setTextSize(55);
     }
 
@@ -181,7 +162,6 @@ public class StackView extends View {
         mAnimatorPeekText.start();
         mAnimatorPeekArea.start();
         mPeek = true;
-        mSize = false;
         mClear = false;
         mRandom = false;
         mPop = false;
@@ -190,24 +170,10 @@ public class StackView extends View {
     }
 
     /**
-     * shows the size of the stack - goes from one item to next and counts them
-     */
-    protected void size() {
-        //TODO: Still in progress
-        mPeek = false;
-        mSize = true;
-        mClear = false;
-        mRandom = false;
-        mPop = false;
-        mPush = false;
-    }
-
-    /**
      * clears the stack
      */
     protected void clear() {
         mPeek = false;
-        mSize = false;
         mClear = true;
         mRandom = false;
         mPop = true;
@@ -223,7 +189,6 @@ public class StackView extends View {
         mStackNumbers.clear();
         mStack.clear();
         mPeek = false;
-        mSize = false;
         mClear = false;
         mRandom = true;
         mPop = false;
@@ -239,7 +204,6 @@ public class StackView extends View {
      */
     protected void prePop() {
         mPeek = false;
-        mSize = false;
         mClear = false;
         mRandom = false;
         mPop = true;
@@ -276,7 +240,6 @@ public class StackView extends View {
         }
         changeBoxSize(getMax(), true);
         mPeek = false;
-        mSize = false;
         mClear = false;
         mPop = false;
         mPush = true;
@@ -330,10 +293,10 @@ public class StackView extends View {
         mMaxWidthStack = (float) _w - xpad - 6;
         mScale = 1;
 
-        PropertyValuesHolder propertyTranslateYPush = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_PUSH, (int) (-200), 0);
+        PropertyValuesHolder propertyTranslateYPush = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_PUSH, -200, 0);
         PropertyValuesHolder propertyAlphaPush = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_PUSH, 0, 255);
 
-        PropertyValuesHolder propertyTranslateYPop = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_POP, 0, (int) (-200));
+        PropertyValuesHolder propertyTranslateYPop = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_POP, 0, -200);
         PropertyValuesHolder propertyAlphaPop = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_POP, 255, 0);
 
         mAnimatorPush.setValues(propertyTranslateYPush, propertyAlphaPush);
@@ -360,18 +323,7 @@ public class StackView extends View {
             }
         });
 
-//        mAnimatorPeekBorder = ValueAnimator.ofObject(new ArgbEvaluator(), mPrimaryColor, mSecondaryColor);
-//        mAnimatorPeekBorder.setDuration(2000);
-//        mAnimatorPeekBorder.setInterpolator(new AccelerateDecelerateInterpolator());
-//        mAnimatorPeekBorder.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//            @Override
-//            public void onAnimationUpdate(ValueAnimator animation) {
-//                mColorBorder = (int) animation.getAnimatedValue();
-//                invalidate();
-//            }
-//        });
-
-        mAnimatorPeekArea = ValueAnimator.ofObject(new ArgbEvaluator(), Color.WHITE, mPrimaryColor);
+        mAnimatorPeekArea = ValueAnimator.ofObject(new ArgbEvaluator(), mSurfaceColor, mPrimaryColor);
         mAnimatorPeekArea.setDuration(1000);
         mAnimatorPeekArea.setInterpolator(new AccelerateDecelerateInterpolator());
         mAnimatorPeekArea.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -382,7 +334,7 @@ public class StackView extends View {
             }
         });
 
-        mAnimatorPeekText = ValueAnimator.ofObject(new ArgbEvaluator(),mSecondaryColorText, mPrimaryColorText);
+        mAnimatorPeekText = ValueAnimator.ofObject(new ArgbEvaluator(), mOnSurfaceColor, mOnPrimaryColor);
         mAnimatorPeekText.setDuration(1000);
         mAnimatorPeekText.setInterpolator(new AccelerateDecelerateInterpolator());
         mAnimatorPeekText.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -422,7 +374,7 @@ public class StackView extends View {
                 mStack.get(i).top = (int) (mMaxHeightStack - ((mMaxWidthStack / 4) + (mMaxWidthStack / 4 * i)) * mScale);
                 mStackItemTextPaint.setAlpha(255);
                 mStackItemPaint.setAlpha(255);
-                mStackItemTextPaint.setColor(mSecondaryColorText);
+                mStackItemTextPaint.setColor(mOnSurfaceColor);
                 mStackItemPaint.setColor(mPrimaryColor);
             }
             // save the size of the text ("box" around the text) in mBounds
@@ -441,10 +393,10 @@ public class StackView extends View {
         if (mPop && mAlphaPop == 0 && !mClear) { // Animation of pop is over -> remove element
             pop();
             mPop = false;
+            mStackActivity.setPressedPop(false);
         } else if (mClear && mStackNumbers.isEmpty()) { // clear operation is finished
             mPop = false;
             mClear = false;
-            mStackActivity.setPressedRandom(false);
             mStackActivity.showEmpty();
             mAnimatorPop.setDuration(700);
             mPosition = 0;
@@ -459,11 +411,6 @@ public class StackView extends View {
         } else if (mRandom && mAlphaPush == 255) { // random animation for element is finished - add next element
             push(mRandomStack.get(mPosition));
             mPosition++;
-        }  else if (mSize) { // random animation for element is finished - add next element
-            mStackActivity.showSize();
-            mStackActivity.setPressedRandom(false);
-        } else if (mPeek) { // random animation for element is finished - add next element
-            mStackActivity.setPressedRandom(false);
         }
     }
 

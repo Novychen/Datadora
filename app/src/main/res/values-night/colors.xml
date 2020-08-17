@@ -1,6 +1,6 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
-    <color name="primaryColor">#062351</color>
+    <color name="primaryColor">#274c88</color>
     <color name="primaryColor_buttonPressed">#051C42</color>
     <color name="primaryLightColor">#3b4a7e</color>
     <color name="primaryDarkColor">#000029</color>
@@ -9,10 +9,10 @@
     <color name="secondaryLightColor">#ffffff</color>
     <color name="secondaryDarkColor">#c9afa9</color>
 
-    <color name="colorSurface">#EFEFEF</color>
-    <color name="colorBackground">#EFEFEF</color>
+    <color name="colorSurface">#121212</color>
+    <color name="colorBackground">#121212</color>
 
-    <color name="colorOnSurface">#000000</color>
+    <color name="colorOnSurface">#ffffff</color>
     <color name="colorOnPrimary">#ffffff</color>
     <color name="colorOnSecondary">#ffffff</color>
 </resources>

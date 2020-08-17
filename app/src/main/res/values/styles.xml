@@ -1,19 +1,31 @@
 <resources>
     <style name="Button">
-        <item name="android:padding">10dp</item>
         <item name="android:background">@drawable/button</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
     </style>
 
-    <style name="Button.Return">
-        <item name="android:padding">10dp</item>
+    <style name="Return">
         <item name="android:background">@drawable/background_return</item>
-        <item name="backgroundTint">@color/primaryColor</item>
-        <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="Text">
-        <item name="android:padding">10dp</item>
-        <item name="android:textColor">@android:color/white</item>
+    <style name="Surface">
+        <item name="android:background">@color/colorSurface</item>
     </style>
+
+    <style name="Surface.Text">
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="Primary">
+        <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
+
+    <style name="Primary.Text">
+        <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
+
+    <style name="Primary.Text.Return">
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 </resources>

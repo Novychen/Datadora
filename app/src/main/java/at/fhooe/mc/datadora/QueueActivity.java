@@ -2,12 +2,16 @@ package at.fhooe.mc.datadora;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 
+
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.google.android.material.slider.LabelFormatter;
@@ -18,18 +22,10 @@ import java.util.Vector;
 
 import at.fhooe.mc.datadora.databinding.ActivityQueueBinding;
 
-public class QueueActivity extends AppCompatActivity implements View.OnClickListener {
+public class QueueActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "QueueActivity : ";
     private ActivityQueueBinding mBinding;
-
-    //TODO: 2x same data -> Queue!!
-    //TODO: Animation better
-    //TODO: Queue size (?) fine tuning
-    //TODO: Styles, Themes, ...!!
-    //TODO: Resize - animation (?) -> Animation clear -> too ugly when many elements
-    //TODO: ENUM for operations (?)
-    //TODO: Blocked UI while animation -> thats ok?
 
     /* Stores the integer values, that the user put it - is only for testing purposes,
      * feel free to change the way this data is stored - just remember that you have to
@@ -37,6 +33,8 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      */
     private Vector<Integer> mQueue = new Vector<>();
     private boolean mPressedRandom;
+    private boolean mPressedDequeue;
+
 
     public boolean getPressedRandom() {
         return mPressedRandom;
@@ -44,6 +42,14 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
 
     public void setPressedRandom(boolean _pressedRandom) {
         mPressedRandom = _pressedRandom;
+    }
+
+    public boolean gePressedDequeue() {
+        return mPressedDequeue;
+    }
+
+    public void setPressedDequeue(boolean _pressedDequeue) {
+        mPressedDequeue = _pressedDequeue;
     }
 
     @Override
@@ -58,9 +64,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         decorView.setSystemUiVisibility(uiOptions);
 
         mBinding.QueueActivityQueueView.init(this);
-        /*
-         * The used Icons are NOT final - the toolbar was inserted for defining the right proportions and can be changed
-         */
 
         // set up the slider
         Slider slider = mBinding.QueueActivityInputSlider;
@@ -95,6 +98,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         mBinding.QueueActivityButtonEmpty.setOnClickListener(this);
         mBinding.QueueActivityButtonClear.setOnClickListener(this);
         mBinding.QueueActivityButtonRandom.setOnClickListener(this);
+        mBinding.QueueActivitySwitch.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -121,6 +125,9 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    protected void onStop() { super.onStop(); }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mBinding = null;
@@ -128,85 +135,21 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-
-        if (v == mBinding.QueueActivityButtonEnqueue) {
-            if (isInputValid()) {
-                // parse the input to an int and store it into the Queue (mQueue), then let it be drawn by the QueueView
-                mQueue.add((int) mBinding.QueueActivityInputSlider.getValue());
-                mBinding.QueueActivityReturnValue.setText("");
-                mBinding.QueueActivityQueueView.enqueue((int) mBinding.QueueActivityInputSlider.getValue());
-                makeInVisible();
-            }
-        } else if (v == mBinding.QueueActivityButtonDequeue) {
-            if (!mQueue.isEmpty()) {
-                //delete the last element of the Queue (mQueue), then let it be (visually) removed by the QueueView
-                mBinding.QueueActivityReturnValue.setText(String.format("%s", mQueue.get(0)));
-                mQueue.removeElementAt(0);
-                mBinding.QueueActivityQueueView.preDequeue();
-                makeInVisible();
-                if (mQueue.isEmpty()) {
-                    showEmpty();
-                }
-            } else {
-                Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
-                mBinding.QueueActivityReturnValue.setText("");
-                showEmpty();
-            }
-        } else if(v == mBinding.QueueActivityButtonPeek) {
-            if(!mPressedRandom) {
-                if (!mQueue.isEmpty()) {
-                    mBinding.QueueActivityQueueView.peek();
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            mBinding.QueueActivityReturnValue.setText(String.format("%s",  mBinding.QueueActivityQueueView.mQueueNumbers.get(0).toString()));
-                        }
-                    }, 500);
-                } else {
-                    Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
-                    mBinding.QueueActivityReturnValue.setText("");
-                    showEmpty();
-                }
-            } else {
-                Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
-            }
-        } else if (v == mBinding.QueueActivityButtonSize) {
-            if(!mPressedRandom) {
-                mBinding.QueueActivityReturnValue.setText("");
-                if (!mQueue.isEmpty()) {
-                    mBinding.QueueActivityQueueView.size();
-                } else {
-                    mBinding.QueueActivityReturnValue.setText("0");
-                    showEmpty();
-                }
-            } else {
-                Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
-            }
-        } else if (v == mBinding.QueueActivityButtonEmpty) {
-            if (!mQueue.isEmpty()) {
-                mBinding.QueueActivityReturnValue.setText(R.string.All_Data_Activity_False);
-            } else {
-                mBinding.QueueActivityReturnValue.setText(R.string.All_Data_Activity_True);
-            }
-        } else if (v == mBinding.QueueActivityButtonClear) {
-            mBinding.QueueActivityReturnValue.setText("");
-
-            if (!mQueue.isEmpty()) {
-                mBinding.QueueActivityQueueView.clear();
-                mQueue.clear();
-            } else {
-                Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
-                showEmpty();
-            }
-        } else if (v == mBinding.QueueActivityButtonRandom) {
-            if (!mPressedRandom) {
+        if (!mPressedDequeue && !mPressedRandom) {
+            if (v == mBinding.QueueActivityButtonEnqueue) { enqueue();
+            } else if (v == mBinding.QueueActivityButtonDequeue) {
+                mPressedDequeue = true;
+                dequeue();
+            } else if(v == mBinding.QueueActivityButtonPeek) { peek();
+            } else if (v == mBinding.QueueActivityButtonSize) { size();
+            } else if (v == mBinding.QueueActivityButtonEmpty) { isEmpty();
+            } else if (v == mBinding.QueueActivityButtonClear) { clear();
+            } else if (v == mBinding.QueueActivityButtonRandom) {
                 mPressedRandom = true;
-                mBinding.QueueActivityReturnValue.setText("");
-                createRandomQueue();
-                makeInVisible();
-                mBinding.QueueActivityQueueView.random(mQueue);
-            } else {
-                Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
+                random();
             }
+        } else {
+            Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -252,14 +195,115 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      * @return true if the input is valid, false if its not
      */
     private boolean isInputValid() {
-        if (mQueue.size() > 15) {
+        if (mQueue.size() > 14) {
             Toast.makeText(this, R.string.Overflow, Toast.LENGTH_SHORT).show();
             showFull();
             return false;
-        } else if (mQueue.size() == 15) {
+        } else if (mQueue.size() == 14) {
             showFull();
         }
         return true;
+    }
+
+
+    /**
+     * This method handles the operation enqueue
+     */
+    private void enqueue(){
+        if (isInputValid()) {
+            // parse the input to an int and store it into the Queue (mQueue), then let it be drawn by the QueueView
+            mQueue.add((int) mBinding.QueueActivityInputSlider.getValue());
+            mBinding.QueueActivityReturnValue.setText("");
+            mBinding.QueueActivityQueueView.enqueue((int) mBinding.QueueActivityInputSlider.getValue());
+            makeInVisible();
+        }
+    }
+
+
+    /**
+     * This method handles the operation dequeue
+     */
+    private void dequeue() {
+        if (!mQueue.isEmpty()) {
+            //delete the last element of the Queue (mQueue), then let it be (visually) removed by the QueueView
+            mBinding.QueueActivityReturnValue.setText(String.format("%s", mQueue.get(0)));
+            mQueue.removeElementAt(0);
+            mBinding.QueueActivityQueueView.preDequeue();
+            makeInVisible();
+            if (mQueue.isEmpty()) {
+                showEmpty();
+            }
+        } else {
+            Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
+            mBinding.QueueActivityReturnValue.setText("");
+            showEmpty();
+        }
+    }
+
+    /**
+     * This method handles the operation peek
+     */
+    private void peek(){
+        if (!mQueue.isEmpty()) {
+            mBinding.QueueActivityQueueView.peek();
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    mBinding.QueueActivityReturnValue.setText(String.format("%s",  mBinding.QueueActivityQueueView.mQueueNumbers.get(0).toString()));
+                }
+            }, 500);
+        } else {
+            Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
+            mBinding.QueueActivityReturnValue.setText("");
+            showEmpty();
+        }
+    }
+
+    /**
+     * This method handles the operation size
+     */
+    private void size(){
+        mBinding.QueueActivityReturnValue.setText("");
+        if (!mQueue.isEmpty()) {
+            showSize();
+        } else {
+            mBinding.QueueActivityReturnValue.setText("0");
+            showEmpty();
+        }
+    }
+
+    /**
+     * This method handles the operation isEmpty
+     */
+    private void isEmpty(){
+        if (!mQueue.isEmpty()) {
+            mBinding.QueueActivityReturnValue.setText(R.string.All_Data_Activity_False);
+        } else {
+            mBinding.QueueActivityReturnValue.setText(R.string.All_Data_Activity_True);
+        }
+    }
+
+    /**
+     * This method handles the operation clear
+     */
+    private void clear(){
+        mBinding.QueueActivityReturnValue.setText("");
+        if (!mQueue.isEmpty()) {
+            mBinding.QueueActivityQueueView.clear();
+            mQueue.clear();
+        } else {
+            Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
+            showEmpty();
+        }
+    }
+
+    /**
+     * This method handles the operation random
+     */
+    private void random(){
+        mBinding.QueueActivityReturnValue.setText("");
+        createRandomQueue();
+        makeInVisible();
+        mBinding.QueueActivityQueueView.random(mQueue);
     }
 
     /**
@@ -280,5 +324,14 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
+        if (_isChecked) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 }
