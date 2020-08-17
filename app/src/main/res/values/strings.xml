@@ -10,7 +10,7 @@
     // All Data structures Activity
     <string name="All_Data_Activity_Stack">Stack</string>
     <string name="All_Data_Activity_Queue">Queue</string>
-
+    <string name="All_Data_Activity_BST">BST</string>
     <string name="All_Data_Activity_Text_Return">Return Value</string>
     <string name="All_Data_Activity_Text_Random">random</string>
     <string name="All_Data_Activity_Text_Clear">clear</string>

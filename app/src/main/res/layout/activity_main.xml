@@ -30,6 +30,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_Activity_Toolbar" />
 
+    <Button
+        android:id="@+id/main_Activity_Button_BST"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/All_Data_Activity_BST"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_Activity_Toolbar"
+        app:layout_constraintVertical_bias="0.364" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_Activity_Toolbar"
         android:layout_width="0dp"
