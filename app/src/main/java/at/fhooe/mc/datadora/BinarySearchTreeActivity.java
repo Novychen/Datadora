@@ -18,11 +18,11 @@ public class BinarySearchTreeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_binary_search_tree);
-        View view = mBinding.getRoot();
+       /* View view = mBinding.getRoot();
         setContentView(view);
         mBinding = ActivityBinarySearchTreeBinding.inflate(getLayoutInflater());
 
-
+*/
 
 
         // array eingeben sachen speichern
@@ -105,7 +105,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity {
 
         return;
     }
-
+    // fertrig machen
     public boolean remove(int _rem){
         if (!mBST.contains(_rem)){
             // print: object doesn't exist
