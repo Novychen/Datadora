@@ -14,5 +14,5 @@
 
     <color name="colorOnSurface">#000000</color>
     <color name="colorOnPrimary">#ffffff</color>
-    <color name="colorOnSecondary">#ffffff</color>
+    <color name="colorOnSecondary">#000000</color>
 </resources>

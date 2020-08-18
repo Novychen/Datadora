@@ -31,11 +31,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(view);
 
         // setup Toolbar
-        Toolbar myToolbar = mBinding.mainActivityToolbar;
+        Toolbar myToolbar = mBinding.MainActivityToolbar;
         setSupportActionBar(myToolbar);
 
         mBinding.MainActivityButtonStack.setOnClickListener(this);
         mBinding.MainActivityButtonQueue.setOnClickListener(this);
+        mBinding.MainActivityButtonLinkedList.setOnClickListener(this);
+
     }
 
     @Override
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(i);
         } else if (v == mBinding.MainActivityButtonQueue) {
             Intent i = new Intent(this, QueueActivity.class);
+            startActivity(i);
+        } else if (v == mBinding.MainActivityButtonLinkedList) {
+            Intent i = new Intent(this, LinkedListActivity.class);
             startActivity(i);
         }
     }

@@ -47,9 +47,6 @@ public class QueueView extends View {
     // Animator for the last dequeued element
     ValueAnimator mAnimatorDequeue = new ValueAnimator();
 
-    // Animator for the operation peek (for the border of one item)
-    // ValueAnimator mAnimatorPeekBorder = new ValueAnimator();
-
     // Animator for the operation peek (for the area of one item)
     ValueAnimator mAnimatorPeekArea = new ValueAnimator();
 
@@ -88,9 +85,6 @@ public class QueueView extends View {
 
     // the current alpha value - used for the dequeue animation
     int mAlphaDequeue;
-
-    // the current color value - used for peek animation (for the border of one item)
-    // int mColorBorder;
 
     // the current color value - used for peek animation (for the area of one item)
     int mColorAreaPeek;
@@ -152,7 +146,7 @@ public class QueueView extends View {
     }
 
     /**
-     * Initializes the key components such as Paint, the PropertyHolders for the animations as well as the animation itself
+     * Initializes the key components such as Paint
      */
     private void init() {
         mQueueItemPaint.setColor(mPrimaryColor);
@@ -337,17 +331,6 @@ public class QueueView extends View {
                 invalidate();
             }
         });
-
-//        mAnimatorPeekBorder = ValueAnimator.ofObject(new ArgbEvaluator(), mPrimaryColor, mSecondaryColor);
-//        mAnimatorPeekBorder.setDuration(2000);
-//        mAnimatorPeekBorder.setInterpolator(new AccelerateDecelerateInterpolator());
-//        mAnimatorPeekBorder.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//            @Override
-//            public void onAnimationUpdate(ValueAnimator animation) {
-//                mColorBorder = (int) animation.getAnimatedValue();
-//                invalidate();
-//            }
-//        });
 
         mAnimatorPeekArea = ValueAnimator.ofObject(new ArgbEvaluator(), mSurfaceColor, mPrimaryColor);
         mAnimatorPeekArea.setDuration(1000);

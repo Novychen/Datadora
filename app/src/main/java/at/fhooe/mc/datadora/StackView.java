@@ -139,7 +139,7 @@ public class StackView extends View {
     }
 
     /**
-     * Initializes the key components such as Paint, the PropertyHolders for the animations as well as the animation itself
+     * Initializes the key components such as Paint
      */
     private void init() {
         mStackItemPaint.setColor(mPrimaryColor);

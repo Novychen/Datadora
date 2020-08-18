@@ -16,8 +16,16 @@
         <item name="android:textColor">@color/colorOnSurface</item>
     </style>
 
+    <style name="Secondary">
+        <item name="android:background">@color/secondaryColor</item>
+    </style>
+
+    <style name="Secondary.Text">
+        <item name="android:textColor">@color/colorOnSecondary</item>
+    </style>
+
     <style name="Primary">
-        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="android:textColor">@color/primaryColor</item>
     </style>
 
     <style name="Primary.Text">

@@ -31,7 +31,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     //TODO: Styles, Themes, ...!!
     //TODO: Resize - animation (?) -> Animation clear -> too ugly when many elements
     //TODO: ENUM for operations (?)
-    //TODO: Theme is constant!
+    //TODO: Make size (stack size) propotional to screensize
 
     /* Stores the integer values, that the user put it - is only for testing purposes,
      * feel free to change the way this data is stored - just remember that you have to
@@ -330,6 +330,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return true;
     }
 

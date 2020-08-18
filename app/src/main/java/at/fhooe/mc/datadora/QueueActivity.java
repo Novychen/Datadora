@@ -53,8 +53,8 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle _savedInstanceState) {
+        super.onCreate(_savedInstanceState);
         mBinding = ActivityQueueBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
         setContentView(view);
@@ -114,9 +114,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        decorView.setSystemUiVisibility(uiOptions);
     }
 
     @Override
@@ -323,6 +320,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return true;
     }
 
