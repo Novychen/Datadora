@@ -4,34 +4,34 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Vector;
 
 import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
+import at.fhooe.mc.datadora.databinding.ActivityLinkedListBinding;
+
 public class BinarySearchTreeActivity extends AppCompatActivity {
 
     private TextView mTextView;
     private Vector<Integer> mBST = new Vector<>();
     private ActivityBinarySearchTreeBinding mBinding;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_binary_search_tree);
-       /* View view = mBinding.getRoot();
-        setContentView(view);
+    protected void onCreate(Bundle _savedInstanceState) {
+        super.onCreate(_savedInstanceState);
         mBinding = ActivityBinarySearchTreeBinding.inflate(getLayoutInflater());
-
-*/
-
+        View view = mBinding.getRoot();
+        setContentView(view);
 
         // array eingeben sachen speichern
         // setup Toolbar
-       /* Toolbar myToolbar = mBinding.BTSActivityToolbar;
+        Toolbar myToolbar = mBinding.BTSActivityToolbar;
         setSupportActionBar(myToolbar);
         myToolbar.inflateMenu(R.menu.menu_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         // Enables Always-on
 
        }
@@ -128,6 +128,13 @@ public class BinarySearchTreeActivity extends AppCompatActivity {
 
 
 
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return true;
     }
 }
