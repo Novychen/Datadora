@@ -70,8 +70,11 @@
 
                 <ImageView
                     android:id="@+id/LinkedList_Activity_Type_Background"
-                    android:layout_width="190dp"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/Content_Description_LinkedList_Type_Background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +181,6 @@
                 android:id="@+id/LinkedList_Activity_Add_MotionLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 app:layoutDescription="@xml/activity_linked_list_add_scene"
                 app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Type_MotionLayout"
                 app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Type_MotionLayout"
@@ -186,8 +188,11 @@
 
                 <ImageView
                     android:id="@+id/LinkedList_Activity_Add_Background"
-                    android:layout_width="190dp"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/Content_Description_LinkedList_Add_Background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -266,6 +271,27 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Add_RadioGroup"
                         app:srcCompat="@drawable/ic_check" />
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/LinkedList_Activity_Add_Position_Slider"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:stepSize="1"
+                        app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Add_RadioGroup"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_Add_RadioGroup"
+                        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Add_Check"
+                        app:srcCompat="@drawable/background_list_item" />
+
+                    <TextView
+                        android:id="@+id/LinkedList_Activity_Add_Position_Zero"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/Slider_Default_Value"
+                        app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Add_RadioGroup"
+                        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Add_Position_Slider"
+                        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Add_Check" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.motion.widget.MotionLayout>
@@ -282,8 +308,10 @@
 
                 <ImageView
                     android:id="@+id/LinkedList_Activity_Delete_Background"
-                    android:layout_width="190dp"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/Content_Description_LinkedList_Delete_Background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -325,8 +353,10 @@
 
                 <ImageView
                     android:id="@+id/LinkedList_Activity_Get_Background"
-                    android:layout_width="190dp"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/Content_Description_LinkedList_Get_Background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -400,6 +430,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.45" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

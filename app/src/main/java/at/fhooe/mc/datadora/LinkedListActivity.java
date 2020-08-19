@@ -21,7 +21,7 @@ import java.util.Vector;
 
 import at.fhooe.mc.datadora.databinding.ActivityLinkedListBinding;
 
-public class LinkedListActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class LinkedListActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = "LinkedListActivity : ";
 
@@ -35,11 +35,10 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         View view = mBinding.getRoot();
         setContentView(view);
 
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        decorView.setSystemUiVisibility(uiOptions);
-
         mBinding.LinkedListActivityLinkedListView.init(this);
+        mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.GONE);
+
+        head();
 
         // setup Toolbar
         Toolbar myToolbar = mBinding.LinkedListActivityToolbar;
@@ -65,6 +64,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         });
 
         mBinding.LinkedListActivityAddCheck.setOnClickListener(this);
+        mBinding.LinkedListActivityTypeRadioGroup.setOnCheckedChangeListener(this);
         mBinding.LinkedListActivitySwitch.setOnCheckedChangeListener(this);
     }
 
@@ -79,12 +79,36 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             } else if (mBinding.LinkedListActivityAddAtRadioButton.isChecked()) {
                 insertAt();
             }
+            if(mLinkedList.size() == 1){
+                preparePositionSlider();
+            }
+            mBinding.LinkedListActivityAddPositionSlider.setValueTo(mLinkedList.size());
         }
+    }
 
+    private void preparePositionSlider(){
+        mBinding.LinkedListActivityAddPositionZero.setVisibility(View.GONE);
+        mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.VISIBLE);
+        mBinding.LinkedListActivityAddPositionSlider.setValueFrom(0);
+        mBinding.LinkedListActivityAddPositionSlider.setStepSize(1);
+    }
+
+    private void head(){
+        mBinding.LinkedListActivityLinkedListView.head();
+    }
+
+    private void tail(){
+        mBinding.LinkedListActivityLinkedListView.tail();
+    }
+
+    private void both(){
+        mBinding.LinkedListActivityLinkedListView.both();
     }
 
     private void prepend(){
-
+        int value = (int) mBinding.LinkedListActivityInputSlider.getValue();
+        mLinkedList.add(0,value);
+        mBinding.LinkedListActivityLinkedListView.prepend(value);
     }
 
     private void append(){
@@ -94,7 +118,10 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     private void insertAt(){
-
+        int value = (int) mBinding.LinkedListActivityInputSlider.getValue();
+        int pos = (int) mBinding.LinkedListActivityAddPositionSlider.getValue();
+        mLinkedList.add(value);
+        mBinding.LinkedListActivityLinkedListView.insertAt(value, pos);
     }
 
     @Override
@@ -113,5 +140,14 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         }
     }
 
-
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        if (mBinding.LinkedListActivityTypeHeadRadioButton.isChecked()) {
+            head();
+        } else if (mBinding.LinkedListActivityTypeTailRadioButton.isChecked()) {
+            tail();
+        } else if (mBinding.LinkedListActivityTypeBothRadioButton.isChecked()) {
+            both();
+        }
+    }
 }

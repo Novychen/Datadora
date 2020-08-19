@@ -3,9 +3,12 @@ package at.fhooe.mc.datadora;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -17,8 +20,24 @@ public class LinkedListView extends View {
     private static final String TAG = "LinkedListView : ";
 
     Paint mLinkedListItemPaint = new Paint();
+    Paint mLinkedListTypePaint = new Paint();
     Paint mLinkedListItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     Paint mLinkedListPositionTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    Paint mLinkedListTypeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    enum Operation {
+        SORTED,
+        UNSORTED,
+        PREPEND,
+        APPEND,
+        INSERT_AT
+    }
+
+    enum Type {
+        HEAD,
+        TAIL,
+        HEAD_TAIL
+    }
 
     LinkedListActivity mActivity;
 
@@ -58,6 +77,27 @@ public class LinkedListView extends View {
     // current height of the LinkedListView within the layout
     float mMaxHeightLinkedList;
 
+    // the current operation
+    Operation mCurrentOperation;
+
+    // the current type
+    Type mCurrentType;
+
+    // the RectF for head, tail or both
+    RectF mTypeRect = new RectF();
+
+    // First point of the triangle used in the background to display the type of the linked list
+    Point mFirst = new Point();
+
+    // Second point of the triangle used in the background to display the type of the linked list
+    Point mSecond = new Point();
+
+    // Third point of the triangle used in the background to display the type of the linked list
+    Point mThird = new Point();
+
+    // Path of the drawn triangle used in the background to display the type of the linked list
+    Path mTriangle = new Path();
+
     public LinkedListView(Context context) {
         super(context);
         init();
@@ -81,8 +121,14 @@ public class LinkedListView extends View {
         mLinkedListItemPaint.setStyle(Paint.Style.STROKE);
         mLinkedListItemPaint.setStrokeWidth(6);
 
+        mLinkedListTypePaint.setColor(mPrimaryColor);
+        mLinkedListTypePaint.setStyle(Paint.Style.FILL);
+
         mLinkedListItemTextPaint.setColor(mOnSurfaceColor);
         mLinkedListItemTextPaint.setTextSize(55);
+
+        mLinkedListTypeTextPaint.setColor(mOnPrimaryColor);
+        mLinkedListTypeTextPaint.setTextSize(40);
 
         mLinkedListPositionTextPaint.setColor(mOnSurfaceColor);
         mLinkedListPositionTextPaint.setTextSize(30);
@@ -92,9 +138,42 @@ public class LinkedListView extends View {
         mActivity = _activity;
     }
 
-    protected void append(int _value){
-        RectF r = new RectF();
+    protected void head(){
+        mCurrentType = Type.HEAD;
+        Log.i(TAG, "TYPE: " + mCurrentType);
+        invalidate();
+    }
 
+    protected void tail(){
+        mCurrentType = Type.TAIL;
+        Log.i(TAG, "TYPE: " + mCurrentType);
+        invalidate();
+    }
+
+    protected void both(){
+        mCurrentType = Type.HEAD_TAIL;
+        Log.i(TAG, "TYPE: " + mCurrentType);
+        invalidate();
+    }
+
+    protected void prepend(int _value){
+        mCurrentOperation = Operation.PREPEND;
+
+        RectF r = new RectF();
+        mLinkedList.add(r);
+        mLinkedListNumbers.add(0,_value);
+
+        if (mMaxHeightLinkedList <= (mMaxWidthLinkedList / 4) * mScale * mLinkedList.size()) {
+            mScale = mScale / 1.2f;
+        }
+
+        invalidate();
+    }
+
+    protected void append(int _value){
+        mCurrentOperation = Operation.APPEND;
+
+        RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(_value);
 
@@ -105,6 +184,19 @@ public class LinkedListView extends View {
         invalidate();
     }
 
+    protected void insertAt(int _value, int _pos){
+        mCurrentOperation = Operation.INSERT_AT;
+
+        RectF r = new RectF();
+        mLinkedList.add(r);
+        mLinkedListNumbers.add(_pos,_value);
+
+        if (mMaxHeightLinkedList <= (mMaxWidthLinkedList / 4) * mScale * mLinkedList.size()) {
+            mScale = mScale / 1.2f;
+        }
+
+        invalidate();
+    }
 
     @Override
     protected void onSizeChanged(int _w, int _h, int _oldW, int _oldH) {
@@ -132,14 +224,66 @@ public class LinkedListView extends View {
 
             // set LinkedList item size
             mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale);
-            mLinkedList.get(i).left = (int) ((mMaxWidthLinkedList / 2) - (mMaxWidthLinkedList / 8) - (mResize / 2));
+            mLinkedList.get(i).left = (int) ((mMaxWidthLinkedList / 1.5) - (mMaxWidthLinkedList / 8) - (mResize / 2));
             mLinkedList.get(i).right = (int) (mLinkedList.get(i).left + (mMaxWidthLinkedList / 4) + mResize);
             mLinkedList.get(i).bottom = (int) (mLinkedList.get(i).top + ((mMaxWidthLinkedList / 4) * mScale) - 10);
 
             // get BoundingBox from Text & draw Text + LinkedList item
             _canvas.drawText(mLinkedListNumbers.get(i).toString(), getExactCenterX(mLinkedList.get(i)) - mBounds.exactCenterX(), (getExactCenterY(mLinkedList.get(i)) - mBounds.exactCenterY()), mLinkedListItemTextPaint);
             _canvas.drawRoundRect(mLinkedList.get(i), mRadius, mRadius, mLinkedListItemPaint);
+            String type;
+            if (mCurrentType == Type.HEAD && i == 0){
+                type = getResources().getString(R.string.LinkedList_Activity_Type_Head);
+                drawType(_canvas, 0, type);
+            } else if (mCurrentType == Type.TAIL && i == mLinkedList.size() - 1) {
+                type = getResources().getString(R.string.LinkedList_Activity_Type_Tail);
+                drawType(_canvas, i, type);
+            } else if (mCurrentType == Type.HEAD_TAIL) {
+                if(i == 0) {
+                    type = getResources().getString(R.string.LinkedList_Activity_Type_Head);
+                    drawType(_canvas, 0, type);
+                } else if(i == mLinkedList.size() - 1) {
+                    type = getResources().getString(R.string.LinkedList_Activity_Type_Tail);
+                    drawType(_canvas, mLinkedList.size() - 1, type);
+                }
+            }
         }
+    }
+
+    /**
+     * draws the head of the list
+     * @param _canvas
+     */
+    private void drawType(Canvas _canvas, int _pos, String _type) {
+        mLinkedListTypeTextPaint.getTextBounds(_type, 0, _type.length(), mBounds);
+        int padding = 15;
+
+        float topLeft = (getExactCenterY(mLinkedList.get(_pos)) - mBounds.exactCenterY()) + 9;
+
+        mTypeRect.top = topLeft - mBounds.height() - padding;
+        mTypeRect.bottom = mTypeRect.top + mBounds.height() + (padding * 2);
+        mTypeRect.left = 45;
+        mTypeRect.right = mTypeRect.left + mBounds.width() + 6 + (padding * 2);
+
+        int y = (int) (mTypeRect.bottom - (mTypeRect.height() / 2));
+
+        // setup triangle
+        int width = 20;
+        mFirst.set((int) mTypeRect.right, y - width/2);
+        mSecond.set((int) mTypeRect.right + (width/2), y);
+        mThird.set((int) mTypeRect.right, y + width/2);
+
+        // draw triangle
+        mTriangle.setFillType(Path.FillType.EVEN_ODD);
+        mTriangle.moveTo(mFirst.x, mFirst.y);
+        mTriangle.lineTo(mSecond.x, mSecond.y);
+        mTriangle.lineTo(mThird.x, mThird.y);
+        mTriangle.close();
+
+        _canvas.drawPath(mTriangle, mLinkedListTypePaint);
+        mTriangle.reset();
+        _canvas.drawRoundRect(mTypeRect, 10, 10, mLinkedListTypePaint);
+        _canvas.drawText(_type,mTypeRect.left + padding, topLeft , mLinkedListTypeTextPaint);
     }
 
 
