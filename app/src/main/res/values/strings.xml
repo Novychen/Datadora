@@ -11,6 +11,7 @@
     <string name="All_Data_Activity_Stack">Stack</string>
     <string name="All_Data_Activity_Queue">Queue</string>
     <string name="All_Data_Activity_LinkedList">Linked List</string>
+    <string name="All_Data_Activity_BST">Binary Search Tree</string>
 
     <string name="All_Data_Activity_Text_Return">Return Value</string>
     <string name="All_Data_Activity_Text_Random">random</string>
@@ -60,12 +61,17 @@
 
     <string name="LinkedList_Activity_Get_Title">Get</string>
 
-
     <string name="LinkedList_Activity_Full">Queue is full</string>
     <string name="LinkedList_Activity_Empty">Queue is empty</string>
 
     <string name="LinkedList_Activity_Text_Dequeue">dequeue</string>
     <string name="LinkedList_Activity_Text_Enqueue">enqueue</string>
+
+    // BinarySearchTree
+    <string name="BST_Activity_Text_Add">add</string>
+    <string name="BST_Activity_Text_Remove">remove</string>
+    <string name="BST_Activity_Text_Min">min</string>
+    <string name="BST_Activity_Text_Max">max</string>
 
     // Toolbar
     <string name="Toolbar_Action_Settings">Settings</string>
@@ -75,7 +81,6 @@
     // Slider
     <string name="Slider_Current_Value">Current value: </string>
     <string name="Slider_Default_Value">0</string>
-
 
     <string name="Content_Description_Queue_Line">A line that is used to split the display into two visual parts, one for the queue and one for the input of the queue</string>
     <string name="Content_Description_Queue_FlowIcon">An icon used to display an x if the queue is empty or a check-mark if the queue is full</string>

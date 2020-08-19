@@ -8,8 +8,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LinkedListActivity"></activity>
+        <activity android:name=".LinkedListActivity"/>
         <activity android:name=".QueueActivity" />
+        <activity android:name=".BinarySearchTreeActivity"/>
         <activity
             android:name=".StackActivity"
             android:screenOrientation="portrait"

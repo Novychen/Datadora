@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBinding.MainActivityButtonStack.setOnClickListener(this);
         mBinding.MainActivityButtonQueue.setOnClickListener(this);
         mBinding.MainActivityButtonLinkedList.setOnClickListener(this);
+        mBinding.mainActivityButtonBST.setOnClickListener(this);
 
     }
 
@@ -50,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(i);
         } else if (v == mBinding.MainActivityButtonLinkedList) {
             Intent i = new Intent(this, LinkedListActivity.class);
+            startActivity(i);
+        }else if(v==mBinding.mainActivityButtonBST){
+            Intent i = new Intent(this,BinarySearchTreeActivity.class);
             startActivity(i);
         }
     }

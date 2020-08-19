@@ -1,18 +1,16 @@
 package at.fhooe.mc.datadora;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
-
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
