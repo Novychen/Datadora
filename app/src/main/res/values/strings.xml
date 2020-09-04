@@ -72,6 +72,7 @@
     <string name="BST_Activity_Text_Remove">remove</string>
     <string name="BST_Activity_Text_Min">min</string>
     <string name="BST_Activity_Text_Max">max</string>
+    <string name="BST_Activity_Text_vector">vector</string>
 
     // Toolbar
     <string name="Toolbar_Action_Settings">Settings</string>

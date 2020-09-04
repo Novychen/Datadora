@@ -1,22 +1,27 @@
 package at.fhooe.mc.datadora;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
-import at.fhooe.mc.datadora.databinding.ActivityLinkedListBinding;
 
-public class BinarySearchTreeActivity extends AppCompatActivity {
 
+public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener{
+    private static String TAG = "BSTActivity :: ";
     private TextView mTextView;
     private Vector<Integer> mBST = new Vector<>();
     private ActivityBinarySearchTreeBinding mBinding;
+
 
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
@@ -33,10 +38,24 @@ public class BinarySearchTreeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         // Enables Always-on
+        mBinding.activityBSTAdd.setOnClickListener(this);
+        mBinding.activityBSTClear.setOnClickListener(this);
+        mBinding.activityBSTMax.setOnClickListener(this);
+        mBinding.activityBSTMin.setOnClickListener(this);
+        mBinding.activityBSTRandom.setOnClickListener(this);
+        mBinding.activityBSTRemove.setOnClickListener(this);
+        mBinding.activityBSTSize.setOnClickListener(this);
+        mBinding.activityBSTVector.setOnClickListener(this);
+
+
 
        }
     public int getSize(){return mBST.size();}
-    public void addRandom(){add((int)Math.random());}
+    public void addRandom(){
+        int i = (int) (Math.random() * 10);
+        mBinding.activityBSTTitelText.setText("Random");
+       mBinding.ActivityBSTValueText.setText(String.format("%s", i));
+        mBST.add(i);}
     private boolean hasLeftChild(int _position){
         return mBST.elementAt(_position*2) != null;
     }
@@ -85,14 +104,17 @@ public class BinarySearchTreeActivity extends AppCompatActivity {
 
     //adds content;
     public void add(int _add){
+        Log.e(TAG,"Adding"+ _add);
         if(mBST.size() == 0){
+            Log.e(TAG,"Sizing " + mBST.size());
             mBST.add(_add);
             return;
         }
+        Log.e(TAG,"Adding bevor ");
         int i = 0;
         while(i < mBST.size()){
             if(mBST.elementAt(i) == null){
-                mBST.insertElementAt(_add,i);
+                mBST.insertElementAt(i,_add);
                 return;
             }
             if (mBST.elementAt(i) > _add){
@@ -101,7 +123,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity {
             if (mBST.elementAt(i) < _add){
                 i = i*2 + 1;
             }
+            Log.e(TAG,"i=" + i);
         }
+        Log.e(TAG,"Adding after ");
 
         return;
     }
@@ -131,10 +155,86 @@ public class BinarySearchTreeActivity extends AppCompatActivity {
         return true;
     }
 
+    private int getMin(){
+        mBinding.activityBSTTitelText.setText("min");
+        if (mBST.size()==0){
+            mBinding.ActivityBSTValueText.setText("-");
+            return 0;
+        }
+        int min = Integer.MAX_VALUE;
+        for (int i = 0 ;i< mBST.size(); i++){
+            if(mBST.elementAt(i) < min){
+                min = mBST.elementAt(i);
+            }
+        }
+
+        mBinding.ActivityBSTValueText.setText( String.format("%s", min));
+        return 0;
+    }
+    private int getMax(){
+        mBinding.activityBSTTitelText.setText("max");
+        if (mBST.size()==0){
+            mBinding.ActivityBSTValueText.setText("-");
+            return 0;
+        }
+        int max = Integer.MIN_VALUE;
+        for (int i = 0 ;i< mBST.size(); i++){
+            if(mBST.elementAt(i) > max){
+                max = mBST.elementAt(i);
+            }
+        }
+        mBinding.ActivityBSTValueText.setText( String.format("%s", max));
+        return 0;
+    }
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return true;
     }
+
+    @Override
+    public void onClick(View view) {
+        if(view == mBinding.activityBSTSize){
+            Log.i(TAG, "Size "+  mBST.size());
+            mBinding.activityBSTTitelText.setText("Size");
+            mBinding.ActivityBSTValueText.setText( String.format("%s", mBST.size()));
+        }
+        if(view == mBinding.activityBSTAdd){
+            Log.i(TAG, "Add");
+            //add;
+        }
+        if(view == mBinding.activityBSTRandom){
+            Log.i(TAG, "Random");
+            addRandom();
+        }
+        if(view == mBinding.activityBSTMax){
+            Log.i(TAG, "Max");
+            getMax();
+        }
+        if(view == mBinding.activityBSTMin){
+            Log.i(TAG, "Min");
+            getMin();
+        }
+        if(view == mBinding.activityBSTRemove){
+            Log.i(TAG, "Remove");
+            mBinding.activityBSTTitelText.setText("Remove Last");
+            mBinding.ActivityBSTValueText.setText( String.format("%s", mBST.lastElement()));
+            mBST.remove(mBST.size()-1);
+        }
+        if(view == mBinding.activityBSTClear){
+            Log.i(TAG, "Clear");
+            mBST.clear();
+        }
+        if(view == mBinding.activityBSTVector){
+            Log.i(TAG, "Inorder :: ");
+            mBinding.ActivityBSTOderText.setText(mBST.toString()+ ", capacity : " +   mBST.capacity());
+
+        }
+    }
+
+
+
+
+
 }
