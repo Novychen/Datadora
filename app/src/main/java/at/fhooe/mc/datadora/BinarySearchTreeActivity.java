@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -219,8 +220,13 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         if(view == mBinding.activityBSTRemove){
             Log.i(TAG, "Remove");
             mBinding.activityBSTTitelText.setText("Remove Last");
-            mBinding.ActivityBSTValueText.setText( String.format("%s", mBST.lastElement()));
-            mBST.remove(mBST.size()-1);
+            if (!mBST.isEmpty()){
+                mBinding.ActivityBSTValueText.setText( String.format("%s", mBST.lastElement()));
+                mBST.remove(mBST.size()-1);
+            }else{
+                Toast.makeText(this, R.string.Stack_Activity_Text_Empty, Toast.LENGTH_SHORT).show();
+                mBinding.ActivityBSTValueText.setText( "-");}
+
         }
         if(view == mBinding.activityBSTClear){
             Log.i(TAG, "Clear");
