@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/Surface"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/Queue_Activity_Toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/AppTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/Queue_Activity_Switch"
+        style="@style/AppTheme.Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/Queue_Activity_Guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Toolbar" />
+
+    <ImageView
+        android:id="@+id/Queue_Activity_Box_Return"
+        style="@style/Return"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintDimensionRatio="1.8:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Queue_Activity_Guideline"
+        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Toolbar"
+        android:contentDescription="@string/Content_Description_Queue_Return_Background" />
+
+    <TextView
+        android:id="@+id/Queue_Activity_ReturnValue"
+        style="@style/Primary.Text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Queue_Activity_Box_Return"
+        app:layout_constraintEnd_toEndOf="@+id/Queue_Activity_Box_Return"
+        app:layout_constraintStart_toStartOf="@+id/Queue_Activity_Box_Return"
+        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_ReturnText" />
+
+    <TextView
+        android:id="@+id/Queue_Activity_ReturnText"
+        style="@style/Primary.Text.Return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/All_Data_Activity_Text_Return"
+        app:layout_constraintEnd_toEndOf="@+id/Queue_Activity_Box_Return"
+        app:layout_constraintStart_toStartOf="@+id/Queue_Activity_Box_Return"
+        app:layout_constraintTop_toTopOf="@+id/Queue_Activity_Box_Return" />
+
+    <ScrollView
+        android:id="@+id/Queue_Activity_ScrollViewButtons"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/Queue_Activity_Button_Enqueue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Queue_Activity_Guideline"
+        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Box_Return">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/Queue_Activity_Button_Peek"
+                style="@style/Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/Queue_Activity_Text_Peek"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/Queue_Activity_Button_Size"
+                style="@style/Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/Queue_Activity_Text_Size"
+                app:layout_constraintEnd_toEndOf="@+id/Queue_Activity_Button_Peek"
+                app:layout_constraintStart_toStartOf="@+id/Queue_Activity_Button_Peek"
+                app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Button_Peek" />
+
+            <Button
+                android:id="@+id/Queue_Activity_Button_Empty"
+                style="@style/Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/Queue_Activity_Text_Empty"
+                app:layout_constraintEnd_toEndOf="@+id/Queue_Activity_Button_Size"
+                app:layout_constraintStart_toStartOf="@+id/Queue_Activity_Button_Size"
+                app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Button_Size" />
+
+            <Button
+                android:id="@+id/Queue_Activity_Button_Clear"
+                style="@style/Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/All_Data_Activity_Text_Clear"
+                app:layout_constraintEnd_toEndOf="@+id/Queue_Activity_Button_Size"
+                app:layout_constraintStart_toStartOf="@+id/Queue_Activity_Button_Size"
+                app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Button_Empty" />
+
+            <Button
+                android:id="@+id/Queue_Activity_Button_Random"
+                style="@style/Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/All_Data_Activity_Text_Random"
+                app:layout_constraintEnd_toEndOf="@+id/Queue_Activity_Button_Clear"
+                app:layout_constraintStart_toStartOf="@+id/Queue_Activity_Button_Clear"
+                app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Button_Clear" />
+
+            <ImageView
+                android:id="@+id/Queue_Activity_FlowIcon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="64dp"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toEndOf="@+id/Queue_Activity_Button_Random"
+                app:layout_constraintStart_toStartOf="@+id/Queue_Activity_Button_Random"
+                app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Button_Random"
+                android:contentDescription="@string/Content_Description_Queue_FlowIcon" />
+
+            <TextView
+                android:id="@+id/Queue_Activity_FlowText"
+                style="@style/Surface.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                app:layout_constraintEnd_toEndOf="@+id/Queue_Activity_FlowIcon"
+                app:layout_constraintStart_toStartOf="@+id/Queue_Activity_FlowIcon"
+                app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_FlowIcon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/Queue_Activity_Button_Enqueue"
+        style="@style/Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="8dp"
+        android:text="@string/Queue_Activity_Text_Enqueue"
+        app:layout_constraintBottom_toTopOf="@+id/Queue_Activity_Line"
+        app:layout_constraintEnd_toStartOf="@+id/Queue_Activity_Button_Dequeue" />
+
+    <Button
+        android:id="@+id/Queue_Activity_Button_Dequeue"
+        style="@style/Button"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/Queue_Activity_Text_Dequeue"
+        app:layout_constraintBottom_toBottomOf="@+id/Queue_Activity_Button_Enqueue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Queue_Activity_Button_Enqueue" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Queue_Activity_Guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <FrameLayout
+        android:id="@+id/Queue_Activity_ViewContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/Queue_Activity_InputValue"
+        app:layout_constraintEnd_toStartOf="@+id/Queue_Activity_ScrollViewButtons"
+        app:layout_constraintStart_toStartOf="@+id/Queue_Activity_InputSlider"
+        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Switch">
+
+        <at.fhooe.mc.datadora.QueueView
+            android:id="@+id/Queue_Activity_QueueView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/Queue_Activity_Line"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_CurrentValue"
+        app:srcCompat="@drawable/line"
+        android:contentDescription="@string/Content_Description_Queue_Line" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/Queue_Activity_InputSlider"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:theme="@style/AppTheme"
+        android:value="0.0"
+        android:valueFrom="-100.0"
+        android:valueTo="100.0"
+        app:labelBehavior="withinBounds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/Queue_Activity_InputValue"
+        style="@style/Surface.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/Slider_Default_Value"
+        app:layout_constraintBaseline_toBaselineOf="@+id/Queue_Activity_CurrentValue"
+        app:layout_constraintStart_toEndOf="@+id/Queue_Activity_CurrentValue" />
+
+    <TextView
+        android:id="@+id/Queue_Activity_CurrentValue"
+        style="@style/Surface.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/Slider_Current_Value"
+        app:layout_constraintStart_toStartOf="@+id/Queue_Activity_ViewContainer"
+        app:layout_constraintTop_toTopOf="@+id/Queue_Activity_InputSlider" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

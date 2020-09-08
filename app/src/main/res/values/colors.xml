@@ -1,6 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="primaryColor">#062351</color>
+    <color name="primaryColor_buttonPressed">#051C42</color>
+    <color name="primaryLightColor">#3b4a7e</color>
+    <color name="primaryDarkColor">#000029</color>
+
+    <color name="secondaryColor">#fce1db</color>
+    <color name="secondaryLightColor">#ffffff</color>
+    <color name="secondaryDarkColor">#c9afa9</color>
+
+    <color name="colorSurface">#EFEFEF</color>
+    <color name="colorBackground">#EFEFEF</color>
+
+    <color name="colorOnSurface">#000000</color>
+    <color name="colorOnPrimary">#ffffff</color>
+    <color name="colorOnSecondary">#000000</color>
 </resources>

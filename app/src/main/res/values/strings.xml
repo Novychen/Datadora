@@ -1,3 +1,103 @@
 <resources>
     <string name="app_name">Datadora</string>
+
+    // Error Messages
+    <string name="NumberInvalid">This number is invalid</string>
+    <string name="EmptyNumber">Please enter a number</string>
+    <string name="Overflow">Overflow</string>
+    <string name="Underflow">Underflow</string>
+
+    // All Data structures Activity
+    <string name="All_Data_Activity_Stack">Stack</string>
+    <string name="All_Data_Activity_Queue">Queue</string>
+    <string name="All_Data_Activity_LinkedList">Linked List</string>
+    <string name="All_Data_Activity_BST">Binary Search Tree</string>
+
+    <string name="All_Data_Activity_Text_Return">Return Value</string>
+    <string name="All_Data_Activity_Text_Random">random</string>
+    <string name="All_Data_Activity_Text_Clear">clear</string>
+
+    <string name="All_Data_Activity_True">true</string>
+    <string name="All_Data_Activity_False">false</string>
+
+    <string name="All_Data_Activity_Text_Animation">Please wait till the animation is over :)</string>
+
+    // Stack Activity
+    <string name="Stack_Activity_Text_Peek">peek</string>
+    <string name="Stack_Activity_Text_Size">size</string>
+    <string name="Stack_Activity_Text_Empty">isEmpty</string>
+
+    <string name="Stack_Activity_Full">Stack is full</string>
+    <string name="Stack_Activity_Empty">Stack is empty</string>
+
+    <string name="Stack_Activity_Text_Push">push</string>
+    <string name="Stack_Activity_Text_Pop">pop</string>
+
+    // Queue Activity
+    <string name="Queue_Activity_Text_Peek">peek</string>
+    <string name="Queue_Activity_Text_Size">size</string>
+    <string name="Queue_Activity_Text_Empty">isEmpty</string>
+
+    <string name="Queue_Activity_Full">Queue is full</string>
+    <string name="Queue_Activity_Empty">Queue is empty</string>
+
+    <string name="Queue_Activity_Text_Dequeue">dequeue</string>
+    <string name="Queue_Activity_Text_Enqueue">enqueue</string>
+
+    // LinkedList Activity
+    <string name="LinkedList_Activity_Type_Title">Type</string>
+    <string name="LinkedList_Activity_Type_Sorted">Sorted</string>
+    <string name="LinkedList_Activity_Type_Unsorted">Unsorted</string>
+    <string name="LinkedList_Activity_Type_Head">Head</string>
+    <string name="LinkedList_Activity_Type_Tail">Tail</string>
+    <string name="LinkedList_Activity_Type_Both">Head &amp; Tail</string>
+
+    <string name="LinkedList_Activity_Add_Title">Add</string>
+    <string name="LinkedList_Activity_Add_Prepend">Prepend</string>
+    <string name="LinkedList_Activity_Add_Append">Append</string>
+    <string name="LinkedList_Activity_Add_At">Insert at</string>
+
+    <string name="LinkedList_Activity_Delete_Title">Delete</string>
+
+    <string name="LinkedList_Activity_Get_Title">Get</string>
+
+    <string name="LinkedList_Activity_Full">Queue is full</string>
+    <string name="LinkedList_Activity_Empty">Queue is empty</string>
+
+    <string name="LinkedList_Activity_Text_Dequeue">dequeue</string>
+    <string name="LinkedList_Activity_Text_Enqueue">enqueue</string>
+
+    // BinarySearchTree
+    <string name="BST_Activity_Text_Add">add</string>
+    <string name="BST_Activity_Text_Remove">remove</string>
+    <string name="BST_Activity_Text_Min">min</string>
+    <string name="BST_Activity_Text_Max">max</string>
+    <string name="BST_Activity_Text_vector">vector</string>
+
+    // Toolbar
+    <string name="Toolbar_Action_Settings">Settings</string>
+    <string name="Toolbar_Action_ModeSwitch">Switch modes</string>
+    <string name="Toolbar_action_Save">Save</string>
+
+    // Slider
+    <string name="Slider_Current_Value">Current value: </string>
+    <string name="Slider_Default_Value">0</string>
+
+    <string name="Content_Description_Queue_Line">A line that is used to split the display into two visual parts, one for the queue and one for the input of the queue</string>
+    <string name="Content_Description_Queue_FlowIcon">An icon used to display an x if the queue is empty or a check-mark if the queue is full</string>
+    <string name="Content_Description_Queue_Return_Background">A rectangle that serves as the background of the returned values of the available operations</string>
+
+    <string name="Content_Description_LinkedList_Type_Background">A rectangle that serves as the background of the operation group type</string>
+    <string name="Content_Description_LinkedList_Type_Arrow">An arrow that opens and closes the available operations of the group type</string>
+
+    <string name="Content_Description_LinkedList_Add_Background">A rectangle that serves as the background of the operation group add</string>
+    <string name="Content_Description_LinkedList_Add_Arrow">An arrow that opens and closes the available operations of the group add</string>
+    <string name="Content_Description_LinkedList_Add_Check">A check sign that conforms the chosen adding operation for the current value selected by the slider</string>
+
+    <string name="Content_Description_LinkedList_Delete_Background">A rectangle that serves as the background of the operation group delete</string>
+    <string name="Content_Description_LinkedList_Delete_Arrow">An arrow that opens and closes the available operations of the group delete</string>
+
+    <string name="Content_Description_LinkedList_Get_Background">A rectangle that serves as the background of the operation group get</string>
+    <string name="Content_Description_LinkedList_Get_Arrow">An arrow that opens and closes the available operations of the group get</string>
+
 </resources>

@@ -1,11 +1,39 @@
 <resources>
+    <style name="Button">
+        <item name="android:background">@drawable/button</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="Return">
+        <item name="android:background">@drawable/background_return</item>
+    </style>
+
+    <style name="Surface">
+        <item name="android:background">@color/colorSurface</item>
+    </style>
+
+    <style name="Surface.Text">
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="Secondary">
+        <item name="android:background">@color/secondaryColor</item>
+    </style>
+
+    <style name="Secondary.Text">
+        <item name="android:textColor">@color/colorOnSecondary</item>
+    </style>
+
+    <style name="Primary">
+        <item name="android:textColor">@color/primaryColor</item>
+    </style>
+
+    <style name="Primary.Text">
+        <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
+
+    <style name="Primary.Text.Return">
+        <item name="android:textAllCaps">true</item>
     </style>
 
 </resources>
