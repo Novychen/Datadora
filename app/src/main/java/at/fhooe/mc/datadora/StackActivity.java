@@ -32,11 +32,8 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     //TODO: Resize - animation (?) -> Animation clear -> too ugly when many elements
     //TODO: ENUM for operations (?)
     //TODO: Make size (stack size) propotional to screensize
+    //TODO: Better UI
 
-    /* Stores the integer values, that the user put it - is only for testing purposes,
-     * feel free to change the way this data is stored - just remember that you have to
-     * give the StackView.push method an integer to work with
-     */
     private Vector<Integer> mStack = new Vector<>();
     private boolean mPressedRandom;
     private boolean mPressedPop;
@@ -322,7 +319,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         int size = 4 + r.nextInt(6);
 
         for(int i = 0; i < size; i++){
-            int x = -5 + r.nextInt(500);
+            int x = -5 + r.nextInt(100);
             mStack.add(x);
         }
     }

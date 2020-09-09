@@ -48,15 +48,18 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         mBinding.activityBSTSize.setOnClickListener(this);
         mBinding.activityBSTVector.setOnClickListener(this);
 
-
+        add(1);
+        add(4);
+        add(7);
 
        }
     public int getSize(){return mBST.size();}
-    public void addRandom(){
+    public void addRandom() {
         int i = (int) (Math.random() * 10);
         mBinding.activityBSTTitelText.setText("Random");
-       mBinding.ActivityBSTValueText.setText(String.format("%s", i));
-        mBST.add(i);}
+        mBinding.ActivityBSTValueText.setText(String.format("%s", i));
+        mBST.add(i);
+    }
     private boolean hasLeftChild(int _position){
         return mBST.elementAt(_position*2) != null;
     }
@@ -101,8 +104,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         }return Integer.MIN_VALUE;
     }
 
-
-
     //adds content;
     public void add(int _add){
         Log.e(TAG,"Adding"+ _add);
@@ -113,15 +114,15 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         }
         Log.e(TAG,"Adding bevor ");
         int i = 0;
-        while(i < mBST.size()){
-            if(mBST.elementAt(i) == null){
+        while (i < mBST.size()) {
+            if (mBST.elementAt(i) == null) {
                 mBST.insertElementAt(i,_add);
                 return;
             }
-            if (mBST.elementAt(i) > _add){
+            if (mBST.elementAt(i) > _add) {
                 i = i*2;
             }
-            if (mBST.elementAt(i) < _add){
+            if (mBST.elementAt(i) < _add) {
                 i = i*2 + 1;
             }
             Log.e(TAG,"i=" + i);

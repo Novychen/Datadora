@@ -25,10 +25,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "QueueActivity : ";
     private ActivityQueueBinding mBinding;
 
-    /* Stores the integer values, that the user put it - is only for testing purposes,
-     * feel free to change the way this data is stored - just remember that you have to
-     * give the QueueView.push method an integer to work with
-     */
     private Vector<Integer> mQueue = new Vector<>();
     private boolean mPressedRandom;
     private boolean mPressedDequeue;
@@ -310,7 +306,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         int size = 4 + r.nextInt(6);
 
         for(int i = 0; i < size; i++){
-            int x = -5 + r.nextInt(500);
+            int x = -5 + r.nextInt(100);
             mQueue.add(x);
         }
     }

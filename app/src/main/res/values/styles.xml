@@ -8,6 +8,10 @@
         <item name="android:background">@drawable/background_return</item>
     </style>
 
+    <style name="Text">
+
+    </style>
+
     <style name="Surface">
         <item name="android:background">@color/colorSurface</item>
     </style>
@@ -20,7 +24,7 @@
         <item name="android:background">@color/secondaryColor</item>
     </style>
 
-    <style name="Secondary.Text">
+    <style name="Text.Secondary">
         <item name="android:textColor">@color/colorOnSecondary</item>
     </style>
 
