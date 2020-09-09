@@ -58,8 +58,17 @@
     <string name="LinkedList_Activity_Add_At">Insert at</string>
 
     <string name="LinkedList_Activity_Delete_Title">Delete</string>
+    <string name="LinkedList_Activity_Delete_First">Delete First</string>
+    <string name="LinkedList_Activity_Delete_Last">Delete Last</string>
+    <string name="LinkedList_Activity_Delete_At">Delete at</string>
+    <string name="LinkedList_Activity_Delete_All">Clear</string>
 
     <string name="LinkedList_Activity_Get_Title">Get</string>
+    <string name="LinkedList_Activity_Get_Predecessor">Predecessor</string>
+    <string name="LinkedList_Activity_Get_Successor">Successor</string>
+    <string name="LinkedList_Activity_Get_First">Get First</string>
+    <string name="LinkedList_Activity_Get_Last">Get Last</string>
+    <string name="LinkedList_Activity_Get_At">Get at</string>
 
     <string name="LinkedList_Activity_Full">Queue is full</string>
     <string name="LinkedList_Activity_Empty">Queue is empty</string>

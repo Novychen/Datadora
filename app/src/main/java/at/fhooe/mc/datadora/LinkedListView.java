@@ -26,11 +26,22 @@ public class LinkedListView extends View {
     Paint mLinkedListTypeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     enum Operation {
-        SORTED,
-        UNSORTED,
         PREPEND,
         APPEND,
-        INSERT_AT
+        INSERT_AT,
+        DELETE_FIRST,
+        DELETE_LAST,
+        DELETE_AT,
+        PREDECESSOR,
+        SUCCESSOR,
+        GET_FIRST,
+        GET_LAST,
+        GET_AT
+    }
+
+    enum Filter {
+        SORTED,
+        UNSORTED
     }
 
     enum Type {
@@ -82,6 +93,9 @@ public class LinkedListView extends View {
 
     // the current type
     Type mCurrentType;
+
+    // the current filter (sorted or unsorted)
+    Filter mCurrentFiler;
 
     // the RectF for head, tail or both
     RectF mTypeRect = new RectF();
@@ -138,6 +152,14 @@ public class LinkedListView extends View {
         mActivity = _activity;
     }
 
+    protected void sorted(){
+        mCurrentFiler = Filter.SORTED;
+    }
+
+    protected void unsorted(){
+        mCurrentFiler = Filter.UNSORTED;
+    }
+
     protected void head(){
         mCurrentType = Type.HEAD;
         Log.i(TAG, "TYPE: " + mCurrentType);
@@ -162,12 +184,7 @@ public class LinkedListView extends View {
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(0,_value);
-
-        if (mMaxHeightLinkedList <= (mMaxWidthLinkedList / 4) * mScale * mLinkedList.size()) {
-            mScale = mScale / 1.2f;
-        }
-
-        invalidate();
+        reScale();
     }
 
     protected void append(int _value){
@@ -176,12 +193,7 @@ public class LinkedListView extends View {
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(_value);
-
-        if (mMaxHeightLinkedList <= (mMaxWidthLinkedList / 4) * mScale * mLinkedList.size()) {
-            mScale = mScale / 1.2f;
-        }
-
-        invalidate();
+        reScale();
     }
 
     protected void insertAt(int _value, int _pos){
@@ -190,7 +202,32 @@ public class LinkedListView extends View {
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(_pos,_value);
+        reScale();
+    }
 
+    protected void deleteFirst() {
+        mCurrentOperation = Operation.DELETE_FIRST;
+        mLinkedList.remove(0);
+        mLinkedListNumbers.remove(0);
+        reScale();
+    }
+
+    protected void deleteLast() {
+        mCurrentOperation = Operation.DELETE_LAST;
+        mLinkedList.remove(mLinkedList.size() - 1);
+        mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
+        reScale();
+    }
+
+    protected void deleteAt(int _pos) {
+        mCurrentOperation = Operation.DELETE_AT;
+
+        mLinkedList.remove(_pos);
+        mLinkedListNumbers.remove(_pos);
+        reScale();
+    }
+
+    private void reScale() {
         if (mMaxHeightLinkedList <= (mMaxWidthLinkedList / 4) * mScale * mLinkedList.size()) {
             mScale = mScale / 1.2f;
         }
