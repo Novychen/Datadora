@@ -149,8 +149,8 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         } else {
             //TODO: position slide has 1 value too much
             mBinding.LinkedListActivityAddPositionSlider.setValueTo(mLinkedList.size());
-            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size());
-            mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size());
+            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1);
+            mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
         }
     }
 
