@@ -145,7 +145,7 @@ public class LinkedListView extends View {
     Type mCurrentType;
 
     // the current filter (sorted or unsorted)
-    Filter mCurrentFilter;
+    Filter mCurrentFiler;
 
     // the RectF for head, tail or both
     RectF mTypeRect = new RectF();
@@ -276,10 +276,44 @@ public class LinkedListView extends View {
 
     protected void deleteAt(int _pos) {
         mCurrentOperation = Operation.DELETE_AT;
+
         mLinkedList.remove(_pos);
         mLinkedListNumbers.remove(_pos);
         reScale();
     }
+
+    //TODO gerald: the 3 getter operations, then predecessor and successor
+
+    protected void getFirst(){
+
+        //TODO: animations where the square blinks
+        mCurrentOperation = Operation.GET_FIRST;
+        mLinkedList.get(0);
+        mLinkedListNumbers.get(0);
+        //reScale(); //TODO needed to call? - the size is not changed tho
+
+    }
+
+    protected void getLast(){
+
+        mCurrentOperation = Operation.GET_LAST;
+        mLinkedList.get(mLinkedList.size() -1 );
+        mLinkedListNumbers.get(mLinkedListNumbers.size() - 1);
+
+    }
+
+    protected void getAt(int _pos){
+
+        mCurrentOperation = Operation.GET_AT;
+        mLinkedList.get(_pos);
+        mLinkedListNumbers.get(_pos);
+        //reScale();
+
+    }
+
+
+
+
 
     protected void random(Vector<Integer> _list) {
         mLinkedListNumbers.clear();
