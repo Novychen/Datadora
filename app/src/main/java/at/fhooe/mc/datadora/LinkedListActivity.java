@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
 
+import java.util.Random;
 import java.util.Vector;
 
 import at.fhooe.mc.datadora.databinding.ActivityLinkedListBinding;
@@ -67,11 +68,20 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             }
         });
 
+        Slider sliderAdd = mBinding.LinkedListActivityAddPositionSlider;
+        sliderAdd.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                mBinding.LinkedListActivityAddAtRadioButton.setChecked(true);
+            }
+        });
+
         mBinding.LinkedListActivityAddCheck.setOnClickListener(this);
         mBinding.LinkedListActivityDeleteCheck.setOnClickListener(this);
         mBinding.LinkedListActivityGetCheck.setOnClickListener(this);
         mBinding.LinkedListActivityTypeRadioGroup.setOnCheckedChangeListener(this);
         mBinding.LinkedListActivitySwitch.setOnCheckedChangeListener(this);
+        mBinding.LinkedListActivityRandomBackground.setOnClickListener(this);
     }
 
     @Override
@@ -108,6 +118,9 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                 getAt();
             }
             preparePositionSlider();
+        } else if (_v == mBinding.LinkedListActivityRandomBackground) {
+            random();
+            preparePositionSlider();
         }
     }
 
@@ -121,7 +134,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     private void preparePositionSlider(){
 
         if(mLinkedList.size() == 1) {
-
             mBinding.LinkedListActivityAddPositionZero.setVisibility(View.GONE);
             mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.VISIBLE);
             mBinding.LinkedListActivityAddPositionSlider.setValueFrom(0);
@@ -289,6 +301,28 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
     }
 
+    /**
+     * This method handles the operation random
+     */
+    private void random(){
+        mBinding.LinkedListActivityReturnValue.setText("");
+        createRandomQueue();
+        mBinding.LinkedListActivityLinkedListView.random(mLinkedList);
+    }
+
+    /**
+     * Creates a random queue with its size being min 4 and max 7
+     */
+    private void createRandomQueue(){
+        mLinkedList.clear();
+        Random r = new Random();
+        int size = 4 + r.nextInt(6);
+
+        for(int i = 0; i < size; i++){
+            int x = -5 + r.nextInt(100);
+            mLinkedList.add(x);
+        }
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

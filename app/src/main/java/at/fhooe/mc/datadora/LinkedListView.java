@@ -1,5 +1,9 @@
 package at.fhooe.mc.datadora;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -10,6 +14,9 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateInterpolator;
 
 import androidx.annotation.Nullable;
 
@@ -17,13 +24,55 @@ import java.util.Vector;
 
 public class LinkedListView extends View {
 
+    int test = 1;
+    int oldTest = 0;
+
     private static final String TAG = "LinkedListView : ";
+    private static final String PROPERTY_TRANSLATE_Y_APPEND = "PROPERTY_TRANSLATE_APPEND";
+    private static final String PROPERTY_ALPHA_APPEND = "PROPERTY_ALPHA_APPEND";
+    private static final String PROPERTY_TRANSLATE_Y_PREPEND = "PROPERTY_TRANSLATE_Y_PREPEND";
+    private static final String PROPERTY_ALPHA_PREPEND = "PROPERTY_ALPHA_PREPEND";
+    private static final String PROPERTY_TRANSLATE_Y_INSERT = "PROPERTY_TRANSLATE_Y_INSERT";
+    private static final String PROPERTY_ALPHA_INSERT = "PROPERTY_ALPHA_INSERT";
 
     Paint mLinkedListItemPaint = new Paint();
     Paint mLinkedListTypePaint = new Paint();
     Paint mLinkedListItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     Paint mLinkedListPositionTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     Paint mLinkedListTypeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    // Animator for the appended element
+    ValueAnimator mAnimatorAppend = new ValueAnimator();
+
+    // Animator for the prepended element
+    ValueAnimator mAnimatorPrepend = new ValueAnimator();
+
+    // Animator for the inserted element
+    ValueAnimator mAnimatorInsert = new ValueAnimator();
+
+    // Animator for the alpha value of the inserted element
+    ValueAnimator mAnimatorInsertAlpha = new ValueAnimator();
+
+    // the current translation on the y-axis - used for the append animation
+    int mTranslateYAppend;
+
+    // the current alpha value - used for the append animation
+    int mAlphaAppend;
+
+    // the current translation on the y-axis - used for the prepend animation
+    int mTranslateYPrepend;
+
+    // the current alpha value - used for the prepend animation
+    int mAlphaPrepend;
+
+    // the current translation on the y-axis - used for the insertAt animation
+    int mTranslateYInsert;
+
+    // the current alpha value - used for the insertAt animation
+    int mAlphaInsert;
+
+    // the position where the element will be inserted with the insertAt operation
+    int mPosition;
 
     enum Operation {
         PREPEND,
@@ -36,7 +85,8 @@ public class LinkedListView extends View {
         SUCCESSOR,
         GET_FIRST,
         GET_LAST,
-        GET_AT
+        GET_AT,
+        RANDOM
     }
 
     enum Filter {
@@ -153,11 +203,11 @@ public class LinkedListView extends View {
     }
 
     protected void sorted(){
-        mCurrentFiler = Filter.SORTED;
+        mCurrentFilter = Filter.SORTED;
     }
 
     protected void unsorted(){
-        mCurrentFiler = Filter.UNSORTED;
+        mCurrentFilter = Filter.UNSORTED;
     }
 
     protected void head(){
@@ -185,6 +235,7 @@ public class LinkedListView extends View {
         mLinkedList.add(r);
         mLinkedListNumbers.add(0,_value);
         reScale();
+        mAnimatorPrepend.start();
     }
 
     protected void append(int _value){
@@ -194,6 +245,7 @@ public class LinkedListView extends View {
         mLinkedList.add(r);
         mLinkedListNumbers.add(_value);
         reScale();
+        mAnimatorAppend.start();
     }
 
     protected void insertAt(int _value, int _pos){
@@ -203,6 +255,9 @@ public class LinkedListView extends View {
         mLinkedList.add(r);
         mLinkedListNumbers.add(_pos,_value);
         reScale();
+        mPosition = _pos;
+        mAnimatorInsert.start();
+        mAnimatorInsertAlpha.start();
     }
 
     protected void deleteFirst() {
@@ -260,11 +315,22 @@ public class LinkedListView extends View {
 
 
 
+    protected void random(Vector<Integer> _list) {
+        mLinkedListNumbers.clear();
+        mLinkedList.clear();
+        for(int i = 0; i < _list.size(); i++) {
+            mLinkedListNumbers.add(_list.get(i));
+            mLinkedList.add(new RectF());
+        }
+        mCurrentOperation = Operation.RANDOM;
+        mAnimatorAppend.setDuration(350);
+        mAnimatorAppend.start();
+    }
+
     private void reScale() {
         if (mMaxHeightLinkedList <= (mMaxWidthLinkedList / 4) * mScale * mLinkedList.size()) {
             mScale = mScale / 1.2f;
         }
-
         invalidate();
     }
 
@@ -280,7 +346,74 @@ public class LinkedListView extends View {
         mMaxWidthLinkedList = (float) _w - xpad - 6;
         mScale = 1;
 
+        setUpAnimation();
         invalidate();
+    }
+
+    private void setUpAnimation(){
+        PropertyValuesHolder propertyTranslateYAppend = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_APPEND, -200, 0);
+        PropertyValuesHolder propertyAlphaAppend = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_APPEND, 0, 255);
+
+        mAnimatorAppend.setValues(propertyTranslateYAppend, propertyAlphaAppend);
+        mAnimatorAppend.setDuration(700);
+        mAnimatorAppend.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorAppend.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Log.i(TAG, "END HELLO: " + mTranslateYAppend);
+                mTranslateYAppend = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_APPEND);
+                mAlphaAppend = (int) animation.getAnimatedValue(PROPERTY_ALPHA_APPEND);
+                invalidate();
+            }
+        });
+
+        mAnimatorAppend.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator _animation) {
+                test++;
+            }
+        });
+
+        int number = (int) (((mMaxWidthLinkedList / 4) * mScale) - 10);
+        PropertyValuesHolder propertyTranslateYPrepend = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_PREPEND, -number, 0);
+        PropertyValuesHolder propertyAlphaPrepend = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_PREPEND, 0, 255);
+
+        mAnimatorPrepend.setValues(propertyTranslateYPrepend, propertyAlphaPrepend);
+        mAnimatorPrepend.setDuration(700);
+        mAnimatorPrepend.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorPrepend.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mTranslateYPrepend = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_PREPEND);
+                mAlphaPrepend = (int) animation.getAnimatedValue(PROPERTY_ALPHA_PREPEND);
+                invalidate();
+            }
+        });
+
+        PropertyValuesHolder propertyTranslateYInsert = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_INSERT, -number, 0);
+        PropertyValuesHolder propertyAlphaInsert = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_INSERT, 0, 255);
+
+        mAnimatorInsert.setValues(propertyTranslateYInsert);
+        mAnimatorInsert.setDuration(700);
+        mAnimatorInsert.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorInsert.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mTranslateYInsert = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_INSERT);
+                invalidate();
+            }
+        });
+
+        mAnimatorInsertAlpha.setValues(propertyAlphaInsert);
+        mAnimatorInsertAlpha.setDuration(900);
+        mAnimatorInsertAlpha.setInterpolator(new AccelerateInterpolator());
+        mAnimatorInsertAlpha.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAlphaInsert = (int) animation.getAnimatedValue(PROPERTY_ALPHA_INSERT);
+                invalidate();
+            }
+        });
     }
 
     @Override
@@ -288,12 +421,56 @@ public class LinkedListView extends View {
         super.onDraw(_canvas);
 
         for(int i = 0; i < mLinkedListNumbers.size(); i++) {
+            if (i == mLinkedListNumbers.size() - 1) {
+                if (mCurrentOperation == Operation.APPEND) {
+                    mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale) + mTranslateYAppend;
+                    mLinkedListItemTextPaint.setAlpha(mAlphaAppend);
+                    mLinkedListItemPaint.setAlpha(mAlphaAppend);
+                }
+            } else {
+                mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale);
+                mLinkedListItemTextPaint.setAlpha(255);
+                mLinkedListItemPaint.setAlpha(255);
+            }
+
+            if (mCurrentOperation == Operation.RANDOM) {
+                if(test > oldTest && oldTest != mLinkedList.size()) {
+                    Log.i(TAG, "DRAW HELLO: " + mTranslateYAppend);
+                    mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale) + mTranslateYAppend;
+                    mLinkedListItemTextPaint.setAlpha(mAlphaAppend);
+                    mLinkedListItemPaint.setAlpha(mAlphaAppend);
+                    oldTest = test;
+                    mAnimatorAppend.start();
+                }
+            }
+
+           if (mCurrentOperation == Operation.PREPEND) {
+                if( i == 0) {
+                    mLinkedListItemTextPaint.setAlpha(mAlphaPrepend);
+                    mLinkedListItemPaint.setAlpha(mAlphaPrepend);
+                }
+                mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale) - mTranslateYPrepend;
+            }
+
+            if (mCurrentOperation == Operation.INSERT_AT) {
+                if (mPosition + 1 == mLinkedListNumbers.size()) {
+                    mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale) ;
+                }
+
+                if (i == mPosition) {
+                    mLinkedListItemTextPaint.setAlpha(mAlphaInsert);
+                    mLinkedListItemPaint.setAlpha(mAlphaInsert);
+                } else if (i > mPosition) {
+                    mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale) - mTranslateYInsert;
+                    mLinkedListItemTextPaint.setAlpha(255);
+                    mLinkedListItemPaint.setAlpha(255);
+                }
+            }
 
             // save the size of the text ("box" around the text) in mBounds
             mLinkedListItemTextPaint.getTextBounds(mLinkedListNumbers.get(i).toString(), 0, mLinkedListNumbers.get(i).toString().length(), mBounds);
 
             // set LinkedList item size
-            mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale);
             mLinkedList.get(i).left = (int) ((mMaxWidthLinkedList / 1.5) - (mMaxWidthLinkedList / 8) - (mResize / 2));
             mLinkedList.get(i).right = (int) (mLinkedList.get(i).left + (mMaxWidthLinkedList / 4) + mResize);
             mLinkedList.get(i).bottom = (int) (mLinkedList.get(i).top + ((mMaxWidthLinkedList / 4) * mScale) - 10);
@@ -301,6 +478,7 @@ public class LinkedListView extends View {
             // get BoundingBox from Text & draw Text + LinkedList item
             _canvas.drawText(mLinkedListNumbers.get(i).toString(), getExactCenterX(mLinkedList.get(i)) - mBounds.exactCenterX(), (getExactCenterY(mLinkedList.get(i)) - mBounds.exactCenterY()), mLinkedListItemTextPaint);
             _canvas.drawRoundRect(mLinkedList.get(i), mRadius, mRadius, mLinkedListItemPaint);
+
             String type;
             if (mCurrentType == Type.HEAD && i == 0){
                 type = getResources().getString(R.string.LinkedList_Activity_Type_Head);
