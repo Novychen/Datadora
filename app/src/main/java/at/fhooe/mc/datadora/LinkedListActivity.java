@@ -8,11 +8,13 @@ import androidx.collection.ArraySet;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
@@ -136,6 +138,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mBinding.LinkedListActivityGetPositionSlider.setStepSize(1);
 
         } else if (mLinkedList.size() == 0) {
+
             mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.INVISIBLE);
             mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.INVISIBLE);
             mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.INVISIBLE);
@@ -144,6 +147,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.VISIBLE);
             mBinding.LinkedListActivityGetPositionZero.setVisibility(View.VISIBLE);
         } else {
+            //TODO: position slide has 1 value too much
             mBinding.LinkedListActivityAddPositionSlider.setValueTo(mLinkedList.size());
             mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size());
             mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size());
@@ -206,24 +210,85 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     private void getPredecessor() {
-
+        //TODO gerald
     }
 
     private void getSuccessor() {
-
+        //TODO gerald
     }
 
     private void getFirst() {
+
+        if(!mLinkedList.isEmpty()){
+            mBinding.LinkedListActivityLinkedListView.getFirst();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mBinding.LinkedListActivityReturnValue.setText(
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(0).toString()));
+                }
+            }, 500);
+
+
+        } else {
+            Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
+            mBinding.LinkedListActivityReturnValue.setText("");
+            //todo: showEmpty(); like in the stack?
+        }
+
+
+
 
     }
 
     private void getLast() {
 
+        if(!mLinkedList.isEmpty()){
+            mBinding.LinkedListActivityLinkedListView.getLast();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mBinding.LinkedListActivityReturnValue.setText(
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(
+                                    mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size() - 1
+                            ).toString()));
+                }
+            }, 500);
+
+
+        } else {
+            Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
+            mBinding.LinkedListActivityReturnValue.setText("");
+            //todo: showEmpty(); like in the stack?
+        }
+
+
     }
 
     private void getAt() {
 
+        //TODO: position slider is not working yet ... has 1 range to much (from 0 - 5 when only 5 vals are in list)
+
+        if(!mLinkedList.isEmpty()){
+            final int pos = (int) mBinding.LinkedListActivityGetPositionSlider.getValue();
+            mBinding.LinkedListActivityLinkedListView.getAt(pos);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mBinding.LinkedListActivityReturnValue.setText(
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(
+                                    mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.elementAt(pos)).toString())); //TODO check
+                }
+            }, 500);
+
+
+        } else {
+            Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
+            mBinding.LinkedListActivityReturnValue.setText("");
+        }
+
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {

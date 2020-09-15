@@ -8,7 +8,7 @@
     tools:context=".LinkedListActivity">
 
     <ImageView
-        android:id="@+id/queue_Activity_Box_Return"
+        android:id="@+id/LinkedList_Activity_Box_Return"
         style="@style/Return"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Toolbar" />
 
     <TextView
-        android:id="@+id/queue_Activity_ReturnValue"
+        android:id="@+id/LinkedList_Activity_ReturnValue"
         style="@style/Primary.Text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -31,20 +31,20 @@
         android:singleLine="true"
         android:textAlignment="center"
         android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="@+id/queue_Activity_Box_Return"
-        app:layout_constraintEnd_toEndOf="@+id/queue_Activity_Box_Return"
-        app:layout_constraintStart_toStartOf="@+id/queue_Activity_Box_Return"
-        app:layout_constraintTop_toBottomOf="@+id/queue_Activity_ReturnText" />
+        app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Box_Return"
+        app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Box_Return"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Box_Return"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_ReturnText" />
 
     <TextView
-        android:id="@+id/queue_Activity_ReturnText"
+        android:id="@+id/LinkedList_Activity_ReturnText"
         style="@style/Primary.Text.Return"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/All_Data_Activity_Text_Return"
-        app:layout_constraintEnd_toEndOf="@+id/queue_Activity_Box_Return"
-        app:layout_constraintStart_toStartOf="@+id/queue_Activity_Box_Return"
-        app:layout_constraintTop_toTopOf="@+id/queue_Activity_Box_Return" />
+        app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Box_Return"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Box_Return"
+        app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Box_Return" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/LinkedList_Activity_Toolbar"
@@ -93,7 +93,7 @@
         app:layout_constraintBottom_toTopOf="@+id/LinkedList_Activity_InputSlider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Guideline"
-        app:layout_constraintTop_toBottomOf="@+id/queue_Activity_Box_Return">
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Box_Return">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

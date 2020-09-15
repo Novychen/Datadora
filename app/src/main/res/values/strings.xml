@@ -70,11 +70,14 @@
     <string name="LinkedList_Activity_Get_Last">Get Last</string>
     <string name="LinkedList_Activity_Get_At">Get at</string>
 
-    <string name="LinkedList_Activity_Full">Queue is full</string>
-    <string name="LinkedList_Activity_Empty">Queue is empty</string>
+    <string name="LinkedList_Activity_Toast_Full">List is full!</string>
+    <string name="LinkedList_Activity_Toast_Empty">List is empty!</string>
 
+    //NOT NEEDED
     <string name="LinkedList_Activity_Text_Dequeue">dequeue</string>
     <string name="LinkedList_Activity_Text_Enqueue">enqueue</string>
+
+
 
     // BinarySearchTree
     <string name="BST_Activity_Text_Add">add</string>

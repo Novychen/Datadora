@@ -227,6 +227,39 @@ public class LinkedListView extends View {
         reScale();
     }
 
+    //TODO gerald: the 3 getter operations, then predecessor and successor
+
+    protected void getFirst(){
+
+        //TODO: animations where the square blinks
+        mCurrentOperation = Operation.GET_FIRST;
+        mLinkedList.get(0);
+        mLinkedListNumbers.get(0);
+        //reScale(); //TODO needed to call? - the size is not changed tho
+
+    }
+
+    protected void getLast(){
+
+        mCurrentOperation = Operation.GET_LAST;
+        mLinkedList.get(mLinkedList.size() -1 );
+        mLinkedListNumbers.get(mLinkedListNumbers.size() - 1);
+
+    }
+
+    protected void getAt(int _pos){
+
+        mCurrentOperation = Operation.GET_AT;
+        mLinkedList.get(_pos);
+        mLinkedListNumbers.get(_pos);
+        //reScale();
+
+    }
+
+
+
+
+
     private void reScale() {
         if (mMaxHeightLinkedList <= (mMaxWidthLinkedList / 4) * mScale * mLinkedList.size()) {
             mScale = mScale / 1.2f;
