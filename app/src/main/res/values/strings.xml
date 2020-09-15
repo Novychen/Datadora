@@ -14,8 +14,8 @@
     <string name="All_Data_Activity_BST">Binary Search Tree</string>
 
     <string name="All_Data_Activity_Text_Return">Return Value</string>
-    <string name="All_Data_Activity_Text_Random">random</string>
-    <string name="All_Data_Activity_Text_Clear">clear</string>
+    <string name="All_Data_Activity_Text_Random">Random</string>
+    <string name="All_Data_Activity_Text_Clear">Clear</string>
 
     <string name="All_Data_Activity_True">true</string>
     <string name="All_Data_Activity_False">false</string>
