@@ -64,6 +64,7 @@
     <string name="LinkedList_Activity_Delete_All">Clear</string>
 
     <string name="LinkedList_Activity_Get_Title">Get</string>
+    <string name="LinkedList_Activity_Get_Size">Size</string>
     <string name="LinkedList_Activity_Get_Predecessor">Predecessor</string>
     <string name="LinkedList_Activity_Get_Successor">Successor</string>
     <string name="LinkedList_Activity_Get_First">Get First</string>
@@ -111,5 +112,6 @@
 
     <string name="Content_Description_LinkedList_Get_Background">A rectangle that serves as the background of the operation group get</string>
     <string name="Content_Description_LinkedList_Get_Arrow">An arrow that opens and closes the available operations of the group get</string>
+
 
 </resources>

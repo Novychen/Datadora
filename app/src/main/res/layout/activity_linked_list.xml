@@ -170,6 +170,12 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <RadioButton
+                            android:id="@+id/LinkedList_Activity_Get_Size_RadioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/LinkedList_Activity_Get_Size" />
+
+                        <RadioButton
                             android:id="@+id/LinkedList_Activity_Get_Pre_RadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -534,7 +540,7 @@
                         android:id="@+id/LinkedList_Activity_Delete_Position_Slider"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="42dp"
+                        android:layout_marginBottom="0dp"
                         android:stepSize="1"
                         app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Delete_RadioGroup"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -544,10 +550,16 @@
                         android:id="@+id/LinkedList_Activity_Delete_RadioGroup"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@id/LinkedList_Activity_Delete_First_RadioButton"
+                        android:checkedButton="@id/LinkedList_Activity_Delete_All_RadioButton"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
+
+                        <RadioButton
+                            android:id="@+id/LinkedList_Activity_Delete_All_RadioButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/LinkedList_Activity_Delete_All" />
 
                         <RadioButton
                             android:id="@+id/LinkedList_Activity_Delete_First_RadioButton"
@@ -567,11 +579,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/LinkedList_Activity_Delete_At" />
 
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Delete_All_RadioButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Delete_All" />
+
                     </RadioGroup>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

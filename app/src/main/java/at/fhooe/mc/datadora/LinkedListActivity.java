@@ -97,7 +97,10 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             }
                 preparePositionSlider();
         } else if(_v == mBinding.LinkedListActivityDeleteCheck) {
-            if (mBinding.LinkedListActivityDeleteFirstRadioButton.isChecked()) {
+
+            if (mBinding.LinkedListActivityDeleteAllRadioButton.isChecked()){
+                deleteAll(); //clear
+            } else if (mBinding.LinkedListActivityDeleteFirstRadioButton.isChecked()) {
                 deleteFirst();
             } else if (mBinding.LinkedListActivityDeleteLastRadioButton.isChecked()) {
                 deleteLast();
@@ -106,7 +109,10 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             }
                preparePositionSlider();
         } else if(_v == mBinding.LinkedListActivityGetCheck) {
-            if (mBinding.LinkedListActivityGetPreRadioButton.isChecked()) {
+
+            if (mBinding.LinkedListActivityGetSizeRadioButton.isChecked()){
+                getSize();
+            } else if (mBinding.LinkedListActivityGetPreRadioButton.isChecked()) {
                 getPredecessor();
             } else if (mBinding.LinkedListActivityGetSuccRadioButton.isChecked()) {
                 getSuccessor();
@@ -133,23 +139,8 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
      */
     private void preparePositionSlider(){
 
-        if(mLinkedList.size() == 1) {
-            mBinding.LinkedListActivityAddPositionZero.setVisibility(View.GONE);
-            mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.VISIBLE);
-            mBinding.LinkedListActivityAddPositionSlider.setValueFrom(0);
-            mBinding.LinkedListActivityAddPositionSlider.setStepSize(1);
 
-            mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.GONE);
-            mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.VISIBLE);
-            mBinding.LinkedListActivityDeletePositionSlider.setValueFrom(0);
-            mBinding.LinkedListActivityDeletePositionSlider.setStepSize(1);
-
-            mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
-            mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.VISIBLE);
-            mBinding.LinkedListActivityGetPositionSlider.setValueFrom(0);
-            mBinding.LinkedListActivityGetPositionSlider.setStepSize(1);
-
-        } else if (mLinkedList.size() == 0) {
+        if (mLinkedList.size() == 0) {
 
             mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.INVISIBLE);
             mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.INVISIBLE);
@@ -158,11 +149,63 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mBinding.LinkedListActivityAddPositionZero.setVisibility(View.VISIBLE);
             mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.VISIBLE);
             mBinding.LinkedListActivityGetPositionZero.setVisibility(View.VISIBLE);
-        } else {
-            //TODO: position slide has 1 value too much
+
+        } else if (mLinkedList.size() == 1){
+
+            mBinding.LinkedListActivityAddPositionZero.setVisibility(View.GONE);
+            mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityAddPositionSlider.setValueFrom(0);
+            mBinding.LinkedListActivityAddPositionSlider.setStepSize(1);
+
+            mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.INVISIBLE);
+            mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.VISIBLE);
+
+            mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.INVISIBLE);
+            mBinding.LinkedListActivityGetPositionZero.setVisibility(View.VISIBLE);
+
+        } else if (mLinkedList.size() == 2) {
+
             mBinding.LinkedListActivityAddPositionSlider.setValueTo(mLinkedList.size());
-            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1);
+
+            mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.GONE);
+            mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityDeletePositionSlider.setValueFrom(0);
+            mBinding.LinkedListActivityDeletePositionSlider.setStepSize(1);
+            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1); //todo is -1 needed
+
+            mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
+            mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityGetPositionSlider.setValueFrom(0);
+            mBinding.LinkedListActivityGetPositionSlider.setStepSize(1);
             mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
+
+        //do
+
+        } else {
+
+            mBinding.LinkedListActivityAddPositionSlider.setValueTo(mLinkedList.size());
+
+            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1); //TODO: exception: Slider value(3.0) must be greater or equal to valueFrom(0.0), and lower or equal to valueTo(2.0)
+            mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
+
+
+            /*
+            mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.GONE);
+            mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityDeletePositionSlider.setValueFrom(0);
+            mBinding.LinkedListActivityDeletePositionSlider.setStepSize(1);
+            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1);
+
+             */
+
+            /*
+            mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
+            mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityGetPositionSlider.setValueFrom(0);
+            mBinding.LinkedListActivityGetPositionSlider.setStepSize(1);
+            mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
+
+             */
         }
     }
 
@@ -205,28 +248,87 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         mBinding.LinkedListActivityLinkedListView.insertAt(value, pos);
     }
 
+    private void deleteAll(){
+
+        if(!mLinkedList.isEmpty()){
+            mBinding.LinkedListActivityLinkedListView.deleteAll();
+            mLinkedList.clear();
+
+        } else {
+            isEmptyMessage();
+        }
+
+
+    }
+
     private void deleteFirst() {
-        mBinding.LinkedListActivityLinkedListView.deleteFirst();
-        mLinkedList.remove(0);
+
+        if(!mLinkedList.isEmpty()){
+            mBinding.LinkedListActivityLinkedListView.deleteFirst();
+            mLinkedList.remove(0);
+
+        } else {
+            isEmptyMessage();
+        }
+
     }
 
     private void deleteLast() {
-        mBinding.LinkedListActivityLinkedListView.deleteLast();
-        mLinkedList.remove(mLinkedList.size() - 1);
+
+        if(!mLinkedList.isEmpty()){
+            mBinding.LinkedListActivityLinkedListView.deleteLast();
+            mLinkedList.remove(mLinkedList.size() - 1);
+
+        } else {
+            isEmptyMessage();
+        }
+
     }
 
     private void deleteAt() {
-        int pos = (int) mBinding.LinkedListActivityDeletePositionSlider.getValue();
-        mBinding.LinkedListActivityLinkedListView.deleteAt(pos);
-        mLinkedList.remove(pos);
+
+        if(!mLinkedList.isEmpty() && mLinkedList.size() > 1) {
+            int pos = (int) mBinding.LinkedListActivityDeletePositionSlider.getValue();
+            Log.i(TAG, "----- position deleteAt: " + pos);
+            mBinding.LinkedListActivityLinkedListView.deleteAt(pos);
+            mLinkedList.remove(pos);
+
+        } else if (mLinkedList.size() == 1){
+            deleteAll();
+            Log.i(TAG, "----- last element deleteAt: size was 1");
+        } else {
+            isEmptyMessage();
+        }
+
+
+    }
+
+
+    private void getSize(){
+
+        if(!mLinkedList.isEmpty()){
+            mBinding.LinkedListActivityLinkedListView.getSize();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mBinding.LinkedListActivityReturnValue.setText(
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size()));
+                }
+            }, 500);
+
+
+        } else {
+            isEmptyMessage();
+        }
+
     }
 
     private void getPredecessor() {
-        //TODO gerald
+        //TODO
     }
 
     private void getSuccessor() {
-        //TODO gerald
+        //TODO
     }
 
     private void getFirst() {
@@ -243,9 +345,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
 
         } else {
-            Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
-            mBinding.LinkedListActivityReturnValue.setText("");
-            //todo: showEmpty(); like in the stack?
+            isEmptyMessage();
         }
 
 
@@ -269,9 +369,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
 
         } else {
-            Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
-            mBinding.LinkedListActivityReturnValue.setText("");
-            //todo: showEmpty(); like in the stack?
+            isEmptyMessage();
         }
 
 
@@ -279,26 +377,38 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
     private void getAt() {
 
-        //TODO: position slider is not working yet ... has 1 range to much (from 0 - 5 when only 5 vals are in list)
 
         if(!mLinkedList.isEmpty()){
-            final int pos = (int) mBinding.LinkedListActivityGetPositionSlider.getValue();
-            mBinding.LinkedListActivityLinkedListView.getAt(pos);
+
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
+                    int pos = (int) mBinding.LinkedListActivityGetPositionSlider.getValue();
+                    mBinding.LinkedListActivityLinkedListView.getAt(pos);
+
+
+                    Log.d(TAG, "----- position getAt: "+ pos);
+
                     mBinding.LinkedListActivityReturnValue.setText(
-                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(
-                                    mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.elementAt(pos)).toString())); //TODO check
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(pos).toString())); //TODO check
+                    //todo am i passing the value as index?
                 }
             }, 500);
 
 
         } else {
-            Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
-            mBinding.LinkedListActivityReturnValue.setText("");
+            isEmptyMessage();
         }
 
+    }
+
+
+    public void isEmptyMessage(){
+        Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
+        mBinding.LinkedListActivityReturnValue.setText("");
+        //todo: more visual output like showEmpty(); in the stack?
     }
 
     /**

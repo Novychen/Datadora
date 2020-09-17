@@ -78,9 +78,11 @@ public class LinkedListView extends View {
         PREPEND,
         APPEND,
         INSERT_AT,
+        CLEAR,
         DELETE_FIRST,
         DELETE_LAST,
         DELETE_AT,
+        GET_SIZE,
         PREDECESSOR,
         SUCCESSOR,
         GET_FIRST,
@@ -145,7 +147,7 @@ public class LinkedListView extends View {
     Type mCurrentType;
 
     // the current filter (sorted or unsorted)
-    Filter mCurrentFiler;
+    Filter mCurrentFilter;
 
     // the RectF for head, tail or both
     RectF mTypeRect = new RectF();
@@ -196,6 +198,9 @@ public class LinkedListView extends View {
 
         mLinkedListPositionTextPaint.setColor(mOnSurfaceColor);
         mLinkedListPositionTextPaint.setTextSize(30);
+
+
+        //TODO: make some SP stuff
     }
 
     protected void init(LinkedListActivity _activity) {
@@ -260,6 +265,13 @@ public class LinkedListView extends View {
         mAnimatorInsertAlpha.start();
     }
 
+    protected void deleteAll(){
+        mCurrentOperation = Operation.CLEAR;
+        mLinkedList.clear();
+        mLinkedListNumbers.clear();
+        reScale();
+    }
+
     protected void deleteFirst() {
         mCurrentOperation = Operation.DELETE_FIRST;
         mLinkedList.remove(0);
@@ -283,6 +295,25 @@ public class LinkedListView extends View {
     }
 
     //TODO gerald: the 3 getter operations, then predecessor and successor
+
+
+    protected void predecessor(){
+        mCurrentOperation = Operation.PREDECESSOR;
+
+    }
+
+    protected void successor(){
+        mCurrentOperation = Operation.SUCCESSOR;
+
+    }
+
+    protected void getSize(){
+        mCurrentOperation = Operation.GET_SIZE;
+        mLinkedList.size();
+        mLinkedListNumbers.size();
+
+
+    }
 
     protected void getFirst(){
 
