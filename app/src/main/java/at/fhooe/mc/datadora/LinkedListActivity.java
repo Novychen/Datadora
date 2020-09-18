@@ -171,7 +171,10 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.VISIBLE);
             mBinding.LinkedListActivityDeletePositionSlider.setValueFrom(0);
             mBinding.LinkedListActivityDeletePositionSlider.setStepSize(1);
-            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1); //todo is -1 needed
+            if(mBinding.LinkedListActivityDeletePositionSlider.getValue() == mLinkedList.size()) {
+                mBinding.LinkedListActivityDeletePositionSlider.setValue(mLinkedList.size() - 1);
+            }
+            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size()-1);
 
             mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
             mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.VISIBLE);
@@ -179,24 +182,19 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mBinding.LinkedListActivityGetPositionSlider.setStepSize(1);
             mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
 
-        //do
-
         } else {
 
             mBinding.LinkedListActivityAddPositionSlider.setValueTo(mLinkedList.size());
-
-            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1); //TODO: exception: Slider value(3.0) must be greater or equal to valueFrom(0.0), and lower or equal to valueTo(2.0)
             mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
 
-
-            /*
             mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.GONE);
             mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.VISIBLE);
             mBinding.LinkedListActivityDeletePositionSlider.setValueFrom(0);
             mBinding.LinkedListActivityDeletePositionSlider.setStepSize(1);
+            if(mBinding.LinkedListActivityDeletePositionSlider.getValue() == mLinkedList.size()) {
+                mBinding.LinkedListActivityDeletePositionSlider.setValue(mLinkedList.size() - 1);
+            }
             mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1);
-
-             */
 
             /*
             mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
@@ -289,18 +287,14 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
         if(!mLinkedList.isEmpty() && mLinkedList.size() > 1) {
             int pos = (int) mBinding.LinkedListActivityDeletePositionSlider.getValue();
-            Log.i(TAG, "----- position deleteAt: " + pos);
             mBinding.LinkedListActivityLinkedListView.deleteAt(pos);
             mLinkedList.remove(pos);
 
         } else if (mLinkedList.size() == 1){
             deleteAll();
-            Log.i(TAG, "----- last element deleteAt: size was 1");
         } else {
             isEmptyMessage();
         }
-
-
     }
 
 
@@ -320,7 +314,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         } else {
             isEmptyMessage();
         }
-
     }
 
     private void getPredecessor() {
@@ -343,14 +336,9 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                 }
             }, 500);
 
-
         } else {
             isEmptyMessage();
         }
-
-
-
-
     }
 
     private void getLast() {
@@ -366,8 +354,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                             ).toString()));
                 }
             }, 500);
-
-
         } else {
             isEmptyMessage();
         }
@@ -379,15 +365,11 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
 
         if(!mLinkedList.isEmpty()){
-
-
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
                     int pos = (int) mBinding.LinkedListActivityGetPositionSlider.getValue();
                     mBinding.LinkedListActivityLinkedListView.getAt(pos);
-
 
                     Log.d(TAG, "----- position getAt: "+ pos);
 
@@ -396,7 +378,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                     //todo am i passing the value as index?
                 }
             }, 500);
-
 
         } else {
             isEmptyMessage();
