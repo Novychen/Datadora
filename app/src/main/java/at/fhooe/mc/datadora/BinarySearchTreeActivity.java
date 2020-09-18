@@ -3,7 +3,6 @@ package at.fhooe.mc.datadora;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,16 +10,46 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import org.w3c.dom.Node;
+
 import java.util.Vector;
-import java.util.concurrent.TimeUnit;
 
 import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
 
 
-public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener{
+public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener {
+
     private static String TAG = "BSTActivity :: ";
+
     private TextView mTextView;
     private Vector<Integer> mBST = new Vector<>();
+    private Vector<Integer> mBSTOrder = new Vector<>();
+    private BSTNode root;
+    public class BSTNode{
+        BSTNode left;
+        BSTNode right;
+        int element;
+        public BSTNode(){
+            left = null;
+            right = null;
+            element = Integer.MIN_VALUE;
+        }
+        public BSTNode(int _element){
+            left = null;
+            right = null;
+            element = _element;
+        }
+
+        public void setLeft(BSTNode left) {
+            this.left = left;
+        }
+
+        public void setRight(BSTNode right) {
+            this.right = right;
+        }
+    };
+
+
     private ActivityBinarySearchTreeBinding mBinding;
 
 
@@ -47,147 +76,148 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         mBinding.activityBSTRemove.setOnClickListener(this);
         mBinding.activityBSTSize.setOnClickListener(this);
         mBinding.activityBSTVector.setOnClickListener(this);
+    }
 
-        add(1);
-        add(4);
-        add(7);
+ /*   private void init(int point, int count) {
+        for (int i = point; i < count; i++) {
+            mBST.add(-1);
+        }
+    }
 
-       }
-    public int getSize(){return mBST.size();}
+    public int getSize() {
+        return mBST.size();
+    }*/
+
     public void addRandom() {
-        int i = (int) (Math.random() * 10);
+        int i = (int) (Math.random() * 100);
         mBinding.activityBSTTitelText.setText("Random");
         mBinding.ActivityBSTValueText.setText(String.format("%s", i));
-        mBST.add(i);
+        addNode(i);
     }
-    private boolean hasLeftChild(int _position){
-        return mBST.elementAt(_position*2) != null;
+
+    private boolean hasLeftChild(int _position) {
+        return mBST.elementAt(_position * 2) != null;
     }
-    private boolean hasRightChild(int _position){
-        return mBST.elementAt(_position*2+1) != null;
+
+    private boolean hasRightChild(int _position) {
+        return mBST.elementAt(_position * 2 + 1) != null;
     }
+
     private boolean hasChild(int _position) {
-        return hasLeftChild(_position)|| hasRightChild(_position);
+        return hasLeftChild(_position) || hasRightChild(_position);
     }
-    private boolean hasParent(int _position){
-        if (_position< 4){
-            return false;
-        }
-        if (_position % 2 == 0) {
-            return mBST.elementAt(_position/2) != null;
-        } else {
-            return mBST.elementAt(_position/2 - 1) != null;
-        }
-    }
-    private int getLeftChild(int _position){
-        if (hasLeftChild(_position)){
-            return mBST.elementAt(_position*2);
-        }
-        return Integer.MIN_VALUE;
-    }
-    private int getRightChild(int _position){
-        if (hasRightChild(_position)){
-            return mBST.elementAt(_position*2+1);
-        }
-        return Integer.MIN_VALUE;
-    }
-    private int getParent(int _position){
-        if(!hasParent(_position)){
-            return Integer.MIN_VALUE;
-        }
-        if(hasParent(_position)) {
-            if (_position % 2 == 0) {
-                return mBST.elementAt(_position/2);
-            } else {
-                return mBST.elementAt(_position/2 - 1);
-            }
-        }return Integer.MIN_VALUE;
-    }
+
+
+
 
     //adds content;
-    public void add(int _add){
-        Log.e(TAG,"Adding"+ _add);
-        if(mBST.size() == 0){
-            Log.e(TAG,"Sizing " + mBST.size());
-            mBST.add(_add);
+    //alt
+  /*  public void addint(int _add) {
+        if (mBST.contains(_add)) {
             return;
         }
-        Log.e(TAG,"Adding bevor ");
-        int i = 0;
-        while (i < mBST.size()) {
-            if (mBST.elementAt(i) == null) {
-                mBST.insertElementAt(i,_add);
+        Log.e(TAG, "add ::" + _add);
+        if (mBST.contains(_add)) {
+            return;
+        }
+        System.out.println("size" + mBST.size());
+        if (mBST.size() == 0) {
+            mBST.add(_add);
+            init(0, 4);
+            return;
+        }
+
+
+        int size = mBST.size();
+        int j = 1;
+        while (j < mBST.size()) {
+            System.out.println(j + " -element :: " + mBST.elementAt(j));
+            if (mBST.elementAt(j) < 0) {
+                mBST.add(-1);
+                mBST.add(-1);
+                mBST.removeElementAt(j);
+                mBST.insertElementAt(_add, j);
+
                 return;
             }
-            if (mBST.elementAt(i) > _add) {
-                i = i*2;
+            if (mBST.elementAt(j) > _add) {
+                j = j * 2;
+                System.out.println("left" + j);
+            } else if (mBST.elementAt(j) < _add) {
+                j = j * 2 + 1;
+                System.out.println("right" + j);
             }
-            if (mBST.elementAt(i) < _add) {
-                i = i*2 + 1;
-            }
-            Log.e(TAG,"i=" + i);
+
         }
-        Log.e(TAG,"Adding after ");
+        Log.e(TAG, "Adding after ");
 
         return;
+    }*/
+    //neu
+    public void addNode(int _add){
+        buildTree(new BSTNode(_add));
+        mBST.add(_add);
     }
+    public void buildTree(BSTNode _node){
+        if(root == null){
+            root = _node;
+            Log.e(TAG,"root");
+        }else{
+
+            BSTNode temp = root;
+            while (temp != null){
+                Log.e(TAG,"BuildTree :: " + temp.element + "node" + _node.element);
+                if (_node.element > temp.element) {
+                    temp = temp.right;
+                    Log.i(TAG,"right");
+                } else if (_node.element < temp.element) {
+                    temp = temp.left;
+                    Log.i(TAG,"left");}
+            }
+            temp = _node;
+            Log.e(TAG,"BuildTree");
+        }
+
+    }
+
     // fertrig machen
-    public boolean remove(int _rem){
-        if (!mBST.contains(_rem)){
-            // print: object doesn't exist
-            return false;
-        }
-        int i = 0;
-        while (i < mBST.size() && mBST.elementAt(i) != _rem){
-            if(_rem < mBST.elementAt(i) ){
-                i = i * 2 ;
-            }
-            if(_rem > mBST.elementAt(i) ){
-                i = i * 2 +1;
-            }
-        }
-        if (!hasChild(i)){
-            mBST.removeElementAt(i);
-            return true;
-        }
-
-
-
-
-        return true;
+    public void removeNode(int _element){
+        if(mBST.contains(_element)){return;}
     }
 
-    private int getMin(){
+    private int getMin() {
         mBinding.activityBSTTitelText.setText("min");
-        if (mBST.size()==0){
+        if (mBST.size() == 0) {
             mBinding.ActivityBSTValueText.setText("-");
             return 0;
         }
         int min = Integer.MAX_VALUE;
-        for (int i = 0 ;i< mBST.size(); i++){
-            if(mBST.elementAt(i) < min){
+        for (int i = 0; i < mBST.size(); i++) {
+            if (mBST.elementAt(i) < min) {
                 min = mBST.elementAt(i);
             }
         }
 
-        mBinding.ActivityBSTValueText.setText( String.format("%s", min));
+        mBinding.ActivityBSTValueText.setText(String.format("%s", min));
         return 0;
     }
-    private int getMax(){
+
+    private int getMax() {
         mBinding.activityBSTTitelText.setText("max");
-        if (mBST.size()==0){
+        if (mBST.size() == 0) {
             mBinding.ActivityBSTValueText.setText("-");
             return 0;
         }
         int max = Integer.MIN_VALUE;
-        for (int i = 0 ;i< mBST.size(); i++){
-            if(mBST.elementAt(i) > max){
+        for (int i = 0; i < mBST.size(); i++) {
+            if (mBST.elementAt(i) > max) {
                 max = mBST.elementAt(i);
             }
         }
-        mBinding.ActivityBSTValueText.setText( String.format("%s", max));
+        mBinding.ActivityBSTValueText.setText(String.format("%s", max));
         return 0;
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -197,51 +227,63 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
     @Override
     public void onClick(View view) {
-        if(view == mBinding.activityBSTSize){
-            Log.i(TAG, "Size "+  mBST.size());
+        if (view == mBinding.activityBSTSize) {
+            Log.i(TAG, "Size " + mBST.size());
+            fillOder();
             mBinding.activityBSTTitelText.setText("Size");
-            mBinding.ActivityBSTValueText.setText( String.format("%s", mBST.size()));
+            mBinding.ActivityBSTValueText.setText(String.format("%s", mBSTOrder.size()));
         }
-        if(view == mBinding.activityBSTAdd){
+        if (view == mBinding.activityBSTAdd) {
             Log.i(TAG, "Add");
             //add;
         }
-        if(view == mBinding.activityBSTRandom){
+        if (view == mBinding.activityBSTRandom) {
             Log.i(TAG, "Random");
             addRandom();
         }
-        if(view == mBinding.activityBSTMax){
+        if (view == mBinding.activityBSTMax) {
             Log.i(TAG, "Max");
             getMax();
         }
-        if(view == mBinding.activityBSTMin){
+        if (view == mBinding.activityBSTMin) {
             Log.i(TAG, "Min");
             getMin();
         }
-        if(view == mBinding.activityBSTRemove){
+        if (view == mBinding.activityBSTRemove) {
             Log.i(TAG, "Remove");
             mBinding.activityBSTTitelText.setText("Remove Last");
-            if (!mBST.isEmpty()){
-                mBinding.ActivityBSTValueText.setText( String.format("%s", mBST.lastElement()));
-                mBST.remove(mBST.size()-1);
-            }else{
+            if (!mBST.isEmpty()) {
+               // mBinding.ActivityBSTValueText.setText(String.format("%s", mBST.lastElement()));
+               // mBST.remove(mBST.size() - 1);
+            } else {
                 Toast.makeText(this, R.string.Stack_Activity_Text_Empty, Toast.LENGTH_SHORT).show();
-                mBinding.ActivityBSTValueText.setText( "-");}
+                mBinding.ActivityBSTValueText.setText("-");
+            }
 
         }
-        if(view == mBinding.activityBSTClear){
+        if (view == mBinding.activityBSTClear) {
             Log.i(TAG, "Clear");
             mBST.clear();
         }
-        if(view == mBinding.activityBSTVector){
+        if (view == mBinding.activityBSTVector) {
             Log.i(TAG, "Inorder :: ");
-            mBinding.ActivityBSTOderText.setText(mBST.toString()+ ", capacity : " +   mBST.capacity());
+            fillOder();
+            mBinding.ActivityBSTOderText.setText(mBSTOrder.toString());
+
 
         }
+
+
     }
 
-
-
+    public void fillOder() {
+        mBSTOrder.clear();
+        for (int i = 0; i < mBST.size(); i++) {
+            if (mBST.elementAt(i) > -1) {
+                mBSTOrder.add(mBST.elementAt(i));
+            }
+        }
+    }
 
 
 }
