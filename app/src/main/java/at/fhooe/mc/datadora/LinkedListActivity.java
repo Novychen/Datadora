@@ -4,15 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.collection.ArraySet;
-import androidx.constraintlayout.motion.widget.MotionLayout;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -101,6 +98,12 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBinding = null;
+    }
+
+    @Override
     public void onClick(View _v) {
 
         if(_v == mBinding.LinkedListActivityAddCheck) {
@@ -115,7 +118,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         } else if(_v == mBinding.LinkedListActivityDeleteCheck) {
 
             if (mBinding.LinkedListActivityDeleteAllRadioButton.isChecked()){
-                deleteAll(); //clear
+                clear();
             } else if (mBinding.LinkedListActivityDeleteFirstRadioButton.isChecked()) {
                 deleteFirst();
             } else if (mBinding.LinkedListActivityDeleteLastRadioButton.isChecked()) {
@@ -190,7 +193,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             if(mBinding.LinkedListActivityDeletePositionSlider.getValue() == mLinkedList.size()) {
                 mBinding.LinkedListActivityDeletePositionSlider.setValue(mLinkedList.size() - 1);
             }
-            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size()-1);
+            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1);
 
             mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
             mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.VISIBLE);
@@ -261,12 +264,11 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         mBinding.LinkedListActivityLinkedListView.insertAt(value, pos);
     }
 
-    private void deleteAll(){
+    private void clear(){
 
         if(!mLinkedList.isEmpty()){
-            mBinding.LinkedListActivityLinkedListView.deleteAll();
+            mBinding.LinkedListActivityLinkedListView.clear();
             mLinkedList.clear();
-
         } else {
             isEmptyMessage();
         }
@@ -302,7 +304,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mLinkedList.remove(pos);
 
         } else if (mLinkedList.size() == 1){
-            deleteAll();
+            clear();
         } else {
             isEmptyMessage();
         }
