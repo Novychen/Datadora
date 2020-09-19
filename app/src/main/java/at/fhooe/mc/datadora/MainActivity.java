@@ -17,7 +17,6 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import at.fhooe.mc.datadora.databinding.ActivityMainBinding;
-import at.fhooe.mc.datadora.databinding.ActivityStackBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

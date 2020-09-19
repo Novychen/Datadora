@@ -33,6 +33,8 @@ public class LinkedListView extends View {
     private static final String PROPERTY_ALPHA_PREPEND = "PROPERTY_ALPHA_PREPEND";
     private static final String PROPERTY_TRANSLATE_Y_INSERT = "PROPERTY_TRANSLATE_Y_INSERT";
     private static final String PROPERTY_ALPHA_INSERT = "PROPERTY_ALPHA_INSERT";
+    private static final String PROPERTY_TRANSLATE_Y_DELETE_AT = "PROPERTY_TRANSLATE_Y_DELETE_AT";
+    private static final String PROPERTY_ALPHA_DELETE_AT = "PROPERTY_ALPHA_DELETE_AT";
     private static final String PROPERTY_TRANSLATE_Y_RANDOM = "PROPERTY_TRANSLATE_RANDOM";
     private static final String PROPERTY_ALPHA_RANDOM = "PROPERTY_ALPHA_RANDOM";
 
@@ -54,7 +56,14 @@ public class LinkedListView extends View {
     // Animator for the alpha value of the inserted element
     private ValueAnimator mAnimatorInsertAlpha = new ValueAnimator();
 
+    // Animator for the created random list
     private ValueAnimator mAnimatorRandom  = new ValueAnimator();
+
+    // Animator for the deletedAt element
+    private  ValueAnimator mAnimatorDeleteAt = new ValueAnimator();
+
+    // Animator for the alpha value of the deletedAt element
+    private ValueAnimator mAnimatorDeleteAtAlpha = new ValueAnimator();
 
     // the current translation on the y-axis - used for the append animation
     private  int mTranslateYAppend;
@@ -73,6 +82,12 @@ public class LinkedListView extends View {
 
     // the current alpha value - used for the insertAt animation
     private int mAlphaInsert;
+
+    // the current translation on the y-axis - used for the deleteAt animation
+    private int mTranslateYDeleteAt;
+
+    // the current alpha value - used for the deleteAt animation
+    private int mAlphaDeleteAt;
 
     // the current alpha value - used for the random animation
     private int mAlphaRandom;
@@ -303,10 +318,10 @@ public class LinkedListView extends View {
 
     protected void deleteAt(int _pos) {
         mCurrentOperation = Operation.DELETE_AT;
-
-        mLinkedList.remove(_pos);
-        mLinkedListNumbers.remove(_pos);
         reScale();
+        mPosition = _pos;
+        mAnimatorDeleteAt.start();
+        mAnimatorDeleteAtAlpha.start();
     }
 
     //TODO gerald: the 3 getter operations, then predecessor and successor
@@ -453,6 +468,54 @@ public class LinkedListView extends View {
             }
         });
 
+        PropertyValuesHolder propertyTranslateYDeleteAt = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_DELETE_AT, 0, -number - 10);
+        PropertyValuesHolder propertyAlphaDeleteAt = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_DELETE_AT, 255, 0);
+
+        mAnimatorDeleteAt.setValues(propertyTranslateYDeleteAt);
+        mAnimatorDeleteAt.setDuration(900);
+        mAnimatorDeleteAt.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorDeleteAt.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mTranslateYDeleteAt = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_DELETE_AT);
+                invalidate();
+            }
+        });
+
+        mAnimatorDeleteAtAlpha.setValues(propertyAlphaDeleteAt);
+        mAnimatorDeleteAtAlpha.setDuration(700);
+        mAnimatorDeleteAtAlpha.setInterpolator(new AccelerateInterpolator());
+        mAnimatorDeleteAtAlpha.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAlphaDeleteAt = (int) animation.getAnimatedValue(PROPERTY_ALPHA_DELETE_AT);
+                invalidate();
+            }
+        });
+
+        mAnimatorDeleteAt.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                    mLinkedList.remove(mPosition);
+                    mLinkedListNumbers.remove(mPosition);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+
         PropertyValuesHolder propertyTranslateYRandom = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_RANDOM, -200, 0);
         PropertyValuesHolder propertyAlphaRandom = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_RANDOM, 0, 255);
 
@@ -528,12 +591,22 @@ public class LinkedListView extends View {
                 if (mPosition + 1 == mLinkedListNumbers.size()) {
                     mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale) ;
                 }
-
                 if (i == mPosition) {
                     mItemTextPaint.setAlpha(mAlphaInsert);
                     mItemPaint.setAlpha(mAlphaInsert);
                 } else if (i > mPosition) {
                     mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale) - mTranslateYInsert;
+                    mItemTextPaint.setAlpha(255);
+                    mItemPaint.setAlpha(255);
+                }
+            }
+
+            if (mCurrentOperation == Operation.DELETE_AT) {
+                if (i == mPosition) {
+                    mItemTextPaint.setAlpha(mAlphaDeleteAt);
+                    mItemPaint.setAlpha(mAlphaDeleteAt);
+                } else if (i > mPosition) {
+                    mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale) - mTranslateYDeleteAt;
                     mItemTextPaint.setAlpha(255);
                     mItemPaint.setAlpha(255);
                 }

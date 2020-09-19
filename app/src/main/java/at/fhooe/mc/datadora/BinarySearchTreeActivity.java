@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
-import org.w3c.dom.Node;
-
 import java.util.Vector;
 
 import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
@@ -25,10 +23,12 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     private Vector<Integer> mBST = new Vector<>();
     private Vector<Integer> mBSTOrder = new Vector<>();
     private BSTNode root;
-    public class BSTNode{
+
+    public class BSTNode {
         BSTNode left;
         BSTNode right;
         int element;
+
         public BSTNode(){
             left = null;
             right = null;
@@ -48,7 +48,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             this.right = right;
         }
     };
-
 
     private ActivityBinarySearchTreeBinding mBinding;
 
@@ -157,7 +156,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     public void addNode(int _add){
         buildTree(new BSTNode(_add));
         mBST.add(_add);
+        BSTNode n = root;
     }
+
     public void buildTree(BSTNode _node){
         if(root == null){
             root = _node;
@@ -179,7 +180,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         }
 
     }
-
     // fertrig machen
     public void removeNode(int _element){
         if(mBST.contains(_element)){return;}
@@ -240,6 +240,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         if (view == mBinding.activityBSTRandom) {
             Log.i(TAG, "Random");
             addRandom();
+            for(int i = 0; i < mBST.size(); i++) {
+                Log.i(TAG, "Vector: " + mBST.get(i));
+            }
         }
         if (view == mBinding.activityBSTMax) {
             Log.i(TAG, "Max");
@@ -270,10 +273,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             fillOder();
             mBinding.ActivityBSTOderText.setText(mBSTOrder.toString());
 
-
         }
-
-
     }
 
     public void fillOder() {
