@@ -1,26 +1,19 @@
 package at.fhooe.mc.datadora;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.google.android.material.slider.LabelFormatter;
-import com.google.android.material.slider.Slider;
-
-import java.text.NumberFormat;
-import java.util.Locale;
 
 import at.fhooe.mc.datadora.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityMainBinding mBinding;
+
+    //TODO: Sync all animations
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

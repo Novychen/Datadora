@@ -312,7 +312,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
 
     private void getSize(){
-
         if(!mLinkedList.isEmpty()){
             mBinding.LinkedListActivityLinkedListView.getSize();
             new Handler().postDelayed(new Runnable() {
@@ -321,7 +320,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                     mBinding.LinkedListActivityReturnValue.setText(
                             String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size()));
                 }
-            }, 500);
+            }, (600 * mLinkedList.size() - 1));
 
         } else {
             isEmptyMessage();
@@ -362,8 +361,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                 public void run() {
                     mBinding.LinkedListActivityReturnValue.setText(
                             String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(
-                                    mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size() - 1
-                            ).toString()));
+                                    mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size() - 1).toString()));
                 }
             }, 500);
         } else {
@@ -372,8 +370,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     private void getAt() {
-
-
         if(!mLinkedList.isEmpty()){
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -384,8 +380,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                     Log.d(TAG, "----- position getAt: "+ pos);
 
                     mBinding.LinkedListActivityReturnValue.setText(
-                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(pos).toString())); //TODO check
-                    //todo am i passing the value as index?
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(pos).toString()));
                 }
             }, 500);
 
@@ -393,7 +388,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             isEmptyMessage();
         }
     }
-
 
     public void isEmptyMessage(){
         Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
@@ -406,14 +400,14 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
      */
     private void random(){
         mBinding.LinkedListActivityReturnValue.setText("");
-        createRandomQueue();
+        createRandomList();
         mBinding.LinkedListActivityLinkedListView.random(mLinkedList);
     }
 
     /**
      * Creates a random queue with its size being min 4 and max 7
      */
-    private void createRandomQueue(){
+    private void createRandomList(){
         mLinkedList.clear();
         Random r = new Random();
         int size = 4 + r.nextInt(6);
@@ -449,7 +443,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+    public void onCheckedChanged(RadioGroup _radioGroup, int _i) {
         if (mBinding.LinkedListActivityTypeHeadRadioButton.isChecked()) {
             head();
         } else if (mBinding.LinkedListActivityTypeTailRadioButton.isChecked()) {
