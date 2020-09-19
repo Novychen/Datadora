@@ -20,6 +20,7 @@ import java.util.Vector;
 
 import at.fhooe.mc.datadora.databinding.ActivityQueueBinding;
 
+
 public class QueueActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "QueueActivity : ";
