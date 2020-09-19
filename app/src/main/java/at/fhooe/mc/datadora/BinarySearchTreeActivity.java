@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Random;
 import java.util.Vector;
 
 import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
@@ -20,37 +21,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     private static String TAG = "BSTActivity :: ";
 
     private TextView mTextView;
-    private Vector<Integer> mBST = new Vector<>();
-    private Vector<Integer> mBSTOrder = new Vector<>();
-    private BSTNode root;
-
-    public class BSTNode {
-        BSTNode left;
-        BSTNode right;
-        int element;
-
-        public BSTNode(){
-            left = null;
-            right = null;
-            element = Integer.MIN_VALUE;
-        }
-        public BSTNode(int _element){
-            left = null;
-            right = null;
-            element = _element;
-        }
-
-        public void setLeft(BSTNode left) {
-            this.left = left;
-        }
-
-        public void setRight(BSTNode right) {
-            this.right = right;
-        }
-    };
-
+    private BinarySearchTree mTree = new BinarySearchTree();
+    private Vector<Integer> mTreeUser = new Vector<>();
     private ActivityBinarySearchTreeBinding mBinding;
-
 
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
@@ -77,147 +50,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         mBinding.activityBSTVector.setOnClickListener(this);
     }
 
- /*   private void init(int point, int count) {
-        for (int i = point; i < count; i++) {
-            mBST.add(-1);
-        }
-    }
-
-    public int getSize() {
-        return mBST.size();
-    }*/
-
-    public void addRandom() {
-        int i = (int) (Math.random() * 100);
-        mBinding.activityBSTTitelText.setText("Random");
-        mBinding.ActivityBSTValueText.setText(String.format("%s", i));
-        addNode(i);
-    }
-
-    private boolean hasLeftChild(int _position) {
-        return mBST.elementAt(_position * 2) != null;
-    }
-
-    private boolean hasRightChild(int _position) {
-        return mBST.elementAt(_position * 2 + 1) != null;
-    }
-
-    private boolean hasChild(int _position) {
-        return hasLeftChild(_position) || hasRightChild(_position);
-    }
-
-
-
-
-    //adds content;
-    //alt
-  /*  public void addint(int _add) {
-        if (mBST.contains(_add)) {
-            return;
-        }
-        Log.e(TAG, "add ::" + _add);
-        if (mBST.contains(_add)) {
-            return;
-        }
-        System.out.println("size" + mBST.size());
-        if (mBST.size() == 0) {
-            mBST.add(_add);
-            init(0, 4);
-            return;
-        }
-
-
-        int size = mBST.size();
-        int j = 1;
-        while (j < mBST.size()) {
-            System.out.println(j + " -element :: " + mBST.elementAt(j));
-            if (mBST.elementAt(j) < 0) {
-                mBST.add(-1);
-                mBST.add(-1);
-                mBST.removeElementAt(j);
-                mBST.insertElementAt(_add, j);
-
-                return;
-            }
-            if (mBST.elementAt(j) > _add) {
-                j = j * 2;
-                System.out.println("left" + j);
-            } else if (mBST.elementAt(j) < _add) {
-                j = j * 2 + 1;
-                System.out.println("right" + j);
-            }
-
-        }
-        Log.e(TAG, "Adding after ");
-
-        return;
-    }*/
-    //neu
-    public void addNode(int _add){
-        buildTree(new BSTNode(_add));
-        mBST.add(_add);
-        BSTNode n = root;
-    }
-
-    public void buildTree(BSTNode _node){
-        if(root == null){
-            root = _node;
-            Log.e(TAG,"root");
-        }else{
-
-            BSTNode temp = root;
-            while (temp != null){
-                Log.e(TAG,"BuildTree :: " + temp.element + "node" + _node.element);
-                if (_node.element > temp.element) {
-                    temp = temp.right;
-                    Log.i(TAG,"right");
-                } else if (_node.element < temp.element) {
-                    temp = temp.left;
-                    Log.i(TAG,"left");}
-            }
-            temp = _node;
-            Log.e(TAG,"BuildTree");
-        }
-
-    }
-    // fertrig machen
-    public void removeNode(int _element){
-        if(mBST.contains(_element)){return;}
-    }
-
-    private int getMin() {
-        mBinding.activityBSTTitelText.setText("min");
-        if (mBST.size() == 0) {
-            mBinding.ActivityBSTValueText.setText("-");
-            return 0;
-        }
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < mBST.size(); i++) {
-            if (mBST.elementAt(i) < min) {
-                min = mBST.elementAt(i);
-            }
-        }
-
-        mBinding.ActivityBSTValueText.setText(String.format("%s", min));
-        return 0;
-    }
-
-    private int getMax() {
-        mBinding.activityBSTTitelText.setText("max");
-        if (mBST.size() == 0) {
-            mBinding.ActivityBSTValueText.setText("-");
-            return 0;
-        }
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i < mBST.size(); i++) {
-            if (mBST.elementAt(i) > max) {
-                max = mBST.elementAt(i);
-            }
-        }
-        mBinding.ActivityBSTValueText.setText(String.format("%s", max));
-        return 0;
-    }
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -228,62 +60,91 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View view) {
         if (view == mBinding.activityBSTSize) {
-            Log.i(TAG, "Size " + mBST.size());
-            fillOder();
             mBinding.activityBSTTitelText.setText("Size");
-            mBinding.ActivityBSTValueText.setText(String.format("%s", mBSTOrder.size()));
-        }
-        if (view == mBinding.activityBSTAdd) {
-            Log.i(TAG, "Add");
-            //add;
-        }
-        if (view == mBinding.activityBSTRandom) {
-            Log.i(TAG, "Random");
-            addRandom();
-            for(int i = 0; i < mBST.size(); i++) {
-                Log.i(TAG, "Vector: " + mBST.get(i));
-            }
-        }
-        if (view == mBinding.activityBSTMax) {
-            Log.i(TAG, "Max");
-            getMax();
-        }
-        if (view == mBinding.activityBSTMin) {
-            Log.i(TAG, "Min");
-            getMin();
-        }
-        if (view == mBinding.activityBSTRemove) {
-            Log.i(TAG, "Remove");
+            mBinding.ActivityBSTValueText.setText(String.format("%s", mTree.size()));
+        } else if (view == mBinding.activityBSTAdd) {
+            add(12); //TODO: take user input as number
+            mTreeUser.add(12);
+        } else if (view == mBinding.activityBSTRandom) {
+            random();
+        } else if (view == mBinding.activityBSTMax) {
+            max();
+        } else if (view == mBinding.activityBSTMin) {
+            min();
+        } else if (view == mBinding.activityBSTRemove) {
             mBinding.activityBSTTitelText.setText("Remove Last");
-            if (!mBST.isEmpty()) {
-               // mBinding.ActivityBSTValueText.setText(String.format("%s", mBST.lastElement()));
-               // mBST.remove(mBST.size() - 1);
+            /* if (!mTree.isEmpty()) { //TODO: let BinarySearchTree implement isEmpty
+                // mBinding.ActivityBSTValueText.setText(String.format("%s", mBST.lastElement()));
+                // mBST.remove(mBST.size() - 1);
             } else {
                 Toast.makeText(this, R.string.Stack_Activity_Text_Empty, Toast.LENGTH_SHORT).show();
                 mBinding.ActivityBSTValueText.setText("-");
-            }
-
-        }
-        if (view == mBinding.activityBSTClear) {
-            Log.i(TAG, "Clear");
-            mBST.clear();
-        }
-        if (view == mBinding.activityBSTVector) {
-            Log.i(TAG, "Inorder :: ");
-            fillOder();
-            mBinding.ActivityBSTOderText.setText(mBSTOrder.toString());
-
+            } */
+        } else if (view == mBinding.activityBSTClear) {
+            clear();
+        } else if (view == mBinding.activityBSTVector) {
+            mBinding.ActivityBSTOderText.setText(mTree.toString());
         }
     }
 
-    public void fillOder() {
-        mBSTOrder.clear();
-        for (int i = 0; i < mBST.size(); i++) {
-            if (mBST.elementAt(i) > -1) {
-                mBSTOrder.add(mBST.elementAt(i));
-            }
+    private void clear() {
+        //TODO: let BinarySearchTree implement clear
+    }
+
+    private void add(int _value) {
+        mTree.insert(_value);
+    }
+
+    private int max() {
+        return mTree.max();
+    }
+
+    private int min() {
+        return mTree.min();
+    }
+
+    private void random() {
+        Random r = new Random();
+        int low = -100;
+        int high = 101;
+        int result = r.nextInt(high-low) + low;
+
+        mTree.insert(result);
+        mTreeUser.add(result);
+    }
+
+    /**
+     * Takes an array and transforms it to a tree
+     * @param _array the array that is transformed - needs to be in the same order as the user put their values in
+     */
+    protected void fromArrayToTree(int[] _array){
+
+        //TODO: clear mTree to be sure no false data is in it
+
+        for(int i = 0; i < _array.length; i++) {
+            mTree.insert(_array[i]);
         }
     }
 
+    /**
+     * Takes an array and transforms it to a tree
+     * @param _array the array that is transformed - needs to be inorder!
+     * @param _begin the begin position of the array
+     * @param _end the end position of the array
+     * @return the root node of the generated tree
+     */
+    protected BinaryTreeNode fromArrayToTree(int[] _array, int _begin, int _end){
 
+        if (_begin > _end) {
+            return null;
+        }
+
+        int mid = (_begin + _end) / 2;
+        BinaryTreeNode node = new BinaryTreeNode(_array[mid]);
+
+        node.left = fromArrayToTree(_array, _begin, mid - 1);
+        node.right = fromArrayToTree(_array, mid + 1, _end);
+
+        return node;
+    }
 }
