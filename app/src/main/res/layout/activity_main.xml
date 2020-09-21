@@ -21,24 +21,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:text="@string/All_Data_Activity_Queue"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Button_LinkedList" />
 
     <Button
         android:id="@+id/Main_Activity_Button_LinkedList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
         android:text="@string/All_Data_Activity_LinkedList"
-        app:layout_constraintBottom_toTopOf="@+id/Main_Activity_Button_Queue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Button_Queue"
         app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Button_Queue" />
+        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Button_Queue"
+        app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Toolbar" />
 
     <Button
         android:id="@+id/main_Activity_Button_BST"

@@ -1,27 +1,19 @@
 package at.fhooe.mc.datadora;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.google.android.material.slider.LabelFormatter;
-import com.google.android.material.slider.Slider;
-
-import java.text.NumberFormat;
-import java.util.Locale;
 
 import at.fhooe.mc.datadora.databinding.ActivityMainBinding;
-import at.fhooe.mc.datadora.databinding.ActivityStackBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityMainBinding mBinding;
+
+    //TODO: Sync all animations
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBinding.MainActivityButtonQueue.setOnClickListener(this);
         mBinding.MainActivityButtonLinkedList.setOnClickListener(this);
         mBinding.mainActivityButtonBST.setOnClickListener(this);
-
     }
 
     @Override
@@ -52,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v == mBinding.MainActivityButtonLinkedList) {
             Intent i = new Intent(this, LinkedListActivity.class);
             startActivity(i);
-        }else if(v==mBinding.mainActivityButtonBST){
+        }else if(v == mBinding.mainActivityButtonBST){
             Intent i = new Intent(this,BinarySearchTreeActivity.class);
             startActivity(i);
         }

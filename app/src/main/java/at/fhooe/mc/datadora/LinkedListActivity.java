@@ -4,15 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.collection.ArraySet;
-import androidx.constraintlayout.motion.widget.MotionLayout;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -76,12 +73,34 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             }
         });
 
+        Slider sliderDelete = mBinding.LinkedListActivityDeletePositionSlider;
+        sliderDelete.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                mBinding.LinkedListActivityDeleteAtRadioButton.setChecked(true);
+            }
+        });
+
+        Slider sliderGet = mBinding.LinkedListActivityGetPositionSlider;
+        sliderGet.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                mBinding.LinkedListActivityGetAtRadioButton.setChecked(true);
+            }
+        });
+
         mBinding.LinkedListActivityAddCheck.setOnClickListener(this);
         mBinding.LinkedListActivityDeleteCheck.setOnClickListener(this);
         mBinding.LinkedListActivityGetCheck.setOnClickListener(this);
         mBinding.LinkedListActivityTypeRadioGroup.setOnCheckedChangeListener(this);
         mBinding.LinkedListActivitySwitch.setOnCheckedChangeListener(this);
         mBinding.LinkedListActivityRandomBackground.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBinding = null;
     }
 
     @Override
@@ -99,7 +118,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         } else if(_v == mBinding.LinkedListActivityDeleteCheck) {
 
             if (mBinding.LinkedListActivityDeleteAllRadioButton.isChecked()){
-                deleteAll(); //clear
+                clear();
             } else if (mBinding.LinkedListActivityDeleteFirstRadioButton.isChecked()) {
                 deleteFirst();
             } else if (mBinding.LinkedListActivityDeleteLastRadioButton.isChecked()) {
@@ -158,35 +177,14 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mBinding.LinkedListActivityAddPositionSlider.setStepSize(1);
 
             mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.INVISIBLE);
-            mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.GONE);
 
             mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.INVISIBLE);
-            mBinding.LinkedListActivityGetPositionZero.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
 
         } else if (mLinkedList.size() == 2) {
 
             mBinding.LinkedListActivityAddPositionSlider.setValueTo(mLinkedList.size());
-
-            mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.GONE);
-            mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.VISIBLE);
-            mBinding.LinkedListActivityDeletePositionSlider.setValueFrom(0);
-            mBinding.LinkedListActivityDeletePositionSlider.setStepSize(1);
-
-            if(mBinding.LinkedListActivityDeletePositionSlider.getValue() == mLinkedList.size()) {
-                mBinding.LinkedListActivityDeletePositionSlider.setValue(mLinkedList.size() - 1);
-            }
-            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size()-1);
-
-            mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
-            mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.VISIBLE);
-            mBinding.LinkedListActivityGetPositionSlider.setValueFrom(0);
-            mBinding.LinkedListActivityGetPositionSlider.setStepSize(1);
-            mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
-
-        } else {
-
-            mBinding.LinkedListActivityAddPositionSlider.setValueTo(mLinkedList.size());
-            mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
 
             mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.GONE);
             mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.VISIBLE);
@@ -197,6 +195,33 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             }
             mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1);
 
+            mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
+            mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityGetPositionSlider.setValueFrom(0);
+            mBinding.LinkedListActivityGetPositionSlider.setStepSize(1);
+            mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
+
+        } else {
+            mBinding.LinkedListActivityAddPositionZero.setVisibility(View.GONE);
+            mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityAddPositionSlider.setValueFrom(0);
+            mBinding.LinkedListActivityAddPositionSlider.setStepSize(1);
+            mBinding.LinkedListActivityAddPositionSlider.setValueTo(mLinkedList.size() - 1);
+
+            mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
+            mBinding.LinkedListActivityGetPositionSlider.setValueFrom(0);
+            mBinding.LinkedListActivityGetPositionSlider.setStepSize(1);
+            mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
+
+            mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.GONE);
+            mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.VISIBLE);
+            mBinding.LinkedListActivityDeletePositionSlider.setValueFrom(0);
+            mBinding.LinkedListActivityDeletePositionSlider.setStepSize(1);
+            if(mBinding.LinkedListActivityDeletePositionSlider.getValue() == mLinkedList.size()) {
+                mBinding.LinkedListActivityDeletePositionSlider.setValue(mLinkedList.size() - 1);
+            }
+            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1);
         }
     }
 
@@ -239,17 +264,14 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         mBinding.LinkedListActivityLinkedListView.insertAt(value, pos);
     }
 
-    private void deleteAll(){
+    private void clear(){
 
         if(!mLinkedList.isEmpty()){
-            mBinding.LinkedListActivityLinkedListView.deleteAll();
+            mBinding.LinkedListActivityLinkedListView.clear();
             mLinkedList.clear();
-
         } else {
             isEmptyMessage();
         }
-
-
     }
 
     private void deleteFirst() {
@@ -261,7 +283,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         } else {
             isEmptyMessage();
         }
-
     }
 
     private void deleteLast() {
@@ -273,7 +294,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         } else {
             isEmptyMessage();
         }
-
     }
 
     private void deleteAt() {
@@ -283,11 +303,8 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mBinding.LinkedListActivityLinkedListView.deleteAt(pos);
             mLinkedList.remove(pos);
 
-            Log.d(TAG, "----- position deleteAt: "+ pos);
-
         } else if (mLinkedList.size() == 1){
-            deleteAll();
-            Log.d(TAG, "----- position deleteAt: last Element");
+            clear();
         } else {
             isEmptyMessage();
         }
@@ -295,7 +312,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
 
     private void getSize(){
-
         if(!mLinkedList.isEmpty()){
             mBinding.LinkedListActivityLinkedListView.getSize();
             new Handler().postDelayed(new Runnable() {
@@ -304,8 +320,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                     mBinding.LinkedListActivityReturnValue.setText(
                             String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size()));
                 }
-            }, 500);
-
+            }, (600 * mLinkedList.size() - 1));
 
         } else {
             isEmptyMessage();
@@ -346,20 +361,15 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                 public void run() {
                     mBinding.LinkedListActivityReturnValue.setText(
                             String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(
-                                    mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size() - 1
-                            ).toString()));
+                                    mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size() - 1).toString()));
                 }
             }, 500);
         } else {
             isEmptyMessage();
         }
-
-
     }
 
     private void getAt() {
-
-
         if(!mLinkedList.isEmpty()){
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -371,16 +381,13 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
                     mBinding.LinkedListActivityReturnValue.setText(
                             String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(pos).toString()));
-                    //todo am i passing the value as index?
                 }
             }, 500);
 
         } else {
             isEmptyMessage();
         }
-
     }
-
 
     public void isEmptyMessage(){
         Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
@@ -393,14 +400,14 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
      */
     private void random(){
         mBinding.LinkedListActivityReturnValue.setText("");
-        createRandomQueue();
+        createRandomList();
         mBinding.LinkedListActivityLinkedListView.random(mLinkedList);
     }
 
     /**
      * Creates a random queue with its size being min 4 and max 7
      */
-    private void createRandomQueue(){
+    private void createRandomList(){
         mLinkedList.clear();
         Random r = new Random();
         int size = 4 + r.nextInt(6);
@@ -436,7 +443,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+    public void onCheckedChanged(RadioGroup _radioGroup, int _i) {
         if (mBinding.LinkedListActivityTypeHeadRadioButton.isChecked()) {
             head();
         } else if (mBinding.LinkedListActivityTypeTailRadioButton.isChecked()) {

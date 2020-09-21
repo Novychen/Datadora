@@ -31,7 +31,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     //TODO: Styles, Themes, ...!!
     //TODO: Resize - animation (?) -> Animation clear -> too ugly when many elements
     //TODO: ENUM for operations (?)
-    //TODO: Make size (stack size) propotional to screensize
     //TODO: Better UI
 
     private Vector<Integer> mStack = new Vector<>();
