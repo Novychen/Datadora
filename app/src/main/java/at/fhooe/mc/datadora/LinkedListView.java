@@ -5,6 +5,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -46,6 +48,11 @@ public class LinkedListView extends View {
     private static final String PROPERTY_ALPHA_DELETE_FIRST = "PROPERTY_ALPHA_DELETE_FIRST";
     private static final String PROPERTY_TRANSLATE_Y_RANDOM = "PROPERTY_TRANSLATE_RANDOM";
     private static final String PROPERTY_ALPHA_RANDOM = "PROPERTY_ALPHA_RANDOM";
+
+    //Shared Preferences setup
+    private static final String SP_FILE_KEY = "LinkedListSharedPreferenceFile";
+    private static final String SP_VALUE_KEY = "DataDoraLinkedListKey2020"; //TODO: make this to R.string?
+    SharedPreferences mSharedPreferences;
 
     Paint mItemPaint = new Paint();
     Paint mTypePaint = new Paint();
@@ -273,6 +280,13 @@ public class LinkedListView extends View {
 
     protected void init(LinkedListActivity _activity) {
         mActivity = _activity;
+
+        //TODO: the activity is here - initialize some sp stuff here?
+
+        //Context context = _activity; //getActivity();
+        mSharedPreferences = _activity.getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
+
+
     }
 
     protected void sorted(){
@@ -308,11 +322,18 @@ public class LinkedListView extends View {
         mAnimatorPrepend.start();
     }
 
+    //TODO: write to shared pref here
     protected void append(int _value){
         mCurrentOperation = Operation.APPEND;
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(_value);
+
+        SharedPreferences.Editor edt = mSharedPreferences.edit();
+        edt.putInt(SP_VALUE_KEY, _value); //write the user input value to SP
+        edt.apply(); //asynchronous write
+        Log.i(TAG, "append value saved");
+
         reScale();
         mAnimatorAppend.start();
     }
@@ -358,8 +379,6 @@ public class LinkedListView extends View {
         mAnimatorDeleteLast.start();
         reScale();
     }
-
-    //TODO gerald: the 3 getter operations, then predecessor and successor
 
 
     protected void predecessor(){
