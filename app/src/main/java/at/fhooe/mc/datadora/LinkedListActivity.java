@@ -171,6 +171,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.VISIBLE);
             mBinding.LinkedListActivityDeletePositionSlider.setValueFrom(0);
             mBinding.LinkedListActivityDeletePositionSlider.setStepSize(1);
+
             if(mBinding.LinkedListActivityDeletePositionSlider.getValue() == mLinkedList.size()) {
                 mBinding.LinkedListActivityDeletePositionSlider.setValue(mLinkedList.size() - 1);
             }
@@ -196,14 +197,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             }
             mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1);
 
-            /*
-            mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
-            mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.VISIBLE);
-            mBinding.LinkedListActivityGetPositionSlider.setValueFrom(0);
-            mBinding.LinkedListActivityGetPositionSlider.setStepSize(1);
-            mBinding.LinkedListActivityGetPositionSlider.setValueTo(mLinkedList.size() - 1);
-
-             */
         }
     }
 
@@ -290,8 +283,11 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mBinding.LinkedListActivityLinkedListView.deleteAt(pos);
             mLinkedList.remove(pos);
 
+            Log.d(TAG, "----- position deleteAt: "+ pos);
+
         } else if (mLinkedList.size() == 1){
             deleteAll();
+            Log.d(TAG, "----- position deleteAt: last Element");
         } else {
             isEmptyMessage();
         }
@@ -374,7 +370,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                     Log.d(TAG, "----- position getAt: "+ pos);
 
                     mBinding.LinkedListActivityReturnValue.setText(
-                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(pos).toString())); //TODO check
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(pos).toString()));
                     //todo am i passing the value as index?
                 }
             }, 500);
