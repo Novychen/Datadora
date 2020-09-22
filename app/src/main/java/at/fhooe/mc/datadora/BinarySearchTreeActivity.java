@@ -34,20 +34,20 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
         // array eingeben sachen speichern
         // setup Toolbar
-        Toolbar myToolbar = mBinding.BTSActivityToolbar;
+        Toolbar myToolbar = mBinding.BSTActivityToolbar;
         setSupportActionBar(myToolbar);
         myToolbar.inflateMenu(R.menu.menu_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         // Enables Always-on
-        mBinding.activityBSTAdd.setOnClickListener(this);
-        mBinding.activityBSTClear.setOnClickListener(this);
-        mBinding.activityBSTMax.setOnClickListener(this);
-        mBinding.activityBSTMin.setOnClickListener(this);
-        mBinding.activityBSTRandom.setOnClickListener(this);
-        mBinding.activityBSTRemove.setOnClickListener(this);
-        mBinding.activityBSTSize.setOnClickListener(this);
-        mBinding.activityBSTVector.setOnClickListener(this);
+        mBinding.BSTActivityAdd.setOnClickListener(this);
+        mBinding.BSTActivityClear.setOnClickListener(this);
+        mBinding.BSTActivityMax.setOnClickListener(this);
+        mBinding.BSTActivityMin.setOnClickListener(this);
+        mBinding.BSTActivityRandom.setOnClickListener(this);
+        mBinding.BSTActivityRemove.setOnClickListener(this);
+        mBinding.BSTActivitySize.setOnClickListener(this);
+        mBinding.BSTActivityVector.setOnClickListener(this);
     }
 
     @Override
@@ -59,20 +59,20 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
     @Override
     public void onClick(View view) {
-        if (view == mBinding.activityBSTSize) {
-            mBinding.activityBSTTitelText.setText("Size");
-            mBinding.ActivityBSTValueText.setText(String.format("%s", mTree.size()));
-        } else if (view == mBinding.activityBSTAdd) {
+        if (view == mBinding.BSTActivitySize) {
+            mBinding.BSTActivityReturnText.setText("Size");
+            mBinding.BSTActivityReturnValue.setText(String.format("%s", mTree.size()));
+        } else if (view == mBinding.BSTActivityAdd) {
             add(12); //TODO: take user input as number
             mTreeUser.add(12);
-        } else if (view == mBinding.activityBSTRandom) {
+        } else if (view == mBinding.BSTActivityRandom) {
             random();
-        } else if (view == mBinding.activityBSTMax) {
+        } else if (view == mBinding.BSTActivityMax) {
             max();
-        } else if (view == mBinding.activityBSTMin) {
+        } else if (view == mBinding.BSTActivityMin) {
             min();
-        } else if (view == mBinding.activityBSTRemove) {
-            mBinding.activityBSTTitelText.setText("Remove Last");
+        } else if (view == mBinding.BSTActivityRemove) {
+            mBinding.BSTActivityReturnText.setText("Remove Last");
             /* if (!mTree.isEmpty()) { //TODO: let BinarySearchTree implement isEmpty
                 // mBinding.ActivityBSTValueText.setText(String.format("%s", mBST.lastElement()));
                 // mBST.remove(mBST.size() - 1);
@@ -80,10 +80,10 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
                 Toast.makeText(this, R.string.Stack_Activity_Text_Empty, Toast.LENGTH_SHORT).show();
                 mBinding.ActivityBSTValueText.setText("-");
             } */
-        } else if (view == mBinding.activityBSTClear) {
+        } else if (view == mBinding.BSTActivityClear) {
             clear();
-        } else if (view == mBinding.activityBSTVector) {
-            mBinding.ActivityBSTOderText.setText(mTree.toString());
+        } else if (view == mBinding.BSTActivityVector) {
+            mBinding.BSTActivityVectorOutput.setText(mTree.toString());
         }
     }
 

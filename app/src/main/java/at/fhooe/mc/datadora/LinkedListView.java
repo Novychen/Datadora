@@ -267,8 +267,12 @@ public class LinkedListView extends View {
 
         mPositionTextPaint.setColor(mOnSurfaceColor);
         mPositionTextPaint.setTextSize(30);
-
-        //TODO: make some SP stuff
+/*
+        if(loadFromSave()) {
+            for (int i = 0; i < mLinkedListNumbers.size(); i++) {
+                mLinkedList.add(new RectF());
+            }
+        }*/
     }
 
     protected void init(LinkedListActivity _activity) {
@@ -384,13 +388,16 @@ public class LinkedListView extends View {
 
     protected void getFirst(){
         mCurrentOperation = Operation.GET_FIRST;
+        mAnimatorGetText.setRepeatCount(0);
+        mAnimatorGetArea.setRepeatCount(0);
         mAnimatorGetArea.start();
         mAnimatorGetText.start();
-
     }
 
     protected void getLast(){
         mCurrentOperation = Operation.GET_LAST;
+        mAnimatorGetText.setRepeatCount(0);
+        mAnimatorGetArea.setRepeatCount(0);
         mAnimatorGetArea.start();
         mAnimatorGetText.start();
     }
