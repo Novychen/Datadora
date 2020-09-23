@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/box_inset_layout_padding">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/BST_Activity_Toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/BST_Activity_Switch"
+        style="@style/AppTheme.Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_Box_Return"
+        style="@style/Return"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/Content_Description_Queue_Return_Background"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar" />
+
+    <TextView
+        android:id="@+id/BST_Activity_ReturnValue"
+        style="@style/Primary.Text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_ReturnText" />
+
+    <TextView
+        android:id="@+id/BST_Activity_ReturnText"
+        style="@style/Primary.Text.Return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/All_Data_Activity_Text_Return"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Box_Return" />
+
+    <at.fhooe.mc.datadora.BinarySearchTree.BSTView
+        android:id="@+id/BST_Activity_BSTView"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar" />
+
+    <TextView
+        android:id="@+id/BST_Activity_Vector_Output"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text=" "
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_BSTView"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_BSTView" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/BST_Activity_InputSlider"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_gravity="center"
+        android:theme="@style/AppTheme"
+        android:value="0.0"
+        android:valueFrom="-100.0"
+        android:valueTo="100.0"
+        app:labelBehavior="withinBounds"
+        app:layout_constraintDimensionRatio=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_BSTView" />
+
+    <TextView
+        android:id="@+id/BST_Activity_CurrentValue"
+        style="@style/Surface.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/Slider_Current_Value"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_BSTView"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_InputSlider" />
+
+    <TextView
+        android:id="@+id/BST_Activity_InputValue"
+        style="@style/Surface.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/Slider_Default_Value"
+        app:layout_constraintBaseline_toBaselineOf="@+id/BST_Activity_CurrentValue"
+        app:layout_constraintStart_toEndOf="@+id/BST_Activity_CurrentValue" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_InputSlider">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/BST_Activity_StandardOperations"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/BST_Activity_Standard_Background"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/background_list_item" />
+
+                <ImageView
+                    android:id="@+id/BST_Activity_Standard_Arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Standard_Background"
+                    app:layout_constraintEnd_toEndOf="@+id/BST_Activity_Standard_Background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+                <TextView
+                    android:id="@+id/BST_Activity_Standard_Title"
+                    style="@style/Primary.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="sdsadsa"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Standard_Arrow"
+                    app:layout_constraintStart_toStartOf="@+id/BST_Activity_Standard_Background"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Standard_Arrow" />
+
+                <Button
+                    android:id="@+id/BST_Activity_Clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/All_Data_Activity_Text_Clear"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Random"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_Random"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Random" />
+
+                <Button
+                    android:id="@+id/BST_Activity_Random"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/All_Data_Activity_Text_Random"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Remove"
+                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Clear"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_Remove"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Remove" />
+
+                <Button
+                    android:id="@+id/BST_Activity_Add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/BST_Activity_Text_Add"
+                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Remove"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Standard_Background" />
+
+                <Button
+                    android:id="@+id/BST_Activity_Remove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/BST_Activity_Text_Remove"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Random"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_Add"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Add" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/BST_Activity_Structure"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/BST_Activity_StandardOperations">
+
+                <ImageView
+                    android:id="@+id/BST_Activity_Structure_Background"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/background_list_item" />
+
+                <ImageView
+                    android:id="@+id/BST_Activity_Structure_Arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Structure_Background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Structure_Background"
+                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+                <TextView
+                    android:id="@+id/BST_Activity_Structure_Title"
+                    style="@style/Primary.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="sdsadsa"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Structure_Background"
+                    app:layout_constraintStart_toStartOf="@+id/BST_Activity_Structure_Background"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/BST_Activity_Size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/All_Data_Activity_Text_Size"
+                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Height"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Structure_Background" />
+
+                <Button
+                    android:id="@+id/BST_Activity_Height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/BST_Activity_Text_Height"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Size"
+                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Depth"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_Size"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Size" />
+
+                <Button
+                    android:id="@+id/BST_Activity_Depth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/BST_Activity_Text_Depth"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Height"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_Height"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Height" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/BST_Activity_Structure"
+                app:layout_constraintStart_toStartOf="@+id/BST_Activity_Structure"
+                app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Structure">
+
+                <ImageView
+                    android:id="@+id/BST_Activity_Get_Background"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/background_list_item" />
+
+                <ImageView
+                    android:id="@+id/BST_Activity_Get_Arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_Background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Get_Background"
+                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+                <TextView
+                    android:id="@+id/BST_Activity_Get_Title"
+                    style="@style/Primary.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="sdsadsa"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_Background"
+                    app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_Background"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Get_Background" />
+
+                <Button
+                    android:id="@+id/BST_Activity_LeftChild"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/BST_Activity_Text_Max"
+                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_RightChild"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Get_Background" />
+
+                <Button
+                    android:id="@+id/BST_Activity_RightChild"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/BST_Activity_Text_Max"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_LeftChild"
+                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_GetParent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_LeftChild"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_LeftChild" />
+
+                <Button
+                    android:id="@+id/BST_Activity_GetParent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/BST_Activity_Text_Max"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_RightChild"
+                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_GetRoot"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_RightChild"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_RightChild" />
+
+                <Button
+                    android:id="@+id/BST_Activity_GetRoot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/BST_Activity_Text_Min"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_GetParent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_GetParent"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_GetParent" />
+
+                <Button
+                    android:id="@+id/BST_Activity_Min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/BST_Activity_Text_Min"
+                    app:layout_constraintStart_toStartOf="@+id/BST_Activity_LeftChild"
+                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_LeftChild" />
+
+                <Button
+                    android:id="@+id/BST_Activity_Max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/BST_Activity_Text_Max"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Min"
+                    app:layout_constraintStart_toStartOf="@+id/BST_Activity_RightChild"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Min" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/BST_Activity_Guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/BST_Activity_InputSlider"
+        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_BSTView"
+        app:srcCompat="@drawable/button_normal" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:srcCompat="@drawable/button_normal" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_BSTView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:srcCompat="@drawable/button_normal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package at.fhooe.mc.datadora;
+package at.fhooe.mc.datadora.BinarySearchTree;
 
 /**
  * Inner class for the binary tree node.

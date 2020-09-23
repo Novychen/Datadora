@@ -1,4 +1,4 @@
-package at.fhooe.mc.datadora;
+package at.fhooe.mc.datadora.BinarySearchTree;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
+import at.fhooe.mc.datadora.R;
 
 public class BSTView extends View {
     private static final String TAG = "BSTView : ";

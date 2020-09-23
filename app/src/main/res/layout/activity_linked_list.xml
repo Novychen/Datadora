@@ -5,7 +5,7 @@
     style="@style/Surface"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LinkedListActivity">
+    tools:context=".LinkedList.LinkedListActivity">
 
     <ImageView
         android:id="@+id/LinkedList_Activity_Box_Return"
@@ -78,7 +78,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Switch">
 
-        <at.fhooe.mc.datadora.LinkedListView
+        <at.fhooe.mc.datadora.LinkedList.LinkedListView
             android:id="@+id/LinkedList_Activity_LinkedListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

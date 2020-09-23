@@ -1,26 +1,23 @@
 package at.fhooe.mc.datadora;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.google.android.material.slider.LabelFormatter;
-import com.google.android.material.slider.Slider;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
+import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity;
+import at.fhooe.mc.datadora.LinkedList.LinkedListActivity;
+import at.fhooe.mc.datadora.Queue.QueueActivity;
+import at.fhooe.mc.datadora.Stack.StackActivity;
 import at.fhooe.mc.datadora.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityMainBinding mBinding;
+
+    //TODO: Sync all animations
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent i = new Intent(this, LinkedListActivity.class);
             startActivity(i);
         }else if(v == mBinding.mainActivityButtonBST){
-            Intent i = new Intent(this,BinarySearchTreeActivity.class);
+            Intent i = new Intent(this, BinarySearchTreeActivity.class);
             startActivity(i);
         }
     }

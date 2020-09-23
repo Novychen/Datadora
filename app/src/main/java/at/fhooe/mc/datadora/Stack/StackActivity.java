@@ -1,4 +1,4 @@
-package at.fhooe.mc.datadora;
+package at.fhooe.mc.datadora.Stack;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +18,7 @@ import com.google.android.material.slider.Slider;
 import java.util.Random;
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityStackBinding;
 
 public class StackActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -31,7 +32,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     //TODO: Styles, Themes, ...!!
     //TODO: Resize - animation (?) -> Animation clear -> too ugly when many elements
     //TODO: ENUM for operations (?)
-    //TODO: Make size (stack size) propotional to screensize
     //TODO: Better UI
 
     private Vector<Integer> mStack = new Vector<>();

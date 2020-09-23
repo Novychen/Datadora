@@ -1,18 +1,17 @@
-package at.fhooe.mc.datadora;
+package at.fhooe.mc.datadora.LinkedList;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.collection.ArraySet;
-import androidx.constraintlayout.motion.widget.MotionLayout;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.google.android.material.slider.Slider;
 import java.util.Random;
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityLinkedListBinding;
 
 public class LinkedListActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
@@ -31,6 +31,12 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     private ActivityLinkedListBinding mBinding;
     private Vector<Integer> mLinkedList = new Vector<>();
 
+    //TODO: copied from LinkedListView - do we need the same here?
+    //Shared Preferences setup
+    private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.LinkedListSharedPreferenceFile.LinkedList";
+    private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.LinkedListKey2020";
+    SharedPreferences mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
@@ -38,10 +44,12 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         View view = mBinding.getRoot();
         setContentView(view);
 
-        mBinding.LinkedListActivityLinkedListView.init(this);
+        mBinding.LinkedListActivityLinkedListView.setActivity(this);
         mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.INVISIBLE);
         mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.INVISIBLE);
         mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.INVISIBLE);
+
+        mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
         head();
 
@@ -101,6 +109,86 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBinding = null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Vector<Integer> v = loadFromSave();
+        if(v != null) {
+            mLinkedList.clear();
+            mLinkedList.addAll(v);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        save();
+    }
+
+    /**
+     * saves the current vector (input from the user) into the sharedPreferences
+     */
+    private void save() {
+
+        // init the SP object
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+
+        // Convert the vector containing the integers to a string
+        Vector<Integer> vector = mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers;
+        StringBuilder vectorStr = new StringBuilder();
+
+        // transform the vector into a string
+        for (int i = 0; i < vector.size(); i++) {
+            if (i != vector.size() - 1) {
+                vectorStr.append(vector.get(i)).append(",");
+            } else {
+                vectorStr.append(vector.get(i));
+            }
+        }
+
+        editor.putString(SP_VALUE_KEY, String.valueOf(vectorStr));
+        editor.apply();
+    }
+
+    /**
+     * gets the saved vector (user input) from the sharedPreferences
+     * @return the saved vector or null if there is none
+     */
+    protected Vector<Integer> loadFromSave() {
+
+        // get the saved string (vector)
+        String defaultValue = "empty";
+        String vectorStr = mSharedPreferences.getString(SP_VALUE_KEY, defaultValue);
+        Vector<Integer> vector = new Vector<>();
+
+        // check if it was successful -> transform to vector, or if not -> return null
+        int begin;
+        int end = 0;
+        int i;
+        if(vectorStr == null || vectorStr.contains(defaultValue)) {
+            return null;
+        } else {
+            while(end > -1) {
+                begin = end;
+                end = vectorStr.indexOf(',', begin);
+                if(end == -1) {
+                    i = Integer.parseInt(vectorStr.substring(begin));
+                } else {
+                    i = Integer.parseInt(vectorStr.substring(begin, end));
+                    end++;
+                }
+                vector.add(i);
+            }
+            return vector;
+        }
+    }
+
+    @Override
     public void onClick(View _v) {
 
         if(_v == mBinding.LinkedListActivityAddCheck) {
@@ -115,7 +203,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         } else if(_v == mBinding.LinkedListActivityDeleteCheck) {
 
             if (mBinding.LinkedListActivityDeleteAllRadioButton.isChecked()){
-                deleteAll(); //clear
+                clear();
             } else if (mBinding.LinkedListActivityDeleteFirstRadioButton.isChecked()) {
                 deleteFirst();
             } else if (mBinding.LinkedListActivityDeleteLastRadioButton.isChecked()) {
@@ -190,7 +278,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             if(mBinding.LinkedListActivityDeletePositionSlider.getValue() == mLinkedList.size()) {
                 mBinding.LinkedListActivityDeletePositionSlider.setValue(mLinkedList.size() - 1);
             }
-            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size()-1);
+            mBinding.LinkedListActivityDeletePositionSlider.setValueTo(mLinkedList.size() - 1);
 
             mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
             mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.VISIBLE);
@@ -250,7 +338,9 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
     private void append(){
         int value = (int) mBinding.LinkedListActivityInputSlider.getValue();
+
         mLinkedList.add(value);
+
         mBinding.LinkedListActivityLinkedListView.append(value);
     }
 
@@ -261,12 +351,11 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         mBinding.LinkedListActivityLinkedListView.insertAt(value, pos);
     }
 
-    private void deleteAll(){
+    private void clear(){
 
         if(!mLinkedList.isEmpty()){
-            mBinding.LinkedListActivityLinkedListView.deleteAll();
+            mBinding.LinkedListActivityLinkedListView.clear();
             mLinkedList.clear();
-
         } else {
             isEmptyMessage();
         }
@@ -302,7 +391,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mLinkedList.remove(pos);
 
         } else if (mLinkedList.size() == 1){
-            deleteAll();
+            clear();
         } else {
             isEmptyMessage();
         }
@@ -310,7 +399,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
 
     private void getSize(){
-
         if(!mLinkedList.isEmpty()){
             mBinding.LinkedListActivityLinkedListView.getSize();
             new Handler().postDelayed(new Runnable() {
@@ -319,7 +407,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                     mBinding.LinkedListActivityReturnValue.setText(
                             String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size()));
                 }
-            }, 500);
+            }, (600 * mLinkedList.size() - 1));
 
         } else {
             isEmptyMessage();
@@ -360,8 +448,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                 public void run() {
                     mBinding.LinkedListActivityReturnValue.setText(
                             String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(
-                                    mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size() - 1
-                            ).toString()));
+                                    mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size() - 1).toString()));
                 }
             }, 500);
         } else {
@@ -370,8 +457,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     private void getAt() {
-
-
         if(!mLinkedList.isEmpty()){
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -382,8 +467,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                     Log.d(TAG, "----- position getAt: "+ pos);
 
                     mBinding.LinkedListActivityReturnValue.setText(
-                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(pos).toString())); //TODO check
-                    //todo am i passing the value as index?
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(pos).toString()));
                 }
             }, 500);
 
@@ -391,7 +475,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             isEmptyMessage();
         }
     }
-
 
     public void isEmptyMessage(){
         Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
@@ -404,14 +487,14 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
      */
     private void random(){
         mBinding.LinkedListActivityReturnValue.setText("");
-        createRandomQueue();
+        createRandomList();
         mBinding.LinkedListActivityLinkedListView.random(mLinkedList);
     }
 
     /**
      * Creates a random queue with its size being min 4 and max 7
      */
-    private void createRandomQueue(){
+    private void createRandomList(){
         mLinkedList.clear();
         Random r = new Random();
         int size = 4 + r.nextInt(6);
@@ -447,7 +530,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+    public void onCheckedChanged(RadioGroup _radioGroup, int _i) {
         if (mBinding.LinkedListActivityTypeHeadRadioButton.isChecked()) {
             head();
         } else if (mBinding.LinkedListActivityTypeTailRadioButton.isChecked()) {

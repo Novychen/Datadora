@@ -1,4 +1,4 @@
-package at.fhooe.mc.datadora;
+package at.fhooe.mc.datadora.Queue;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,10 +18,14 @@ import com.google.android.material.slider.Slider;
 import java.util.Random;
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityQueueBinding;
 
 
 public class QueueActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+
+    //TODO: ENUM for operations (?)
+
 
     private static final String TAG = "QueueActivity : ";
     private ActivityQueueBinding mBinding;

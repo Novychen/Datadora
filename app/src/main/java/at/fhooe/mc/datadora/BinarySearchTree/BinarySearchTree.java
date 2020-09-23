@@ -1,6 +1,4 @@
-package at.fhooe.mc.datadora;
-
-import java.util.ArrayList;
+package at.fhooe.mc.datadora.BinarySearchTree;
 
 /**
  * Implements a binary search tree. Is the value bigger it is saved on the right side, if not - on the left side. Same values are not allowed

@@ -1,4 +1,4 @@
-package at.fhooe.mc.datadora;
+package at.fhooe.mc.datadora.Queue;
 
 import android.animation.ArgbEvaluator;
 import android.animation.PropertyValuesHolder;
@@ -16,6 +16,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import androidx.annotation.Nullable;
 
 import java.util.Vector;
+
+import at.fhooe.mc.datadora.R;
 
 /**
  * Class QueueView, implements the animation for the Queue in normal mode
