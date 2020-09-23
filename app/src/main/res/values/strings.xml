@@ -78,17 +78,35 @@
     // BinarySearchTree
 
     <string name="BST_Activity_Text_Vector">Vector</string>
+    <string name="BST_Activity_Text_Inorder">Inorder</string>
+    <string name="BST_Activity_Text_Preorder">Preorder</string>
+    <string name="BST_Activity_Text_Postorder">Postorder</string>
+
+    <string name="BST_Activity_Standard_Title">Standard Operations</string>
+    <string name="BST_Activity_Standard_Add">Add</string>
+    <string name="BST_Activity_Standard_Remove">Remove</string>
+
+    <string name="BST_Activity_Structure_Title">Structure</string>
+    <string name="BST_Activity_Structure_Height">height</string>
+    <string name="BST_Activity_Structure_Depth">depth</string>
+
+    <string name="BST_Activity_Check_Title">Check</string>
+    <string name="BST_Activity_Check_isRoot">isRoot</string>
+    <string name="BST_Activity_Check_isExternal">isExternal</string>
+    <string name="BST_Activity_Check_isInternal">isInternal</string>
+    <string name="BST_Activity_Check_hasLeftChild">hasLeftChild</string>
+    <string name="BST_Activity_Check_hasRightChild">hasRightChild</string>
+    <string name="BST_Activity_Check_hasChild">hasChild</string>
+    <string name="BST_Activity_Check_hasParent">hasParent</string>
+
+    <string name="BST_Activity_Get_Title">Get</string>
+    <string name="BST_Activity_Get_LeftChild">leftChild</string>
+    <string name="BST_Activity_Get_RightChild">rightChild</string>
+    <string name="BST_Activity_Get_Parent">getParent</string>
+    <string name="BST_Activity_Get_Root">getRoot</string>
 
     <string name="BST_Activity_Text_Add">add</string>
     <string name="BST_Activity_Text_Remove">remove</string>
-
-    <string name="BST_Activity_Text_Height">height</string>
-    <string name="BST_Activity_Text_Depth">depth</string>
-
-    <string name="BST_Activity_Text_LeftChild">leftChild</string>
-    <string name="BST_Activity_Text_RightChild">rightChild</string>
-    <string name="BST_Activity_Text_Parent">getParent</string>
-    <string name="BST_Activity_Text_Root">getRoot</string>
     <string name="BST_Activity_Text_Min">min</string>
     <string name="BST_Activity_Text_Max">max</string>
 

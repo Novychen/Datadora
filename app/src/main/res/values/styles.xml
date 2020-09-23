@@ -1,6 +1,6 @@
 <resources>
     <style name="Button">
-        <item name="android:background">@drawable/button</item>
+        <item name="android:background">@drawable/background_list_item</item>
         <item name="android:textColor">@color/colorOnPrimary</item>
     </style>
 

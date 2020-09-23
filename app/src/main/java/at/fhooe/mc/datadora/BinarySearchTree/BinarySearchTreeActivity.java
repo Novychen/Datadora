@@ -38,6 +38,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         myToolbar.inflateMenu(R.menu.menu_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         // Enables Always-on
         mBinding.BSTActivityAdd.setOnClickListener(this);
         mBinding.BSTActivityClear.setOnClickListener(this);

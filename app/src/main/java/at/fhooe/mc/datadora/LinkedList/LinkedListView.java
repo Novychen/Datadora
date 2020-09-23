@@ -162,7 +162,8 @@ public class LinkedListView extends View {
         GET_FIRST,
         GET_LAST,
         GET_AT,
-        RANDOM
+        RANDOM,
+        SAVE
     }
 
     enum Filter {
@@ -452,7 +453,7 @@ public class LinkedListView extends View {
                 mLinkedListNumbers.add(v.get(i));
                 mLinkedList.add(new RectF());
             }
-            mCurrentOperation = Operation.RANDOM;
+            mCurrentOperation = Operation.SAVE;
         }
 
         setUpAnimation();
