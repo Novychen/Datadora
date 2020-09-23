@@ -32,8 +32,8 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
     //TODO: copied from LinkedListView - do we need the same here?
     //Shared Preferences setup
-    private static final String SP_FILE_KEY = "LinkedListSharedPreferenceFile";
-    private static final String SP_VALUE_KEY = "DataDoraLinkedListKey2020";
+    private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.LinkedListSharedPreferenceFile.LinkedList";
+    private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.LinkedListKey2020";
     SharedPreferences mSharedPreferences;
 
     @Override
@@ -43,12 +43,12 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         View view = mBinding.getRoot();
         setContentView(view);
 
-        mBinding.LinkedListActivityLinkedListView.init(this);
+        mBinding.LinkedListActivityLinkedListView.setActivity(this);
         mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.INVISIBLE);
         mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.INVISIBLE);
         mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.INVISIBLE);
 
-
+        mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
         head();
 
@@ -72,10 +72,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             @Override
             public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
                 mBinding.LinkedListActivityInputValue.setText(String.valueOf((int) value));
-
-                //TODO: SHARED PREFERENCES - nope not here
-                //the slider value -100 to 100 is set here i guess
-
             }
         });
 
@@ -120,28 +116,68 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     @Override
     protected void onResume() {
         super.onResume();
-
+        Vector<Integer> v = loadFromSave();
+        if(v != null) {
+            mLinkedList.clear();
+            mLinkedList.addAll(v);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        save();
+    }
 
-        //init the SP object
-        mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
+    private void save() {
 
+        // init the SP object
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
 
-        //TODO: read from SP
-        //int defaultValue = getResources().getInteger(0);
-        //int savedVal = mSharedPreferences.getInt(SP_VALUE_KEY, 34);
+        // Convert the vector containing the integers to a string
+        Vector<Integer> vector = mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers;
+        StringBuilder vectorStr = new StringBuilder();
 
-        //Convert the vector containing the integers to a string
-         String vectorStr = mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.toString();
-         mSharedPreferences.getString(SP_VALUE_KEY, vectorStr);
+        // transform the vector into a string
+        for (int i = 0; i < vector.size(); i++) {
+            if (i != vector.size() - 1) {
+                vectorStr.append(vector.get(i)).append(",");
+            } else {
+                vectorStr.append(vector.get(i));
+            }
+        }
 
-        //TODO yvonne: methode zum aufrufen der animation
+        editor.putString(SP_VALUE_KEY, String.valueOf(vectorStr));
+        editor.apply();
+    }
 
+    protected Vector<Integer> loadFromSave() {
 
+        // get the saved string (vector)
+        String defaultValue = "empty";
+        String vectorStr = mSharedPreferences.getString(SP_VALUE_KEY, defaultValue);
+        Vector<Integer> vector = new Vector<>();
+
+        // check if it was successful -> transform to vector, or if not -> return null
+        int begin;
+        int end = 0;
+        int i;
+        if(vectorStr == null || vectorStr.contains(defaultValue)) {
+            return null;
+        } else {
+            while(end > -1) {
+                begin = end;
+                end = vectorStr.indexOf(',', begin);
+                if(end == -1) {
+                    i = Integer.parseInt(vectorStr.substring(begin));
+                } else {
+                    i = Integer.parseInt(vectorStr.substring(begin, end));
+                    end++;
+                }
+                vector.add(i);
+            }
+            return vector;
+        }
     }
 
     @Override

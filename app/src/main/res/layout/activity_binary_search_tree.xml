@@ -124,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/BST_Activity_Text_vector"
+                android:text="@string/BST_Activity_Text_Vector"
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="@+id/BST_Activity_Min"
                 app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Min" />

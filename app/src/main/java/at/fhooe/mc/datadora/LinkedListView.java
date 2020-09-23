@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -274,23 +273,10 @@ public class LinkedListView extends View {
 
         mPositionTextPaint.setColor(mOnSurfaceColor);
         mPositionTextPaint.setTextSize(30);
-/*
-        if(loadFromSave()) {
-            for (int i = 0; i < mLinkedListNumbers.size(); i++) {
-                mLinkedList.add(new RectF());
-            }
-        }*/
     }
 
-    protected void init(LinkedListActivity _activity) {
+    protected void setActivity(LinkedListActivity _activity) {
         mActivity = _activity;
-
-        //TODO: the activity is here - initialize some sp stuff here?
-
-        //Context context = _activity; //getActivity();
-        mSharedPreferences = _activity.getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
-
-
     }
 
     protected void sorted(){
@@ -457,6 +443,15 @@ public class LinkedListView extends View {
         mMaxHeightLinkedList = (float) _h - ypad - 6;
         mMaxWidthLinkedList = (float) _w - xpad - 6;
         mScale = 1;
+
+        Vector<Integer> v = mActivity.loadFromSave();
+        if(v != null) {
+            for (int i = 0; i < v.size(); i++) {
+                mLinkedListNumbers.add(v.get(i));
+                mLinkedList.add(new RectF());
+            }
+            mCurrentOperation = Operation.RANDOM;
+        }
 
         setUpAnimation();
         invalidate();
