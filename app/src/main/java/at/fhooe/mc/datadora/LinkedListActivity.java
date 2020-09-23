@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -28,6 +30,12 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     private ActivityLinkedListBinding mBinding;
     private Vector<Integer> mLinkedList = new Vector<>();
 
+    //TODO: copied from LinkedListView - do we need the same here?
+    //Shared Preferences setup
+    private static final String SP_FILE_KEY = "LinkedListSharedPreferenceFile";
+    private static final String SP_VALUE_KEY = "DataDoraLinkedListKey2020";
+    SharedPreferences mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
@@ -39,6 +47,8 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.INVISIBLE);
         mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.INVISIBLE);
         mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.INVISIBLE);
+
+
 
         head();
 
@@ -62,6 +72,10 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             @Override
             public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
                 mBinding.LinkedListActivityInputValue.setText(String.valueOf((int) value));
+
+                //TODO: SHARED PREFERENCES - nope not here
+                //the slider value -100 to 100 is set here i guess
+
             }
         });
 
@@ -101,6 +115,33 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     protected void onDestroy() {
         super.onDestroy();
         mBinding = null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //init the SP object
+        mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
+
+
+        //TODO: read from SP
+        //int defaultValue = getResources().getInteger(0);
+        //int savedVal = mSharedPreferences.getInt(SP_VALUE_KEY, 34);
+
+        //Convert the vector containing the integers to a string
+         String vectorStr = mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.toString();
+         mSharedPreferences.getString(SP_VALUE_KEY, vectorStr);
+
+        //TODO yvonne: methode zum aufrufen der animation
+
+
     }
 
     @Override
@@ -253,7 +294,9 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
     private void append(){
         int value = (int) mBinding.LinkedListActivityInputSlider.getValue();
+
         mLinkedList.add(value);
+
         mBinding.LinkedListActivityLinkedListView.append(value);
     }
 
