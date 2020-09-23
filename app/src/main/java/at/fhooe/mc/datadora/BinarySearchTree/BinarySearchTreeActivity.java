@@ -2,12 +2,17 @@ package at.fhooe.mc.datadora.BinarySearchTree;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.slider.LabelFormatter;
+import com.google.android.material.slider.Slider;
 
 import java.util.Random;
 import java.util.Vector;
@@ -16,7 +21,7 @@ import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
 
 
-public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener {
+public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener  {
 
     private static String TAG = "BSTActivity :: ";
     private BinarySearchTree mTree = new BinarySearchTree();
@@ -30,7 +35,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         View view = mBinding.getRoot();
         setContentView(view);
 
-        // array eingeben sachen speichern
         // setup Toolbar
         Toolbar myToolbar = mBinding.BSTActivityToolbar;
         setSupportActionBar(myToolbar);
@@ -38,37 +42,49 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        // set up the slider
+        Slider slider = mBinding.BSTActivityInputSlider;
+        slider.setLabelFormatter(new LabelFormatter() {
+            @NonNull
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);    // converting the float value to an int value
+            }
+        });
+        slider.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                mBinding.BSTActivityInputValue.setText(String.valueOf((int) value));
+            }
+        });
+
         // Enables Always-on
         mBinding.BSTActivityAdd.setOnClickListener(this);
         mBinding.BSTActivityClear.setOnClickListener(this);
-        mBinding.BSTActivityMax.setOnClickListener(this);
-        mBinding.BSTActivityMin.setOnClickListener(this);
+        mBinding.BSTActivityGetMax.setOnClickListener(this);
+        mBinding.BSTActivityGetMin.setOnClickListener(this);
         mBinding.BSTActivityRandom.setOnClickListener(this);
         mBinding.BSTActivityRemove.setOnClickListener(this);
-        mBinding.BSTActivitySize.setOnClickListener(this);
-        mBinding.BSTActivityVector.setOnClickListener(this);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        return true;
+        mBinding.BSTActivityStructureSize.setOnClickListener(this);
+        mBinding.BSTActivityInorder.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view == mBinding.BSTActivitySize) {
+        if (view == mBinding.BSTActivityStructureSize) {
             mBinding.BSTActivityReturnText.setText("Size");
             mBinding.BSTActivityReturnValue.setText(String.format("%s", mTree.size()));
         } else if (view == mBinding.BSTActivityAdd) {
-            add(12); //TODO: take user input as number
-            mTreeUser.add(12);
+            mBinding.BSTActivityAdd.setChecked(false);
+            add();
         } else if (view == mBinding.BSTActivityRandom) {
+            mBinding.BSTActivityRandom.setChecked(false);
             random();
-        } else if (view == mBinding.BSTActivityMax) {
+        } else if (view == mBinding.BSTActivityGetMax) {
+            mBinding.BSTActivityGetMax.setChecked(false);
             max();
-        } else if (view == mBinding.BSTActivityMin) {
+        } else if (view == mBinding.BSTActivityGetMin) {
+            mBinding.BSTActivityGetMin.setChecked(false);
             min();
         } else if (view == mBinding.BSTActivityRemove) {
             mBinding.BSTActivityReturnText.setText("Remove Last");
@@ -85,20 +101,22 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             } */
         } else if (view == mBinding.BSTActivityClear) {
             clear();
-        } else if (view == mBinding.BSTActivityVector) {
+        } else if (view == mBinding.BSTActivityInorder) {
             mBinding.BSTActivityVectorOutput.setText(mTree.toString());
         }
     }
 
     private void clear() {
         //TODO: let BinarySearchTree implement clear
-        mTree.setRoot(null);
+        mTree.setRoot(null); // Do you intend to change this? Because thats not clearing
         mTreeUser.clear();
-        mTree.setSize(0);
+        mTree.setSize(0); // Do you intend to change this? Because thats not clearing
     }
 
-    private void add(int _value) {
-        mTree.insert(_value);
+    private void add() {
+        int value = (int) mBinding.BSTActivityInputSlider.getValue();
+        mTreeUser.add(value);
+        mTree.insert(value);
     }
 
     private int max() {
@@ -115,8 +133,8 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         int high = 101;
         int result = r.nextInt(high-low) + low;
 
-        boolean succesfull = mTree.insert(result);
-        if (succesfull){mTreeUser.add(result);}
+        boolean successful = mTree.insert(result);
+        if (successful){mTreeUser.add(result);}
     }
 
     /**
@@ -152,5 +170,23 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         node.right = fromArrayToTree(_array, mid + 1, _end);
 
         return node;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
+        if (_buttonView == mBinding.BSTActivitySwitch) {
+            if (_isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        return true;
     }
 }

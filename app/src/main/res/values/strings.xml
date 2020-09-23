@@ -73,8 +73,6 @@
     <string name="LinkedList_Activity_Toast_Empty">List is empty!</string>
 
     // BinarySearchTree
-
-    <string name="BST_Activity_Text_Vector">Vector</string>
     <string name="BST_Activity_Text_Inorder">Inorder</string>
     <string name="BST_Activity_Text_Preorder">Preorder</string>
     <string name="BST_Activity_Text_Postorder">Postorder</string>
@@ -105,11 +103,8 @@
     <string name="BST_Activity_Get_Root">Root</string>
     <string name="BST_Activity_Get_External">External Nodes</string>
     <string name="BST_Activity_Get_Internal">Internal Nodes</string>
-
-    <string name="BST_Activity_Text_Add">add</string>
-    <string name="BST_Activity_Text_Remove">remove</string>
-    <string name="BST_Activity_Text_Min">min</string>
-    <string name="BST_Activity_Text_Max">max</string>
+    <string name="BST_Activity_Get_Max">Max</string>
+    <string name="BST_Activity_Get_Min">Min</string>
 
     // Toolbar
     <string name="Toolbar_Action_Settings">Settings</string>

@@ -10,7 +10,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".LinkedList.LinkedListActivity"/>
         <activity android:name=".Queue.QueueActivity" />
-        <activity android:name=".Test" />
         <activity android:name=".BinarySearchTree.BinarySearchTreeActivity"/>
         <activity
             android:name=".Stack.StackActivity"
@@ -19,7 +18,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

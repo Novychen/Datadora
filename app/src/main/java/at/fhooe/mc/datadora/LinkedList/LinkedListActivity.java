@@ -338,9 +338,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
     private void append(){
         int value = (int) mBinding.LinkedListActivityInputSlider.getValue();
-
         mLinkedList.add(value);
-
         mBinding.LinkedListActivityLinkedListView.append(value);
     }
 
