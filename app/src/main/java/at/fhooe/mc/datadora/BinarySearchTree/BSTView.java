@@ -49,10 +49,10 @@ public class BSTView extends View {
         mBSTItemPaint.setStyle(Paint.Style.STROKE);
         mBSTItemPaint.setStrokeWidth(6);
 
-
         mBSTItemTextPaint.setColor(mOnSurfaceColor);
         mBSTItemTextPaint.setTextSize(55);
     }
+
     @Override
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);

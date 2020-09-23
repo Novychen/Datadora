@@ -133,7 +133,7 @@
                 android:id="@+id/BST_Activity_Size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Stack_Activity_Text_Size"
+                android:text="@string/All_Data_Activity_Text_Size"
                 app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Random"
                 app:layout_constraintStart_toStartOf="@+id/BST_Activity_Remove"
                 app:layout_constraintTop_toTopOf="@+id/BST_Activity_Random" />

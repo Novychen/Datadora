@@ -91,7 +91,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/Stack_Activity_Text_Size"
+                android:text="@string/All_Data_Activity_Text_Size"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Peek"
                 app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Button_Peek"
                 app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Button_Peek" />

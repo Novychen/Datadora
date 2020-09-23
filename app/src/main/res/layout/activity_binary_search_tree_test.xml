@@ -85,11 +85,11 @@
 
     <Button
         android:id="@+id/BST_Activity_Preorder"
-        style="@style/Button"
-        android:layout_width="0dp"
+        style="@style/Tree.Button"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/BST_Activity_Text_Preorder"
         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Inorder"
         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Postorder"
@@ -99,10 +99,10 @@
 
     <Button
         android:id="@+id/BST_Activity_Inorder"
-        style="@style/Button"
-        android:layout_width="0dp"
+        style="@style/Tree.Button"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:text="@string/BST_Activity_Text_Inorder"
         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Preorder"
         app:layout_constraintHorizontal_bias="0.5"
@@ -111,10 +111,10 @@
 
     <Button
         android:id="@+id/BST_Activity_Postorder"
-        style="@style/Button"
-        android:layout_width="0dp"
+        style="@style/Tree.Button"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/BST_Activity_Text_Postorder"
         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Preorder"
         app:layout_constraintEnd_toEndOf="@+id/BST_Activity_BSTView"
@@ -127,16 +127,15 @@
         android:layout_width="0dp"
         android:layout_height="10dp"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
         android:theme="@style/AppTheme"
         android:value="0.0"
         android:valueFrom="-100.0"
         android:valueTo="100.0"
         app:labelBehavior="withinBounds"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Inorder" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/BST_Activity_CurrentValue"
@@ -162,32 +161,34 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/BST_Activity_InputSlider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_InputSlider">
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Preorder">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.constraintlayout.motion.widget.MotionLayout
                 android:id="@+id/BST_Activity_StandardOperations"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layoutDescription="@xml/activity_bst_standard_scene"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/BST_Activity_Standard_Background"
+                    style="@style/Tree.List"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/background_list_item" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/BST_Activity_Standard_Arrow"
@@ -210,70 +211,77 @@
                     app:layout_constraintStart_toStartOf="@+id/BST_Activity_Standard_Background"
                     app:layout_constraintTop_toTopOf="@+id/BST_Activity_Standard_Arrow" />
 
-                <Button
-                    android:id="@+id/BST_Activity_Clear"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/BST_Activity_Standard_ConstraintLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/All_Data_Activity_Text_Clear"
-                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Random"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_Random"
-                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Random" />
-
-                <Button
-                    android:id="@+id/BST_Activity_Random"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/All_Data_Activity_Text_Random"
-                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Remove"
-                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Clear"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_Remove"
-                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Remove" />
-
-                <Button
-                    android:id="@+id/BST_Activity_Add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/BST_Activity_Standard_Add"
-                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Remove"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintEnd_toEndOf="@+id/BST_Activity_Standard_Background"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Standard_Background" />
+                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Standard_Background">
 
-                <Button
-                    android:id="@+id/BST_Activity_Remove"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/BST_Activity_Standard_Remove"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Random"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_Add"
-                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Add" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Standard_Add"
+                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Remove"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/All_Data_Activity_Text_Clear"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Random"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Random"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Random" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Random"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/All_Data_Activity_Text_Random"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Remove"
+                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Clear"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Remove"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Remove" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Remove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Standard_Remove"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Add"
+                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Random"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Add"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Add" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.motion.widget.MotionLayout>
+
+            <androidx.constraintlayout.motion.widget.MotionLayout
                 android:id="@+id/BST_Activity_Structure"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                app:layoutDescription="@xml/activity_bst_structure_scene"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/BST_Activity_StandardOperations">
 
                 <ImageView
                     android:id="@+id/BST_Activity_Structure_Background"
+                    style="@style/Tree.List"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/background_list_item" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/BST_Activity_Structure_Arrow"
@@ -291,64 +299,190 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="sdsadsa"
+                    android:text="@string/BST_Activity_Structure_Title"
                     app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Structure_Background"
                     app:layout_constraintStart_toStartOf="@+id/BST_Activity_Structure_Background"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/BST_Activity_Size"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/BST_Activity_Structure_ConstraintLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/All_Data_Activity_Text_Size"
-                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Height"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Structure_Background" />
+                    app:layout_constraintEnd_toEndOf="@+id/BST_Activity_Structure_Background"
+                    app:layout_constraintStart_toStartOf="@+id/BST_Activity_Structure_Background"
+                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Structure_Background">
 
-                <Button
-                    android:id="@+id/BST_Activity_Height"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/BST_Activity_Structure_Height"
-                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Size"
-                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Depth"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_Size"
-                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Size" />
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Structure_Depth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Structure_Depth"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Structure_Height"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Structure_Height"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Structure_Height" />
 
-                <Button
-                    android:id="@+id/BST_Activity_Depth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/BST_Activity_Structure_Depth"
-                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Height"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_Height"
-                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Height" />
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Structure_Height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Structure_Height"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Structure_Size"
+                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Structure_Depth"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Structure_Size"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Structure_Size" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Structure_Size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Structure_Size"
+                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Structure_Height"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            </androidx.constraintlayout.motion.widget.MotionLayout>
+
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/BST_Activity_Check"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                app:layoutDescription="@xml/activity_bst_check_scene"
                 app:layout_constraintEnd_toEndOf="@+id/BST_Activity_Structure"
                 app:layout_constraintStart_toStartOf="@+id/BST_Activity_Structure"
                 app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Structure">
 
                 <ImageView
-                    android:id="@+id/BST_Activity_Get_Background"
+                    android:id="@+id/BST_Activity_Check_Background"
+                    style="@style/Tree.List"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/background_list_item" />
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/BST_Activity_Check_Arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Check_Background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Check_Background"
+                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+                <TextView
+                    android:id="@+id/BST_Activity_Check_Title"
+                    style="@style/Primary.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/BST_Activity_Check_Title"
+                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Check_Background"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Check_Background" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/BST_Activity_Check_ConstraintLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/BST_Activity_Check_Background"
+                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Check_Background">
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Check_Parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/BST_Activity_Check_Parent"
+                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Check_RightChild"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Check_RightChild"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Check_RightChild"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Check_Parent"
+                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Check_LeftChild"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Check_Parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Check_LeftChild"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/BST_Activity_Check_LeftChild"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Check_RightChild"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Check_RightChild"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Check_RightChild" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Check_Root"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Check_Root"
+                        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Check_Parent"
+                        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Check_Parent" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Check_Internal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Check_Internal"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Check_External"
+                        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Check_LeftChild"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Check_External" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Check_External"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Check_External"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Check_Root"
+                        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Check_RightChild"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Check_Root" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Check_Empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Check_Empty"
+                        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Check_Root"
+                        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Check_Root" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.motion.widget.MotionLayout>
+
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/BST_Activity_Get"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layoutDescription="@xml/activity_bst_get_scene"
+                app:layout_constraintEnd_toEndOf="@+id/BST_Activity_Structure"
+                app:layout_constraintStart_toStartOf="@+id/BST_Activity_Structure"
+                app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Check">
+
+                <ImageView
+                    android:id="@+id/BST_Activity_Get_Background"
+                    style="@style/Tree.List"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/BST_Activity_Get_Arrow"
@@ -366,75 +500,81 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="sdsadsa"
+                    android:text="@string/BST_Activity_Get_Title"
                     app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_Background"
                     app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_Background"
                     app:layout_constraintTop_toTopOf="@+id/BST_Activity_Get_Background" />
 
-                <Button
-                    android:id="@+id/BST_Activity_LeftChild"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/BST_Activity_Get_ConstraintLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/BST_Activity_Text_Max"
-                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_RightChild"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Get_Background" />
-
-                <Button
-                    android:id="@+id/BST_Activity_RightChild"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/BST_Activity_Text_Max"
-                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_LeftChild"
-                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_GetParent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_LeftChild"
-                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_LeftChild" />
-
-                <Button
-                    android:id="@+id/BST_Activity_GetParent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/BST_Activity_Text_Max"
-                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_RightChild"
-                    app:layout_constraintEnd_toStartOf="@+id/BST_Activity_GetRoot"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_RightChild"
-                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_RightChild" />
-
-                <Button
-                    android:id="@+id/BST_Activity_GetRoot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/BST_Activity_Text_Min"
-                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_GetParent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/BST_Activity_GetParent"
-                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_GetParent" />
+                    app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_Background"
+                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Get_Background">
 
-                <Button
-                    android:id="@+id/BST_Activity_Min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/BST_Activity_Text_Min"
-                    app:layout_constraintStart_toStartOf="@+id/BST_Activity_LeftChild"
-                    app:layout_constraintTop_toBottomOf="@+id/BST_Activity_LeftChild" />
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Get_Parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/BST_Activity_Get_Parent"
+                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Get_External"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/BST_Activity_Max"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/BST_Activity_Text_Max"
-                    app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Min"
-                    app:layout_constraintStart_toStartOf="@+id/BST_Activity_RightChild"
-                    app:layout_constraintTop_toTopOf="@+id/BST_Activity_Min" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Get_RightChild"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Get_RightChild"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_Parent"
+                        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_External"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Get_Parent" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Get_LeftChild"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Get_LeftChild"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_RightChild"
+                        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_Internal"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Get_RightChild" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Get_Root"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Get_Root"
+                        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_Parent"
+                        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Get_Parent" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Get_External"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BST_Activity_Get_External"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_Root"
+                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Get_Internal"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Get_Parent"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Get_Root" />
+
+                    <RadioButton
+                        android:id="@+id/BST_Activity_Get_Internal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/BST_Activity_Get_Internal"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_External"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Get_External"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Get_External" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.motion.widget.MotionLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -451,6 +591,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.55" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

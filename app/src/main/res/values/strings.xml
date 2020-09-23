@@ -25,7 +25,6 @@
 
     // Stack Activity
     <string name="Stack_Activity_Text_Peek">peek</string>
-    <string name="Stack_Activity_Text_Size">size</string>
     <string name="Stack_Activity_Text_Empty">isEmpty</string>
 
     <string name="Stack_Activity_Full">Stack is full</string>
@@ -36,7 +35,6 @@
 
     // Queue Activity
     <string name="Queue_Activity_Text_Peek">peek</string>
-    <string name="Queue_Activity_Text_Size">size</string>
     <string name="Queue_Activity_Text_Empty">isEmpty</string>
 
     <string name="Queue_Activity_Full">Queue is full</string>
@@ -65,7 +63,6 @@
     <string name="LinkedList_Activity_Delete_All">Clear</string>
 
     <string name="LinkedList_Activity_Get_Title">Get</string>
-    <string name="LinkedList_Activity_Get_Size">Size</string>
     <string name="LinkedList_Activity_Get_Predecessor">Predecessor</string>
     <string name="LinkedList_Activity_Get_Successor">Successor</string>
     <string name="LinkedList_Activity_Get_First">Get First</string>
@@ -87,23 +84,27 @@
     <string name="BST_Activity_Standard_Remove">Remove</string>
 
     <string name="BST_Activity_Structure_Title">Structure</string>
-    <string name="BST_Activity_Structure_Height">height</string>
-    <string name="BST_Activity_Structure_Depth">depth</string>
+    <string name="BST_Activity_Structure_Size">Size</string>
+    <string name="BST_Activity_Structure_Height">Height</string>
+    <string name="BST_Activity_Structure_Depth">Depth</string>
 
     <string name="BST_Activity_Check_Title">Check</string>
-    <string name="BST_Activity_Check_isRoot">isRoot</string>
-    <string name="BST_Activity_Check_isExternal">isExternal</string>
-    <string name="BST_Activity_Check_isInternal">isInternal</string>
-    <string name="BST_Activity_Check_hasLeftChild">hasLeftChild</string>
-    <string name="BST_Activity_Check_hasRightChild">hasRightChild</string>
-    <string name="BST_Activity_Check_hasChild">hasChild</string>
-    <string name="BST_Activity_Check_hasParent">hasParent</string>
+    <string name="BST_Activity_Check_Root">Is Root</string>
+    <string name="BST_Activity_Check_External">Is External</string>
+    <string name="BST_Activity_Check_Internal">Is Internal</string>
+    <string name="BST_Activity_Check_LeftChild">Has Left Child</string>
+    <string name="BST_Activity_Check_RightChild">Has Right Child</string>
+    <string name="BST_Activity_Check_Child">Has Child</string>
+    <string name="BST_Activity_Check_Parent">Has Parent</string>
+    <string name="BST_Activity_Check_Empty">Is Empty</string>
 
     <string name="BST_Activity_Get_Title">Get</string>
-    <string name="BST_Activity_Get_LeftChild">leftChild</string>
-    <string name="BST_Activity_Get_RightChild">rightChild</string>
-    <string name="BST_Activity_Get_Parent">getParent</string>
-    <string name="BST_Activity_Get_Root">getRoot</string>
+    <string name="BST_Activity_Get_LeftChild">Left Child</string>
+    <string name="BST_Activity_Get_RightChild">Right Child</string>
+    <string name="BST_Activity_Get_Parent">Parent</string>
+    <string name="BST_Activity_Get_Root">Root</string>
+    <string name="BST_Activity_Get_External">External Nodes</string>
+    <string name="BST_Activity_Get_Internal">Internal Nodes</string>
 
     <string name="BST_Activity_Text_Add">add</string>
     <string name="BST_Activity_Text_Remove">remove</string>

@@ -19,7 +19,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
     private static String TAG = "BSTActivity :: ";
 
-    private TextView mTextView;
     private BinarySearchTree mTree = new BinarySearchTree();
     private Vector<Integer> mTreeUser = new Vector<>();
     private ActivityBinarySearchTreeBinding mBinding;

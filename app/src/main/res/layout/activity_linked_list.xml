@@ -173,7 +173,7 @@
                             android:id="@+id/LinkedList_Activity_Get_Size_RadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Get_Size" />
+                            android:text="@string/All_Data_Activity_Text_Size" />
 
                         <RadioButton
                             android:id="@+id/LinkedList_Activity_Get_Pre_RadioButton"

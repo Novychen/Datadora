@@ -4,6 +4,21 @@
         <item name="android:textColor">@color/colorOnPrimary</item>
     </style>
 
+    <style name="Tree">
+    </style>
+
+    <style name="Tree.List">
+        <item name="android:background">@drawable/background_list_item</item>
+        <item name="android:backgroundTint">@color/secondaryColor</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
+
+    <style name="Tree.Button">
+        <item name="android:background">@drawable/background_list_item</item>
+        <item name="android:backgroundTint">@color/secondaryColor</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
+
     <style name="Return">
         <item name="android:background">@drawable/background_return</item>
     </style>
