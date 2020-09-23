@@ -2,6 +2,7 @@ package at.fhooe.mc.datadora.BinarySearchTree;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +19,6 @@ import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
 public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static String TAG = "BSTActivity :: ";
-
-    private TextView mTextView;
     private BinarySearchTree mTree = new BinarySearchTree();
     private Vector<Integer> mTreeUser = new Vector<>();
     private ActivityBinarySearchTreeBinding mBinding;
@@ -75,6 +74,10 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             /* if (!mTree.isEmpty()) { //TODO: let BinarySearchTree implement isEmpty
                 // mBinding.ActivityBSTValueText.setText(String.format("%s", mBST.lastElement()));
                 // mBST.remove(mBST.size() - 1);
+                 int key = 0;
+                 if(mTreeUser.contains(key)){
+                     mTree.remove(key);
+                 }
             } else {
                 Toast.makeText(this, R.string.Stack_Activity_Text_Empty, Toast.LENGTH_SHORT).show();
                 mBinding.ActivityBSTValueText.setText("-");
@@ -88,6 +91,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
     private void clear() {
         //TODO: let BinarySearchTree implement clear
+        mTree.setRoot(null);
+        mTreeUser.clear();
+        mTree.setSize(0);
     }
 
     private void add(int _value) {
@@ -108,8 +114,10 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         int high = 101;
         int result = r.nextInt(high-low) + low;
 
-        mTree.insert(result);
-        mTreeUser.add(result);
+        boolean succesfull = mTree.insert(result);
+        if (succesfull){mTreeUser.add(result);}
+
+
     }
 
     /**
