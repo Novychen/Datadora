@@ -1,4 +1,4 @@
-package at.fhooe.mc.datadora;
+package at.fhooe.mc.datadora.LinkedList;
 
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
@@ -21,6 +21,8 @@ import android.view.animation.AccelerateInterpolator;
 import androidx.annotation.Nullable;
 
 import java.util.Vector;
+
+import at.fhooe.mc.datadora.R;
 
 public class LinkedListView extends View {
 

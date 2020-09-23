@@ -1,10 +1,8 @@
-package at.fhooe.mc.datadora;
+package at.fhooe.mc.datadora.BinarySearchTree;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -13,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Random;
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
 
 

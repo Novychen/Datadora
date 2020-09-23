@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/box_inset_layout_padding"
-    tools:context=".BinarySearchTreeActivity">
+    tools:context=".BinarySearchTree.BinarySearchTreeActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/BST_Activity_Toolbar"
@@ -53,7 +53,7 @@
         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Box_Return"
         app:layout_constraintTop_toTopOf="@+id/BST_Activity_Box_Return" />
 
-    <at.fhooe.mc.datadora.BSTView
+    <at.fhooe.mc.datadora.BinarySearchTree.BSTView
         android:id="@+id/BST_Activity_BSTView"
         android:layout_width="0dp"
         android:layout_height="400dp"

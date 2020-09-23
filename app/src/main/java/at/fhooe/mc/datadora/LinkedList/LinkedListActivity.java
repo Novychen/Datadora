@@ -1,4 +1,4 @@
-package at.fhooe.mc.datadora;
+package at.fhooe.mc.datadora.LinkedList;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +21,7 @@ import com.google.android.material.slider.Slider;
 import java.util.Random;
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityLinkedListBinding;
 
 public class LinkedListActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
@@ -129,6 +130,9 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         save();
     }
 
+    /**
+     * saves the current vector (input from the user) into the sharedPreferences
+     */
     private void save() {
 
         // init the SP object
@@ -151,6 +155,10 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         editor.apply();
     }
 
+    /**
+     * gets the saved vector (user input) from the sharedPreferences
+     * @return the saved vector or null if there is none
+     */
     protected Vector<Integer> loadFromSave() {
 
         // get the saved string (vector)

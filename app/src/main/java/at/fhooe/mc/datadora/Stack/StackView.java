@@ -1,11 +1,10 @@
-package at.fhooe.mc.datadora;
+package at.fhooe.mc.datadora.Stack;
 
 import android.animation.ArgbEvaluator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -16,6 +15,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import androidx.annotation.Nullable;
 
 import java.util.Vector;
+
+import at.fhooe.mc.datadora.R;
 
 /**
  * Class StackView, implements the animation for the stack in normal mode

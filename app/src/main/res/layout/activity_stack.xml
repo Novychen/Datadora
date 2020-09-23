@@ -209,7 +209,7 @@
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_InputSlider"
         app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Switch">
 
-        <at.fhooe.mc.datadora.StackView
+        <at.fhooe.mc.datadora.Stack.StackView
             android:id="@+id/Stack_Activity_StackView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

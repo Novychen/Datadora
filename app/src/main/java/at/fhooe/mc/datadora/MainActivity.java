@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 
 
+import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity;
+import at.fhooe.mc.datadora.LinkedList.LinkedListActivity;
+import at.fhooe.mc.datadora.Queue.QueueActivity;
+import at.fhooe.mc.datadora.Stack.StackActivity;
 import at.fhooe.mc.datadora.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent i = new Intent(this, LinkedListActivity.class);
             startActivity(i);
         }else if(v == mBinding.mainActivityButtonBST){
-            Intent i = new Intent(this,BinarySearchTreeActivity.class);
+            Intent i = new Intent(this, BinarySearchTreeActivity.class);
             startActivity(i);
         }
     }

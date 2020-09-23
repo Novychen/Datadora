@@ -204,7 +204,7 @@
         app:layout_constraintStart_toStartOf="@+id/Queue_Activity_InputSlider"
         app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Switch">
 
-        <at.fhooe.mc.datadora.QueueView
+        <at.fhooe.mc.datadora.Queue.QueueView
             android:id="@+id/Queue_Activity_QueueView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
