@@ -31,11 +31,10 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     private ActivityLinkedListBinding mBinding;
     private Vector<Integer> mLinkedList = new Vector<>();
 
-    //TODO: copied from LinkedListView - do we need the same here?
     //Shared Preferences setup
     private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.LinkedListSharedPreferenceFile.LinkedList";
     private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.LinkedListKey2020";
-    SharedPreferences mSharedPreferences;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
@@ -131,7 +130,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     /**
-     * saves the current vector (input from the user) into the sharedPreferences
+     * Saves the current vector (input from the user) into the SharedPreferences.
      */
     private void save() {
 
@@ -156,7 +155,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     /**
-     * gets the saved vector (user input) from the sharedPreferences
+     * Gets the saved vector (user input) from the SharedPreferences.
      * @return the saved vector or null if there is none
      */
     protected Vector<Integer> loadFromSave() {
@@ -170,7 +169,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         int begin;
         int end = 0;
         int i;
-        if(vectorStr == null || vectorStr.contains(defaultValue)) {
+        if(vectorStr == null || vectorStr.contains(defaultValue) || vectorStr.equals("")) {
             return null;
         } else {
             while(end > -1) {
@@ -414,10 +413,12 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
     private void getPredecessor() {
         //TODO
+        Toast.makeText(this, R.string.LinkedList_Activity_Toast_Feature, Toast.LENGTH_SHORT).show();
     }
 
     private void getSuccessor() {
         //TODO
+        Toast.makeText(this, R.string.LinkedList_Activity_Toast_Feature, Toast.LENGTH_SHORT).show();
     }
 
     private void getFirst() {
@@ -477,7 +478,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     public void isEmptyMessage(){
         Toast.makeText(this, R.string.LinkedList_Activity_Toast_Empty, Toast.LENGTH_SHORT).show();
         mBinding.LinkedListActivityReturnValue.setText("");
-        //todo: more visual output like showEmpty(); in the stack?
     }
 
     /**

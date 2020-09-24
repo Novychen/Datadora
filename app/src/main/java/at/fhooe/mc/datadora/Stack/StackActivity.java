@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -55,6 +58,12 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         mPressedPop = _pressedPop;
     }
 
+    //Shared Preferences setup
+    private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.StackSharedPreferenceFile.Stack";
+    private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.StackKey2020";
+    private SharedPreferences mSharedPreferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +75,9 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
         decorView.setSystemUiVisibility(uiOptions);
 
-        mBinding.StackActivityStackView.init(this);
+        mBinding.StackActivityStackView.setActivity(this);
+
+        mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
         // set up the slider
         Slider slider = mBinding.StackActivityInputSlider;
@@ -104,6 +115,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         mBinding.StackActivitySwitch.setOnCheckedChangeListener(this);
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -114,22 +126,38 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         super.onRestart();
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
+
+        Vector<Integer> v = loadFromSave();
+        if(v != null) {
+            Log.i(TAG, "-------------------------" + v + " loaded");
+            mStack.clear();
+            mStack.addAll(v);
+        }
+
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
         decorView.setSystemUiVisibility(uiOptions);
+
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        save();
     }
+
 
 
     @Override
     protected void onStop() { super.onStop(); }
+
+
 
     @Override
     protected void onDestroy() {
@@ -157,6 +185,75 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * Saves the current vector (input from the user) into the SharedPreferences.
+     */
+    private void save() {
+
+        // init the SP object
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+
+        // Convert the vector containing the integers to a string
+        Vector<Integer> vector = mBinding.StackActivityStackView.mStackNumbers;
+        StringBuilder vectorStr = new StringBuilder();
+
+        // transform the vector into a string
+        for (int i = 0; i < vector.size(); i++) {
+            if (i != vector.size() - 1) {
+                vectorStr.append(vector.get(i)).append(",");
+
+                Log.i(TAG, "-------------------------" + vector.get(i) + " saved");
+
+            } else {
+                vectorStr.append(vector.get(i));
+                Log.i(TAG, "-------------------------" + vector.get(i) + " saved");
+            }
+        }
+
+        editor.putString(SP_VALUE_KEY, String.valueOf(vectorStr));
+        editor.apply();
+    }
+
+
+    /**
+     * Gets the saved vector (user input) from the SharedPreferences.
+     * @return the saved vector or null if there is none
+     */
+    protected Vector<Integer> loadFromSave() {
+
+        // get the saved string (vector)
+        String defaultValue = "empty";
+        String vectorStr = mSharedPreferences.getString(SP_VALUE_KEY, defaultValue);
+        Vector<Integer> vector = new Vector<>();
+
+        // check if it was successful -> transform to vector, or if not -> return null
+        int begin;
+        int end = 0;
+        int i;
+        if(vectorStr == null || vectorStr.contains(defaultValue) || vectorStr.equals("")) {
+            return null;
+        } else {
+            while(end > -1) {
+                begin = end;
+                end = vectorStr.indexOf(',', begin);
+
+                if(end == -1) {
+                    i = Integer.parseInt(vectorStr.substring(begin));
+
+                } else {
+                    i = Integer.parseInt(vectorStr.substring(begin, end));
+                    end++;
+                }
+                vector.add(i);
+
+            }
+            return vector;
+        }
+    }
+
+
+
 
     /**
      * show the size of the stack
@@ -251,7 +348,8 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
             mBinding.StackActivityStackView.peek();
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    mBinding.StackActivityReturnValue.setText(String.format("%s",  mBinding.StackActivityStackView.mStackNumbers.get( mBinding.StackActivityStackView.mStackNumbers.size() - 1).toString()));
+                    mBinding.StackActivityReturnValue.setText(String.format("%s",  mBinding.StackActivityStackView.mStackNumbers.get(
+                            mBinding.StackActivityStackView.mStackNumbers.size() - 1).toString()));
                 }
             }, 500);
         } else {
