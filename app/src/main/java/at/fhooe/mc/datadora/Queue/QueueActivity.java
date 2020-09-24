@@ -1,5 +1,7 @@
 package at.fhooe.mc.datadora.Queue;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -51,6 +53,11 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         mPressedDequeue = _pressedDequeue;
     }
 
+    //Shared Preferences setup
+    private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.QueueSharedPreferenceFile.Queue";
+    private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.QueueKey2020";
+    private SharedPreferences mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
@@ -62,7 +69,9 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
         decorView.setSystemUiVisibility(uiOptions);
 
-        mBinding.QueueActivityQueueView.init(this);
+        mBinding.QueueActivityQueueView.setActivity(this);
+
+        mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
         // set up the slider
         Slider slider = mBinding.QueueActivityInputSlider;
@@ -113,11 +122,17 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+        Vector<Integer> v = loadFromSave();
+        if(v != null) {
+            mQueue.clear();
+            mQueue.addAll(v);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        save();
     }
 
     @Override
@@ -127,6 +142,64 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
         mBinding = null;
+    }
+
+    /**
+     * Saves the current vector (input from the user) into the SharedPreferences.
+     */
+    private void save() {
+
+        // init the SP object
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+
+        // Convert the vector containing the integers to a string
+        Vector<Integer> vector = mBinding.QueueActivityQueueView.mQueueNumbers;
+        StringBuilder vectorStr = new StringBuilder();
+
+        // transform the vector into a string
+        for (int i = 0; i < vector.size(); i++) {
+            if (i != vector.size() - 1) {
+                vectorStr.append(vector.get(i)).append(",");
+            } else {
+                vectorStr.append(vector.get(i));
+            }
+        }
+
+        editor.putString(SP_VALUE_KEY, String.valueOf(vectorStr));
+        editor.apply();
+    }
+
+    /**
+     * Gets the saved vector (user input) from the SharedPreferences.
+     * @return the saved vector or null if there is none
+     */
+    protected Vector<Integer> loadFromSave() {
+
+        // get the saved string (vector)
+        String defaultValue = "empty";
+        String vectorStr = mSharedPreferences.getString(SP_VALUE_KEY, defaultValue);
+        Vector<Integer> vector = new Vector<>();
+
+        // check if it was successful -> transform to vector, or if not -> return null
+        int begin;
+        int end = 0;
+        int i;
+        if(vectorStr == null || vectorStr.contains(defaultValue) || vectorStr.equals("")) {
+            return null;
+        } else {
+            while(end > -1) {
+                begin = end;
+                end = vectorStr.indexOf(',', begin);
+                if(end == -1) {
+                    i = Integer.parseInt(vectorStr.substring(begin));
+                } else {
+                    i = Integer.parseInt(vectorStr.substring(begin, end));
+                    end++;
+                }
+                vector.add(i);
+            }
+            return vector;
+        }
     }
 
     @Override

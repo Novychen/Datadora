@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.LinkedList.LinkedListView;
 import at.fhooe.mc.datadora.R;
 
 /**
@@ -30,7 +31,22 @@ public class StackView extends View {
     private static final String TAG = "StackView : ";
 
     // Booleans that check which is the current operation
-    boolean mPop, mPush, mPeek, mClear, mRandom;
+    //boolean mPop, mPush, mPeek, mClear, mRandom;
+
+    // the current operation
+    Operation mCurrentOperation;
+
+    //Check what the current operation is
+    enum Operation{
+        POP,
+        PUSH,
+        PEEK,
+        CLEAR,
+        RANDOM,
+
+        SIZE,
+        SAVE
+    }
 
     // int that counts how often the operator pushed was used (by operator random)
     int mPosition;
@@ -151,7 +167,7 @@ public class StackView extends View {
         mStackItemTextPaint.setTextSize(55);
     }
 
-    protected void init(StackActivity _activity) {
+    protected void setActivity (StackActivity _activity) {
         mStackActivity = _activity;
     }
 
@@ -159,14 +175,12 @@ public class StackView extends View {
      * marks the latest element of the stack
      */
     protected void peek() {
+
+        mCurrentOperation = Operation.PEEK;
         //mAnimatorPeekBorder.start();
         mAnimatorPeekText.start();
         mAnimatorPeekArea.start();
-        mPeek = true;
-        mClear = false;
-        mRandom = false;
-        mPop = false;
-        mPush = false;
+
         invalidate();
     }
 
@@ -174,11 +188,7 @@ public class StackView extends View {
      * clears the stack
      */
     protected void clear() {
-        mPeek = false;
-        mClear = true;
-        mRandom = false;
-        mPop = true;
-        mPush = false;
+        mCurrentOperation = Operation.CLEAR;
         mAnimatorPop.setDuration(200);
         mAnimatorPop.start();
     }
@@ -187,13 +197,11 @@ public class StackView extends View {
      * creates a random stack
      */
     protected void random(Vector<Integer> _stack) {
+        mCurrentOperation = Operation.RANDOM;
+
         mStackNumbers.clear();
         mStack.clear();
-        mPeek = false;
-        mClear = false;
-        mRandom = true;
-        mPop = false;
-        mPush = false;
+
         mRandomStack = _stack;
         mAnimatorPush.setDuration(350);
         push(_stack.get(mPosition));
@@ -204,11 +212,8 @@ public class StackView extends View {
      * prepares the view for the pop
      */
     protected void prePop() {
-        mPeek = false;
-        mClear = false;
-        mRandom = false;
-        mPop = true;
-        mPush = false;
+        //TODO: make 1 method out of those two?
+        mCurrentOperation = Operation.POP;
         mAnimatorPop.start();
     }
 
@@ -232,6 +237,7 @@ public class StackView extends View {
      * adds a element to the stack
      */
     protected void push(int _value) {
+        mCurrentOperation = Operation.PUSH;
         RectF r = new RectF();
         mStack.add(r);
         mStackNumbers.add(_value);
@@ -240,10 +246,7 @@ public class StackView extends View {
             mScale = mScale / 1.2f;
         }
         changeBoxSize(getMax(), true);
-        mPeek = false;
-        mClear = false;
-        mPop = false;
-        mPush = true;
+
         mAnimatorPush.start();
     }
 
@@ -346,6 +349,19 @@ public class StackView extends View {
             }
         });
 
+
+        //Visualize the vector in the Shared Preferences
+        Vector<Integer> v = mStackActivity.loadFromSave();
+        if(v != null) {
+            for (int i = 0; i < v.size(); i++) {
+                mStackNumbers.add(v.get(i));
+                mStack.add(new RectF());
+            }
+            mCurrentOperation = Operation.SAVE;
+            //TODO error: last element not visualized correctly.
+
+        }
+
         invalidate();
     }
 
@@ -354,15 +370,17 @@ public class StackView extends View {
         super.onDraw(_canvas);
         for (int i = 0; i < mStackNumbers.size(); i++) {
             if (i == mStackNumbers.size() - 1) {  // only animate the last object - translate box + text and change the alpha
-                if (mPush) {
+                if (mCurrentOperation == Operation.PUSH) {
                     mStack.get(i).top = (int) (mMaxHeightStack - ((mMaxWidthStack / 4) + (mMaxWidthStack / 4 * i)) * mScale) + mTranslateYPush;
                     mStackItemTextPaint.setAlpha(mAlphaPush);
                     mStackItemPaint.setAlpha(mAlphaPush);
-                } else if (mPop) {
+
+                } else if (mCurrentOperation == Operation.POP) {
                     mStack.get(i).top = (int) (mMaxHeightStack - ((mMaxWidthStack / 4) + (mMaxWidthStack / 4 * i)) * mScale) + mTranslateYPop;
                     mStackItemTextPaint.setAlpha(mAlphaPop);
                     mStackItemPaint.setAlpha(mAlphaPop);
-                } else if(mPeek){
+
+                } else if(mCurrentOperation == Operation.PEEK){
                     mStack.get(i).top = (int) (mMaxHeightStack - ((mMaxWidthStack / 4) + (mMaxWidthStack / 4 * i)) * mScale);
                     mStackItemPaint.setColor(mColorAreaPeek);
                     mStackItemPaint.setStyle(Paint.Style.FILL);
@@ -391,25 +409,28 @@ public class StackView extends View {
             _canvas.drawRoundRect(mStack.get(i), mRadius, mRadius, mStackItemPaint);
         }
 
-        if (mPop && mAlphaPop == 0 && !mClear) { // Animation of pop is over -> remove element
+
+        if (mCurrentOperation == Operation.POP && mAlphaPop == 0) { // Animation of pop is over -> remove element
             pop();
-            mPop = false;
+            //mPop = false;
             mStackActivity.setPressedPop(false);
-        } else if (mClear && mStackNumbers.isEmpty()) { // clear operation is finished
-            mPop = false;
-            mClear = false;
+        } else if (mCurrentOperation == Operation.CLEAR && mStackNumbers.isEmpty()) { // clear operation is finished
+            //mPop = false;
+            //mClear = false;
             mStackActivity.showEmpty();
             mAnimatorPop.setDuration(700);
             mPosition = 0;
-        } else if (mClear && mPop && mAlphaPop == 0) { // clear operation is ongoing - animation is finished - remove last element
+        } else if (mCurrentOperation == Operation.CLEAR && mAlphaPop == 0) { // clear operation is ongoing - animation is finished - remove last element
             pop();
             mAnimatorPop.start();
-        } else if (mRandom && mRandomStack.size() == mStackNumbers.size()) { // random operation is finished
-            mRandom = false;
+
+        } else if (mCurrentOperation == Operation.RANDOM && mRandomStack.size() == mStackNumbers.size()) { // random operation is finished
+            //mRandom = false;
+            //TODO: random not working /visualizing properly anymore - error may be here!
             mAnimatorPush.setDuration(700);
             mStackActivity.setPressedRandom(false);
             mPosition = 0;
-        } else if (mRandom && mAlphaPush == 255) { // random animation for element is finished - add next element
+        } else if (mCurrentOperation == Operation.RANDOM && mAlphaPush == 255) { // random animation for element is finished - add next element
             push(mRandomStack.get(mPosition));
             mPosition++;
         }

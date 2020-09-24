@@ -31,7 +31,9 @@ public class LinkedListView extends View {
     //TODO: App crashes when list empty & change in type
     //TODO: Type not tied to element
     //TODO: Sorted / Unsorted
-
+    //TODO: Handle too many list elements - how many? 100?
+    //TODO: app still buggy with DELETEAT, especially when prepend was used.
+    //TODO: the GET slider appears too late when performing the very first get at after insertion
     //TODO: put Size Button after random (?)
 
     private static final String TAG = "LinkedListView : ";
@@ -50,10 +52,6 @@ public class LinkedListView extends View {
     private static final String PROPERTY_TRANSLATE_Y_RANDOM = "PROPERTY_TRANSLATE_RANDOM";
     private static final String PROPERTY_ALPHA_RANDOM = "PROPERTY_ALPHA_RANDOM";
 
-    //Shared Preferences setup
-    private static final String SP_FILE_KEY = "LinkedListSharedPreferenceFile";
-    private static final String SP_VALUE_KEY = "DataDoraLinkedListKey2020"; //TODO: make this to R.string?
-    SharedPreferences mSharedPreferences;
 
     Paint mItemPaint = new Paint();
     Paint mTypePaint = new Paint();
@@ -315,18 +313,11 @@ public class LinkedListView extends View {
         mAnimatorPrepend.start();
     }
 
-    //TODO: write to shared pref here
     protected void append(int _value){
         mCurrentOperation = Operation.APPEND;
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(_value);
-
-        SharedPreferences.Editor edt = mSharedPreferences.edit();
-        edt.putInt(SP_VALUE_KEY, _value); //write the user input value to SP
-        edt.apply(); //asynchronous write
-        Log.i(TAG, "append value saved");
-
         reScale();
         mAnimatorAppend.start();
     }
@@ -447,6 +438,7 @@ public class LinkedListView extends View {
         mMaxWidthLinkedList = (float) _w - xpad - 6;
         mScale = 1;
 
+        //Visualize the vector in the Shared Preferences
         Vector<Integer> v = mActivity.loadFromSave();
         if(v != null) {
             for (int i = 0; i < v.size(); i++) {

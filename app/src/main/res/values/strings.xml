@@ -71,6 +71,7 @@
 
     <string name="LinkedList_Activity_Toast_Full">List is full!</string>
     <string name="LinkedList_Activity_Toast_Empty">List is empty!</string>
+    <string name="LinkedList_Activity_Toast_Feature">This feature is coming soon</string>
 
     // BinarySearchTree
     <string name="BST_Activity_Text_Inorder">Inorder</string>
@@ -133,4 +134,5 @@
 
     <string name="Content_Description_LinkedList_Get_Background">A rectangle that serves as the background of the operation group get</string>
     <string name="Content_Description_LinkedList_Get_Arrow">An arrow that opens and closes the available operations of the group get</string>
+
 </resources>

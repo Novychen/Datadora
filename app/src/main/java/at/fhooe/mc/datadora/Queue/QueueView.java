@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.LinkedList.LinkedListView;
 import at.fhooe.mc.datadora.R;
 
 /**
@@ -159,7 +160,7 @@ public class QueueView extends View {
         mQueueItemTextPaint.setTextSize(55);
     }
 
-    protected void init(QueueActivity _activity) {
+    protected void setActivity(QueueActivity _activity) {
         mQueueActivity = _activity;
     }
 
@@ -355,6 +356,17 @@ public class QueueView extends View {
                 invalidate();
             }
         });
+
+        //Visualize the vector in the Shared Preferences
+        Vector<Integer> v = mQueueActivity.loadFromSave();
+        if(v != null) {
+            for (int i = 0; i < v.size(); i++) {
+                mQueueNumbers.add(v.get(i));
+                mQueue.add(new RectF());
+            }
+            //mCurrentOperation = Operation.SAVE; TODO enum
+            //TODO: last element not visalized properly
+        }
 
         invalidate();
     }
