@@ -102,15 +102,11 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         int key = (int) mBinding.BSTActivityInputSlider.getValue();
         if (view == mBinding.BSTActivityInorder) {
             Log.e(TAG, "InOrder");
-            //mBinding.BSTActivityVectorOutput.setText(mTree.toString());
-
             mBinding.BSTActivityVectorOutput.setText(ArrayToSting(mTree.toArray(true)));
         } else if (view == mBinding.BSTActivityPostorder) {
-            Log.e(TAG, "PostOrder" + mTree.toArrayPostOrder());
             mTree.toArrayPostOrder();
             mBinding.BSTActivityVectorOutput.setText(ArrayToSting(mTree.toArrayPostOrder()));
         } else if (view == mBinding.BSTActivityPreorder) {
-            Log.e(TAG, "PreOrder" + mTree.toArrayPreOrder());
             mBinding.BSTActivityVectorOutput.setText(ArrayToSting(mTree.toArrayPreOrder()));
 
         }
@@ -141,27 +137,27 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             mBinding.BSTActivityStructureSize.setChecked(false);
             mBinding.BSTActivityReturnText.setText("Size");
             mBinding.BSTActivityReturnValue.setText(String.format("%s", mTreeUser.size()));
-        } else if (view == mBinding.BSTActivityStructureDepth) {
+        } else if (view == mBinding.BSTActivityStructureDepth) { //ToDo
             mBinding.BSTActivityStructureDepth.setChecked(false);
             Log.e(TAG, "Depth");
             mBinding.BSTActivityReturnText.setText("Depth");
-        } else if (view == mBinding.BSTActivityStructureHeight) {
+        } else if (view == mBinding.BSTActivityStructureHeight) {//ToDo
             mBinding.BSTActivityReturnText.setText("Height");
             mBinding.BSTActivityStructureHeight.setChecked(false);
             Log.e(TAG, "Height");
         }
         //Get
-        else if (view == mBinding.BSTActivityGetParent) {
+        else if (view == mBinding.BSTActivityGetParent) {//ToDo
             mBinding.BSTActivityGetParent.setChecked(false);
             Log.e(TAG, "GetParent");
             //BinaryTreeNode m = mTree.getParentNode(key);
             mBinding.BSTActivityReturnText.setText("Parent");
            // mBinding.BSTActivityReturnValue.setText(String.format("%s", m.data));
-        } else if (view == mBinding.BSTActivityGetLeftChild) {
+        } else if (view == mBinding.BSTActivityGetLeftChild) {//ToDo
             mBinding.BSTActivityGetLeftChild.setChecked(false);
             Log.e(TAG, "GetLeftChild");
             mBinding.BSTActivityReturnText.setText("LeftChild");
-        } else if (view == mBinding.BSTActivityGetRightChild) {
+        } else if (view == mBinding.BSTActivityGetRightChild) {//ToDo
             mBinding.BSTActivityGetRightChild.setChecked(false);
             Log.e(TAG, "GetRightChild");
             mBinding.BSTActivityReturnText.setText("RightChild");
@@ -172,11 +168,10 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
                 mBinding.BSTActivityReturnValue.setText(String.format("%s", mTree.root.data));
             }else {
                 Toast.makeText(this, R.string.BST_Activity_Check_Empty, Toast.LENGTH_SHORT).show();}
-            Log.e(TAG, "GetRoot");
-        } else if (view == mBinding.BSTActivityGetInternal) {
+        } else if (view == mBinding.BSTActivityGetInternal) {//ToDo
             mBinding.BSTActivityGetInternal.setChecked(false);
             Log.e(TAG, "GetInternal");
-        } else if (view == mBinding.BSTActivityGetExternal) {
+        } else if (view == mBinding.BSTActivityGetExternal) {//ToDo
             mBinding.BSTActivityGetExternal.setChecked(false);
             Log.e(TAG, "GetExternal");
         } else if (view == mBinding.BSTActivityGetMax) {
@@ -189,41 +184,37 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         //Check
         else if (view == mBinding.BSTActivityCheckEmpty) {
             mBinding.BSTActivityCheckEmpty.setChecked(false);
-            Log.e(TAG, "CheckEmpty");
             if (mTreeUser.isEmpty()) {
                 Toast.makeText(this, R.string.BST_Activity_Check_Empty, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, R.string.BST_Activity_Check_NotEmpty, Toast.LENGTH_SHORT).show();
             }
-        } else if (view == mBinding.BSTActivityCheckParent) {
+        } else if (view == mBinding.BSTActivityCheckParent) {//ToDo
             mBinding.BSTActivityCheckParent.setChecked(false);
             Log.e(TAG, "CheckParent");
-        } else if (view == mBinding.BSTActivityCheckLeftChild) {
+        } else if (view == mBinding.BSTActivityCheckLeftChild) {//ToDo
             mBinding.BSTActivityCheckLeftChild.setChecked(false);
             Log.e(TAG, "CheckLeftChild");
-        } else if (view == mBinding.BSTActivityCheckRightChild) {
+        } else if (view == mBinding.BSTActivityCheckRightChild) {//ToDo
             mBinding.BSTActivityCheckRightChild.setChecked(false);
             Log.e(TAG, "CheckRightChild");
         } else if (view == mBinding.BSTActivityCheckRoot) {
             mBinding.BSTActivityCheckRoot.setChecked(false);
-          //  mBinding.BSTActivityReturnText.setText("Root");
             mBinding.BSTActivityReturnValue.setText(String.format("%s",key));
             if (mTree.root != null){
                 if(mTree.root.data == key){
                     mBinding.BSTActivityReturnText.setText("True");
-                   // mBinding.BSTActivityReturnValue.setText("True");
                 }else{
                     mBinding.BSTActivityReturnText.setText("False");
-                   // mBinding.BSTActivityReturnValue.setText("False");
                     }
             }else {
                 Toast.makeText(this, R.string.BST_Activity_Check_Empty, Toast.LENGTH_SHORT).show();
             }
             Log.e(TAG, "CheckRoot");
-        } else if (view == mBinding.BSTActivityCheckExternal) {
+        } else if (view == mBinding.BSTActivityCheckExternal) {//ToDo
             mBinding.BSTActivityCheckExternal.setChecked(false);
             Log.e(TAG, "CheckExternal");
-        } else if (view == mBinding.BSTActivityCheckInternal) {
+        } else if (view == mBinding.BSTActivityCheckInternal) {//ToDo
             mBinding.BSTActivityCheckInternal.setChecked(false);
             Log.e(TAG, "CheckInternal");
         } else {
