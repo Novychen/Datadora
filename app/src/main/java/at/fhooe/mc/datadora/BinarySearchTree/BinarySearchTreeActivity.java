@@ -117,18 +117,22 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         //Strandard
         else if (view == mBinding.BSTActivityAdd) {
             mBinding.BSTActivityAdd.setChecked(false);
+            mBinding.BSTActivityReturnText.setText("Add");
+            mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
             add();
         } else if (view == mBinding.BSTActivityRandom) {
             mBinding.BSTActivityRandom.setChecked(false);
+            mBinding.BSTActivityReturnText.setText("Random");
             random();
 
         } else if (view == mBinding.BSTActivityRemove) {
             mBinding.BSTActivityRemove.setChecked(false);
             mBinding.BSTActivityReturnText.setText("Remove");
             mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
-
             remove();
         } else if (view == mBinding.BSTActivityClear) {
+            mBinding.BSTActivityReturnText.setText("Clear");
+            mBinding.BSTActivityReturnValue.setText(String.format("%s", 0));
             mBinding.BSTActivityClear.setChecked(false);
             clear();
         }
@@ -202,10 +206,16 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             Log.e(TAG, "CheckRightChild");
         } else if (view == mBinding.BSTActivityCheckRoot) {
             mBinding.BSTActivityCheckRoot.setChecked(false);
-            mBinding.BSTActivityReturnText.setText("Root");
+          //  mBinding.BSTActivityReturnText.setText("Root");
+            mBinding.BSTActivityReturnValue.setText(String.format("%s",key));
             if (mTree.root != null){
-                if(mTree.root.data == key){mBinding.BSTActivityReturnValue.setText("True");}else{
-                mBinding.BSTActivityReturnValue.setText("False");}
+                if(mTree.root.data == key){
+                    mBinding.BSTActivityReturnText.setText("True");
+                   // mBinding.BSTActivityReturnValue.setText("True");
+                }else{
+                    mBinding.BSTActivityReturnText.setText("False");
+                   // mBinding.BSTActivityReturnValue.setText("False");
+                    }
             }else {
                 Toast.makeText(this, R.string.BST_Activity_Check_Empty, Toast.LENGTH_SHORT).show();
             }
@@ -255,7 +265,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         boolean successful = mTree.insert(result);
         if (successful) {
             mTreeUser.add(result);
+            mBinding.BSTActivityReturnValue.setText(String.format("%s",result));
         }
+
     }
 
     public void remove() {
