@@ -80,6 +80,7 @@
     <string name="BST_Activity_Standard_Title">Standard Operations</string>
     <string name="BST_Activity_Standard_Add">Add</string>
     <string name="BST_Activity_Standard_Remove">Remove</string>
+    <string name="BST_Activity_Standard_NotRemoveable">Item is not in the Tree</string>
 
     <string name="BST_Activity_Structure_Title">Structure</string>
     <string name="BST_Activity_Structure_Size">Size</string>
@@ -95,6 +96,7 @@
     <string name="BST_Activity_Check_Child">Has Child</string>
     <string name="BST_Activity_Check_Parent">Has Parent</string>
     <string name="BST_Activity_Check_Empty">Is Empty</string>
+    <string name="BST_Activity_Check_NotEmpty">Is not Empty</string>
 
     <string name="BST_Activity_Get_Title">Get</string>
     <string name="BST_Activity_Get_LeftChild">Left Child</string>
