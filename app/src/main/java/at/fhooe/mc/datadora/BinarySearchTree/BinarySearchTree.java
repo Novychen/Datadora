@@ -100,6 +100,7 @@ public class BinarySearchTree {
         return null;
     }
 
+
     /**
      * Removes the element with the given key. Returns true if the key could be
      * found (and removed), false otherwise.
@@ -220,6 +221,29 @@ public class BinarySearchTree {
 
         return getParentNode(key).data;
     }
+    /**
+     * Returns the child data of the given key and the boolean side. Integer.MIN_VALUE if no child
+     * can be found.
+     */
+    public int getChildNode(int _key, boolean _side){
+        if(root == null){
+            return Integer.MIN_VALUE;
+        }
+        BinaryTreeNode n = findNode(_key);
+        if(n!=null){
+        if (_side){
+          return   n.left.data;
+        }
+        return   n.right.data;
+        }
+        return Integer.MIN_VALUE;
+    }
+    public boolean hasChildren(int key){
+        if(root != null){
+          return (findNode(key).right != null)&&(findNode(key).left!=null);
+        }
+        return false;
+    }
 
     public BinaryTreeNode getParentNode(int key) {
 
@@ -247,6 +271,13 @@ public class BinarySearchTree {
         return null;
     }
 
+    public int getDepth(int _key){
+        if(find(_key)){
+            BinaryTreeNode n =findNode(_key);
+            maxDepth(n);
+        }
+        return 0;
+    }
     /**
      * Returns the elements of the tree in ascending (inorder traversal) or
      * descending (reverse inorder traversal) order.
