@@ -80,7 +80,7 @@ public class BinarySearchTree {
         return false;
     }
 
-    private BinaryTreeNode findNode(int key) {
+    public BinaryTreeNode findNode(int key) {
         BinarySearchTree t = new BinarySearchTree();
         BinaryTreeNode n = new BinaryTreeNode(root.data);
         n.left = root.left;
@@ -230,13 +230,18 @@ public class BinarySearchTree {
             return Integer.MIN_VALUE;
         }
         BinaryTreeNode n = findNode(_key);
+        int ret = Integer.MIN_VALUE;
         if(n!=null){
         if (_side){
-          return   n.left.data;
+            if(n.left != null){  ret = n.left.data;}
+
+        }else{ if(n.right!= null){
+            ret = n.right.data;
         }
-        return   n.right.data;
         }
-        return Integer.MIN_VALUE;
+
+        }
+        return ret;
     }
     public boolean hasNoChildren(int key){
         if(root != null){
@@ -274,7 +279,7 @@ public class BinarySearchTree {
     public int getDepth(int _key){
         if(find(_key)){
             BinaryTreeNode n =findNode(_key);
-            maxDepth(n);
+            maxHeight(n);
         }
         return 0;
     }
@@ -467,12 +472,12 @@ public class BinarySearchTree {
      * @param n Node which is check of its depth
      * @return max depth of the tree
      */
-    protected int maxDepth(BinaryTreeNode n) {
+    protected int maxHeight(BinaryTreeNode n) {
         if (n == null)
             return 0;
         else {
-            int right = maxDepth(n.right);
-            int left = maxDepth(n.left);
+            int right = maxHeight(n.right);
+            int left = maxHeight(n.left);
 
             if (left > right)
                 return ++left;
