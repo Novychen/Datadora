@@ -36,6 +36,10 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.LinkedListKey2020";
     private SharedPreferences mSharedPreferences;
 
+    protected ActivityLinkedListBinding getBinding() {
+        return mBinding;
+    }
+
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
@@ -261,7 +265,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             mBinding.LinkedListActivityAddPositionSlider.setStepSize(1);
 
             mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.INVISIBLE);
-            mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.GONE);
+            mBinding.LinkedListActivityDeletePositionZero.setVisibility(View.VISIBLE);
 
             mBinding.LinkedListActivityGetPositionSlider.setVisibility(View.INVISIBLE);
             mBinding.LinkedListActivityGetPositionZero.setVisibility(View.GONE);
@@ -394,7 +398,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         }
     }
 
-
     private void getSize(){
         if(!mLinkedList.isEmpty()){
             mBinding.LinkedListActivityLinkedListView.getSize();
@@ -412,13 +415,11 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     private void getPredecessor() {
-        //TODO
-        Toast.makeText(this, R.string.LinkedList_Activity_Toast_Feature, Toast.LENGTH_SHORT).show();
+        mBinding.LinkedListActivityLinkedListView.predecessor();
     }
 
     private void getSuccessor() {
-        //TODO
-        Toast.makeText(this, R.string.LinkedList_Activity_Toast_Feature, Toast.LENGTH_SHORT).show();
+        mBinding.LinkedListActivityLinkedListView.successor();
     }
 
     private void getFirst() {

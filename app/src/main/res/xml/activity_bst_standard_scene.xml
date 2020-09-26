@@ -6,7 +6,7 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="500">
+        motion:duration="300">
         <OnClick motion:clickAction="toggle"
             motion:targetId="@id/BST_Activity_Standard_Background"/>
         <KeyFrameSet>
@@ -18,6 +18,7 @@
             android:id="@+id/BST_Activity_Standard_Arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:rotation="90"
             android:layout_marginEnd="8dp"
             motion:layout_constraintTop_toTopOf="@+id/BST_Activity_Standard_Background"
             motion:layout_constraintEnd_toEndOf="@+id/BST_Activity_Standard_Background"
@@ -27,7 +28,7 @@
             android:id="@+id/BST_Activity_Standard_ConstraintLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             motion:layout_constraintTop_toBottomOf="@+id/BST_Activity_Standard_Background"
             motion:layout_constraintEnd_toEndOf="@+id/BST_Activity_Standard_Background"
             motion:layout_constraintStart_toStartOf="@+id/BST_Activity_Standard_Background" />
@@ -38,7 +39,6 @@
             android:id="@+id/BST_Activity_Standard_Arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:rotation="90"
             android:layout_marginEnd="8dp"
             motion:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Add_Background"
             motion:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Add_Background"
@@ -48,7 +48,7 @@
             android:id="@+id/BST_Activity_Standard_ConstraintLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             motion:layout_constraintTop_toBottomOf="@+id/BST_Activity_Standard_Background"
             motion:layout_constraintEnd_toEndOf="@+id/BST_Activity_Standard_Background"
             motion:layout_constraintStart_toStartOf="@+id/BST_Activity_Standard_Background"

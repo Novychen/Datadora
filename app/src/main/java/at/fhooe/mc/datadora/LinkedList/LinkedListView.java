@@ -5,20 +5,23 @@ import android.animation.ArgbEvaluator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 
 import java.util.Vector;
 
@@ -139,6 +142,9 @@ public class LinkedListView extends View {
 
     // the current translation on the y-axis - used for the random animation
     private int mTranslateYRandom;
+
+    // checks if a list item was touched
+    private boolean mTouched;
 
     // the position where the element will be inserted with the insertAt operation
     private int mPosition;
@@ -367,10 +373,12 @@ public class LinkedListView extends View {
 
     protected void predecessor(){
         mCurrentOperation = Operation.PREDECESSOR;
+        mPosition = 0;
     }
 
     protected void successor(){
         mCurrentOperation = Operation.SUCCESSOR;
+        mPosition = 0;
     }
 
     protected void getSize(){
@@ -616,7 +624,9 @@ public class LinkedListView extends View {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-
+                if(mCurrentOperation == Operation.PREDECESSOR || mCurrentOperation == Operation.SUCCESSOR) {
+                    mActivity.getBinding().LinkedListActivityReturnValue.setText(String.format("%s", mLinkedListNumbers.get(mPosition).toString()));
+                }
             }
 
             @Override
@@ -626,7 +636,13 @@ public class LinkedListView extends View {
 
             @Override
             public void onAnimationRepeat(Animator animator) {
-                mPositionAnimation++;
+                if(mCurrentOperation == Operation.PREDECESSOR) {
+                    mPosition--;
+                } else if(mCurrentOperation == Operation.SUCCESSOR) {
+                    mPosition++;
+                } else {
+                    mPositionAnimation++;
+                }
                 mColorTextGet = 0;
                 mColorAreaGet = 0;
             }
@@ -847,11 +863,11 @@ public class LinkedListView extends View {
                     mItemPaint.setAlpha(mAlphaDeleteLast);
                 }
             } break;
+            case SUCCESSOR:
             case PREDECESSOR: {
-
-            } break;
-            case SUCCESSOR: {
-
+                if(mTouched && _pos == mPosition) {
+                    drawGet(_canvas, _pos);
+                }
             } break;
             case GET_FIRST: { if (_pos == 0) { drawGet(_canvas, _pos); } } break;
             case GET_AT: { if (_pos == mPosition) { drawGet(_canvas, _pos); } } break;
@@ -878,6 +894,30 @@ public class LinkedListView extends View {
         _canvas.drawRoundRect(mLinkedList.get(_pos), mRadius, mRadius, mItemPaint);
         _canvas.drawText(mLinkedListNumbers.get(_pos).toString(), getExactCenterX(mLinkedList.get(_pos)) - mBounds.exactCenterX(), (getExactCenterY(mLinkedList.get(_pos)) - mBounds.exactCenterY()), mItemTextPaint);
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent _event) {
+
+        float y = _event.getY();
+        float x = _event.getX();
+
+        if(_event.getAction() == MotionEvent.ACTION_DOWN){
+            if(mCurrentOperation == Operation.PREDECESSOR || mCurrentOperation == Operation.SUCCESSOR) {
+                mAnimatorGetText.setRepeatCount(1);
+                mAnimatorGetArea.setRepeatCount(1);
+                mAnimatorGetArea.start();
+                mAnimatorGetText.start();
+                for(int i = 0; i < mLinkedList.size(); i++) {
+                    RectF r = mLinkedList.get(i);
+                    if(x > r.left && x < r.right && y > r.top && y < r.bottom) {
+                        mTouched = true;
+                        mPosition = i;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     /**

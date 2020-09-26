@@ -6,7 +6,7 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="500">
+        motion:duration="300">
         <OnClick motion:clickAction="toggle"
             motion:targetId="@id/LinkedList_Activity_Get_Background"/>
        <KeyFrameSet>
