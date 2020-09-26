@@ -238,7 +238,7 @@ public class BinarySearchTree {
         }
         return Integer.MIN_VALUE;
     }
-    public boolean hasChildren(int key){
+    public boolean hasNoChildren(int key){
         if(root != null){
           return (findNode(key).right != null)&&(findNode(key).left!=null);
         }

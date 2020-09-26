@@ -1,5 +1,7 @@
 package at.fhooe.mc.datadora.BinarySearchTree;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +30,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     private Vector<Integer> mTreeUser = new Vector<>();
     private ActivityBinarySearchTreeBinding mBinding;
 
+    private SharedPreferences mSharedPreferences;
+    private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.BSTSharedPreferenceFile.BST";
+    private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.BSTKey2020";
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
@@ -91,7 +96,99 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         mBinding.BSTActivityGetInternal.setOnClickListener(this);
 
         mBinding.BSTActivityCheckEmpty.setOnClickListener(this);
+        mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBinding = null;
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        save();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Vector<Integer> v = loadFromSave();
+        if(v != null) {
+            mTreeUser.clear();
+            mTree.root = null;
+            mTree.size = 0;
+            // mTreeUser.addAll(v);
+            for (int i = 0; i < v.size();i++){
+                add(v.elementAt(i));
+            }
+        }
+    }
+    /**
+     * Saves the current vector (input from the user) into the SharedPreferences.
+     */
+    private void save() {
+
+        // init the SP object
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+
+        // Convert the vector containing the integers to a string
+        Vector<Integer> vector = mTreeUser;
+        StringBuilder vectorStr = new StringBuilder();
+
+        // transform the vector into a string
+        for (int i = 0; i < vector.size(); i++) {
+            if (i != vector.size() - 1) {
+                vectorStr.append(vector.get(i)).append(",");
+            } else {
+                vectorStr.append(vector.get(i));
+            }
+        }
+
+        editor.putString(SP_VALUE_KEY, String.valueOf(vectorStr));
+        editor.apply();
+    }
+
+
+
+    /**
+     * Gets the saved vector (user input) from the SharedPreferences.
+     * @return the saved vector or null if there is none
+     */
+    protected Vector<Integer> loadFromSave() {
+
+        // get the saved string (vector)
+        String defaultValue = "empty";
+        String vectorStr = mSharedPreferences.getString(SP_VALUE_KEY, defaultValue);
+        Vector<Integer> vector = new Vector<>();
+
+        // check if it was successful -> transform to vector, or if not -> return null
+        int begin;
+        int end = 0;
+        int i;
+        if(vectorStr == null || vectorStr.contains(defaultValue) || vectorStr.equals("")) {
+            return null;
+        } else {
+            while(end > -1) {
+                begin = end;
+                end = vectorStr.indexOf(',', begin);
+                if(end == -1) {
+                    i = Integer.parseInt(vectorStr.substring(begin));
+                } else {
+                    i = Integer.parseInt(vectorStr.substring(begin, end));
+                    end++;
+                }
+                vector.add(i);
+            }
+            return vector;
+        }
+    }
+
+
+
+
+
+
+
+
 
     @Override
     public void onClick(View view) {
@@ -109,7 +206,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         //Standard
         else if (view == mBinding.BSTActivityAdd) {
             mBinding.BSTActivityAdd.setChecked(false);
-            add();
+            mBinding.BSTActivityReturnText.setText("Add");
+            mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
+            add(key);
         } else if (view == mBinding.BSTActivityRandom) {
             mBinding.BSTActivityRandom.setChecked(false);
             mBinding.BSTActivityReturnText.setText("Random");
@@ -119,7 +218,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             mBinding.BSTActivityRemove.setChecked(false);
             mBinding.BSTActivityReturnText.setText("Remove");
             mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
-            remove();
+            remove(key);
         } else if (view == mBinding.BSTActivityClear) {
             mBinding.BSTActivityReturnText.setText("Clear");
             mBinding.BSTActivityReturnValue.setText(String.format("%s", 0));
@@ -164,18 +263,18 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         } else if (view == mBinding.BSTActivityGetRoot) {
             mBinding.BSTActivityGetRoot.setChecked(false);
             mBinding.BSTActivityReturnText.setText("Root");
-            if (mTree.root != null){
+            if (mTree.root != null) {
                 mBinding.BSTActivityReturnValue.setText(String.format("%s", mTree.root.data));
-            }else {
-                Toast.makeText(this, R.string.BST_Activity_Check_Empty, Toast.LENGTH_SHORT).show();}
+            } else {
+                Toast.makeText(this, R.string.BST_Activity_Check_Empty, Toast.LENGTH_SHORT).show();
+            }
         } else if (view == mBinding.BSTActivityGetInternal) {
             mBinding.BSTActivityGetInternal.setChecked(false);
-            Internal(key);
-            Log.e(TAG, "GetInternal");
+            mBinding.BSTActivityVectorOutput.setText(getInternalNodes());
         } else if (view == mBinding.BSTActivityGetExternal) {
             mBinding.BSTActivityGetExternal.setChecked(false);
             Log.e(TAG, "GetExternal");
-            External(key);
+            mBinding.BSTActivityVectorOutput.setText(getExternalNodes());
         } else if (view == mBinding.BSTActivityGetMax) {
             mBinding.BSTActivityGetMax.setChecked(false);
             max();
@@ -208,14 +307,14 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             mBinding.BSTActivityReturnValue.setText(String.format("%s", RightChild(key)));
         } else if (view == mBinding.BSTActivityCheckRoot) {
             mBinding.BSTActivityCheckRoot.setChecked(false);
-            mBinding.BSTActivityReturnValue.setText(String.format("%s",key));
-            if (mTree.root != null){
-                if(mTree.root.data == key){
+            mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
+            if (mTree.root != null) {
+                if (mTree.root.data == key) {
                     mBinding.BSTActivityReturnText.setText("True");
-                }else{
+                } else {
                     mBinding.BSTActivityReturnText.setText("False");
-                    }
-            }else {
+                }
+            } else {
                 Toast.makeText(this, R.string.BST_Activity_Check_Empty, Toast.LENGTH_SHORT).show();
             }
             Log.e(TAG, "CheckRoot");
@@ -232,37 +331,66 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             Log.i(TAG, "UnKnownButton");
         }
     }
-    public boolean Internal(int key){
-        if (mTree.root != null){
-            if( mTree.hasChildren(key)){
+
+    public boolean Internal(int key) {
+        if (mTree.root != null) {
+            if (mTree.hasNoChildren(key)) {
                 mBinding.BSTActivityReturnText.setText("False");
-            }else {
+            } else {
                 mBinding.BSTActivityReturnText.setText("True");
             }
             mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
         }
         return false;
-    }
-    public boolean External(int key){
-        if (mTree.root != null){
-            if( mTree.hasChildren(key)){
-                mBinding.BSTActivityReturnText.setText("True");
-            }else {
-                mBinding.BSTActivityReturnText.setText("False");
-            }
-            mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
-        }
-        return false;
-    }
-    private void clear() {
-        //TODO: let BinarySearchTree implement clear
-        mTree.setRoot(null); // Do you intend to change this? Because thats not clearing
-        mTreeUser.clear();
-        mTree.setSize(0); // Do you intend to change this? Because thats not clearing
     }
 
-    private void add() {
-        int value = (int) mBinding.BSTActivityInputSlider.getValue();
+    public boolean External(int key) {
+        if (mTree.root != null) {
+            if (mTree.hasNoChildren(key)) {
+                mBinding.BSTActivityReturnText.setText("True");
+            } else {
+                mBinding.BSTActivityReturnText.setText("False");
+            }
+            mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
+        }
+        return false;
+    }
+
+    public String getExternalNodes() {
+        StringBuilder stringBuilder = new StringBuilder("ExternalNodes : -");
+        if (mTree.root != null) {
+            for (int i = 0; i < mTreeUser.size(); i++) {
+                if (mTree.hasNoChildren(mTreeUser.get(i))) {
+                    stringBuilder.append(mTreeUser.get(i) + "-");
+                }
+            }
+
+        }
+        return stringBuilder.toString();
+    }
+
+    public String getInternalNodes() {
+        StringBuilder stringBuilder = new StringBuilder("InternalNodes : -");
+        if (mTree.root != null) {
+            for (int i = 0; i < mTreeUser.size(); i++) {
+                if (!mTree.hasNoChildren(mTreeUser.get(i))) {
+                    stringBuilder.append(mTreeUser.get(i) + "-");
+                }
+            }
+
+        }
+        return stringBuilder.toString();
+    }
+
+    private void clear() {
+        mTreeUser.clear();
+        for (int i = 0 ; i < mTreeUser.size();i++){
+            remove(mTreeUser.elementAt(i));
+        }
+
+    }
+
+    private void add(int value) {
         mTreeUser.add(value);
         mTree.insert(value);
         mBinding.BSTActivityView.add(value);
@@ -280,14 +408,15 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         return mTree.min();
     }
 
-    private int Depth(int key){
-        if(mTree.root != null){
-           return mTree.getDepth(key);
+    private int Depth(int key) {
+        if (mTree.root != null) {
+            return mTree.getDepth(key);
         }
         return 0;
     }
-    private int Height(int key){
-        if(mTree.root != null){
+
+    private int Height(int key) {
+        if (mTree.root != null) {
 
         }
         return 0;
@@ -301,32 +430,35 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
         boolean successful = mTree.insert(result);
         if (successful) {
-            mTreeUser.add(result);
-            mBinding.BSTActivityReturnValue.setText(String.format("%s",result));
+            add(result);
+            mBinding.BSTActivityReturnValue.setText(String.format("%s", result));
         }
 
     }
-    private int Parent(int key){
-        if(mTree.root == null){
+
+    private int Parent(int key) {
+        if (mTree.root == null) {
             return Integer.MIN_VALUE;
         }
         return mTree.getParent(key);
     }
-    private int LeftChild(int key){
-        if(mTree.root == null){
+
+    private int LeftChild(int key) {
+        if (mTree.root == null) {
             return Integer.MIN_VALUE;
         }
-        return mTree.getChildNode(key,true);
+        return mTree.getChildNode(key, true);
     }
-    private int RightChild(int key){
-        if(mTree.root == null){
+
+    private int RightChild(int key) {
+        if (mTree.root == null) {
             return Integer.MIN_VALUE;
         }
-        return mTree.getChildNode(key,false);
+        return mTree.getChildNode(key, false);
     }
-    public void remove() {
+
+    public void remove(int key) {
         if (!(mTree.root == null)) {
-            int key = (int) mBinding.BSTActivityInputSlider.getValue();
             if (mTreeUser.contains(key)) {
                 mTree.remove(key);
                 mTreeUser.removeElement(key);
@@ -394,7 +526,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     }
 
     private String ArrayToSting(int[] ints) {
-        if(ints == null){
+        if (ints == null) {
             return "[]";
         }
         StringBuilder stringBuilder = new StringBuilder("[");

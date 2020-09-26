@@ -156,6 +156,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             }
         }
 
+
         editor.putString(SP_VALUE_KEY, String.valueOf(vectorStr));
         editor.apply();
     }
