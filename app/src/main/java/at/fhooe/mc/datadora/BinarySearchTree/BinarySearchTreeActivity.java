@@ -390,6 +390,8 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         for (int i = 0 ; i < mTreeUser.size();i++){
             remove(mTreeUser.elementAt(i));
         }
+        mTree.root=null;
+        mTree.size = 0;
 
     }
 
