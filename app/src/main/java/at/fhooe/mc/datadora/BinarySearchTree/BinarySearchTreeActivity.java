@@ -91,7 +91,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         mBinding.BSTActivityGetExternal.setOnClickListener(this);
         mBinding.BSTActivityGetInternal.setOnClickListener(this);
 
-
         mBinding.BSTActivityCheckEmpty.setOnClickListener(this);
     }
 
@@ -108,11 +107,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             mBinding.BSTActivityVectorOutput.setText(ArrayToSting(mTree.toArrayPreOrder()));
 
         }
-        //Strandard
+        //Standard
         else if (view == mBinding.BSTActivityAdd) {
             mBinding.BSTActivityAdd.setChecked(false);
-            mBinding.BSTActivityReturnText.setText("Add");
-            mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
             add();
         } else if (view == mBinding.BSTActivityRandom) {
             mBinding.BSTActivityRandom.setChecked(false);
@@ -269,6 +266,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         int value = (int) mBinding.BSTActivityInputSlider.getValue();
         mTreeUser.add(value);
         mTree.insert(value);
+        mBinding.BSTActivityView.add(value);
     }
 
     private int max() {
@@ -397,7 +395,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     }
 
     private String ArrayToSting(int[] ints) {
-        if(ints==null){
+        if(ints == null){
             return "[]";
         }
         StringBuilder stringBuilder = new StringBuilder("[");
@@ -411,3 +409,40 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         return stringBuilder.toString();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

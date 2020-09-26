@@ -2,20 +2,27 @@ package at.fhooe.mc.datadora.BinarySearchTree;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import java.util.Vector;
+
+import at.fhooe.mc.datadora.LinkedList.LinkedListView;
 import at.fhooe.mc.datadora.R;
 
 public class BSTView extends View {
     private static final String TAG = "BSTView : ";
-    private Paint mBSTItemPaint = new Paint();
-    private Paint mBSTItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);;
+    private Paint mItemPaint = new Paint();
+    private Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);;
 
     // the current primary color of the currently used theme
     int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
@@ -28,6 +35,33 @@ public class BSTView extends View {
 
     // the current colorOnSurface color of the currently used theme - for text
     int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
+
+    private Matrix mMatrix = new Matrix();
+    Point mBegin = new Point();
+    Point mEnd = new Point();
+
+    enum Operation {
+        ADD,
+        REMOVE,
+        RANDOM,
+        CLEAR,
+        SIZE
+    }
+
+    private Operation mCurrentOperation;
+
+    private float mMaxHeight;
+    private float mMaxWidth;
+    private float mRadius = 40;
+    private float mMinDistanceX = 50;
+    private float mMinDistanceY = 20;
+
+    // Rect in order to save the TextBounds from the current number
+    private Rect mBounds = new Rect();
+    private Vector<Integer> mTree = new Vector<>();
+
+    private int mTranslateX;
+    private int mTranslateY;
 
     public BSTView(Context context) {
         super(context);
@@ -45,17 +79,130 @@ public class BSTView extends View {
     }
 
     private void init() {
-        mBSTItemPaint.setColor(mPrimaryColor);
-        mBSTItemPaint.setStyle(Paint.Style.STROKE);
-        mBSTItemPaint.setStrokeWidth(6);
+        mItemPaint.setColor(mPrimaryColor);
+        mItemPaint.setStyle(Paint.Style.STROKE);
+        mItemPaint.setStrokeWidth(6);
 
-        mBSTItemTextPaint.setColor(mOnSurfaceColor);
-        mBSTItemTextPaint.setTextSize(55);
+        mItemTextPaint.setColor(mOnSurfaceColor);
+        mItemTextPaint.setTextSize(50);
+
+        mBegin.x = -1;
+    }
+
+
+    protected void add(int _value) {
+        mCurrentOperation = Operation.ADD;
+        mTree.add(_value);
+
+        invalidate();
+    }
+
+    @Override
+    protected void onSizeChanged(int _w, int _h, int _oldW, int _oldH) {
+        super.onSizeChanged(_w, _h, _oldW, _oldH);
+
+        // Account for padding
+        float xpad = (float) (getPaddingLeft() + getPaddingRight());
+        float ypad = (float) (getPaddingTop() + getPaddingBottom());
+
+        // size of parent of this view
+        mMaxHeight = (float) _h - ypad - 6;
+        mMaxWidth = (float) _w - xpad - 6;
+    }
+
+    @Override
+    protected void onMeasure(int _widthMeasureSpec, int _heightMeasureSpec) {
+        super.onMeasure(_widthMeasureSpec, _heightMeasureSpec);
+
     }
 
     @Override
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
+        mMatrix.preTranslate(mTranslateX,mTranslateY);
+        _canvas.setMatrix(mMatrix);
 
+        if( mCurrentOperation == Operation.ADD) {
+            addAnimation(_canvas);
+        }
     }
+
+    private void draw(Canvas _canvas, float _posX, float _posY, String _s) {
+        mItemTextPaint.getTextBounds(_s, 0, _s.length(), mBounds);
+
+        _canvas.drawCircle(_posX, _posY, mRadius, mItemPaint);
+        _canvas.drawText(_s, _posX - 3 - mBounds.width() / 2 , _posY + mBounds.height() / 2, mItemTextPaint);
+    }
+
+    private void addAnimation(Canvas _canvas){
+
+        float positionX = mMaxWidth / 2;
+        float positionY = mRadius * 2;
+        int level = 1;
+
+        for (int i = 0; i < mTree.size(); i++) {
+
+            switch (level) {
+                case 1: {
+                    level++;
+                } break;
+                case 2: {
+                    if(i == 1) { positionX = mMaxWidth / 2 - mMinDistanceX; }
+                    else if(i == 2) { positionX = mMaxWidth / 2 + mMinDistanceX; level++;}
+                    positionY = mRadius * 4 + mMinDistanceY;
+                } break;
+                case 3: {
+                    if(i == 3) { positionX = mMaxWidth / 2 - mMinDistanceX * 2; }
+                    else if(i == 4) { positionX = mMaxWidth / 2 - mMinDistanceX; }
+                    else if(i == 5) { positionX = mMaxWidth / 2 + mMinDistanceX; }
+                    else if(i == 6) { positionX = mMaxWidth / 2 + mMinDistanceX * 2;; level++;}
+                    positionY = mRadius * 6 + mMinDistanceY;
+                } break;
+                case 4: {
+                    level++;
+                } break;
+                case 5: {
+                    level++;
+                } break;
+                case 6: {
+                    level++;
+                } break;
+                case 7: {
+                    level++;
+                } break;
+                case 8: {
+                    level++;
+                } break;
+                case 9: {
+                    level++;
+                } break;
+                case 10: {
+
+                } break;
+            }
+            draw(_canvas,positionX,positionY,mTree.get(i).toString());
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent _event) {
+
+        if (_event.getAction() == MotionEvent.ACTION_MOVE) {
+                if(mBegin.x == -1) {
+                    mBegin.y = (int) _event.getY();
+                    mBegin.x = (int) _event.getX();
+                } else {
+                    mEnd.y = (int) _event.getY();
+                    mEnd.x = (int) _event.getX();
+                    mTranslateY = mEnd.y - mBegin.y;
+                    mTranslateX = mEnd.x - mBegin.x;
+                    mBegin.x = -1;
+                }
+                if(mTranslateY < 20 || mTranslateX < 20) {
+                    invalidate();
+                }
+            }
+        return true;
+    }
+
 }

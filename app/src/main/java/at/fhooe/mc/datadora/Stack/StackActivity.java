@@ -29,18 +29,9 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "StackActivity : ";
     private ActivityStackBinding mBinding;
 
-    //TODO: 2x same data -> Stack!!
-    //TODO: Animation better
-    //TODO: Stack size (?) fine tuning
-    //TODO: Styles, Themes, ...!!
-    //TODO: Resize - animation (?) -> Animation clear -> too ugly when many elements
-    //TODO: ENUM for operations (?)
-    //TODO: Better UI
-
     private Vector<Integer> mStack = new Vector<>();
     private boolean mPressedRandom;
     private boolean mPressedPop;
-
 
     public boolean getPressedRandom() {
         return mPressedRandom;
@@ -62,7 +53,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.StackSharedPreferenceFile.Stack";
     private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.StackKey2020";
     private SharedPreferences mSharedPreferences;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +124,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
 
         Vector<Integer> v = loadFromSave();
         if(v != null) {
-            Log.i(TAG, "-------------------------" + v + " loaded");
             mStack.clear();
             mStack.addAll(v);
         }
@@ -142,8 +131,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
         decorView.setSystemUiVisibility(uiOptions);
-
-
     }
 
     @Override
@@ -152,12 +139,8 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         save();
     }
 
-
-
     @Override
     protected void onStop() { super.onStop(); }
-
-
 
     @Override
     protected void onDestroy() {
@@ -171,7 +154,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
             if (v == mBinding.StackActivityButtonPush) {
                 push();
             } else if (v == mBinding.StackActivityButtonPop) {
-                mPressedPop = true;
                 pop();
             } else if(v == mBinding.StackActivityButtonPeek) { peek();
             } else if (v == mBinding.StackActivityButtonSize) { size();
@@ -195,19 +177,15 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         // Convert the vector containing the integers to a string
-        Vector<Integer> vector = mBinding.StackActivityStackView.mStackNumbers;
+        Vector<Integer> vector = mBinding.StackActivityStackView.getStackNumbers();
         StringBuilder vectorStr = new StringBuilder();
 
         // transform the vector into a string
         for (int i = 0; i < vector.size(); i++) {
             if (i != vector.size() - 1) {
                 vectorStr.append(vector.get(i)).append(",");
-
-                Log.i(TAG, "-------------------------" + vector.get(i) + " saved");
-
             } else {
                 vectorStr.append(vector.get(i));
-                Log.i(TAG, "-------------------------" + vector.get(i) + " saved");
             }
         }
 
@@ -252,14 +230,11 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
-
-
     /**
      * show the size of the stack
      */
     protected void showSize(){
-        mBinding.StackActivityReturnValue.setText(String.format("%s", mBinding.StackActivityStackView.mStackNumbers.size()));
+        mBinding.StackActivityReturnValue.setText(String.format("%s", mBinding.StackActivityStackView.getStackNumbers().size()));
     }
 
     /**
@@ -325,10 +300,11 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
      */
     private void pop(){
         if (!mStack.isEmpty()) {
+            mPressedPop = true;
             //delete the last element of the stack (mStack), then let it be (visually) removed by the StackView
             mBinding.StackActivityReturnValue.setText(String.format("%s", mStack.get(mStack.size() - 1).toString()));
             mStack.removeElementAt(mStack.size() - 1);
-            mBinding.StackActivityStackView.prePop();
+            mBinding.StackActivityStackView.pop();
             makeInVisible();
             if (mStack.isEmpty()) {
                 showEmpty();
@@ -348,8 +324,8 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
             mBinding.StackActivityStackView.peek();
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    mBinding.StackActivityReturnValue.setText(String.format("%s",  mBinding.StackActivityStackView.mStackNumbers.get(
-                            mBinding.StackActivityStackView.mStackNumbers.size() - 1).toString()));
+                    mBinding.StackActivityReturnValue.setText(String.format("%s",  mBinding.StackActivityStackView.getStackNumbers().get(
+                            mBinding.StackActivityStackView.getStackNumbers().size() - 1).toString()));
                 }
             }, 500);
         } else {

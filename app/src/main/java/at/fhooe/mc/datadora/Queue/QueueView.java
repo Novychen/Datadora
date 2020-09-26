@@ -19,6 +19,7 @@ import java.util.Vector;
 
 import at.fhooe.mc.datadora.LinkedList.LinkedListView;
 import at.fhooe.mc.datadora.R;
+import at.fhooe.mc.datadora.Stack.StackView;
 
 /**
  * Class QueueView, implements the animation for the Queue in normal mode
