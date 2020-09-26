@@ -80,6 +80,8 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         mBinding.BSTActivityCheckParent.setOnClickListener(this);
         mBinding.BSTActivityCheckExternal.setOnClickListener(this);
         mBinding.BSTActivityCheckInternal.setOnClickListener(this);
+        mBinding.BSTActivityCheckEmpty.setOnClickListener(this);
+
         //Get
         mBinding.BSTActivityGetMax.setOnClickListener(this);
         mBinding.BSTActivityGetMin.setOnClickListener(this);
@@ -90,7 +92,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         mBinding.BSTActivityGetExternal.setOnClickListener(this);
         mBinding.BSTActivityGetInternal.setOnClickListener(this);
 
-        mBinding.BSTActivityCheckEmpty.setOnClickListener(this);
+        mBinding.BSTActivitySwitch.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -255,10 +257,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         return false;
     }
     private void clear() {
-        //TODO: let BinarySearchTree implement clear
-        mTree.setRoot(null); // Do you intend to change this? Because thats not clearing
+        mTree.setRoot(null);
         mTreeUser.clear();
-        mTree.setSize(0); // Do you intend to change this? Because thats not clearing
+        mTree.setSize(0);
     }
 
     private void add() {
@@ -377,13 +378,17 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
     @Override
     public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
-        if (_buttonView == mBinding.BSTActivitySwitch) {
-            if (_isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+        if (_isChecked) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     @Override

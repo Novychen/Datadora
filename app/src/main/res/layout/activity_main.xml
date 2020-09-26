@@ -184,6 +184,16 @@
         app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Tree_Icon"
         app:layout_constraintStart_toStartOf="@+id/Main_Activity_Tree_Icon" />
 
+    <TextView
+        android:id="@+id/Main_Activity_About"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/Main_Activity_About"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Tree_Card"
+        app:layout_constraintStart_toStartOf="@+id/Main_Activity_List_Card" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"

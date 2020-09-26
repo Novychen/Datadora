@@ -58,7 +58,7 @@ public class BSTView extends View {
 
     // Rect in order to save the TextBounds from the current number
     private Rect mBounds = new Rect();
-    private Vector<Integer> mTree = new Vector<>();
+    private BinarySearchTree mTree = new BinarySearchTree();
 
     private int mTranslateX;
     private int mTranslateY;
@@ -92,7 +92,7 @@ public class BSTView extends View {
 
     protected void add(int _value) {
         mCurrentOperation = Operation.ADD;
-        mTree.add(_value);
+        mTree.insert(_value);
 
         invalidate();
     }
@@ -138,50 +138,6 @@ public class BSTView extends View {
 
         float positionX = mMaxWidth / 2;
         float positionY = mRadius * 2;
-        int level = 1;
-
-        for (int i = 0; i < mTree.size(); i++) {
-
-            switch (level) {
-                case 1: {
-                    level++;
-                } break;
-                case 2: {
-                    if(i == 1) { positionX = mMaxWidth / 2 - mMinDistanceX; }
-                    else if(i == 2) { positionX = mMaxWidth / 2 + mMinDistanceX; level++;}
-                    positionY = mRadius * 4 + mMinDistanceY;
-                } break;
-                case 3: {
-                    if(i == 3) { positionX = mMaxWidth / 2 - mMinDistanceX * 2; }
-                    else if(i == 4) { positionX = mMaxWidth / 2 - mMinDistanceX; }
-                    else if(i == 5) { positionX = mMaxWidth / 2 + mMinDistanceX; }
-                    else if(i == 6) { positionX = mMaxWidth / 2 + mMinDistanceX * 2;; level++;}
-                    positionY = mRadius * 6 + mMinDistanceY;
-                } break;
-                case 4: {
-                    level++;
-                } break;
-                case 5: {
-                    level++;
-                } break;
-                case 6: {
-                    level++;
-                } break;
-                case 7: {
-                    level++;
-                } break;
-                case 8: {
-                    level++;
-                } break;
-                case 9: {
-                    level++;
-                } break;
-                case 10: {
-
-                } break;
-            }
-            draw(_canvas,positionX,positionY,mTree.get(i).toString());
-        }
     }
 
     @Override

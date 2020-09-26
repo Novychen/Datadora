@@ -23,6 +23,15 @@
 
     <string name="All_Data_Activity_Text_Animation">Please wait till the animation is over :)</string>
 
+    // Main Activity
+    <string name="Main_Activity_About">About</string>
+
+    // About Activity
+    <string name="About_Activity_Developer">The following developer worked on this project</string>
+    <string name="About_Activity_Yvonne">Yvonne Kathrin Eder</string>
+    <string name="About_Activity_Ines">Ines Langbauer</string>
+    <string name="About_Activity_Gerald">Gerald Lehner</string>
+
     // Stack Activity
     <string name="Stack_Activity_Text_Peek">peek</string>
     <string name="Stack_Activity_Text_Empty">isEmpty</string>
