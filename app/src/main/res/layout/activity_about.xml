@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/About_Activity_Toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/About_Activity_App_Icon"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/About_Activity_Toolbar"
+        app:srcCompat="@drawable/ic_icon_rectangle" />
+
+    <TextView
+        android:id="@+id/About_Activity_App_Name"
+        style="@style/Text.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="@+id/About_Activity_App_Icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/About_Activity_App_Icon" />
+
+    <ImageView
+        android:id="@+id/About_Activity_Line_1"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/About_Activity_App_Name"
+        app:srcCompat="@drawable/background_list_item" />
+
+    <TextView
+        android:id="@+id/About_Activity_BlockText"
+        style="@style/Text.TextBlock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/About_Activity_Line_1"
+        app:layout_constraintStart_toStartOf="@+id/About_Activity_Line_1"
+        app:layout_constraintTop_toBottomOf="@+id/About_Activity_Line_1" />
+
+    <ImageView
+        android:id="@+id/About_Activity_Line_2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/About_Activity_BlockText"
+        app:srcCompat="@drawable/background_list_item" />
+
+    <TextView
+        android:id="@+id/About_Activity_Developer"
+        style="@style/Text.Item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/About_Activity_Developer"
+        app:layout_constraintEnd_toEndOf="@+id/About_Activity_Line_2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/About_Activity_Line_2"
+        app:layout_constraintTop_toBottomOf="@+id/About_Activity_Line_2" />
+
+    <TextView
+        android:id="@+id/About_Activity_Yvonne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Text.TextBlock"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/About_Activity_Yvonne"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/About_Activity_Developer" />
+
+    <TextView
+        android:id="@+id/About_Activity_Ines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Text.TextBlock"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/About_Activity_Ines"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/About_Activity_Yvonne" />
+
+    <TextView
+        android:id="@+id/About_Activity_Gerald"
+        style="@style/Text.TextBlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/About_Activity_Gerald"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/About_Activity_Ines" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

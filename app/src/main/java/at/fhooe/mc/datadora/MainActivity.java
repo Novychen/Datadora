@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ActivityMainBinding mBinding;
 
-    //TODO: Sync all animations
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBinding.MainActivityQueueCard.setOnClickListener(this);
         mBinding.MainActivityListCard.setOnClickListener(this);
         mBinding.MainActivityTreeCard.setOnClickListener(this);
+        mBinding.MainActivityAbout.setOnClickListener(this);
     }
 
     @Override
@@ -50,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(i);
         } else if(v == mBinding.MainActivityTreeCard){
             Intent i = new Intent(this, BinarySearchTreeActivity.class);
+            startActivity(i);
+        } else if(v == mBinding.MainActivityAbout){
+            Intent i = new Intent(this, AboutActivity.class);
             startActivity(i);
         }
     }

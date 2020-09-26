@@ -223,27 +223,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Standard_Add"
+                        style="@style/Surface.Text"
                         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Remove"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <RadioButton
-                        android:id="@+id/BST_Activity_Clear"
+                        android:id="@+id/BST_Activity_Remove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/All_Data_Activity_Text_Clear"
-                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Random"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/BST_Activity_Standard_Remove"
+                        style="@style/Surface.Text"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Add"
+                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Random"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Random"
-                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Random" />
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Add"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Add" />
 
                     <RadioButton
                         android:id="@+id/BST_Activity_Random"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/All_Data_Activity_Text_Random"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Remove"
                         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Clear"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -251,15 +254,16 @@
                         app:layout_constraintTop_toTopOf="@+id/BST_Activity_Remove" />
 
                     <RadioButton
-                        android:id="@+id/BST_Activity_Remove"
+                        android:id="@+id/BST_Activity_Clear"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/BST_Activity_Standard_Remove"
-                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Add"
-                        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Random"
+                        android:text="@string/All_Data_Activity_Text_Clear"
+                        style="@style/Surface.Text"
+                        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Random"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Add"
-                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Add" />
+                        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Random"
+                        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Random" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.motion.widget.MotionLayout>
@@ -316,6 +320,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Structure_Depth"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Structure_Height"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -327,6 +332,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Structure_Height"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Structure_Size"
                         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Structure_Depth"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -338,6 +344,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Structure_Size"
+                        style="@style/Surface.Text"
                         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Structure_Height"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -399,6 +406,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/BST_Activity_Check_Parent"
+                        style="@style/Surface.Text"
                         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Check_RightChild"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -409,6 +417,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Check_RightChild"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Check_Parent"
                         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Check_LeftChild"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -421,6 +430,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:text="@string/BST_Activity_Check_LeftChild"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Check_RightChild"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -432,6 +442,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Check_Root"
+                        style="@style/Surface.Text"
                         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Check_Parent"
                         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Check_Parent" />
 
@@ -440,6 +451,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Check_Internal"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Check_External"
                         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Check_LeftChild"
                         app:layout_constraintTop_toTopOf="@+id/BST_Activity_Check_External" />
@@ -449,6 +461,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Check_External"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Check_Root"
                         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Check_RightChild"
                         app:layout_constraintTop_toTopOf="@+id/BST_Activity_Check_Root" />
@@ -458,6 +471,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Check_Empty"
+                        style="@style/Surface.Text"
                         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Check_Root"
                         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Check_Root" />
 
@@ -518,6 +532,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/BST_Activity_Get_Parent"
+                        style="@style/Surface.Text"
                         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Get_External"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -528,6 +543,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Get_RightChild"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_Parent"
                         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_External"
                         app:layout_constraintTop_toTopOf="@+id/BST_Activity_Get_Parent" />
@@ -537,6 +553,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Get_LeftChild"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_RightChild"
                         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_Internal"
                         app:layout_constraintTop_toTopOf="@+id/BST_Activity_Get_RightChild" />
@@ -546,6 +563,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Get_Root"
+                        style="@style/Surface.Text"
                         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_Parent"
                         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Get_Parent" />
 
@@ -554,6 +572,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Get_External"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_Root"
                         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Get_Internal"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -566,6 +585,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:text="@string/BST_Activity_Get_Internal"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Get_External"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -577,6 +597,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Get_Max"
+                        style="@style/Surface.Text"
                         app:layout_constraintStart_toEndOf="@+id/BST_Activity_Get_External"
                         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_Root"
                         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Get_Root" />
@@ -586,6 +607,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/BST_Activity_Get_Min"
+                        style="@style/Surface.Text"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Get_External"
                         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Get_Root" />

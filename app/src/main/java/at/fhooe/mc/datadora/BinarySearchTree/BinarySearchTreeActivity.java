@@ -85,6 +85,8 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         mBinding.BSTActivityCheckParent.setOnClickListener(this);
         mBinding.BSTActivityCheckExternal.setOnClickListener(this);
         mBinding.BSTActivityCheckInternal.setOnClickListener(this);
+        mBinding.BSTActivityCheckEmpty.setOnClickListener(this);
+
         //Get
         mBinding.BSTActivityGetMax.setOnClickListener(this);
         mBinding.BSTActivityGetMin.setOnClickListener(this);
@@ -97,6 +99,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
         mBinding.BSTActivityCheckEmpty.setOnClickListener(this);
         mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
+        mBinding.BSTActivitySwitch.setOnCheckedChangeListener(this);
     }
     @Override
     protected void onDestroy() {
@@ -509,13 +512,17 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
     @Override
     public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
-        if (_buttonView == mBinding.BSTActivitySwitch) {
-            if (_isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+        if (_isChecked) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     @Override

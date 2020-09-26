@@ -498,6 +498,12 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
