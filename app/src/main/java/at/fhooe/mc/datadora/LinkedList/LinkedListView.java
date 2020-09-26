@@ -6,13 +6,11 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -21,7 +19,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.motion.widget.MotionLayout;
 
 import java.util.Vector;
 
@@ -217,10 +214,10 @@ public class LinkedListView extends View {
     int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
 
     // current width of the LinkedListView within the layout
-    float mMaxWidthLinkedList;
+    float mMaxWidth;
 
     // current height of the LinkedListView within the layout
-    float mMaxHeightLinkedList;
+    float mMaxHeight;
 
     // the current operation
     Operation mCurrentOperation;
@@ -343,7 +340,7 @@ public class LinkedListView extends View {
     protected void deleteFirst() {
         mCurrentOperation = Operation.DELETE_FIRST;
         mAnimatorDeleteFirst.start();
-        reScale();
+        reScaleUndo();
     }
 
     protected void deleteLast() {
@@ -351,12 +348,12 @@ public class LinkedListView extends View {
         mAnimatorDeleteLast.setDuration(700);
         mAnimatorDeleteLast.setRepeatCount(0);
         mAnimatorDeleteLast.start();
-        reScale();
+        reScaleUndo();
     }
 
     protected void deleteAt(int _pos) {
         mCurrentOperation = Operation.DELETE_AT;
-        reScale();
+        reScaleUndo();
         mPosition = _pos;
         mAnimatorDeleteAt.start();
         mAnimatorDeleteAtAlpha.start();
@@ -367,7 +364,7 @@ public class LinkedListView extends View {
         mAnimatorDeleteLast.setDuration(200);
         mAnimatorDeleteLast.setRepeatCount(mLinkedListNumbers.size()-1);
         mAnimatorDeleteLast.start();
-        reScale();
+        reScaleUndo();
     }
 
 
@@ -428,10 +425,18 @@ public class LinkedListView extends View {
     }
 
     private void reScale() {
-        if (mMaxHeightLinkedList <= (mMaxWidthLinkedList / 4) * mScale * mLinkedList.size()) {
+        if (mMaxHeight <= (mMaxWidth / 4) * mScale * mLinkedList.size()) {
             mScale = mScale / 1.2f;
         }
-        invalidate();
+    }
+
+    private void reScaleUndo() {
+        if (mMaxHeight > (mMaxWidth / 4) * (mScale * 1.2f) * mLinkedList.size()) {
+            mScale = mScale * 1.2f;
+            if (mScale > 1) {
+                mScale = 1;
+            }
+        }
     }
 
     @Override
@@ -442,8 +447,8 @@ public class LinkedListView extends View {
         float ypad = (float) (getPaddingTop() + getPaddingBottom());
 
         // size of parent of this view
-        mMaxHeightLinkedList = (float) _h - ypad - 6;
-        mMaxWidthLinkedList = (float) _w - xpad - 6;
+        mMaxHeight = (float) _h - ypad - 6;
+        mMaxWidth = (float) _w - xpad - 6;
         mScale = 1;
 
         //Visualize the vector in the Shared Preferences
@@ -454,6 +459,7 @@ public class LinkedListView extends View {
                 mLinkedList.add(new RectF());
             }
             mCurrentOperation = Operation.SAVE;
+            reScale();
         }
 
         setUpAnimation();
@@ -476,7 +482,7 @@ public class LinkedListView extends View {
             }
         });
 
-        int number = (int) (((mMaxWidthLinkedList / 4) * mScale) - 10);
+        int number = (int) (((mMaxWidth / 4) * mScale) - 10);
         PropertyValuesHolder propertyTranslateYPrepend = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_PREPEND, -number, 0);
         PropertyValuesHolder propertyAlphaPrepend = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_PREPEND, 0, 255);
 
@@ -579,8 +585,11 @@ public class LinkedListView extends View {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
-                mLinkedList.remove(mLinkedList.size() - 1);
+                if(mCurrentOperation == Operation.CLEAR) {
+                    mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
+                    mLinkedList.remove(mLinkedList.size() - 1);
+                }
+                mActivity.setDelete(false);
             }
 
             @Override
@@ -592,6 +601,7 @@ public class LinkedListView extends View {
             public void onAnimationRepeat(Animator animator) {
                 mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
                 mLinkedList.remove(mLinkedList.size() - 1);
+                reScaleUndo();
             }
         });
 
@@ -673,7 +683,7 @@ public class LinkedListView extends View {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-
+                mActivity.setRandom(false);
             }
 
             @Override
@@ -696,7 +706,7 @@ public class LinkedListView extends View {
 
         for(int i = 0; i < mLinkedListNumbers.size(); i++) {
 
-            mLinkedList.get(i).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * i)) * mScale);
+            mLinkedList.get(i).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * i)) * mScale);
             mItemTextPaint.setAlpha(255);
             mItemPaint.setAlpha(255);
             mItemTextPaint.setColor(mOnSurfaceColor);
@@ -725,12 +735,14 @@ public class LinkedListView extends View {
         if (mCurrentOperation == Operation.DELETE_AT && !mAnimatorDeleteAt.isRunning()) {
             mLinkedList.remove(mPosition);
             mLinkedListNumbers.remove(mPosition);
-        } else if (mCurrentOperation == Operation.DELETE_LAST && !mAnimatorDeleteLast.isRunning()) {
-            mLinkedList.remove(mLinkedList.size() - 1);
-            mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
+            mActivity.setDelete(false);
         } else if (mCurrentOperation == Operation.DELETE_FIRST && !mAnimatorDeleteFirst.isRunning()) {
             mLinkedList.remove(0);
             mLinkedListNumbers.remove(0);
+            mActivity.setDelete(false);
+        } else if(mCurrentOperation == Operation.DELETE_LAST && !mAnimatorDeleteLast.isRunning()) {
+            mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
+            mLinkedList.remove(mLinkedList.size() - 1);
         } else if (mCurrentOperation == Operation.GET_SIZE && !mAnimatorGetText.isRunning()) {
             mItemPaint.setColor(mSurfaceColor);
             mItemPaint.setStyle(Paint.Style.FILL);
@@ -812,35 +824,35 @@ public class LinkedListView extends View {
                     mItemTextPaint.setAlpha(mAlphaPrepend);
                     mItemPaint.setAlpha(mAlphaPrepend);
                 }
-                mLinkedList.get(_pos).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * _pos)) * mScale) - mTranslateYPrepend;
+                mLinkedList.get(_pos).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * _pos)) * mScale) - mTranslateYPrepend;
             } break;
             case APPEND: {
                 if(_pos == mLinkedList.size() - 1) {
-                    mLinkedList.get(_pos).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * _pos)) * mScale) + mTranslateYAppend;
+                    mLinkedList.get(_pos).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * _pos)) * mScale) + mTranslateYAppend;
                     mItemTextPaint.setAlpha(mAlphaAppend);
                     mItemPaint.setAlpha(mAlphaAppend);
                 }
             } break;
             case INSERT_AT: {
                 if (mPosition + 1 == mLinkedListNumbers.size()) {
-                    mLinkedList.get(_pos).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * _pos)) * mScale) ;
+                    mLinkedList.get(_pos).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * _pos)) * mScale) ;
                 }
                 if (_pos == mPosition) {
                     mItemTextPaint.setAlpha(mAlphaInsert);
                     mItemPaint.setAlpha(mAlphaInsert);
                 } else if (_pos > mPosition) {
-                    mLinkedList.get(_pos).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * _pos)) * mScale) - mTranslateYInsert;
+                    mLinkedList.get(_pos).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * _pos)) * mScale) - mTranslateYInsert;
                     mItemTextPaint.setAlpha(255);
                     mItemPaint.setAlpha(255);
                 }
             } break;
             case DELETE_FIRST: {
                 if(_pos == 0) {
-                    mLinkedList.get(_pos).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * _pos)) * mScale) + mTranslateYDeleteFirst;
+                    mLinkedList.get(_pos).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * _pos)) * mScale) + mTranslateYDeleteFirst;
                     mItemTextPaint.setAlpha(mAlphaDeleteFirst);
                     mItemPaint.setAlpha(mAlphaDeleteFirst);
                 } else {
-                    mLinkedList.get(_pos).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * _pos)) * mScale) + mTranslateYDeleteFirst;
+                    mLinkedList.get(_pos).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * _pos)) * mScale) + mTranslateYDeleteFirst;
                     mItemTextPaint.setAlpha(255);
                     mItemPaint.setAlpha(255);
                 }
@@ -850,7 +862,7 @@ public class LinkedListView extends View {
                     mItemTextPaint.setAlpha(mAlphaDeleteAt);
                     mItemPaint.setAlpha(mAlphaDeleteAt);
                 } else if (_pos > mPosition) {
-                    mLinkedList.get(_pos).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * _pos)) * mScale) - mTranslateYDeleteAt;
+                    mLinkedList.get(_pos).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * _pos)) * mScale) - mTranslateYDeleteAt;
                     mItemTextPaint.setAlpha(255);
                     mItemPaint.setAlpha(255);
                 }
@@ -858,7 +870,7 @@ public class LinkedListView extends View {
             case CLEAR :
             case DELETE_LAST: {
                 if (_pos == mLinkedListNumbers.size() - 1) {
-                    mLinkedList.get(_pos).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * _pos)) * mScale) + mTranslateYDeleteLast;
+                    mLinkedList.get(_pos).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * _pos)) * mScale) + mTranslateYDeleteLast;
                     mItemTextPaint.setAlpha(mAlphaDeleteLast);
                     mItemPaint.setAlpha(mAlphaDeleteLast);
                 }
@@ -874,7 +886,7 @@ public class LinkedListView extends View {
             case GET_LAST: { if (_pos == mLinkedList.size() - 1) { drawGet(_canvas, _pos); } } break;
             case RANDOM: {
                 if (_pos == mLinkedList.size() - 1) {
-                    mLinkedList.get(_pos).top = (int) (mMaxHeightLinkedList - ((mMaxWidthLinkedList / 4) + (mMaxWidthLinkedList / 4 * _pos)) * mScale) + mTranslateYRandom;
+                    mLinkedList.get(_pos).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * _pos)) * mScale) + mTranslateYRandom;
                     mItemTextPaint.setAlpha(mAlphaRandom);
                     mItemPaint.setAlpha(mAlphaRandom);
                 }
@@ -886,9 +898,9 @@ public class LinkedListView extends View {
         mItemTextPaint.getTextBounds(mLinkedListNumbers.get(_pos).toString(), 0, mLinkedListNumbers.get(_pos).toString().length(), mBounds);
 
         // set LinkedList item size
-        mLinkedList.get(_pos).left = (int) ((mMaxWidthLinkedList / 1.5) - (mMaxWidthLinkedList / 8) - (mResize / 2));
-        mLinkedList.get(_pos).right = (int) (mLinkedList.get(_pos).left + (mMaxWidthLinkedList / 4) + mResize);
-        mLinkedList.get(_pos).bottom = (int) (mLinkedList.get(_pos).top + ((mMaxWidthLinkedList / 4) * mScale) - 10);
+        mLinkedList.get(_pos).left = (int) ((mMaxWidth / 1.5) - (mMaxWidth / 8) - (mResize / 2));
+        mLinkedList.get(_pos).right = (int) (mLinkedList.get(_pos).left + (mMaxWidth / 4) + mResize);
+        mLinkedList.get(_pos).bottom = (int) (mLinkedList.get(_pos).top + ((mMaxWidth / 4) * mScale) - 10);
 
         // get BoundingBox from Text & draw Text + LinkedList item
         _canvas.drawRoundRect(mLinkedList.get(_pos), mRadius, mRadius, mItemPaint);

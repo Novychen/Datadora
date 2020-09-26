@@ -276,7 +276,6 @@
                         android:id="@+id/LinkedList_Activity_Add_RadioGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@id/LinkedList_Activity_Add_Prepend_RadioButton"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -310,30 +309,18 @@
                         app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Add_RadioGroup"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_Add_RadioGroup"
-                        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Add_Check"
                         app:srcCompat="@drawable/background_list_item" />
-
-                    <ImageButton
-                        android:id="@+id/LinkedList_Activity_Add_Check"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:contentDescription="@string/Content_Description_LinkedList_Add_Check"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Add_RadioGroup"
-                        app:srcCompat="@drawable/ic_check" />
 
                     <TextView
                         android:id="@+id/LinkedList_Activity_Add_Position_Zero"
+                        style="@style/Surface.Text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Surface.Text"
                         android:layout_marginStart="8dp"
                         android:text="@string/Slider_Default_Value"
                         app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Add_RadioGroup"
                         app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Add_Position_Slider"
-                        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Add_Check" />
+                        app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Add_Position_Slider" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.motion.widget.MotionLayout>
@@ -390,15 +377,6 @@
                     app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Delete_Background"
                     app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Delete_Background">
 
-                    <ImageButton
-                        android:id="@+id/LinkedList_Activity_Delete_Check"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toTopOf="@+id/LinkedList_Activity_Delete_Position_Slider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Delete_RadioGroup"
-                        app:srcCompat="@drawable/ic_check" />
-
                     <TextView
                         android:id="@+id/LinkedList_Activity_Delete_Position_Zero"
                         android:layout_width="wrap_content"
@@ -423,7 +401,6 @@
                         android:id="@+id/LinkedList_Activity_Delete_RadioGroup"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@id/LinkedList_Activity_Delete_All_RadioButton"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -527,7 +504,6 @@
                         android:id="@+id/LinkedList_Activity_Get_RadioGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@id/LinkedList_Activity_Get_Pre_RadioButton"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -585,15 +561,6 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Get_RadioGroup"
                         app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Get_Position_Slider" />
-
-                    <ImageButton
-                        android:id="@+id/LinkedList_Activity_Get_Check"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toTopOf="@+id/LinkedList_Activity_Get_Position_Slider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_check" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.motion.widget.MotionLayout>

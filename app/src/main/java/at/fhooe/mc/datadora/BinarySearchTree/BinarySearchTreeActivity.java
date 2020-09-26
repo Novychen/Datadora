@@ -58,7 +58,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             }
         });
 
-        // Enables Always-on
         // Buttons
         mBinding.BSTActivityInorder.setOnClickListener(this);
         mBinding.BSTActivityPostorder.setOnClickListener(this);

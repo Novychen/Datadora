@@ -105,19 +105,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         mBinding.StackActivitySwitch.setOnCheckedChangeListener(this);
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -140,9 +127,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    protected void onStop() { super.onStop(); }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         mBinding = null;
@@ -151,10 +135,8 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (!mPressedPop && !mPressedRandom) {
-            if (v == mBinding.StackActivityButtonPush) {
-                push();
-            } else if (v == mBinding.StackActivityButtonPop) {
-                pop();
+            if (v == mBinding.StackActivityButtonPush) { push();
+            } else if (v == mBinding.StackActivityButtonPop) { pop();
             } else if(v == mBinding.StackActivityButtonPeek) { peek();
             } else if (v == mBinding.StackActivityButtonSize) { size();
             } else if (v == mBinding.StackActivityButtonEmpty) { isEmpty();

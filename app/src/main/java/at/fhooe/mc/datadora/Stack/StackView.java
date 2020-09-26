@@ -227,8 +227,10 @@ public class StackView extends View {
     }
 
     private void reScale() {
-        if (mMaxHeight <= (mMaxWidth / 4) * mScale * mStack.size()) {
-            mScale = mScale / 1.2f;
+        for(int i = 0; i < 3; i++) {
+            if (mMaxHeight <= (mMaxWidth / 4) * mScale * mStack.size()) {
+                mScale = mScale / 1.2f;
+            }
         }
     }
 
@@ -255,6 +257,7 @@ public class StackView extends View {
                 mStack.add(new RectF());
             }
             mCurrentOperation = Operation.SAVE;
+            reScale();
         }
     }
 

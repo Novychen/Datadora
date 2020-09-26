@@ -29,25 +29,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // setup Toolbar
         Toolbar myToolbar = mBinding.MainActivityToolbar;
         setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("");
 
-        mBinding.MainActivityButtonStack.setOnClickListener(this);
-        mBinding.MainActivityButtonQueue.setOnClickListener(this);
-        mBinding.MainActivityButtonLinkedList.setOnClickListener(this);
-        mBinding.MainActivityButtonBST.setOnClickListener(this);
+        mBinding.MainActivityStackCard.setOnClickListener(this);
+        mBinding.MainActivityQueueCard.setOnClickListener(this);
+        mBinding.MainActivityListCard.setOnClickListener(this);
+        mBinding.MainActivityTreeCard.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v == mBinding.MainActivityButtonStack) {
+        if (v == mBinding.MainActivityStackCard) {
             Intent i = new Intent(this, StackActivity.class);
             startActivity(i);
-        } else if (v == mBinding.MainActivityButtonQueue) {
+        } else if (v == mBinding.MainActivityQueueCard) {
             Intent i = new Intent(this, QueueActivity.class);
             startActivity(i);
-        } else if (v == mBinding.MainActivityButtonLinkedList) {
+        } else if (v == mBinding.MainActivityListCard) {
             Intent i = new Intent(this, LinkedListActivity.class);
             startActivity(i);
-        } else if(v == mBinding.MainActivityButtonBST){
+        } else if(v == mBinding.MainActivityTreeCard){
             Intent i = new Intent(this, BinarySearchTreeActivity.class);
             startActivity(i);
         }
