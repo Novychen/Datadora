@@ -247,7 +247,7 @@ public class BinarySearchTree {
      * returns if a Node has children
      */
     public boolean hasNoChildren(int key){
-        if(root != null){
+        if((root != null)&& (findNode(key) != null)){
           return (findNode(key).right != null)&&(findNode(key).left!=null);
         }
         return false;

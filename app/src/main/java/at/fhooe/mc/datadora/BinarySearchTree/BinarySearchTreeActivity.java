@@ -357,10 +357,10 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
      */
     public boolean Internal(int key) {
         if (mTree.root != null) {
-            if (!mTree.hasNoChildren(mTreeUser.get(key))|| (mTree.getChildNode(key,true)!= Integer.MIN_VALUE)||(mTree.getChildNode(key,false)!= Integer.MIN_VALUE)) {
-                mBinding.BSTActivityReturnText.setText("False");
-            } else {
+            if ((mTree.getChildNode(key,true)!= Integer.MIN_VALUE)||(mTree.getChildNode(key,false)!= Integer.MIN_VALUE)) {
                 mBinding.BSTActivityReturnText.setText("True");
+            } else {
+                mBinding.BSTActivityReturnText.setText("False");
             }
             mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
         }
@@ -371,7 +371,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
      */
     public boolean External(int key) {
         if (mTree.root != null) {
-            if (mTree.hasNoChildren(key)) {
+            if ((mTree.getChildNode(key,true) == Integer.MIN_VALUE)&&(mTree.getChildNode(key,false)== Integer.MIN_VALUE)) {
                 mBinding.BSTActivityReturnText.setText("True");
             } else {
                 mBinding.BSTActivityReturnText.setText("False");
@@ -387,7 +387,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         StringBuilder stringBuilder = new StringBuilder("ExternalNodes : ");
         if (mTree.root != null) {
             for (int i = 0; i < mTreeUser.size(); i++) {
-                if (External(mTreeUser.get(i))) {
+                if ((mTree.getChildNode(mTreeUser.get(i),true) == Integer.MIN_VALUE)&&(mTree.getChildNode(mTreeUser.get(i),false)== Integer.MIN_VALUE)) {
                     stringBuilder.append(mTreeUser.get(i) + ";");
                 }
             }
@@ -402,7 +402,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         StringBuilder stringBuilder = new StringBuilder("InternalNodes : ");
         if (mTree.root != null) {
             for (int i = 0; i < mTreeUser.size(); i++) {
-                if (Internal(mTreeUser.get(i))) {
+                if ((mTree.getChildNode(mTreeUser.get(i),true)!= Integer.MIN_VALUE)||(mTree.getChildNode(mTreeUser.get(i),false)!= Integer.MIN_VALUE)) {
                     stringBuilder.append(mTreeUser.get(i) + ";");
                 }
             }
