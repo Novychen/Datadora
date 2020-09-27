@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -186,10 +187,11 @@ public class QueueView extends View {
      */
     protected void clear() {
         mCurrentOperation = Operation.CLEAR;
+        reScaleUndo();
+        setUpDequeueAnimation();
         mAnimatorDequeue.setDuration(200);
         mAnimatorDequeue.setRepeatCount(mQueueNumbers.size() -1);
         mAnimatorDequeue.start();
-        reScaleUndo();
     }
 
     /**
@@ -204,6 +206,7 @@ public class QueueView extends View {
         mQueueAnimation.addAll(_queue);
         mAnimatorRandom.setRepeatCount(_queue.size() - 1);
         mAnimatorRandom.start();
+        reScaleUndo();
     }
 
     /**
@@ -211,87 +214,18 @@ public class QueueView extends View {
      */
     protected void dequeue() {
         mCurrentOperation = Operation.DEQUEUE;
+        reScaleUndo();
+        setUpDequeueAnimation();
         mAnimatorDequeue.setDuration(700);
         mAnimatorDequeue.setRepeatCount(0);
         mAnimatorDequeue.start();
-        reScaleUndo();
     }
 
-    /**
-     * adds a element to the Queue
-     */
-    protected void enqueue(int _value) {
-        mCurrentOperation = Operation.ENQUEUE;
-        RectF r = new RectF();
-        mQueue.add(r);
-        mQueueNumbers.add(_value);
-        mAnimatorEnqueue.start();
-        reScale();
-    }
-
-    private void reScale() {
-        while (mMaxHeightQueue <= (mMaxWidthQueue / 4) * mScale * mQueue.size()) {
-            mScale = mScale / 1.2f;
-        }
-    }
-
-    private void reScaleUndo() {
-        if (mMaxHeightQueue > (mMaxWidthQueue / 4) * (mScale * 1.2f) * mQueue.size()) {
-            mScale = mScale * 1.2f;
-            if (mScale > 1) {
-                mScale = 1;
-            }
-        }
-    }
-
-    @Override
-    protected void onSizeChanged(int _w, int _h, int _oldW, int _oldH) {
-        super.onSizeChanged(_w, _h, _oldW, _oldH);
-        // Account for padding
-        float xpad = (float) (getPaddingLeft() + getPaddingRight());
-        float ypad = (float) (getPaddingTop() + getPaddingBottom());
-
-        // size of parent of this view
-        mMaxHeightQueue = (float) _h - ypad - 6;
-        mMaxWidthQueue = (float) _w - xpad - 6;
-        mScale = 1;
-
-        setUpAnimation();
-
-        //Visualize the vector in the Shared Preferences
-        Vector<Integer> v = mQueueActivity.loadFromSave();
-        if(v != null) {
-            for (int i = 0; i < v.size(); i++) {
-                mQueueNumbers.add(v.get(i));
-                mQueue.add(new RectF());
-            }
-            mCurrentOperation = Operation.SAVE;
-            reScale();
-        }
-    }
-
-    private void setUpAnimation(){
-
-        PropertyValuesHolder propertyTranslateYEnqueue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_ENQUEUE, -200, 0);
-        PropertyValuesHolder propertyAlphaEnqueue = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_ENQUEUE, 0, 255);
-
-        mAnimatorEnqueue.setValues(propertyTranslateYEnqueue, propertyAlphaEnqueue);
-        mAnimatorEnqueue.setDuration(700);
-        mAnimatorEnqueue.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorEnqueue.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYEnqueue = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_ENQUEUE);
-                mAlphaEnqueue = (int) animation.getAnimatedValue(PROPERTY_ALPHA_ENQUEUE);
-                invalidate();
-            }
-        });
-
+    private void setUpDequeueAnimation() {
         PropertyValuesHolder propertyTranslateYDequeue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_DEQUEUE, 0, (int)  (-(mMaxWidthQueue / 4 ) * mScale));
         PropertyValuesHolder propertyAlphaDequeue = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_DEQUEUE, 255, 0);
 
         mAnimatorDequeue.setValues(propertyTranslateYDequeue, propertyAlphaDequeue);
-        mAnimatorDequeue.setDuration(700);
         mAnimatorDequeue.setInterpolator(new AccelerateDecelerateInterpolator());
         mAnimatorDequeue.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -321,8 +255,82 @@ public class QueueView extends View {
 
             @Override
             public void onAnimationRepeat(Animator animation) {
-                mQueueNumbers.remove(0);
-                mQueue.remove(0);
+                if(!mQueueNumbers.isEmpty()) {
+                    mQueueNumbers.remove(0);
+                    mQueue.remove(0);
+                }
+            }
+        });
+    }
+
+    /**
+     * adds a element to the Queue
+     */
+    protected void enqueue(int _value) {
+        mCurrentOperation = Operation.ENQUEUE;
+        RectF r = new RectF();
+        mQueue.add(r);
+        mQueueNumbers.add(_value);
+        mAnimatorEnqueue.start();
+        reScaleUndo();
+        reScale();
+    }
+
+    private void reScale() {
+        while (mMaxHeightQueue <= (mMaxWidthQueue / 4) * mScale * mQueue.size()) {
+            mScale = mScale / 1.2f;
+        }
+    }
+
+    private void reScaleUndo() {
+        while (mMaxHeightQueue > (mMaxWidthQueue / 4) * (mScale * 1.2f) * mQueue.size()) {
+            mScale = mScale * 1.2f;
+            if (mScale > 1) {
+                mScale = 1;
+                break;
+            }
+        }
+    }
+
+    @Override
+    protected void onSizeChanged(int _w, int _h, int _oldW, int _oldH) {
+        super.onSizeChanged(_w, _h, _oldW, _oldH);
+        // Account for padding
+        float xpad = (float) (getPaddingLeft() + getPaddingRight());
+        float ypad = (float) (getPaddingTop() + getPaddingBottom());
+
+        // size of parent of this view
+        mMaxHeightQueue = (float) _h - ypad - 6;
+        mMaxWidthQueue = (float) _w - xpad - 6;
+        reScale();
+        setUpAnimation();
+
+        //Visualize the vector in the Shared Preferences
+        Vector<Integer> v = mQueueActivity.loadFromSave();
+        if(v != null) {
+            for (int i = 0; i < v.size(); i++) {
+                mQueueNumbers.add(v.get(i));
+                mQueue.add(new RectF());
+            }
+            mCurrentOperation = Operation.SAVE;
+            reScale();
+        }
+    }
+
+    private void setUpAnimation(){
+
+        PropertyValuesHolder propertyTranslateYEnqueue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_ENQUEUE, -200, 0);
+        PropertyValuesHolder propertyAlphaEnqueue = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_ENQUEUE, 0, 255);
+
+        mAnimatorEnqueue.setValues(propertyTranslateYEnqueue, propertyAlphaEnqueue);
+        mAnimatorEnqueue.setDuration(700);
+        mAnimatorEnqueue.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorEnqueue.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mTranslateYEnqueue = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_ENQUEUE);
+                mAlphaEnqueue = (int) animation.getAnimatedValue(PROPERTY_ALPHA_ENQUEUE);
+                invalidate();
             }
         });
 
@@ -405,19 +413,11 @@ public class QueueView extends View {
             animateOperation(_canvas, i);
         }
 
-        //TODO: check if works, seems like the same with stack
         if(mCurrentOperation == Operation.DEQUEUE && !mAnimatorDequeue.isRunning()){
             mQueueActivity.setPressedDequeue(false);
-
-            mQueueNumbers.remove(0); //first in first out
+            mQueueNumbers.remove(0);
             mQueue.remove(0);
 
-            if (mMaxHeightQueue > (mMaxWidthQueue / 4) * (mScale * 1.2f) * mQueue.size()) {
-                mScale = mScale * 1.2f;
-                if (mScale > 1) {
-                    mScale = 1;
-                }
-            }
         } else if (mCurrentOperation == Operation.RANDOM && !mAnimatorRandom.isRunning()){
             mQueueActivity.setPressedRandom(false);
         }
