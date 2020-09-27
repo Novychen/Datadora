@@ -521,13 +521,19 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
-        } else if (_buttonView == mBinding.LinkedListActivityTypeSortedSwitch) {
+
+        }
+        /*else if (_buttonView == mBinding.LinkedListActivityTypeSortedSwitch) {
             if (_isChecked) {
                 sorted();
             } else {
                 unsorted();
             }
         }
+
+         */
+
+
     }
 
     @Override
