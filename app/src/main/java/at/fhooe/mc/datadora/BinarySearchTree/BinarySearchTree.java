@@ -243,13 +243,18 @@ public class BinarySearchTree {
         }
         return ret;
     }
+    /**
+     * returns if a Node has children
+     */
     public boolean hasNoChildren(int key){
         if(root != null){
           return (findNode(key).right != null)&&(findNode(key).left!=null);
         }
         return false;
     }
-
+    /**
+     * returns the parentNode's value
+     */
     public BinaryTreeNode getParentNode(int key) {
 
         BinarySearchTree t = new BinarySearchTree();
