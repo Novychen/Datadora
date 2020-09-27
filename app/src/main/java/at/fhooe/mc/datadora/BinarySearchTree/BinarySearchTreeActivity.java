@@ -324,36 +324,42 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             Log.i(TAG, "UnKnownButton");
         }
     }
-
+    /**
+     * returns a boolean if the node given by the key is an interanl node
+     */
     public boolean Internal(int key) {
         if (mTree.root != null) {
-            if (!mTree.hasNoChildren(mTreeUser.get(key))|| (mTree.getChildNode(key,true)!= Integer.MIN_VALUE)||(mTree.getChildNode(key,false)!= Integer.MIN_VALUE)) {
-                mBinding.BSTActivityReturnText.setText(R.string.All_Data_Activity_False);
-            } else {
+            if ((mTree.getChildNode(key,true)!= Integer.MIN_VALUE)||(mTree.getChildNode(key,false)!= Integer.MIN_VALUE)) {
                 mBinding.BSTActivityReturnText.setText(R.string.All_Data_Activity_True);
+            } else {
+                mBinding.BSTActivityReturnText.setText(R.string.All_Data_Activity_False);
             }
             mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
         }
         return false;
     }
-
+    /**
+     * returns a boolean if the node given by the key is an external node
+     */
     public boolean External(int key) {
         if (mTree.root != null) {
-            if (mTree.hasNoChildren(key)) {
-                mBinding.BSTActivityReturnText.setText(R.string.All_Data_Activity_False);
-            } else {
+            if ((mTree.getChildNode(key,true) == Integer.MIN_VALUE)&&(mTree.getChildNode(key,false)== Integer.MIN_VALUE)) {
                 mBinding.BSTActivityReturnText.setText(R.string.All_Data_Activity_True);
+            } else {
+                mBinding.BSTActivityReturnText.setText( R.string.All_Data_Activity_False);
             }
             mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
         }
         return false;
     }
-
+    /**
+     * returns a String with all external nodes of the tree
+     */
     public String getExternalNodes() {
         StringBuilder stringBuilder = new StringBuilder("ExternalNodes : ");
         if (mTree.root != null) {
             for (int i = 0; i < mTreeUser.size(); i++) {
-                if (mTree.hasNoChildren(mTreeUser.get(i))) {
+                if ((mTree.getChildNode(mTreeUser.get(i),true) == Integer.MIN_VALUE)&&(mTree.getChildNode(mTreeUser.get(i),false)== Integer.MIN_VALUE)) {
                     stringBuilder.append(mTreeUser.get(i) + ";");
                 }
             }
@@ -361,12 +367,14 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         }
         return stringBuilder.toString();
     }
-
+    /**
+     * returns a String with all internal nodes of the tree
+     */
     public String getInternalNodes() {
         StringBuilder stringBuilder = new StringBuilder("InternalNodes : ");
         if (mTree.root != null) {
             for (int i = 0; i < mTreeUser.size(); i++) {
-                if (!mTree.hasNoChildren(mTreeUser.get(i))|| (mTree.getChildNode(mTreeUser.get(i),true)!= Integer.MIN_VALUE)||(mTree.getChildNode(mTreeUser.get(i),false)!= Integer.MIN_VALUE)) {
+                if ((mTree.getChildNode(mTreeUser.get(i),true)!= Integer.MIN_VALUE)||(mTree.getChildNode(mTreeUser.get(i),false)!= Integer.MIN_VALUE)) {
                     stringBuilder.append(mTreeUser.get(i) + ";");
                 }
             }
@@ -374,36 +382,48 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         }
         return stringBuilder.toString();
     }
-
+    /**
+     * clears mTree and all of its nodes + the variable mTreeUser
+     */
     private void clear() {
         mTreeUser.clear();
         mTree.clear();
         mBinding.BSTActivityView.clear();
     }
-
+    /**
+     * adds a new node to the tree
+     */
     private void add(int value) {
         mTreeUser.add(value);
         mTree.insert(value);
         mBinding.BSTActivityView.add(value);
     }
-
+    /**
+     * returns the max value of the tree
+     */
     private int max() {
         mBinding.BSTActivityReturnValue.setText(String.format("%s", mTree.max()));
         return mTree.max();
     }
-
+    /**
+     * returns the min value of the tree
+     */
     private int min() {
         mBinding.BSTActivityReturnValue.setText(String.format("%s", mTree.min()));
         return mTree.min();
     }
-
+    /**
+     * returns the height of a node defined  by the key value
+     */
     private int getHeight(int key) {
         if ((mTree.root != null)&& mTree.contains(key)) {
         return mTree.getHeight(mTree.findNode(key));
         }
         return 0;
     }
-
+    /**
+     * returns the Depth of a node defined  by the key value
+     */
     private int getDepth(int key) {
         int value = key;
         int result  = 0;
@@ -415,7 +435,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         }
         return result;
     }
-
+    /**
+     * adds a random node the value between -100 and 100 to the tree
+     */
     private void random() {
         Random r = new Random();
         int low = -100;
@@ -428,28 +450,36 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             mBinding.BSTActivityReturnValue.setText(String.format("%s", result));
         }
     }
-
+    /**
+     * returns the parent of a node defined  by the key value
+     */
     private int Parent(int key) {
         if (mTree.root == null) {
             return Integer.MIN_VALUE;
         }
         return mTree.getParent(key);
     }
-
+    /**
+     * returns the left child of a node defined  by the key value
+     */
     private int LeftChild(int key) {
         if (mTree.root == null) {
             return Integer.MIN_VALUE;
         }
         return mTree.getChildNode(key, true);
     }
-
+    /**
+     * returns the right child of a node defined  by the key value
+     */
     private int RightChild(int key) {
         if (mTree.root == null) {
             return Integer.MIN_VALUE;
         }
         return mTree.getChildNode(key, false);
     }
-
+    /**
+     * removes a Node form the tree defined  by the key value
+     */
     public void remove(int key) {
         if (!(mTree.root == null)) {
             if (mTreeUser.contains(key)) {

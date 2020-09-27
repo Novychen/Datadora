@@ -263,7 +263,7 @@ public class BinarySearchTree {
      * @return true if it has at least one child or false if not
      */
     public boolean hasNoChildren(int key){
-        if(root != null){
+        if((root != null)&& (findNode(key) != null)){
           return (findNode(key).right != null)&&(findNode(key).left!=null);
         }
         return false;
