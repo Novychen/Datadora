@@ -196,6 +196,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
     @Override
     public void onClick(View _v) {
+        mBinding.LinkedListActivityReturnText.setText(R.string.All_Data_Activity_Text_Return);
 
         if(!mRandom) {
             if (_v == mBinding.LinkedListActivityRandomBackground) {
@@ -406,10 +407,12 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     private void getPredecessor() {
+        mBinding.LinkedListActivityReturnText.setText(R.string.LinkedList_Activity_Pre_Succ_Hint);
         mBinding.LinkedListActivityLinkedListView.predecessor();
     }
 
     private void getSuccessor() {
+        mBinding.LinkedListActivityReturnText.setText(R.string.LinkedList_Activity_Pre_Succ_Hint);
         mBinding.LinkedListActivityLinkedListView.successor();
     }
 
@@ -518,17 +521,26 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
-        } else if (_buttonView == mBinding.LinkedListActivityTypeSortedSwitch) {
+
+        }
+        /*else if (_buttonView == mBinding.LinkedListActivityTypeSortedSwitch) {
             if (_isChecked) {
                 sorted();
             } else {
                 unsorted();
             }
         }
+
+         */
+
+
     }
 
     @Override
     public void onCheckedChanged(RadioGroup _radioGroup, int _i) {
+        mBinding.LinkedListActivityReturnText.setText(R.string.All_Data_Activity_Text_Return);
+        mBinding.LinkedListActivityReturnValue.setText("");
+
         if(!mDelete && !mRandom) {
             if (_radioGroup == mBinding.LinkedListActivityTypeRadioGroup) {
                 if (mBinding.LinkedListActivityTypeHeadRadioButton.isChecked()) { head();

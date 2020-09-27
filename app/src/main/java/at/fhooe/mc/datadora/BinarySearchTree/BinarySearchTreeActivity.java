@@ -189,6 +189,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     public void onClick(View view) {
         int key = (int) mBinding.BSTActivityInputSlider.getValue();
         if (view == mBinding.BSTActivityInorder) {
+            Log.e(TAG, "InOrder");
             mBinding.BSTActivityVectorOutput.setText(ArrayToSting(mTree.toArray(true)));
         } else if (view == mBinding.BSTActivityPostorder) {
             mTree.toArrayPostOrder();
@@ -229,7 +230,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             mBinding.BSTActivityReturnValue.setText(R.string.BST_Activity_Structure_Height);
             mBinding.BSTActivityStructureHeight.setChecked(false);
             mBinding.BSTActivityReturnValue.setText(String.format("%s", getHeight(key)));
-            Log.e(TAG, "Height");
         }
         //Get
         else if (view == mBinding.BSTActivityGetParent) {
@@ -244,13 +244,11 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
         } else if (view == mBinding.BSTActivityGetLeftChild) {
             mBinding.BSTActivityGetLeftChild.setChecked(false);
-            Log.e(TAG, "GetLeftChild");
             if(LeftChild(key) != Integer.MIN_VALUE){
                 mBinding.BSTActivityReturnValue.setText(String.format("%s", LeftChild(key)));
             }
         } else if (view == mBinding.BSTActivityGetRightChild) {
             mBinding.BSTActivityGetRightChild.setChecked(false);
-            Log.e(TAG, "GetRightChild");
             if(RightChild(key) != Integer.MIN_VALUE){
                 mBinding.BSTActivityReturnValue.setText(String.format("%s", RightChild(key)));
             }
@@ -266,7 +264,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             mBinding.BSTActivityVectorOutput.setText(getInternalNodes());
         } else if (view == mBinding.BSTActivityGetExternal) {
             mBinding.BSTActivityGetExternal.setChecked(false);
-            Log.e(TAG, "GetExternal");
             mBinding.BSTActivityVectorOutput.setText(getExternalNodes());
         } else if (view == mBinding.BSTActivityGetMax) {
             mBinding.BSTActivityGetMax.setChecked(false);
@@ -285,11 +282,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             }
         } else if (view == mBinding.BSTActivityCheckParent) {
             mBinding.BSTActivityCheckParent.setChecked(false);
-            Log.e(TAG, "CheckParent");
             mBinding.BSTActivityReturnValue.setText(String.format("%s", Parent(key)));
         } else if (view == mBinding.BSTActivityCheckLeftChild) {
             mBinding.BSTActivityCheckLeftChild.setChecked(false);
-            Log.e(TAG, "CheckLeftChild");
             if(LeftChild(key) != Integer.MIN_VALUE){
                 mBinding.BSTActivityReturnText.setText(R.string.All_Data_Activity_True);
             } else {
@@ -298,7 +293,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
         } else if (view == mBinding.BSTActivityCheckRightChild) {
             mBinding.BSTActivityCheckRightChild.setChecked(false);
-            Log.e(TAG, "CheckRightChild");
             if(RightChild(key) != Integer.MIN_VALUE){
                 mBinding.BSTActivityReturnText.setText(R.string.All_Data_Activity_True);
             } else {
@@ -318,18 +312,13 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             } else {
                 Toast.makeText(this, R.string.BST_Activity_Check_Empty, Toast.LENGTH_SHORT).show();
             }
-            Log.e(TAG, "CheckRoot");
 
         } else if (view == mBinding.BSTActivityCheckExternal) {
             mBinding.BSTActivityCheckExternal.setChecked(false);
-            Log.e(TAG, "CheckExternal");
             External(key);
         } else if (view == mBinding.BSTActivityCheckInternal) {
             mBinding.BSTActivityCheckInternal.setChecked(false);
-            Log.e(TAG, "CheckInternal");
             Internal(key);
-        } else {
-            Log.i(TAG, "UnKnownButton");
         }
     }
     /**

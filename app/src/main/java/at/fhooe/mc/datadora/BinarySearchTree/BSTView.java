@@ -62,6 +62,9 @@ public class BSTView extends View {
     private BinarySearchTree mTreeNumbers = new BinarySearchTree();
     private Vector<PointF> mTree = new Vector<>();
 
+    private PointF mTouchedPoint = new PointF();
+    private boolean mTouched;
+
     private int mTranslateX;
     private int mTranslateY;
 
@@ -101,7 +104,13 @@ public class BSTView extends View {
         invalidate();
     }
 
+    protected void remove() {
+        mCurrentOperation = Operation.REMOVE;
+        invalidate();
+    }
+
     protected void clear() {
+        mCurrentOperation = Operation.CLEAR;
         mTreeNumbers.clear();
         mTree.clear();
         invalidate();
@@ -147,9 +156,17 @@ public class BSTView extends View {
             posX = mMaxWidth/2 - posX;
         }
 
-        mTree.add(new PointF(posX, posY));
+        PointF p = new PointF(posX, posY);
+        mTree.add(p);
 
         mItemTextPaint.getTextBounds(_s, 0, _s.length(), mBounds);
+        if(mTouchedPoint != null && mTouchedPoint.x == p.x && mTouchedPoint.y == p.y) {
+            mItemPaintArea.setColor(mPrimaryColor);
+            mItemTextPaint.setColor(mOnPrimaryColor);
+        } else {
+            mItemPaintArea.setColor(mSurfaceColor);
+            mItemTextPaint.setColor(mOnSurfaceColor);
+        }
         _canvas.drawCircle(posX, posY, mRadius, mItemPaintArea);
         _canvas.drawCircle(posX, posY, mRadius, mItemPaint);
         _canvas.drawText(_s, posX - 3 - mBounds.width() / 2 , posY + mBounds.height() / 2, mItemTextPaint);
@@ -177,7 +194,7 @@ public class BSTView extends View {
                 xB = (_b.x - x) + (x * 2);
                 yB = _b.y + x + (mMinDistanceY);
             } else if (_times == -1) {
-                xB =0;
+                xB = 0;
                 yB = 0;
             }
 
@@ -226,6 +243,7 @@ public class BSTView extends View {
             _currPoint.y = (mRadius * 4) + ((mRadius * 2) * depth + (mMinDistanceY * depth));
             if(mTreeNumbers.root.data < _node.data) { // go in left subtree from right tree
                 _currPoint.x = _oldPoint.x - mMinDistanceX;
+
                 drawLine(_canvas,_currPoint, _oldPoint, times);
                 drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), true);
             } else {
@@ -248,7 +266,6 @@ public class BSTView extends View {
                 } else if (_node.right != null) {
                     _currPoint.x = mMinDistanceX;
                 }
-                Log.i(TAG, "NODA");
                 drawLine(_canvas,_currPoint, _oldPoint, times);
                 drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), false);
             }
@@ -263,6 +280,8 @@ public class BSTView extends View {
                 } else if(_node.left == null && _node.right == null) {
                     times = 10;
                     _currPoint.x = _oldPoint.x - mMinDistanceX;
+                } else if (_node.left != null && _node.right == null) {
+                    times = 10;
                 }
                 _node.setPoint(_currPoint);
                 drawLine(_canvas,_currPoint, _oldPoint,times);
@@ -284,6 +303,7 @@ public class BSTView extends View {
                     times = 3;
                 } else {
                     _currPoint.x = mMinDistanceX * (depth);
+                    times = 3;
                 }
                 _node.setPoint(_currPoint);
                 drawLine(_canvas,_currPoint, _oldPoint,times);
@@ -306,6 +326,19 @@ public class BSTView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent _event) {
 
+        if (_event.getAction() == MotionEvent.ACTION_DOWN) {
+            float x = _event.getX();
+            float y = _event.getY();
+            for (PointF p : mTree) {
+                if(x < p.x + mRadius && x > p.x - mRadius && y < p.y + mRadius && y > p.y - mRadius) {
+                    mTouchedPoint = p;
+                } else {
+                    mTouchedPoint.set(-1,-1);
+                }
+                invalidate();
+            }
+        }
+
         if (_event.getAction() == MotionEvent.ACTION_MOVE) {
                 if(mBegin.x == -1) {
                     mBegin.y = (int) _event.getY();
@@ -320,7 +353,8 @@ public class BSTView extends View {
                 if(mTranslateY < 20 || mTranslateX < 20) {
                     invalidate();
                 }
-            }
+        }
+
         return true;
     }
 
