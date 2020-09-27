@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,9 +53,9 @@
         android:id="@+id/About_Activity_Line_1"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="64dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/About_Activity_App_Slogan"
@@ -63,12 +63,10 @@
 
     <TextView
         android:id="@+id/About_Activity_BlockText"
-        style="@style/Text.Item"
+        style="@style/Text.TextBlock"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
         android:text="@string/About_Activity_Description"
         app:layout_constraintEnd_toEndOf="@+id/About_Activity_Line_1"
         app:layout_constraintStart_toStartOf="@+id/About_Activity_Line_1"
@@ -78,11 +76,9 @@
         android:id="@+id/About_Activity_Line_2"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/About_Activity_Line_1"
+        app:layout_constraintStart_toStartOf="@+id/About_Activity_Line_1"
         app:layout_constraintTop_toBottomOf="@+id/About_Activity_BlockText"
         app:srcCompat="@drawable/background_list_item" />
 
@@ -91,13 +87,13 @@
         style="@style/Text.Item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/About_Activity_Developer"
-        app:layout_constraintEnd_toEndOf="@+id/About_Activity_Line_2"
+        app:layout_constraintEnd_toEndOf="@+id/About_Activity_BlockText"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/About_Activity_Line_2"
+        app:layout_constraintStart_toStartOf="@+id/About_Activity_BlockText"
         app:layout_constraintTop_toBottomOf="@+id/About_Activity_Line_2" />
 
     <TextView

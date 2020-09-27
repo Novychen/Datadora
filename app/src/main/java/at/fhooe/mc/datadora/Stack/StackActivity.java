@@ -88,7 +88,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         // setup Toolbar
         Toolbar myToolbar = mBinding.StackActivityToolbar;
         setSupportActionBar(myToolbar);
-        myToolbar.inflateMenu(R.menu.menu_main);
+        getSupportActionBar().setTitle(R.string.All_Data_Activity_Stack);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

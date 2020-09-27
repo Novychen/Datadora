@@ -92,7 +92,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         // setup Toolbar
         Toolbar myToolbar = mBinding.QueueActivityToolbar;
         setSupportActionBar(myToolbar);
-        myToolbar.inflateMenu(R.menu.menu_main);
+        getSupportActionBar().setTitle(R.string.All_Data_Activity_Queue);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

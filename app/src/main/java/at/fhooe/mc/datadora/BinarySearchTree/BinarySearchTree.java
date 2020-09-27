@@ -1,5 +1,7 @@
 package at.fhooe.mc.datadora.BinarySearchTree;
 
+import java.util.Vector;
+
 /**
  * Implements a binary search tree. Is the value bigger it is saved on the right side, if not - on the left side. Same values are not allowed
  *
@@ -70,7 +72,7 @@ public class BinarySearchTree {
      * Searches for the (first) element with the given key. Returns true if it could
      * be found, false otherwise.
      */
-    public boolean find(int key) {
+    public boolean contains(int key) {
         if (root.data == key) {
             return true;
         }
@@ -80,6 +82,11 @@ public class BinarySearchTree {
         return false;
     }
 
+    /**
+     * Searches for the node of the given key
+     * @param key of the searched node
+     * @return the node of the given key if found or null if not
+     */
     public BinaryTreeNode findNode(int key) {
         BinarySearchTree t = new BinarySearchTree();
         BinaryTreeNode n = new BinaryTreeNode(root.data);
@@ -98,6 +105,11 @@ public class BinarySearchTree {
             }
         }
         return null;
+    }
+
+    public void clear() {
+        root = null;
+        size = 0;
     }
 
 
@@ -124,7 +136,7 @@ public class BinarySearchTree {
         n.right = root.right;
         t.root = n;
 
-        if (!find(key)) {
+        if (!contains(key)) {
             return false;
         }
         n = findNode(key);
@@ -211,7 +223,7 @@ public class BinarySearchTree {
      */
     public int getParent(int key) {
 
-        if (root.data == key || !this.find(key)) {
+        if (root.data == key || !this.contains(key)) {
             return Integer.MIN_VALUE;
         }
 
@@ -221,6 +233,7 @@ public class BinarySearchTree {
 
         return getParentNode(key).data;
     }
+
     /**
      * Returns the child data of the given key and the boolean side. Integer.MIN_VALUE if no child
      * can be found.
@@ -243,8 +256,11 @@ public class BinarySearchTree {
         }
         return ret;
     }
+
     /**
-     * returns if a Node has children
+     * Check if the node from the given key has children
+     * @param key of the node that will be checked
+     * @return true if it has at least one child or false if not
      */
     public boolean hasNoChildren(int key){
         if((root != null)&& (findNode(key) != null)){
@@ -252,8 +268,11 @@ public class BinarySearchTree {
         }
         return false;
     }
+
     /**
-     * returns the parentNode's value
+     * Gets the Parent node from the node with the given key
+     * @param key of the node which parent is searched
+     * @return the parent nod if found or null if it has no parent / the tree doesn't contain such a key
      */
     public BinaryTreeNode getParentNode(int key) {
 
@@ -263,7 +282,7 @@ public class BinarySearchTree {
         n.right = root.right;
         t.root = n;
 
-        if (root.data == key) {
+        if (root.data == key || !contains(key)) {
             return null;
         }
 
@@ -281,13 +300,24 @@ public class BinarySearchTree {
         return null;
     }
 
-    public int getDepth(int _key){
-        if(find(_key)){
-            BinaryTreeNode n =findNode(_key);
-            maxHeight(n);
+    /**
+     * Gets the Depth from the given node. The depth of root is 0
+     * @param key from node which depth is searched
+     * @return the depth from the given node or -1 if it doesn't exist within the tree
+     */
+    public int getDepth(int key){
+        int result = 0;
+        if(root != null) {
+            while (getParent(key) != Integer.MIN_VALUE) {
+                key = getParent(key);
+                result++;
+            }
         }
-        return 0;
+        return result;
     }
+
+
+
     /**
      * Returns the elements of the tree in ascending (inorder traversal) or
      * descending (reverse inorder traversal) order.
@@ -465,24 +495,24 @@ public class BinarySearchTree {
             for (int i = 0; i < tree.length; i++) {
                 string = string + tree[i] + ", ";
             }
-            return string.toString();
+            return string;
         } else {
             return "";
         }
     }
 
     /**
-     * returns the max depth of the tree
+     * returns the height of the given node - leaves have a height of 0
      *
-     * @param n Node which is check of its depth
-     * @return max depth of the tree
+     * @param n Node which is checked of its height
+     * @return height of the given node
      */
-    protected int maxHeight(BinaryTreeNode n) {
+    public int getHeight(BinaryTreeNode n) {
         if (n == null)
             return 0;
         else {
-            int right = maxHeight(n.right);
-            int left = maxHeight(n.left);
+            int right = getHeight(n.right);
+            int left = getHeight(n.left);
 
             if (left > right)
                 return ++left;
@@ -500,14 +530,14 @@ public class BinarySearchTree {
      * @param offset offset of the array
      * @return returns the offset
      */
-    protected int getArrayLevel(String[] array, BinaryTreeNode n, int level, int offset) {
+    protected int getArrayLevel(Vector<BinaryTreeNode> array, BinaryTreeNode n, int level, int offset) {
         if (n == null) {
-            array[offset] = "";
+            array.add(offset, null);
             offset++;
             return offset;
         }
         if (level == 1) {
-            array[offset] = String.valueOf(n.data);
+            array.add(offset, n);
             offset++;
         } else if (level > 1) {
             offset = getArrayLevel(array, n.left, level -1, offset);
