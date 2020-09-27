@@ -25,7 +25,7 @@
     <string name="All_Data_Activity_False">false</string>
 
     <string name="All_Data_Activity_Text_Animation">Please wait till the animation is over :)</string>
-
+    <string name="All_Data_Activity_Root">Root don\'t has a parent</string>
     // Main Activity
     <string name="Main_Activity_About">About</string>
 

@@ -189,7 +189,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     public void onClick(View view) {
         int key = (int) mBinding.BSTActivityInputSlider.getValue();
         if (view == mBinding.BSTActivityInorder) {
-            Log.e(TAG, "InOrder");
             mBinding.BSTActivityVectorOutput.setText(ArrayToSting(mTree.toArray(true)));
         } else if (view == mBinding.BSTActivityPostorder) {
             mTree.toArrayPostOrder();
@@ -219,11 +218,15 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         //Structure
         else if (view == mBinding.BSTActivityStructureSize) {
             mBinding.BSTActivityStructureSize.setChecked(false);
+            mBinding.BSTActivityReturnValue.setText(R.string.All_Data_Activity_Text_Size);
             mBinding.BSTActivityReturnValue.setText(String.format("%s", mTreeUser.size()));
         } else if (view == mBinding.BSTActivityStructureDepth) {
+            mBinding.BSTActivityReturnValue.setText(R.string.BST_Activity_Structure_Depth);
             mBinding.BSTActivityStructureDepth.setChecked(false);
+            mBinding.BSTActivityReturnValue.setText(String.format("%s", getDepth(key)));
             Log.e(TAG, "Depth");
         } else if (view == mBinding.BSTActivityStructureHeight) {
+            mBinding.BSTActivityReturnValue.setText(R.string.BST_Activity_Structure_Height);
             mBinding.BSTActivityStructureHeight.setChecked(false);
             mBinding.BSTActivityReturnValue.setText(String.format("%s", getHeight(key)));
             Log.e(TAG, "Height");
@@ -232,8 +235,13 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         else if (view == mBinding.BSTActivityGetParent) {
             mBinding.BSTActivityGetParent.setChecked(false);
             Log.e(TAG, "GetParent");
-            //BinaryTreeNode m = mTree.getParentNode(key);
-            mBinding.BSTActivityReturnValue.setText(String.format("%s", Parent(key)));
+            if(Parent(key) != Integer.MIN_VALUE){
+                mBinding.BSTActivityReturnValue.setText(String.format("%s", Parent(key)));
+            }else{
+                mBinding.BSTActivityReturnValue.setText("-");
+                Toast.makeText(this, R.string.All_Data_Activity_Root, Toast.LENGTH_SHORT).show();
+            }
+
         } else if (view == mBinding.BSTActivityGetLeftChild) {
             mBinding.BSTActivityGetLeftChild.setChecked(false);
             Log.e(TAG, "GetLeftChild");
