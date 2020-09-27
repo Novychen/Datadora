@@ -155,13 +155,26 @@ public class BSTView extends View {
         _canvas.drawText(_s, posX - 3 - mBounds.width() / 2 , posY + mBounds.height() / 2, mItemTextPaint);
     }
 
-    private void drawLine(Canvas _canvas, PointF _a, PointF _b) {
+    private void drawLine(Canvas _canvas, PointF _a, PointF _b, int _times) {
 
         float xA = _a.x + 0;
         float yA = _a.y + 0;
-
-        float xB = (float) (_b.x - (Math.cos(45) * mRadius));
-        float yB = (float) (_b.y + (Math.cos(45) * mRadius) + mMinDistanceY);
+        float xB = 0;
+        float yB = 0;
+        float x = (float) (Math.cos(45) * mRadius);
+        if(_times == 1 ) {
+            xB = (float) (_b.x - x);
+            yB = (float) (_b.y + x + (mMinDistanceY));
+        } else if (_times == 2) {
+            xB = (float) (_b.x + x + (mMinDistanceX / 8));
+            yB = (float) (_b.y + x + mMinDistanceY / 8);
+        } else if (_times == 3) {
+            xB = (float) (_b.x - (x - (x * 2)));
+            yB = (float) (_b.y + x + (mMinDistanceY));
+        } else if (_times == 4) {
+            xB = (float) ((_b.x - x) + (x * 2));
+            yB = (float) (_b.y + x + (mMinDistanceY));
+        }
 
         _canvas.drawLine(mMaxWidth/2 + xA, yA, mMaxWidth/2 + xB, yB, mItemPaint);
     }
@@ -172,7 +185,7 @@ public class BSTView extends View {
             return;
 
         int height = mTreeNumbers.getHeight(_node);
-        int heightOld = mTreeNumbers.getHeight(_old);
+        int times = 1;
         int depth = mTreeNumbers.getDepth(_node.data);
 
         Log.i(TAG, "PRINT: " + _node.data + " NODE OLD: " + _old.data + " , DEPTH : " + mTreeNumbers.getHeight(_node));
@@ -180,7 +193,7 @@ public class BSTView extends View {
             _currPoint.y = (mRadius * 4) + ((mRadius * 2) * depth + (mMinDistanceY * depth));
             if(mTreeNumbers.root.data < _node.data) { // go in left subtree from right tree
                 _currPoint.x = _oldPoint.x - mMinDistanceX;
-                drawLine(_canvas,_currPoint, _oldPoint);
+                drawLine(_canvas,_currPoint, _oldPoint,times);
                 drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), true);
             } else {
                 if (_node.right == null && _node.left == null) {
@@ -216,17 +229,20 @@ public class BSTView extends View {
                 if(_node.left == null && mTreeNumbers.root == _old) {
                 } else if(_node.left != null && mTreeNumbers.root == _old) {
                     _currPoint.x = mMinDistanceX * 2;
+                    times = 2;
                 } else if(_node.left == null && _node.right == null) {
                     _currPoint.x = _oldPoint.x + mMinDistanceX;
                 }  else if(_node.left != null && _node.right == null) {
                     _currPoint.x = _oldPoint.x + (mMinDistanceX * (height - 1));
+                    times = 4;
                 } else if(_node.left == null && _node.right != null) {
                     _currPoint.x = _oldPoint.x + mMinDistanceX;
+                    times = 3;
                 } else {
                     _currPoint.x = mMinDistanceX * (depth);
                 }
                 _node.setPoint(_currPoint);
-                drawLine(_canvas,_currPoint, _oldPoint);
+                drawLine(_canvas,_currPoint, _oldPoint,times);
                 drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), true);
             }
         } else {
