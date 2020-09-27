@@ -330,9 +330,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     public boolean Internal(int key) {
         if (mTree.root != null) {
             if ((mTree.getChildNode(key,true)!= Integer.MIN_VALUE)||(mTree.getChildNode(key,false)!= Integer.MIN_VALUE)) {
-                mBinding.BSTActivityReturnText.setText("True");
+                mBinding.BSTActivityReturnText.setText(R.string.All_Data_Activity_True);
             } else {
-                mBinding.BSTActivityReturnText.setText("False");
+                mBinding.BSTActivityReturnText.setText(R.string.All_Data_Activity_False);
             }
             mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
         }
@@ -344,9 +344,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     public boolean External(int key) {
         if (mTree.root != null) {
             if ((mTree.getChildNode(key,true) == Integer.MIN_VALUE)&&(mTree.getChildNode(key,false)== Integer.MIN_VALUE)) {
-                mBinding.BSTActivityReturnText.setText("True");
+                mBinding.BSTActivityReturnText.setText(R.string.All_Data_Activity_True);
             } else {
-                mBinding.BSTActivityReturnText.setText("False");
+                mBinding.BSTActivityReturnText.setText( R.string.All_Data_Activity_False);
             }
             mBinding.BSTActivityReturnValue.setText(String.format("%s", key));
         }
