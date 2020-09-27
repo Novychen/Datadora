@@ -26,8 +26,6 @@ import at.fhooe.mc.datadora.databinding.ActivityQueueBinding;
 
 public class QueueActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    //TODO: ENUM for operations (?)
-
 
     private static final String TAG = "QueueActivity : ";
     private ActivityQueueBinding mBinding;
@@ -153,7 +151,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         // Convert the vector containing the integers to a string
-        Vector<Integer> vector = mBinding.QueueActivityQueueView.mQueueNumbers;
+        Vector<Integer> vector = mBinding.QueueActivityQueueView.getQueueNumbers();
         StringBuilder vectorStr = new StringBuilder();
 
         // transform the vector into a string
@@ -206,9 +204,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if (!mPressedDequeue && !mPressedRandom) {
             if (v == mBinding.QueueActivityButtonEnqueue) { enqueue();
-            } else if (v == mBinding.QueueActivityButtonDequeue) {
-                mPressedDequeue = true;
-                dequeue();
+            } else if (v == mBinding.QueueActivityButtonDequeue) { dequeue();
             } else if(v == mBinding.QueueActivityButtonPeek) { peek();
             } else if (v == mBinding.QueueActivityButtonSize) { size();
             } else if (v == mBinding.QueueActivityButtonEmpty) { isEmpty();
@@ -226,7 +222,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      * show the size of the queue
      */
     protected void showSize(){
-        mBinding.QueueActivityReturnValue.setText(String.format("%s", mBinding.QueueActivityQueueView.mQueueNumbers.size()));
+        mBinding.QueueActivityReturnValue.setText(String.format("%s", mBinding.QueueActivityQueueView.getQueueNumbers().size()));
     }
 
     /**
@@ -294,10 +290,11 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      */
     private void dequeue() {
         if (!mQueue.isEmpty()) {
+            mPressedDequeue = true;
             //delete the last element of the Queue (mQueue), then let it be (visually) removed by the QueueView
             mBinding.QueueActivityReturnValue.setText(String.format("%s", mQueue.get(0)));
             mQueue.removeElementAt(0);
-            mBinding.QueueActivityQueueView.preDequeue();
+            mBinding.QueueActivityQueueView.dequeue();
             makeInVisible();
             if (mQueue.isEmpty()) {
                 showEmpty();
@@ -317,7 +314,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
             mBinding.QueueActivityQueueView.peek();
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    mBinding.QueueActivityReturnValue.setText(String.format("%s",  mBinding.QueueActivityQueueView.mQueueNumbers.get(0).toString()));
+                    mBinding.QueueActivityReturnValue.setText(String.format("%s",  mBinding.QueueActivityQueueView.getQueueNumbers().get(0).toString()));
                 }
             }, 500);
         } else {
@@ -369,6 +366,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      * This method handles the operation random
      */
     private void random(){
+        mPressedRandom = true;
         mBinding.QueueActivityReturnValue.setText("");
         createRandomQueue();
         makeInVisible();

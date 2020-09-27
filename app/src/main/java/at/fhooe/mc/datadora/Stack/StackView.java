@@ -16,7 +16,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import androidx.annotation.Nullable;
 import java.util.Vector;
 
-import at.fhooe.mc.datadora.LinkedList.LinkedListView;
 import at.fhooe.mc.datadora.R;
 
 /**
@@ -145,6 +144,7 @@ public class StackView extends View {
     }
 
     protected Vector<Integer> getStackNumbers() {
+
         return mStackNumbers;
     }
 
@@ -182,7 +182,7 @@ public class StackView extends View {
         mAnimatorPop.setDuration(200);
         mAnimatorPop.setRepeatCount(mStackNumbers.size()-1);
         mAnimatorPop.start();
-        reScale();
+        reScaleUndo();
     }
 
     /**
@@ -208,7 +208,7 @@ public class StackView extends View {
         mAnimatorPop.setDuration(700);
         mAnimatorPop.setRepeatCount(0);
         mAnimatorPop.start();
-        reScale();
+        reScaleUndo();
     }
 
     /**
@@ -219,17 +219,21 @@ public class StackView extends View {
         RectF r = new RectF();
         mStack.add(r);
         mStackNumbers.add(_value);
-
-        if (mMaxHeight <= (mMaxWidth / 4) * mScale * mStack.size()) {
-            mScale = mScale / 1.2f;
-        }
         mAnimatorPush.start();
+        reScale();
     }
 
     private void reScale() {
-        for(int i = 0; i < 3; i++) {
-            if (mMaxHeight <= (mMaxWidth / 4) * mScale * mStack.size()) {
-                mScale = mScale / 1.2f;
+        while (mMaxHeight <= (mMaxWidth / 4) * mScale * mStack.size()) {
+            mScale = mScale / 1.2f;
+        }
+    }
+
+    private void reScaleUndo() {
+        if (mMaxHeight > (mMaxWidth / 4) * (mScale * 1.2f) * mStack.size()) {
+            mScale = mScale * 1.2f;
+            if (mScale > 1) {
+                mScale = 1;
             }
         }
     }
@@ -467,7 +471,8 @@ public class StackView extends View {
         mStack.get(_pos).bottom = (int) (mStack.get(_pos).top + ((mMaxWidth / 4) * mScale) - 10);
 
         // get BoundingBox from Text & draw Text + StackItem
-        _canvas.drawText(mStackNumbers.get(_pos).toString(), getExactCenterX(mStack.get(_pos)) - mBounds.exactCenterX(), (getExactCenterY(mStack.get(_pos)) - mBounds.exactCenterY()), mItemTextPaint);
+        _canvas.drawText(mStackNumbers.get(_pos).toString(), getExactCenterX(mStack.get(_pos)) - mBounds.exactCenterX(),
+                (getExactCenterY(mStack.get(_pos)) - mBounds.exactCenterY()), mItemTextPaint);
         _canvas.drawRoundRect(mStack.get(_pos), mRadius, mRadius, mItemPaint);
     }
 

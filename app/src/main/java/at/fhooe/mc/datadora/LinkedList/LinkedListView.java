@@ -425,7 +425,7 @@ public class LinkedListView extends View {
     }
 
     private void reScale() {
-        if (mMaxHeight <= (mMaxWidth / 4) * mScale * mLinkedList.size()) {
+        while (mMaxHeight <= (mMaxWidth / 4) * mScale * mLinkedList.size()) {
             mScale = mScale / 1.2f;
         }
     }
