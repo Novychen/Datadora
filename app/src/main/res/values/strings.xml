@@ -27,10 +27,13 @@
     <string name="Main_Activity_About">About</string>
 
     // About Activity
-    <string name="About_Activity_Developer">The following developer worked on this project</string>
+    <string name="About_Activity_Slogan">We adore data!</string>
+    <string name="About_Activity_Description">This app helps you to understand various data structures. Have fun playing around with nodes and watching how the data structure behaves. Save paper - use Datadora!</string>
+    <string name="About_Activity_Developer">The following developers worked on this project:</string>
     <string name="About_Activity_Yvonne">Yvonne Kathrin Eder</string>
     <string name="About_Activity_Ines">Ines Langbauer</string>
     <string name="About_Activity_Gerald">Gerald Lehner</string>
+    <string name="About_Activity_University">FH Hagenberg Mobile Computing</string>
 
     // Stack Activity
     <string name="Stack_Activity_Text_Peek">peek</string>
@@ -143,5 +146,7 @@
 
     <string name="Content_Description_LinkedList_Get_Background">A rectangle that serves as the background of the operation group get</string>
     <string name="Content_Description_LinkedList_Get_Arrow">An arrow that opens and closes the available operations of the group get</string>
+
+
 
 </resources>
