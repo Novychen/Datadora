@@ -135,21 +135,6 @@ public class QueueView extends View {
     }
 
     /**
-     * gets the current maximum out of the mQueueNumbers Vector
-     *
-     * @return the maximum int of the mQueueNumbers Vector
-     */
-    private int getMax() {
-        int max = 0;
-        for (int i : mQueueNumbers) {
-            if (Math.abs(i) > max) {
-                max = Math.abs(i);
-            }
-        }
-        return max;
-    }
-
-    /**
      * Initializes the key components such as Paint
      */
     private void init() {
@@ -234,7 +219,6 @@ public class QueueView extends View {
                 mScale = 1;
             }
         }
-        changeBoxSize(getMax(), false);
     }
 
     /**
@@ -248,7 +232,6 @@ public class QueueView extends View {
         if (mMaxHeightQueue <= (mMaxWidthQueue / 4) * mScale * mQueue.size()) {
             mScale = mScale / 1.2f;
         }
-        changeBoxSize(getMax(), true);
         mPeek = false;
         mClear = false;
         mDequeue = false;
@@ -308,6 +291,7 @@ public class QueueView extends View {
 
         PropertyValuesHolder propertyTranslateYEnqueue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_ENQUEUE, -200, 0);
         PropertyValuesHolder propertyAlphaEnqueue = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_ENQUEUE, 0, 255);
+
 
         mPropertyTranslateYDequeue = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_DEQUEUE, 0, (int)  (-(mMaxWidthQueue / 4 ) * mScale));
         mPropertyAlphaDequeue = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_DEQUEUE, 255, 0);

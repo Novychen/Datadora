@@ -207,7 +207,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         if (!mPressedDequeue && !mPressedRandom) {
             if (v == mBinding.QueueActivityButtonEnqueue) { enqueue();
             } else if (v == mBinding.QueueActivityButtonDequeue) {
-                mPressedDequeue = true;
                 dequeue();
             } else if(v == mBinding.QueueActivityButtonPeek) { peek();
             } else if (v == mBinding.QueueActivityButtonSize) { size();
@@ -294,6 +293,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      */
     private void dequeue() {
         if (!mQueue.isEmpty()) {
+            mPressedDequeue = true;
             //delete the last element of the Queue (mQueue), then let it be (visually) removed by the QueueView
             mBinding.QueueActivityReturnValue.setText(String.format("%s", mQueue.get(0)));
             mQueue.removeElementAt(0);
