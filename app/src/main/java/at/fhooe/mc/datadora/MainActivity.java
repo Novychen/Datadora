@@ -4,10 +4,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 
+import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTree;
 import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity;
+import at.fhooe.mc.datadora.BinarySearchTree.BinaryTreeNode;
 import at.fhooe.mc.datadora.LinkedList.LinkedListActivity;
 import at.fhooe.mc.datadora.Queue.QueueActivity;
 import at.fhooe.mc.datadora.Stack.StackActivity;
@@ -15,6 +18,7 @@ import at.fhooe.mc.datadora.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "MainActivity : ";
     private ActivityMainBinding mBinding;
 
     @Override

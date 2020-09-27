@@ -2,10 +2,10 @@ package at.fhooe.mc.datadora.BinarySearchTree;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -16,10 +16,12 @@ import androidx.annotation.Nullable;
 
 import java.util.Vector;
 
-import at.fhooe.mc.datadora.LinkedList.LinkedListView;
 import at.fhooe.mc.datadora.R;
 
 public class BSTView extends View {
+
+    int level;
+
     private static final String TAG = "BSTView : ";
     private Paint mItemPaint = new Paint();
     private Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);;
@@ -52,13 +54,14 @@ public class BSTView extends View {
 
     private float mMaxHeight;
     private float mMaxWidth;
-    private float mRadius = 40;
-    private float mMinDistanceX = 50;
+    private float mRadius = 50;
+    private float mMinDistanceX = 80;
     private float mMinDistanceY = 20;
 
     // Rect in order to save the TextBounds from the current number
     private Rect mBounds = new Rect();
-    private BinarySearchTree mTree = new BinarySearchTree();
+    private BinarySearchTree mTreeNumbers = new BinarySearchTree();
+    private Vector<PointF> mTree = new Vector<>();
 
     private int mTranslateX;
     private int mTranslateY;
@@ -92,9 +95,13 @@ public class BSTView extends View {
 
     protected void add(int _value) {
         mCurrentOperation = Operation.ADD;
-        mTree.insert(_value);
+        mTreeNumbers.insert(_value);
 
         invalidate();
+    }
+
+    protected void clear() {
+        mTreeNumbers.clear();
     }
 
     @Override
@@ -122,22 +129,68 @@ public class BSTView extends View {
         mMatrix.preTranslate(mTranslateX,mTranslateY);
         _canvas.setMatrix(mMatrix);
 
-        if( mCurrentOperation == Operation.ADD) {
-            addAnimation(_canvas);
+        if(mCurrentOperation == Operation.ADD) {
+            addAnimation(_canvas, mTreeNumbers.root, mTreeNumbers.root, new PointF(0,mRadius * 4), new PointF(0 ,mRadius * 2));
         }
     }
 
-    private void draw(Canvas _canvas, float _posX, float _posY, String _s) {
-        mItemTextPaint.getTextBounds(_s, 0, _s.length(), mBounds);
+    private void drawCircle(Canvas _canvas, PointF _a, PointF _b, String _s, boolean _right) {
 
-        _canvas.drawCircle(_posX, _posY, mRadius, mItemPaint);
-        _canvas.drawText(_s, _posX - 3 - mBounds.width() / 2 , _posY + mBounds.height() / 2, mItemTextPaint);
+        float posX = _a.x;
+        float posY = _a.y;
+
+        if(_right) {
+            posX = mMaxWidth/2 + posX;
+        } else {
+            posX = mMaxWidth/2 - posX;
+        }
+
+        mTree.add(new PointF(posX, posY));
+
+        mItemTextPaint.getTextBounds(_s, 0, _s.length(), mBounds);
+        _canvas.drawCircle(posX, posY, mRadius, mItemPaint);
+       // _canvas.drawLine(_a.x, _a.y, _b.x, _b.y, mItemPaint);
+        _canvas.drawText(_s, posX - 3 - mBounds.width() / 2 , posY + mBounds.height() / 2, mItemTextPaint);
     }
 
-    private void addAnimation(Canvas _canvas){
+    private void addAnimation(Canvas _canvas, BinaryTreeNode _node, BinaryTreeNode _old, PointF _currPoint, PointF _oldPoint) {
 
-        float positionX = mMaxWidth / 2;
-        float positionY = mRadius * 2;
+        if (_node == null)
+            return;
+
+        int height = mTreeNumbers.getHeight(_node);
+        int heightOld = mTreeNumbers.getHeight(_old);
+        int depth = mTreeNumbers.getDepth(_node.data);
+
+        Log.i(TAG, "PRINT: " + _node.data + " NODE OLD: " + _old.data + " , DEPTH : " + mTreeNumbers.getDepth(_node.data));
+        if( _old.data > _node.data) {
+            _oldPoint.x = _currPoint.x;
+            _oldPoint.y = _currPoint.y;
+            _currPoint.y = (mRadius * 4) + ((mRadius * 2) * depth + (mMinDistanceY * depth));
+            if(_node.right == null) {
+                _currPoint.x = _currPoint.x + mMinDistanceX;
+            } else {
+                _currPoint.x = _currPoint.x + (mMinDistanceX * (height));
+            }
+            drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), false);
+
+        } else if (_old.data < _node.data) {
+            _oldPoint.x = _currPoint.x;
+            _currPoint.y = (mRadius * 4) + ((mRadius * 2) * depth) + (mMinDistanceY * depth);
+            if(mTreeNumbers.root.data > _node.data) {
+                _currPoint.x = _currPoint.x - (mMinDistanceX * (heightOld));
+                drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), false);
+            } else {
+                _currPoint.x = _currPoint.x + mMinDistanceX;
+                drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), true);
+            }
+        } else {
+            drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), true);
+        }
+        Log.i(TAG, "PRINT: " + _node.data + " X: " + _currPoint.x);
+
+        addAnimation(_canvas, _node.left, _node, _currPoint, _oldPoint);
+        addAnimation(_canvas, _node.right, _node, _currPoint, _oldPoint);
     }
 
     @Override

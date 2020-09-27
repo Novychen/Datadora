@@ -1,6 +1,7 @@
 package at.fhooe.mc.datadora;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
@@ -24,6 +25,13 @@ public class AboutActivity extends AppCompatActivity {
         Toolbar myToolbar = mBinding.AboutActivityToolbar;
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

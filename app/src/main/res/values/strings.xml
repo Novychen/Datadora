@@ -18,6 +18,9 @@
     <string name="All_Data_Activity_Text_Clear">Clear</string>
     <string name="All_Data_Activity_Text_Size">Size</string>
 
+    <string name="All_Data_Activity_Text_Saved">Datastructure was successfully saved</string>
+    <string name="All_Data_Activity_Text_FromSave">Datastructure restored from last save</string>
+
     <string name="All_Data_Activity_True">true</string>
     <string name="All_Data_Activity_False">false</string>
 
@@ -28,7 +31,7 @@
 
     // About Activity
     <string name="About_Activity_Slogan">We adore data!</string>
-    <string name="About_Activity_Description">This app helps you to understand various data structures. Have fun playing around with nodes and watching how the data structure behaves. Save paper - use Datadora!</string>
+    <string name="About_Activity_Description">This app helps you to understand various data structures. Have fun playing around with nodes and watching how the data structure behaves.\n\nSave paper - use Datadora!</string>
     <string name="About_Activity_Developer">The following developers worked on this project:</string>
     <string name="About_Activity_Yvonne">Yvonne Kathrin Eder</string>
     <string name="About_Activity_Ines">Ines Langbauer</string>
