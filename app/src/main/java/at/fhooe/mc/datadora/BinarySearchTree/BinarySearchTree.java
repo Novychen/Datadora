@@ -1,5 +1,11 @@
 package at.fhooe.mc.datadora.BinarySearchTree;
 
+import android.graphics.Canvas;
+import android.graphics.PointF;
+import android.util.Log;
+
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Vector;
 
 /**
@@ -106,6 +112,7 @@ public class BinarySearchTree {
         }
         return null;
     }
+
 
     public void clear() {
         root = null;
@@ -239,20 +246,23 @@ public class BinarySearchTree {
      * can be found.
      */
     public int getChildNode(int _key, boolean _side){
-        if(root == null){
+        if(root == null) {
             return Integer.MIN_VALUE;
         }
+
         BinaryTreeNode n = findNode(_key);
         int ret = Integer.MIN_VALUE;
-        if(n!=null){
-        if (_side){
-            if(n.left != null){  ret = n.left.data;}
+        if(n != null) {
+            if (_side) {
+                if(n.left != null) {
+                    ret = n.left.data;
+                }
 
-        }else{ if(n.right!= null){
-            ret = n.right.data;
-        }
-        }
-
+            } else {
+                if(n.right!= null) {
+                    ret = n.right.data;
+                }
+            }
         }
         return ret;
     }
@@ -316,6 +326,20 @@ public class BinarySearchTree {
         return result;
     }
 
+    public BinaryTreeNode findNodeByPoint(BinaryTreeNode _node, PointF _point) {
+
+        if (_node == null) {
+            return null;
+        }
+
+        if (_node.point == _point) {
+            return _node;
+        }
+
+        findNodeByPoint(_node.left, _point);
+        findNodeByPoint(_node.right, _point);
+        return null;
+    }
 
 
     /**
@@ -504,20 +528,43 @@ public class BinarySearchTree {
     /**
      * returns the height of the given node - leaves have a height of 0
      *
-     * @param n Node which is checked of its height
-     * @return height of the given node
+     * @param key of Node which is checked of its height
+     * @return height of the given key (node)
      */
-    public int getHeight(BinaryTreeNode n) {
+    public int getHeight(int key) {
+        BinaryTreeNode n = findNode(key);
+        // Base Case
         if (n == null)
             return 0;
-        else {
-            int right = getHeight(n.right);
-            int left = getHeight(n.left);
 
-            if (left > right)
-                return ++left;
-            else
-                return ++right;
+        // Create an empty queue for level order tarversal
+        Queue<BinaryTreeNode> q = new LinkedList();
+
+        // Enqueue Root and initialize height
+        q.add(n);
+        int height = 0;
+
+        while (1 == 1)
+        {
+            // nodeCount (queue size) indicates number of nodes
+            // at current lelvel.
+            int nodeCount = q.size();
+            if (nodeCount == 0)
+                return height;
+            height++;
+
+            // Dequeue all nodes of current level and Enqueue all
+            // nodes of next level
+            while (nodeCount > 0)
+            {
+                BinaryTreeNode newnode = q.peek();
+                q.remove();
+                if (newnode.left != null)
+                    q.add(newnode.left);
+                if (newnode.right != null)
+                    q.add(newnode.right);
+                nodeCount--;
+            }
         }
     }
 
