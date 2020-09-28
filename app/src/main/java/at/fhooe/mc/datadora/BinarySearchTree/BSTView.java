@@ -242,7 +242,10 @@ public class BSTView extends View {
     }
 
     private void setUpOperations() {
-        if(mPosition > -1) {
+        if(mPosition > -1 && mPosition < mTree.size() - 1) {
+            if(mCurrentOperation == null) {
+                mCurrentOperation = Operation.NONE;
+            }
             switch (mCurrentOperation) {
                 case ADD:
                     break;
@@ -317,12 +320,12 @@ public class BSTView extends View {
                 case ISEXTERNAL: {
                     int key = mTree.get(mPosition).data;
                     if ((mTreeNumbers.getChildNode(key,true) == Integer.MIN_VALUE) && (mTreeNumbers.getChildNode(key,false) == Integer.MIN_VALUE)) {
-                        mActivity.getBinding().BSTActivityReturnText.setText(R.string.All_Data_Activity_True);
+                        mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
                     } else {
-                        mActivity.getBinding().BSTActivityReturnText.setText( R.string.All_Data_Activity_False);
+                        mActivity.getBinding().BSTActivityReturnValue.setText( R.string.All_Data_Activity_False);
                     }
-                    mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", key));
-                }
+                    mCurrentOperation = Operation.NONE;
+                } break;
 
                 case RIGHTCHILD: {
                     BinaryTreeNode n = mTreeNumbers.findNode(mTree.get(mPosition).data);
