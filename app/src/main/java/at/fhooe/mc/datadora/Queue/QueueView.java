@@ -451,7 +451,7 @@ public class QueueView extends View {
 
             } break;
             case PEEK:{
-                if(_pos == mQueue.size() - 1){
+                if(_pos == 0){
                     mQueue.get(_pos).top = (int) (mMaxHeightQueue - ((mMaxWidthQueue / 4) + (mMaxWidthQueue / 4 * _pos)) * mScale);
                     mQueueItemPaint.setColor(mColorAreaPeek);
                     mQueueItemPaint.setStyle(Paint.Style.FILL);
