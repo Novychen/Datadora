@@ -1,0 +1,206 @@
+[
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\xml_activity_bst_standard_scene.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\xml\\activity_bst_standard_scene.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_bst.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_bst.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_person.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_person.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_icon_rectangle.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_icon_rectangle.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_linkedlist.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_linkedlist.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_background_return.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\background_return.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_save.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_save.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\xml_activity_linked_list_delete_scene.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\xml\\activity_linked_list_delete_scene.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_button_pressed.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\button_pressed.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_linked_list.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_linked_list.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_check.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_check.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_button.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\button.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_settings.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_settings.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_card.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_card.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\xml_activity_bst_get_scene.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\xml\\activity_bst_get_scene.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_button_normal.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\button_normal.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_binary_search_tree.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_binary_search_tree.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_stack.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_stack.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\xml_activity_linked_list_add_scene.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\xml\\activity_linked_list_add_scene.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\xml_activity_linked_list_type_scene.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\xml\\activity_linked_list_type_scene.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_stack.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_stack.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_line.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\line.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_queue.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_queue.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\xml_activity_bst_check_scene.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\xml\\activity_bst_check_scene.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\xml_activity_linked_list_get_scene.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\xml\\activity_linked_list_get_scene.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_queue.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_queue.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_about.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_about.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_background_list_item.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\background_list_item.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_clear.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_clear.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_arrow_drop_down.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_arrow_drop_down.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\xml_activity_bst_structure_scene.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\xml\\activity_bst_structure_scene.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_foreground.png"
+    }
+]

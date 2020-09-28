@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_about.xml",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_about.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_stack.xml",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_stack.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_queue.xml",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_queue.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_binary_search_tree.xml",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_binary_search_tree.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_linked_list.xml",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_linked_list.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_test.xml",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_test.xml"
+    }
+]

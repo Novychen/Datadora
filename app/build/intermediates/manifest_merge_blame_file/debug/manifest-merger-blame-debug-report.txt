@@ -1,0 +1,91 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="at.fhooe.mc.datadora"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+8-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="30" />
+9-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml
+10
+11    <application
+11-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:5:5-41:19
+12        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+12-->[androidx.core:core:1.3.0] C:\Users\edery\.gradle\caches\transforms-2\files-2.1\429fb715fcc7711d4ab133e350b6f531\core-1.3.0\AndroidManifest.xml:24:18-86
+13        android:debuggable="true"
+14        android:extractNativeLibs="false"
+15        android:icon="@mipmap/ic_launcher"
+15-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:6:9-43
+16        android:label="@string/app_name"
+16-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:7:9-41
+17        android:roundIcon="@mipmap/ic_launcher_round"
+17-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:8:9-54
+18        android:supportsRtl="true"
+18-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:9:9-35
+19        android:testOnly="true"
+20        android:theme="@style/AppTheme" >
+20-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:10:9-40
+21        <activity
+21-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:11:9-14:58
+22            android:name="at.fhooe.mc.datadora.AboutActivity"
+22-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:12:13-42
+23            android:screenOrientation="portrait"
+23-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:13:13-49
+24            android:windowSoftInputMode="adjustResize" />
+24-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:14:13-55
+25        <activity
+25-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:15:9-18:58
+26            android:name="at.fhooe.mc.datadora.LinkedList.LinkedListActivity"
+26-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:16:13-58
+27            android:screenOrientation="portrait"
+27-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:17:13-49
+28            android:windowSoftInputMode="adjustResize" />
+28-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:18:13-55
+29        <activity
+29-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:19:9-22:58
+30            android:name="at.fhooe.mc.datadora.Queue.QueueActivity"
+30-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:20:13-48
+31            android:screenOrientation="portrait"
+31-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:21:13-49
+32            android:windowSoftInputMode="adjustResize" />
+32-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:22:13-55
+33        <activity
+33-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:23:9-26:58
+34            android:name="at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity"
+34-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:24:13-70
+35            android:screenOrientation="portrait"
+35-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:25:13-49
+36            android:windowSoftInputMode="adjustResize" />
+36-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:26:13-55
+37        <activity
+37-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:27:9-30:58
+38            android:name="at.fhooe.mc.datadora.Stack.StackActivity"
+38-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:28:13-48
+39            android:screenOrientation="portrait"
+39-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:29:13-49
+40            android:windowSoftInputMode="adjustResize" />
+40-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:30:13-55
+41        <activity
+41-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:31:9-40:20
+42            android:name="at.fhooe.mc.datadora.MainActivity"
+42-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:32:13-41
+43            android:screenOrientation="portrait"
+43-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:33:13-49
+44            android:windowSoftInputMode="adjustResize" >
+44-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:34:13-55
+45            <intent-filter>
+45-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:35:13-39:29
+46                <action android:name="android.intent.action.MAIN" />
+46-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:36:17-69
+46-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:36:25-66
+47
+48                <category android:name="android.intent.category.LAUNCHER" />
+48-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:38:17-77
+48-->D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:38:27-74
+49            </intent-filter>
+50        </activity>
+51    </application>
+52
+53</manifest>
