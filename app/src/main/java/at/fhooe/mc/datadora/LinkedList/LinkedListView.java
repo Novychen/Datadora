@@ -26,16 +26,6 @@ import at.fhooe.mc.datadora.R;
 
 public class LinkedListView extends View {
 
-    //TODO: Predecessor Animation
-    //TODO: Successor Animation
-    //TODO: App crashes when list empty & change in type
-    //TODO: Type not tied to element
-    //TODO: Sorted / Unsorted
-    //TODO: Handle too many list elements - how many? 100?
-    //TODO: app still buggy with DELETEAT, especially when prepend was used.
-    //TODO: the GET slider appears too late when performing the very first get at after insertion
-    //TODO: put Size Button after random (?)
-
     private static final String TAG = "LinkedListView : ";
     private static final String PROPERTY_TRANSLATE_Y_APPEND = "PROPERTY_TRANSLATE_APPEND";
     private static final String PROPERTY_ALPHA_APPEND = "PROPERTY_ALPHA_APPEND";
