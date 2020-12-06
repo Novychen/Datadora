@@ -12,7 +12,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -46,15 +45,11 @@ public class QueueView extends View {
         PEEK,
         CLEAR,
         RANDOM,
-        SIZE,
         SAVE
     }
 
     // int that counts how often the operator enqueued was used (by operator random)
     private int mPositionAnimation;
-
-    // int that specifies the radius of the corners of the drawn rectangles
-    private int mRadius = 4;
 
     // Vector that gets the random generated Queue
     private Vector<Integer> mRandomQueue = new Vector<>();
@@ -429,6 +424,8 @@ public class QueueView extends View {
      * @param _pos the current position the loop from the onDraw is in
      */
     private void animateOperation(Canvas _canvas, int _pos){
+        // int that specifies the radius of the corners of the drawn rectangles
+        int mRadius = 4;
         switch (mCurrentOperation){
             case ENQUEUE:{
                 if (_pos == mQueue.size() - 1) {

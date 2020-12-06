@@ -8,19 +8,76 @@ import android.graphics.PointF;
  */
 public class BinaryTreeNode {
 
-    public BinaryTreeNode left;
-    public BinaryTreeNode right;
-    public PointF point;
-    public int data;
+    // Count of the children of the node (on the opposite side from where the node is in the tree)
+    // If the node is in the right subtree then it counts its left children and versa-vista.
+    private int mChildCount;
+    private PointF mPoint;
+    private int mData;
+    private BinaryTreeNode mRight;
+    private BinaryTreeNode mLeft;
 
-    public BinaryTreeNode(int elem) {
-        data = elem;
-        left = null;
-        right = null;
-        point = new PointF(80,0);
+    public BinaryTreeNode(int _data) {
+        mData = _data;
+        mPoint = new PointF(0, 0);
     }
 
-    public void setPoint(PointF _point) {
-        point = _point;
+    @Override
+    public String toString() {
+        return "BinaryTreeNode { " + mData + " }\n";
+    }
+
+    public String toStringAll() {
+        return "BinaryTreeNode { " + "Point = " + mPoint.x + ", " + mPoint.y + " || child count = " + mChildCount + " || data = " + mData + "}\n";
+    }
+
+    public String toStringCount() {
+        return "BinaryTreeNode { child count = " + mChildCount + " || data = " + mData + "}\n";
+    }
+
+    public void setChildCount(int _childCount) {
+        mChildCount = _childCount;
+    }
+
+    public int getChildCount() {
+        return mChildCount;
+    }
+
+    public void incrementChildToCount () {
+        mChildCount++;
+    }
+    public void decrementChildToCount () {
+        mChildCount--;
+    }
+
+    public void setPoint(float x, float y) {
+        mPoint.set(x,y);
+    }
+
+    public PointF getPoint() {
+        return mPoint;
+    }
+
+    public int getData() {
+        return mData;
+    }
+
+    public void setData(int _data) {
+        mData = _data;
+    }
+
+    public BinaryTreeNode getRight() {
+        return mRight;
+    }
+
+    public void setRight(BinaryTreeNode _right) {
+        mRight = _right;
+    }
+
+    public BinaryTreeNode getLeft() {
+        return mLeft;
+    }
+
+    public void setLeft(BinaryTreeNode _left) {
+        mLeft = _left;
     }
 }

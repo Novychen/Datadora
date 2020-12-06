@@ -20,7 +20,7 @@
     <ImageView
         android:id="@+id/Main_Activity_App_Icon"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,151 +38,213 @@
         app:layout_constraintStart_toStartOf="@+id/Main_Activity_App_Icon"
         app:layout_constraintTop_toBottomOf="@+id/Main_Activity_App_Icon" />
 
-    <ImageButton
-        android:id="@+id/Main_Activity_Queue_Card"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/ic_card"
-        app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_Stack_Card"
-        app:layout_constraintDimensionRatio="h,1:1"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/Main_Activity_About"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/Main_Activity_Stack_Card" />
-
-    <ImageView
-        android:id="@+id/Main_Activity_Queue_Icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_Queue_Card"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Queue_Card"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Queue_Card"
-        app:layout_constraintTop_toTopOf="@+id/Main_Activity_Queue_Card"
-        app:srcCompat="@drawable/ic_queue" />
-
-    <TextView
-        android:id="@+id/Main_Activity_Queue_Text"
-        style="@style/Text.Item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:text="@string/All_Data_Activity_Queue"
-        app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_Queue_Card"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Queue_Icon"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Queue_Icon"
-        app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Queue_Icon" />
-
-    <ImageButton
-        android:id="@+id/Main_Activity_Stack_Card"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/ic_card"
-        app:layout_constraintDimensionRatio="h,1:1"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Main_Activity_App_Name" />
+        app:layout_constraintTop_toBottomOf="@+id/Main_Activity_App_Name"
+        app:layout_constraintVertical_bias="1.0">
 
-    <ImageView
-        android:id="@+id/Main_Activity_Stack_Icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_Stack_Card"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Stack_Card"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Stack_Card"
-        app:layout_constraintTop_toTopOf="@+id/Main_Activity_Stack_Card"
-        app:srcCompat="@drawable/ic_stack" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/Main_Activity_Stack_Text"
-        style="@style/Text.Item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:text="@string/All_Data_Activity_Stack"
-        app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_Queue_Card"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Stack_Icon"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Stack_Icon"
-        app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Stack_Icon" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
-    <ImageButton
-        android:id="@+id/Main_Activity_List_Card"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_card"
-        app:layout_constraintDimensionRatio="h,1:1"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Stack_Card"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Stack_Card"
-        app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Stack_Card" />
+            <ImageButton
+                android:id="@+id/Main_Activity_Stack_Card"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:background="@drawable/ic_card"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/Main_Activity_List_Icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_List_Card"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_List_Card"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_List_Card"
-        app:layout_constraintTop_toTopOf="@+id/Main_Activity_List_Card"
-        app:srcCompat="@drawable/ic_linkedlist" />
+            <TextView
+                android:id="@+id/Main_Activity_Stack_Text"
+                style="@style/Text.Item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/All_Data_Activity_Stack"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Stack_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_Stack_Card"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Stack_Icon" />
 
-    <TextView
-        android:id="@+id/Main_Activity_List_Text"
-        style="@style/Text.Item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:text="@string/All_Data_Activity_LinkedList"
-        app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_List_Card"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Stack_Icon"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Stack_Icon"
-        app:layout_constraintTop_toBottomOf="@+id/Main_Activity_List_Icon" />
+            <ImageView
+                android:id="@+id/Main_Activity_Stack_Icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="60dp"
+                app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_Stack_Card"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Stack_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_Stack_Card"
+                app:layout_constraintTop_toTopOf="@+id/Main_Activity_Stack_Card"
+                app:srcCompat="@drawable/ic_stack" />
 
-    <ImageButton
-        android:id="@+id/Main_Activity_Tree_Card"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/ic_card"
-        app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_List_Card"
-        app:layout_constraintDimensionRatio="h,1:1"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Queue_Card"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Queue_Card"
-        app:layout_constraintTop_toTopOf="@+id/Main_Activity_List_Card" />
+            <ImageButton
+                android:id="@+id/Main_Activity_Queue_Card"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/ic_card"
+                app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_Stack_Card"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/Main_Activity_Stack_Card" />
 
-    <ImageView
-        android:id="@+id/Main_Activity_Tree_Icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_Tree_Card"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Tree_Card"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Tree_Card"
-        app:layout_constraintTop_toTopOf="@+id/Main_Activity_Tree_Card"
-        app:srcCompat="@drawable/ic_bst" />
+            <ImageView
+                android:id="@+id/Main_Activity_Queue_Icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="60dp"
+                app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_Queue_Card"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Queue_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_Queue_Card"
+                app:layout_constraintTop_toTopOf="@+id/Main_Activity_Queue_Card"
+                app:srcCompat="@drawable/ic_queue" />
 
-    <TextView
-        android:id="@+id/Main_Activity_Tree_Text"
-        style="@style/Text.Item"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:lines="2"
-        android:minLines="1"
-        android:text="@string/All_Data_Activity_BST"
-        app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_List_Text"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Tree_Icon"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_Tree_Icon" />
+            <TextView
+                android:id="@+id/Main_Activity_Queue_Text"
+                style="@style/Text.Item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/All_Data_Activity_Queue"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Queue_Icon"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_Queue_Icon"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Queue_Icon" />
+
+            <ImageButton
+                android:id="@+id/Main_Activity_DoubleList_Card"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/ic_card"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Queue_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_Queue_Card"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Queue_Card" />
+
+            <TextView
+                android:id="@+id/Main_Activity_DoubleList_Text"
+                style="@style/Text.Item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/All_Data_Activity_Double_LinkedList"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Queue_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_Queue_Card"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_DoubleList_Icon" />
+
+            <ImageView
+                android:id="@+id/Main_Activity_DoubleList_Icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="60dp"
+                app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_DoubleList_Card"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Queue_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_DoubleList_Card"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Queue_Card"
+                app:srcCompat="@drawable/ic_doublelinkedlist" />
+
+            <ImageButton
+                android:id="@+id/Main_Activity_SingleList_Card"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/ic_card"
+                app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_DoubleList_Card"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Stack_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_Stack_Card"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Queue_Card" />
+
+            <ImageView
+                android:id="@+id/Main_Activity_SingleList_Icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="60dp"
+                app:layout_constraintBottom_toBottomOf="@+id/Main_Activity_SingleList_Card"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_SingleList_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_SingleList_Card"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Stack_Card"
+                app:srcCompat="@drawable/ic_singlelinkedlist" />
+
+            <TextView
+                android:id="@+id/Main_Activity_SingleList_Text"
+                style="@style/Text.Item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:lines="2"
+                android:minLines="1"
+                android:text="@string/All_Data_Activity_Single_LinkedList"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_SingleList_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_SingleList_Icon"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_SingleList_Icon" />
+
+            <ImageButton
+                android:id="@+id/Main_Activity_Tree_Card"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/ic_card"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Stack_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_Stack_Card"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_SingleList_Card" />
+
+            <ImageView
+                android:id="@+id/Main_Activity_Tree_Icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_SingleList_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_SingleList_Card"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_SingleList_Card"
+                app:srcCompat="@drawable/ic_bst" />
+
+            <TextView
+                android:id="@+id/Main_Activity_Tree_Text"
+                style="@style/Text.Item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:lines="2"
+                android:minLines="1"
+                android:text="@string/All_Data_Activity_BST"
+                app:layout_constraintEnd_toEndOf="@+id/Main_Activity_SingleList_Card"
+                app:layout_constraintStart_toStartOf="@+id/Main_Activity_SingleList_Icon"
+                app:layout_constraintTop_toBottomOf="@+id/Main_Activity_Tree_Icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/Main_Activity_About"
@@ -191,8 +253,8 @@
         android:layout_marginBottom="32dp"
         android:text="@string/Main_Activity_About"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/Main_Activity_Tree_Card"
-        app:layout_constraintStart_toStartOf="@+id/Main_Activity_List_Card" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

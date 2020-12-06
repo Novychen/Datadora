@@ -76,6 +76,12 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   public final TextView BSTActivityCurrentValue;
 
   @NonNull
+  public final ImageView BSTActivityFlowIcon;
+
+  @NonNull
+  public final TextView BSTActivityFlowText;
+
+  @NonNull
   public final MotionLayout BSTActivityGet;
 
   @NonNull
@@ -208,6 +214,7 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       @NonNull RadioButton BSTActivityCheckParent, @NonNull RadioButton BSTActivityCheckRightChild,
       @NonNull RadioButton BSTActivityCheckRoot, @NonNull TextView BSTActivityCheckTitle,
       @NonNull RadioButton BSTActivityClear, @NonNull TextView BSTActivityCurrentValue,
+      @NonNull ImageView BSTActivityFlowIcon, @NonNull TextView BSTActivityFlowText,
       @NonNull MotionLayout BSTActivityGet, @NonNull ImageView BSTActivityGetArrow,
       @NonNull ImageView BSTActivityGetBackground,
       @NonNull ConstraintLayout BSTActivityGetConstraintLayout,
@@ -250,6 +257,8 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
     this.BSTActivityCheckTitle = BSTActivityCheckTitle;
     this.BSTActivityClear = BSTActivityClear;
     this.BSTActivityCurrentValue = BSTActivityCurrentValue;
+    this.BSTActivityFlowIcon = BSTActivityFlowIcon;
+    this.BSTActivityFlowText = BSTActivityFlowText;
     this.BSTActivityGet = BSTActivityGet;
     this.BSTActivityGetArrow = BSTActivityGetArrow;
     this.BSTActivityGetBackground = BSTActivityGetBackground;
@@ -413,6 +422,18 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       id = R.id.BST_Activity_CurrentValue;
       TextView BSTActivityCurrentValue = rootView.findViewById(id);
       if (BSTActivityCurrentValue == null) {
+        break missingId;
+      }
+
+      id = R.id.BST_Activity_FlowIcon;
+      ImageView BSTActivityFlowIcon = rootView.findViewById(id);
+      if (BSTActivityFlowIcon == null) {
+        break missingId;
+      }
+
+      id = R.id.BST_Activity_FlowText;
+      TextView BSTActivityFlowText = rootView.findViewById(id);
+      if (BSTActivityFlowText == null) {
         break missingId;
       }
 
@@ -667,14 +688,14 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
           BSTActivityCheckConstraintLayout, BSTActivityCheckEmpty, BSTActivityCheckExternal,
           BSTActivityCheckInternal, BSTActivityCheckLeftChild, BSTActivityCheckParent,
           BSTActivityCheckRightChild, BSTActivityCheckRoot, BSTActivityCheckTitle, BSTActivityClear,
-          BSTActivityCurrentValue, BSTActivityGet, BSTActivityGetArrow, BSTActivityGetBackground,
-          BSTActivityGetConstraintLayout, BSTActivityGetExternal, BSTActivityGetInternal,
-          BSTActivityGetLeftChild, BSTActivityGetMax, BSTActivityGetMin, BSTActivityGetParent,
-          BSTActivityGetRightChild, BSTActivityGetRoot, BSTActivityGetTitle,
-          BSTActivityGuidelineHor, BSTActivityGuidelineVer, BSTActivityInorder,
-          BSTActivityInputSlider, BSTActivityInputValue, BSTActivityPostorder, BSTActivityPreorder,
-          BSTActivityRandom, BSTActivityRemove, BSTActivityReturnText, BSTActivityReturnValue,
-          BSTActivityStandardArrow, BSTActivityStandardBackground,
+          BSTActivityCurrentValue, BSTActivityFlowIcon, BSTActivityFlowText, BSTActivityGet,
+          BSTActivityGetArrow, BSTActivityGetBackground, BSTActivityGetConstraintLayout,
+          BSTActivityGetExternal, BSTActivityGetInternal, BSTActivityGetLeftChild,
+          BSTActivityGetMax, BSTActivityGetMin, BSTActivityGetParent, BSTActivityGetRightChild,
+          BSTActivityGetRoot, BSTActivityGetTitle, BSTActivityGuidelineHor, BSTActivityGuidelineVer,
+          BSTActivityInorder, BSTActivityInputSlider, BSTActivityInputValue, BSTActivityPostorder,
+          BSTActivityPreorder, BSTActivityRandom, BSTActivityRemove, BSTActivityReturnText,
+          BSTActivityReturnValue, BSTActivityStandardArrow, BSTActivityStandardBackground,
           BSTActivityStandardConstraintLayout, BSTActivityStandardOperations,
           BSTActivityStandardTitle, BSTActivityStructure, BSTActivityStructureArrow,
           BSTActivityStructureBackground, BSTActivityStructureConstraintLayout,

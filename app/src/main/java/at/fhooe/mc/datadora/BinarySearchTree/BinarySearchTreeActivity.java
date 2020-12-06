@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
@@ -25,9 +25,9 @@ import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
 
 public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    private static String TAG = "BSTActivity :: ";
-    private BinarySearchTree mTree = new BinarySearchTree();
-    private Vector<Integer> mTreeUser = new Vector<>();
+    private static final String TAG = "BSTActivity :: ";
+    private final BinarySearchTree mTree = new BinarySearchTree();
+    private final Vector<BinaryTreeNode> mTreeUser = new Vector<>();
     private ActivityBinarySearchTreeBinding mBinding;
 
     private SharedPreferences mSharedPreferences;
@@ -38,7 +38,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         return mTree;
     }
 
-    public Vector<Integer> getTreeUser() {
+    public Vector<BinaryTreeNode> getTreeUser() {
         return mTreeUser;
     }
 
@@ -132,9 +132,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         Vector<Integer> v = loadFromSave();
         if(v != null) {
             mTreeUser.clear();
-            mTree.root = null;
-            mTree.size = 0;
-            for (int i = 0; i < v.size();i++){
+            mTree.setRoot(null);
+            mTree.setSize(0);
+            for (int i = 0; i < v.size(); i++){
                 add(v.elementAt(i));
             }
         }
@@ -148,15 +148,15 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         // Convert the vector containing the integers to a string
-        Vector<Integer> vector = mTreeUser;
+        Vector<BinaryTreeNode> vector = mTreeUser;
         StringBuilder vectorStr = new StringBuilder();
 
         // transform the vector into a string
         for (int i = 0; i < vector.size(); i++) {
             if (i != vector.size() - 1) {
-                vectorStr.append(vector.get(i)).append(",");
+                vectorStr.append(vector.get(i).getData()).append(",");
             } else {
-                vectorStr.append(vector.get(i));
+                vectorStr.append(vector.get(i).getData());
             }
         }
 
@@ -177,7 +177,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         String vectorStr = mSharedPreferences.getString(SP_VALUE_KEY, defaultValue);
         Vector<Integer> vector = new Vector<>();
 
-        // check if it was successful -> transform to vector, or if not -> return null
         int begin;
         int end = 0;
         int i;
@@ -202,8 +201,19 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View view) {
         int key = (int) mBinding.BSTActivityInputSlider.getValue();
+
+        if (mTree.getRoot() == null && view != mBinding.BSTActivityCheckEmpty && view != mBinding.BSTActivityAdd && view != mBinding.BSTActivityRandom) {
+            mBinding.BSTActivityFlowIcon.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear, this.getTheme()));
+            mBinding.BSTActivityFlowText.setText(R.string.BST_Activity_Empty);
+            mBinding.BSTActivityFlowText.setVisibility(View.VISIBLE);
+            mBinding.BSTActivityFlowIcon.setVisibility(View.VISIBLE);
+            return;
+        } else {
+            mBinding.BSTActivityFlowText.setVisibility(View.INVISIBLE);
+            mBinding.BSTActivityFlowIcon.setVisibility(View.INVISIBLE);
+        }
+
         if (view == mBinding.BSTActivityInorder) {
-            Log.e(TAG, "InOrder");
             mBinding.BSTActivityVectorOutput.setText(ArrayToSting(mTree.toArray(true)));
         } else if (view == mBinding.BSTActivityPostorder) {
             mTree.toArrayPostOrder();
@@ -295,110 +305,55 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     }
 
     private void isEmpty() {
-        if (mTree.root == null) {
+        if (mTree.getRoot() == null) {
             mBinding.BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
         } else {
             mBinding.BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
         }
     }
 
-    private void isRoot() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityView.isRoot();
-        } else {
-            Toast.makeText(this, R.string.BST_Activity_Check_Empty, Toast.LENGTH_SHORT).show();
-        }
-    }
+    private void isRoot() { mBinding.BSTActivityView.isRoot(); }
 
-    private void getParentNode() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityView.getParentNode();
-        }
-    }
+    private void getParentNode() { mBinding.BSTActivityView.getParentNode(); }
 
-    private void getRightChild() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityView.getRightChild();
-        }
-    }
+    private void getRightChild() { mBinding.BSTActivityView.getRightChild(); }
 
-    private void getLeftChild() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityView.getLeftChild();
-        }
-    }
+    private void getLeftChild() { mBinding.BSTActivityView.getLeftChild(); }
 
-    private void getRoot() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityReturnValue.setText(String.format("%s", mTree.root.data));
-        } else {
-            mBinding.BSTActivityReturnValue.setText("-");
-        }
-    }
+    private void getRoot() { mBinding.BSTActivityReturnValue.setText(String.format("%s", mTree.getRoot().getData())); }
 
-    private void hasParent() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityView.hasParent();
-        }
-    }
+    private void hasParent() { mBinding.BSTActivityView.hasParent(); }
 
-    private void hasLeftChild() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityView.hasLeftChild();
-        }
-    }
+    private void hasLeftChild() { mBinding.BSTActivityView.hasLeftChild(); }
 
-    private void hasRightChild() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityView.hasRightChild();
-        }
-    }
+    private void hasRightChild() { mBinding.BSTActivityView.hasRightChild(); }
 
-    private void height() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityView.height();
-        }
-    }
+    private void height() { mBinding.BSTActivityView.height(); }
 
-    private void depth() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityView.depth();
-        }
-    }
+    private void depth() { mBinding.BSTActivityView.depth(); }
 
     /**
-     * returns a boolean if the node given by the key is an interanl node
+     * returns a boolean if the node given by the key is an internal node
      */
-    public void isInternal() {
-        if (mTree.root != null) {
-            mBinding.BSTActivityView.isInternal();
-        }
-    }
+    public void isInternal() { mBinding.BSTActivityView.isInternal(); }
 
     /**
      * returns a boolean if the node given by the key is an external node
      */
-    public void isExternal() {
-        if (mTree.root != null) {
-           mBinding.BSTActivityView.isExternal();
-        }
-    }
+    public void isExternal() { mBinding.BSTActivityView.isExternal(); }
     /**
      * returns a String with all external nodes of the tree
      */
     public String getExternalNodes() {
         StringBuilder stringBuilder = new StringBuilder("ExternalNodes : ");
-        if (mTree.root != null) {
-            for (int i = 0; i < mTreeUser.size(); i++) {
-                if ((mTree.getChildNode(mTreeUser.get(i),true) == Integer.MIN_VALUE)&&(mTree.getChildNode(mTreeUser.get(i),false)== Integer.MIN_VALUE)) {
-                    if(i == mTreeUser.size() -1) {
-                        stringBuilder.append(mTreeUser.get(i) + "");
-                    } else {
-                        stringBuilder.append(mTreeUser.get(i) + " , ");
-                    }
+        for (int i = 0; i < mTreeUser.size(); i++) {
+            if (mTree.isExternal(mTreeUser.get(i))) {
+                if(i == mTreeUser.size() - 1) {
+                    stringBuilder.append(mTreeUser.get(i));
+                } else {
+                    stringBuilder.append(mTreeUser.get(i)).append(" , ");
                 }
             }
-
         }
         return stringBuilder.toString();
     }
@@ -407,32 +362,34 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
      */
     public String getInternalNodes() {
         StringBuilder stringBuilder = new StringBuilder("InternalNodes : ");
-        if (mTree.root != null) {
-            for (int i = 0; i < mTreeUser.size(); i++) {
-                if ((mTree.getChildNode(mTreeUser.get(i),true)!= Integer.MIN_VALUE)||(mTree.getChildNode(mTreeUser.get(i),false)!= Integer.MIN_VALUE)) {
-                        stringBuilder.append(mTreeUser.get(i) + " , ");
-                }
+        for (int i = 0; i < mTreeUser.size(); i++) {
+            if (!mTree.isExternal(mTreeUser.get(i))) {
+                stringBuilder.append(mTreeUser.get(i)).append(" , ");
             }
-
         }
+
         return stringBuilder.toString();
     }
     /**
      * clears mTree and all of its nodes + the variable mTreeUser
      */
     private void clear() {
-        mTreeUser.clear();
         mTree.clear();
+        mTreeUser.clear();
         mBinding.BSTActivityView.clear();
     }
     /**
      * adds a new node to the tree
      */
     private void add(int value) {
-        mTreeUser.add(value);
-        mTree.insert(value);
-        mBinding.BSTActivityView.add(value);
+        if(mTree.findNode(value) == null) {
+            BinaryTreeNode n = mTree.insertNode(value);
+            mTree.updateChildCount(mTree.getRoot());
+            mTreeUser.add(n);
+            mBinding.BSTActivityView.add();
+        }
     }
+
     /**
      * returns the max value of the tree
      */
@@ -460,23 +417,13 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         int high = 101;
         int result = r.nextInt(high - low) + low;
 
-        boolean successful = mTree.insert(result);
-        if (successful) {
-            add(result);
-            mBinding.BSTActivityReturnValue.setText(String.format("%s", result));
-        }
+        if (mTree.insertNode(result) != null) { mBinding.BSTActivityReturnValue.setText(String.format("%s", result)); }
     }
 
     /**
-     * removes a Node form the tree defined  by the key value
+     * removes a Node form the tree defined by the key value
      */
-    public void remove() {
-        if (!(mTree.root == null)) {
-                mBinding.BSTActivityView.remove();
-        } else {
-            Toast.makeText(this, R.string.BST_Activity_Check_Empty, Toast.LENGTH_SHORT).show();
-        }
-    }
+    public void remove() { mBinding.BSTActivityView.remove(); }
 
     /**
      * Takes an array and transforms it to a tree
@@ -484,32 +431,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
      * @param _array the array that is transformed - needs to be in the same order as the user put their values in
      */
     protected void fromArrayToTree(int[] _array) {
-        for (int i = 0; i < _array.length; i++) {
-            mTree.insert(_array[i]);
+        for (int value : _array) {
+            mTree.insertNode(value);
         }
-    }
-
-    /**
-     * Takes an array and transforms it to a tree
-     *
-     * @param _array the array that is transformed - needs to be inorder!
-     * @param _begin the begin position of the array
-     * @param _end   the end position of the array
-     * @return the root node of the generated tree
-     */
-    protected BinaryTreeNode fromArrayToTree(int[] _array, int _begin, int _end) {
-
-        if (_begin > _end) {
-            return null;
-        }
-
-        int mid = (_begin + _end) / 2;
-        BinaryTreeNode node = new BinaryTreeNode(_array[mid]);
-
-        node.left = fromArrayToTree(_array, _begin, mid - 1);
-        node.right = fromArrayToTree(_array, mid + 1, _end);
-
-        return node;
     }
 
     @Override

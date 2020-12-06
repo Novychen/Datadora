@@ -32,10 +32,6 @@
         "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_linkedlist.xml.flat",
-        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_linkedlist.xml"
-    },
-    {
         "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_background_return.xml.flat",
         "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\background_return.xml"
     },
@@ -58,6 +54,10 @@
     {
         "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_linked_list.xml.flat",
         "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\layout\\activity_linked_list.xml"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_doublelinkedlist.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_doublelinkedlist.xml"
     },
     {
         "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
@@ -150,6 +150,10 @@
     {
         "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
         "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_singlelinkedlist.xml.flat",
+        "source": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\src\\main\\res\\drawable\\ic_singlelinkedlist.xml"
     },
     {
         "merged": "D:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_queue.xml.flat",

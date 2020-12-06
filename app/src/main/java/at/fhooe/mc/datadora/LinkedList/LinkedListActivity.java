@@ -70,7 +70,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         // setup Toolbar
         Toolbar myToolbar = mBinding.LinkedListActivityToolbar;
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle(R.string.All_Data_Activity_LinkedList);
+        getSupportActionBar().setTitle(R.string.All_Data_Activity_Single_LinkedList);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

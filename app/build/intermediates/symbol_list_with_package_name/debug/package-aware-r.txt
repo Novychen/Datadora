@@ -1563,9 +1563,9 @@ drawable ic_bst
 drawable ic_card
 drawable ic_check
 drawable ic_clear
+drawable ic_doublelinkedlist
 drawable ic_icon_rectangle
 drawable ic_launcher_foreground
-drawable ic_linkedlist
 drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
@@ -1574,6 +1574,7 @@ drawable ic_person
 drawable ic_queue
 drawable ic_save
 drawable ic_settings
+drawable ic_singlelinkedlist
 drawable ic_stack
 drawable line
 drawable material_ic_calendar_black_24dp
@@ -1639,6 +1640,8 @@ id BST_Activity_Check_Root
 id BST_Activity_Check_Title
 id BST_Activity_Clear
 id BST_Activity_CurrentValue
+id BST_Activity_FlowIcon
+id BST_Activity_FlowText
 id BST_Activity_Get
 id BST_Activity_Get_Arrow
 id BST_Activity_Get_Background
@@ -1745,12 +1748,15 @@ id META
 id Main_Activity_About
 id Main_Activity_App_Icon
 id Main_Activity_App_Name
-id Main_Activity_List_Card
-id Main_Activity_List_Icon
-id Main_Activity_List_Text
+id Main_Activity_DoubleList_Card
+id Main_Activity_DoubleList_Icon
+id Main_Activity_DoubleList_Text
 id Main_Activity_Queue_Card
 id Main_Activity_Queue_Icon
 id Main_Activity_Queue_Text
+id Main_Activity_SingleList_Card
+id Main_Activity_SingleList_Icon
+id Main_Activity_SingleList_Text
 id Main_Activity_Stack_Card
 id Main_Activity_Stack_Icon
 id Main_Activity_Stack_Text
@@ -1965,6 +1971,7 @@ id graph_wrap
 id group_divider
 id groups
 id guideline
+id guideline2
 id hideable
 id home
 id homeAsUp
@@ -2325,10 +2332,11 @@ string About_Activity_Slogan
 string About_Activity_University
 string About_Activity_Yvonne
 string All_Data_Activity_BST
+string All_Data_Activity_Double_LinkedList
 string All_Data_Activity_False
-string All_Data_Activity_LinkedList
 string All_Data_Activity_Queue
 string All_Data_Activity_Root
+string All_Data_Activity_Single_LinkedList
 string All_Data_Activity_Stack
 string All_Data_Activity_Text_Animation
 string All_Data_Activity_Text_Clear
@@ -2348,6 +2356,7 @@ string BST_Activity_Check_Parent
 string BST_Activity_Check_RightChild
 string BST_Activity_Check_Root
 string BST_Activity_Check_Title
+string BST_Activity_Empty
 string BST_Activity_Get_External
 string BST_Activity_Get_Internal
 string BST_Activity_Get_LeftChild
@@ -2358,7 +2367,7 @@ string BST_Activity_Get_RightChild
 string BST_Activity_Get_Root
 string BST_Activity_Get_Title
 string BST_Activity_Standard_Add
-string BST_Activity_Standard_NotRemoveable
+string BST_Activity_Standard_NotRemoveAble
 string BST_Activity_Standard_Remove
 string BST_Activity_Standard_Title
 string BST_Activity_Structure_Depth

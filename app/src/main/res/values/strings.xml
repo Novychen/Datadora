@@ -10,7 +10,8 @@
     // All Data structures Activity
     <string name="All_Data_Activity_Stack">Stack</string>
     <string name="All_Data_Activity_Queue">Queue</string>
-    <string name="All_Data_Activity_LinkedList">Linked List</string>
+    <string name="All_Data_Activity_Single_LinkedList">Single Linked List</string>
+    <string name="All_Data_Activity_Double_LinkedList">Double Linked List</string>
     <string name="All_Data_Activity_BST">Binary Search Tree</string>
 
     <string name="All_Data_Activity_Text_Return">Return Value</string>
@@ -26,6 +27,7 @@
 
     <string name="All_Data_Activity_Text_Animation">Please wait till the animation is over :)</string>
     <string name="All_Data_Activity_Root">Root don\'t has a parent</string>
+
     // Main Activity
     <string name="Main_Activity_About">About</string>
 
@@ -58,7 +60,7 @@
     <string name="Queue_Activity_Text_Dequeue">dequeue</string>
     <string name="Queue_Activity_Text_Enqueue">enqueue</string>
 
-    // LinkedList Activity
+    // SingleLinkedList Activity
     <string name="LinkedList_Activity_Type_Title">Type</string>
     <string name="LinkedList_Activity_Type_Sorted">Sorted</string>
     <string name="LinkedList_Activity_Type_Unsorted">Unsorted</string>
@@ -89,6 +91,8 @@
     <string name="LinkedList_Activity_Toast_Feature">This feature is coming soon</string>
 
     // BinarySearchTree
+    <string name="BST_Activity_Empty">Tree is empty</string>
+
     <string name="BST_Activity_Text_Inorder">Inorder</string>
     <string name="BST_Activity_Text_Preorder">Preorder</string>
     <string name="BST_Activity_Text_Postorder">Postorder</string>
@@ -96,7 +100,7 @@
     <string name="BST_Activity_Standard_Title">Standard Operations</string>
     <string name="BST_Activity_Standard_Add">Add</string>
     <string name="BST_Activity_Standard_Remove">Remove</string>
-    <string name="BST_Activity_Standard_NotRemoveable">Item is not in the Tree</string>
+    <string name="BST_Activity_Standard_NotRemoveAble">Item is not in the Tree</string>
 
     <string name="BST_Activity_Structure_Title">Structure</string>
     <string name="BST_Activity_Structure_Size">Size</string>

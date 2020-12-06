@@ -1,8 +1,9 @@
 package at.fhooe.mc.datadora.BinarySearchTree;
 
-import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -14,16 +15,20 @@ import java.util.Vector;
  */
 public class BinarySearchTree {
 
+    private static final String TAG = "BinarySearchTree : ";
+
     /** Root node of the tree. **/
-    protected BinaryTreeNode root;
+    private BinaryTreeNode root;
 
     /** Number of elements stored in the tree. */
-    protected int size;
+    private int size;
 
+    public BinaryTreeNode getRoot() { return root; }
     public void setRoot(BinaryTreeNode _n) {
         root = _n;
     }
 
+    public int getSize() {return size; }
     public void setSize(int _size) {
         size = _size;
     }
@@ -31,61 +36,48 @@ public class BinarySearchTree {
     /**
      * Inserts the given element. Duplicate elements are not allowed.
      *
-     * @param elem insert a Node with the elem as data
+     * @param data insert a Node with the data as data
      * @return Returns true if insertion was successful, false otherwise.
      */
-    public boolean insert(int elem) {
+    public BinaryTreeNode insertNode (int data) {
 
-        BinaryTreeNode newNode = new BinaryTreeNode(elem);
+        BinaryTreeNode newNode = new BinaryTreeNode(data);
         if (root == null) {
             root = newNode;
             size++;
-            return true;
+            return root;
         }
-        BinarySearchTree t = new BinarySearchTree();
-        BinaryTreeNode n = new BinaryTreeNode(root.data);
-        n.left = root.left;
-        n.right = root.right;
-        t.root = n;
 
+        BinaryTreeNode n = root;
         while (n != null) {
 
-            if (elem == n.data) {
-                return false;
+            if (data == n.getData()) {
+                return null;
             }
-            if (elem > n.data) {
-                if (n.right == null) {
-                    n.right = newNode;
-                    this.root = t.root;
-                    size++;
-                    return true;
-                }
-                n = n.right;
-            } else if (elem < n.data) {
-                if (n.left == null) {
-                    n.left = newNode;
-                    this.root = t.root;
-                    size++;
-                    return true;
-                }
-                n = n.left;
-            }
-        }
-        return false;
-    }
 
-    /**
-     * Searches for the (first) element with the given key. Returns true if it could
-     * be found, false otherwise.
-     */
-    public boolean contains(int key) {
-        if (root.data == key) {
-            return true;
+            if (data > n.getData()) {
+                if (n.getRight() == null) {
+                    n.setRight(newNode);
+                    size++;
+                    if (n.getData() < root.getData()) {
+                        n.incrementChildToCount();
+                    }
+                    return newNode;
+                }
+                n = n.getRight();
+            } else {
+                if (n.getLeft() == null) {
+                    n.setLeft(newNode);
+                    size++;
+                    if (n.getData() > root.getData()) {
+                        n.incrementChildToCount();
+                    }
+                    return newNode;
+                }
+                n = n.getLeft();
+            }
         }
-        if (findNode(key) != null) {
-            return true;
-        }
-        return false;
+        return null;
     }
 
     /**
@@ -94,31 +86,31 @@ public class BinarySearchTree {
      * @return the node of the given key if found or null if not
      */
     public BinaryTreeNode findNode(int key) {
-        BinarySearchTree t = new BinarySearchTree();
-        BinaryTreeNode n = new BinaryTreeNode(root.data);
-        n.left = root.left;
-        n.right = root.right;
-        t.root = n;
+        if(root == null) {
+            return null;
+        }
+
+        BinaryTreeNode n = new BinaryTreeNode(root.getData());
+        n.setLeft(root.getLeft());
+        n.setRight(root.getRight());
 
         while (n != null) {
-            if (key == n.data) {
+            if (key == n.getData()) {
                 return n;
             }
-            if (key > n.data) {
-                n = n.right;
-            } else if (key < n.data) {
-                n = n.left;
+            if (key > n.getData()) {
+                n = n.getRight();
+            } else {
+                n = n.getLeft();
             }
         }
         return null;
     }
 
-
     public void clear() {
         root = null;
         size = 0;
     }
-
 
     /**
      * Removes the element with the given key. Returns true if the key could be
@@ -129,87 +121,85 @@ public class BinarySearchTree {
         if(root == null) {
             return false;
         }
-        if(root.left == null && root.right == null) {
+        if(root.getLeft() == null && root.getRight() == null) {
             root = null;
             return true;
         }
 
-        BinarySearchTree t = new BinarySearchTree();
-        BinaryTreeNode n = new BinaryTreeNode(root.data);
-        BinaryTreeNode prev = new BinaryTreeNode(0);
-        BinaryTreeNode temp = new BinaryTreeNode(0);
+        BinaryTreeNode n = new BinaryTreeNode(root.getData());
+        BinaryTreeNode prev;
+        BinaryTreeNode temp;
 
-        n.left = root.left;
-        n.right = root.right;
-        t.root = n;
+        n.setLeft(root.getLeft());
+        n.setRight(root.getRight());
 
-        if (!contains(key)) {
+        if (findNode(key) != null) {
             return false;
         }
         n = findNode(key);
         size--;
-        if (n.left == null && n.right == null) {
-            prev = getParentNode(n.data);
-            if (n.data < prev.data) {
-                prev.left = null;
+        if (n.getLeft() == null && n.getRight() == null) {
+            prev = getParentNode(n.getData());
+            if (n.getData() < prev.getData()) {
+                prev.setLeft(null);
             } else {
-                prev.right = null;
+                prev.setRight(null);
             }
             return true;
-        } else if (root.data == n.data) {
+        } else if (root.getData() == n.getData()) {
 
-            if (n.left.right == null) {
-                n = root.left;
-                n.right = root.right;
+            if (n.getLeft().getRight() == null) {
+                n = root.getLeft();
+                n.setRight(root.getRight());
                 root = n;
             } else {
-                temp = n.left.right;
-                while (temp.right != null) {
-                    temp = temp.right;
+                temp = n.getLeft().getRight();
+                while (temp.getRight() != null) {
+                    temp = temp.getRight();
                 }
-                prev = getParentNode(temp.data);
-                prev.right = null;
-                temp.left = root.left;
-                temp.right = root.right;
+                prev = getParentNode(temp.getData());
+                prev.setRight(null);
+                temp.setLeft(root.getLeft());
+                temp.setRight(root.getRight());
                 root = temp;
             }
             return true;
-        } else if (n.left != null && n.right == null) {
-            prev = getParentNode(n.data);
-            if (prev.data > n.data) {
-                prev.left = n.left;
+        } else if (n.getLeft() != null && n.getRight() == null) {
+            prev = getParentNode(n.getData());
+            if (prev.getData() > n.getData()) {
+                prev.setLeft(n.getLeft());
             } else {
-                prev.right = n.left;
+                prev.setRight(n.getLeft());
             }
-        } else if (n.right != null && n.left == null) {
-            prev = getParentNode(n.data);
-            if (prev.data > n.data) {
-                prev.left = n.right;
+        } else if (n.getRight() != null && n.getLeft() == null) {
+            prev = getParentNode(n.getData());
+            if (prev.getData() > n.getData()) {
+                prev.setLeft(n.getRight());
             } else {
-                prev.right = n.right;
+                prev.setRight(n.getRight());
             }
         } else {
-            prev = getParentNode(n.data);
-            if (prev.data > n.data) {
-                prev.left = n.right;
-                temp = n.right;
-                while (temp.left != null) {
-                    temp = temp.left;
+            prev = getParentNode(n.getData());
+            if (prev.getData() > n.getData()) {
+                prev.setLeft(n.getRight());
+                temp = n.getRight();
+                while (temp.getLeft() != null) {
+                    temp = temp.getLeft();
                 }
-                temp.left = n.left;
+                temp.setLeft(n.getLeft());
             }
-            if (prev.data < n.data) {
-                prev.right = n.left;
-                temp = n.left;
-                while (temp.right != null) {
-                    temp = temp.right;
+            if (prev.getData() < n.getData()) {
+                prev.setRight(n.getLeft());
+                temp = n.getLeft();
+                while (temp.getRight() != null) {
+                    temp = temp.getRight();
                 }
-                temp.right = n.right;
+                temp.setRight(n.getRight());
             }
         }
 
-        while (prev.data != root.data) {
-            prev = getParentNode(prev.data);
+        while (prev.getData() != root.getData()) {
+            prev = getParentNode(prev.getData());
         }
         root = prev;
         return true;
@@ -225,23 +215,6 @@ public class BinarySearchTree {
     }
 
     /**
-     * Returns the parent element of the given key. Integer.MIN_VALUE if no parent
-     * can be found.
-     */
-    public int getParent(int key) {
-
-        if (root.data == key || !this.contains(key)) {
-            return Integer.MIN_VALUE;
-        }
-
-        if (getParentNode(key) == null) {
-            return Integer.MIN_VALUE;
-        }
-
-        return getParentNode(key).data;
-    }
-
-    /**
      * Returns the child data of the given key and the boolean side. Integer.MIN_VALUE if no child
      * can be found.
      */
@@ -254,13 +227,13 @@ public class BinarySearchTree {
         int ret = Integer.MIN_VALUE;
         if(n != null) {
             if (_side) {
-                if(n.left != null) {
-                    ret = n.left.data;
+                if(n.getLeft() != null) {
+                    ret = n.getLeft().getData();
                 }
 
             } else {
-                if(n.right!= null) {
-                    ret = n.right.data;
+                if(n.getRight()!= null) {
+                    ret = n.getRight().getData();
                 }
             }
         }
@@ -273,8 +246,8 @@ public class BinarySearchTree {
      * @return true if it has at least one child or false if not
      */
     public boolean hasNoChildren(int key){
-        if((root != null)&& (findNode(key) != null)){
-          return (findNode(key).right != null)&&(findNode(key).left!=null);
+        if((root != null) && (findNode(key) != null)){
+          return (findNode(key).getRight() != null) &&(findNode(key).getLeft() != null);
         }
         return false;
     }
@@ -286,28 +259,29 @@ public class BinarySearchTree {
      */
     public BinaryTreeNode getParentNode(int key) {
 
-        BinarySearchTree t = new BinarySearchTree();
-        BinaryTreeNode n = new BinaryTreeNode(root.data);
-        n.left = root.left;
-        n.right = root.right;
-        t.root = n;
+        BinaryTreeNode n = root;
 
-        if (root.data == key || !contains(key)) {
+        if (root.getData() == key || findNode(key) == null) {
             return null;
         }
 
         while (n != null) {
 
-            if ((n.right != null && key == n.right.data) || (n.left != null && key == n.left.data)) {
+            if ((n.getRight() != null && key == n.getRight().getData()) || (n.getLeft() != null && key == n.getLeft().getData())) {
                 return n;
             }
-            if (key > n.data) {
-                n = n.right;
-            } else if (key < n.data) {
-                n = n.left;
+
+            if (key > n.getData()) {
+                n = n.getRight();
+            } else if (key < n.getData()) {
+                n = n.getLeft();
             }
         }
         return null;
+    }
+
+    public boolean isExternal(BinaryTreeNode n) {
+        return n.getLeft() != null && n.getRight() == null;
     }
 
     /**
@@ -318,9 +292,11 @@ public class BinarySearchTree {
     public int getDepth(int key){
         int result = 0;
         if(root != null) {
-            while (getParent(key) != Integer.MIN_VALUE) {
-                key = getParent(key);
+            BinaryTreeNode n = getParentNode(key);
+            while (n != null) {
+                key = n.getData();
                 result++;
+                n = getParentNode(key);
             }
         }
         return result;
@@ -332,15 +308,14 @@ public class BinarySearchTree {
             return null;
         }
 
-        if (_node.point == _point) {
+        if (_node.getPoint() == _point) {
             return _node;
         }
 
-        findNodeByPoint(_node.left, _point);
-        findNodeByPoint(_node.right, _point);
+        findNodeByPoint(_node.getLeft(), _point);
+        findNodeByPoint(_node.getRight(), _point);
         return null;
     }
-
 
     /**
      * Returns the elements of the tree in ascending (inorder traversal) or
@@ -365,23 +340,23 @@ public class BinarySearchTree {
 
     private int toArray(int[] inorder, boolean ascending, int offset, BinaryTreeNode n) {
         if (ascending) {
-            if (n.left != null) {
-                offset = toArray(inorder, ascending, offset, n.left);
+            if (n.getLeft() != null) {
+                offset = toArray(inorder, ascending, offset, n.getLeft());
             }
-            inorder[offset] = n.data;
+            inorder[offset] = n.getData();
             offset++;
-            if (n.right != null) {
-                offset = toArray(inorder, ascending, offset, n.right);
+            if (n.getRight() != null) {
+                offset = toArray(inorder, ascending, offset, n.getRight());
             }
             return offset;
         } else {
-            if (n.right != null) {
-                offset = toArray(inorder, ascending, offset, n.right);
+            if (n.getRight() != null) {
+                offset = toArray(inorder, ascending, offset, n.getRight());
             }
-            inorder[offset] = n.data;
+            inorder[offset] = n.getData();
             offset++;
-            if (n.left != null) {
-                offset = toArray(inorder, ascending, offset, n.left);
+            if (n.getLeft() != null) {
+                offset = toArray(inorder, ascending, offset, n.getLeft());
             }
             return offset;
         }
@@ -407,19 +382,19 @@ public class BinarySearchTree {
 
     private int toArrayPostOrder(int[] postorder, int offset, BinaryTreeNode n) {
 
-        if (n.left == null && n.right == null) {
-            postorder[offset] = n.data;
+        if (n.getLeft() == null && n.getRight() == null) {
+            postorder[offset] = n.getData();
             offset++;
             return offset;
         }
 
-        if (n.left != null) {
-            offset = toArrayPostOrder(postorder, offset, n.left);
+        if (n.getLeft() != null) {
+            offset = toArrayPostOrder(postorder, offset, n.getLeft());
         }
-        if (n.right != null) {
-            offset = toArrayPostOrder(postorder, offset, n.right);
+        if (n.getRight() != null) {
+            offset = toArrayPostOrder(postorder, offset, n.getRight());
         }
-        postorder[offset] = n.data;
+        postorder[offset] = n.getData();
         offset++;
         return offset;
     }
@@ -445,14 +420,14 @@ public class BinarySearchTree {
 
     private int toArray(int[] preorder, int offset, BinaryTreeNode n) {
 
-        preorder[offset] = n.data;
+        preorder[offset] = n.getData();
         offset++;
 
-        if (n.left != null) {
-            offset = toArray(preorder, offset, n.left);
+        if (n.getLeft() != null) {
+            offset = toArray(preorder, offset, n.getLeft());
         }
-        if (n.right != null) {
-            offset = toArray(preorder, offset, n.right);
+        if (n.getRight() != null) {
+            offset = toArray(preorder, offset, n.getRight());
         }
         return offset;
     }
@@ -467,20 +442,20 @@ public class BinarySearchTree {
         if (root == null) {
             return Integer.MIN_VALUE;
         }
-        if (root.right == null) {
-            return root.data;
+        if (root.getRight() == null) {
+            return root.getData();
         }
 
         BinarySearchTree t = new BinarySearchTree();
-        BinaryTreeNode n = new BinaryTreeNode(root.data);
-        n.left = root.left;
-        n.right = root.right;
+        BinaryTreeNode n = new BinaryTreeNode(root.getData());
+        n.setLeft(root.getLeft());
+        n.setRight(root.getRight());
         t.root = n;
 
-        while (n.right != null) {
-            n = n.right;
+        while (n.getRight() != null) {
+            n = n.getRight();
         }
-        return n.data;
+        return n.getData();
     }
 
     /**
@@ -493,36 +468,110 @@ public class BinarySearchTree {
         if (root == null) {
             return Integer.MIN_VALUE;
         }
-        if (root.left == null) {
-            return root.data;
+        if (root.getLeft() == null) {
+            return root.getData();
         }
 
         BinarySearchTree t = new BinarySearchTree();
-        BinaryTreeNode n = new BinaryTreeNode(root.data);
-        n.left = root.left;
-        n.right = root.right;
+        BinaryTreeNode n = new BinaryTreeNode(root.getData());
+        n.setLeft(root.getLeft());
+        n.setRight(root.getRight());
         t.root = n;
 
-        while (n.left != null) {
-            n = n.left;
+        while (n.getLeft() != null) {
+            n = n.getLeft();
         }
-        return n.data;
+        return n.getData();
     }
 
     /** Represents the tree in a human readable form. */
+    @NonNull
     public String toString() {
+
+        if(root != null) {
+            StringBuilder string = new StringBuilder();
+
+            int[] tree = toArray(true);
+            for (int value : tree) {
+                string.append(findNode(value));
+            }
+            return string.toString();
+        } else {
+            return "";
+        }
+    }
+
+    /** Represents the tree in a human readable form. */
+    public String toStringCount() {
 
         if(root != null) {
             String string = "";
 
             int[] tree = toArray(true);
-            for (int i = 0; i < tree.length; i++) {
-                string = string + tree[i] + ", ";
+            for (int value : tree) {
+                string = string + findNode(value).toStringCount();
             }
             return string;
         } else {
             return "";
         }
+    }
+
+    /** Represents the tree in a human readable form. Where only the data is printed */
+    public String toStringData() {
+
+        if(root != null) {
+            StringBuilder string = new StringBuilder();
+
+            int[] tree = toArray(true);
+            for (int value : tree) {
+                string.append(value).append(", ");
+            }
+            return string.toString();
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Updates the {@link BinaryTreeNode#setChildCount(int)}
+     * @param _current the {@link BinaryTreeNode} which {@link BinaryTreeNode#setChildCount(int)} will be updated
+     */
+    public void updateChildCount(BinaryTreeNode _current) {
+
+        if(_current.getLeft() != null) {
+            _current.getLeft().setChildCount(getChildCount(_current.getLeft(), 0, 0) + 1);
+           updateChildCount(_current.getLeft());
+        }
+
+        if(_current.getRight() != null) {
+            _current.getRight().setChildCount(getChildCount(_current.getRight(), 0, 1) + 1);
+            updateChildCount(_current.getRight());
+        }
+    }
+
+    /**
+     * Counts the children of the given {@link BinaryTreeNode}. All Nodes count that are below {@param _parent}
+     * @param _parent the {@link BinaryTreeNode} which children will be counted
+     * @param _count the current count of the {@param _parent}
+     * @param _right an integer that checks if the {@param _parent} (from the beginning) was the left (0) or the right (1) child of its parent.
+     *               2 means that it doesn't matter - as this is only important in the first iteration of this method
+     * @return returns the {@param _count} which represents the amount of children the given {@link BinaryTreeNode} has
+     */
+    private int getChildCount(BinaryTreeNode _parent, int _count, int _right) {
+        if(_parent.getLeft() != null) {
+            if(_right == 1 || _right == 2) {
+                _count = getChildCount(_parent.getLeft(), ++_count, 2);
+            }
+        }
+
+        if(_parent.getRight() != null) {
+            if(_right == 0 || _right == 2) {
+                _count = getChildCount(_parent.getRight(), ++_count, 2);
+            }
+        }
+
+        return _count;
     }
 
     /**
@@ -559,10 +608,10 @@ public class BinarySearchTree {
             {
                 BinaryTreeNode newnode = q.peek();
                 q.remove();
-                if (newnode.left != null)
-                    q.add(newnode.left);
-                if (newnode.right != null)
-                    q.add(newnode.right);
+                if (newnode.getLeft() != null)
+                    q.add(newnode.getLeft());
+                if (newnode.getRight() != null)
+                    q.add(newnode.getRight());
                 nodeCount--;
             }
         }
@@ -587,9 +636,13 @@ public class BinarySearchTree {
             array.add(offset, n);
             offset++;
         } else if (level > 1) {
-            offset = getArrayLevel(array, n.left, level -1, offset);
-            offset = getArrayLevel(array, n.right, level -1, offset);
+            offset = getArrayLevel(array, n.getLeft(), level -1, offset);
+            offset = getArrayLevel(array, n.getRight(), level -1, offset);
         }
         return offset;
+    }
+
+    public boolean isEmpty() {
+        return root == null;
     }
 }

@@ -11,7 +11,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -82,8 +81,6 @@ public class BSTView extends View {
 
     // Rect in order to save the TextBounds from the current number
     private Rect mBounds = new Rect();
-    private BinarySearchTree mTreeNumbers = new BinarySearchTree();
-    private Vector<BinaryTreeNode> mTree = new Vector<>();
 
     private boolean mTouched;
     private int mPosition;
@@ -121,13 +118,12 @@ public class BSTView extends View {
         mItemTextPaint.setColor(mOnSurfaceColor);
         mItemTextPaint.setTextSize(50);
 
+
         mBegin.x = -1;
     }
 
-
-    protected void add(int _value) {
+    protected void add() {
         mCurrentOperation = Operation.ADD;
-        mTreeNumbers.insert(_value);
         invalidate();
     }
 
@@ -138,8 +134,6 @@ public class BSTView extends View {
 
     protected void clear() {
         mCurrentOperation = Operation.CLEAR;
-        mTreeNumbers.clear();
-        mTree.clear();
         invalidate();
     }
 
@@ -226,23 +220,78 @@ public class BSTView extends View {
     @Override
     protected void onMeasure(int _widthMeasureSpec, int _heightMeasureSpec) {
         super.onMeasure(_widthMeasureSpec, _heightMeasureSpec);
-
     }
 
     @Override
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
-        mMatrix.preTranslate(mTranslateX,mTranslateY);
-        _canvas.setMatrix(mMatrix);
 
-        setUpOperations();
-        mBeginF.set(0,mRadius * 4);
-        mEndF.set(0 ,mRadius * 4);
-        drawAnimation(_canvas, mTreeNumbers.root, mTreeNumbers.root, mBeginF, mEndF);
+        float topSpace = 80;
+        BinarySearchTree t = mActivity.getTree();
+        Vector<BinaryTreeNode> tv = mActivity.getTreeUser();
+
+        if (mActivity.getTreeUser() != null) {
+            for (int i = 0; i < mActivity.getTreeUser().size(); i++) {
+
+                BinaryTreeNode n = tv.get(i);
+                BinaryTreeNode nPre = t.getParentNode(n.getData());
+
+                float direction;
+                if(nPre != null && n.getData() < nPre.getData()) {
+                    direction = -1;
+                } else {
+                    direction = 1;
+                }
+
+                if(i == 0) {
+                    n.setPoint(mMaxWidth / 2, topSpace);
+                } else {
+                    float xPre = nPre.getPoint().x;
+
+                    float x = (n.getChildCount() * mMinDistanceX * direction) + xPre;
+                    float y = (mMinDistanceX * t.getDepth(n.getData())) + topSpace;
+                    n.setPoint(x,y);
+                }
+
+                String s = String.valueOf(n.getData());
+                mItemTextPaint.getTextBounds(s, 0, s.length(), mBounds);
+
+                if(i != 0) {
+
+                    float x = calculateX(n, nPre);
+                    float y = calculateY(n, nPre);
+
+                    double lengthX = Math.cos(calculateAngle(y,x));
+                    double lengthY = Math.cos(calculateAngle(x,y));
+
+                    float xPre = (float) (nPre.getPoint().x + (lengthX * direction) * mRadius);
+                    float yPre = (float) (nPre.getPoint().y + lengthY * mRadius);
+
+                    x = (float) (n.getPoint().x - (lengthX * direction) * mRadius);
+                    y = (float) (n.getPoint().y - lengthY * mRadius);
+
+                    _canvas.drawLine(xPre, yPre, x, y, mItemPaint);
+                }
+                _canvas.drawCircle(n.getPoint().x, n.getPoint().y, mRadius, mItemPaint);
+                _canvas.drawText(s, n.getPoint().x - 3 - mBounds.width() / 2f, n.getPoint().y + mBounds.height() / 2f, mItemTextPaint);
+            }
+        }
+    }
+
+    private double calculateAngle(float _a, float _b) {
+        return Math.atan(_a / _b);
+    }
+
+    private float calculateX (BinaryTreeNode _n, BinaryTreeNode _nPre) {
+        return _n.getPoint().x - _nPre.getPoint().x;
+    }
+
+    private float calculateY (BinaryTreeNode _n, BinaryTreeNode _nPre) {
+        return _n.getPoint().y - _nPre.getPoint().y;
     }
 
     private void setUpOperations() {
-        if(mPosition > -1 && mPosition < mTree.size() - 1) {
+        if(mPosition > -1 && mPosition < mActivity.getTreeUser().size() - 1) {
             if(mCurrentOperation == null) {
                 mCurrentOperation = Operation.NONE;
             }
@@ -250,26 +299,22 @@ public class BSTView extends View {
                 case ADD:
                     break;
                 case REMOVE: {
-                    Integer data = mTree.get(mPosition).data;
-                    mTreeNumbers.remove(data);
+                    int data = mActivity.getTreeUser().get(mPosition).getData();
                     mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", data));
-                    mActivity.getTree().remove(data);
-                    mActivity.getTreeUser().remove(data);
-                    mTree.remove(mPosition);
                     mCurrentOperation = Operation.NONE;
                 } break;
                 case HEIGHT: {
-                    mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", mTreeNumbers.getHeight(mTree.get(mPosition).data)));
+                   // mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", mTreeNumbers.getHeight(mTree.get(mPosition))));
                     mCurrentOperation = Operation.NONE;
                 } break;
                 case DEPTH: {
-                    mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", mTreeNumbers.getDepth(mTree.get(mPosition).data)));
+                    // mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", mTreeNumbers.getDepth(mTree.get(mPosition))));
                     mCurrentOperation = Operation.NONE;
                 } break;
 
                 case HASPARENT: {
-                    int parent = mTreeNumbers.getParent(mTree.get(mPosition).data);
-                    if(parent > -1) {
+                    BinaryTreeNode parent = mActivity.getTree().getParentNode(mActivity.getTreeUser().get(mPosition).getData());
+                    if(parent != null) {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
                     } else {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
@@ -278,8 +323,8 @@ public class BSTView extends View {
                 } break;
 
                 case HASLEFTCHILD: {
-                    BinaryTreeNode n = mTreeNumbers.findNode(mTree.get(mPosition).data);
-                    if(n.left != null) {
+                    BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+                    if(n.getLeft() != null) {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
                     } else {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
@@ -288,8 +333,8 @@ public class BSTView extends View {
                 } break;
 
                 case HASRIGHTCHILD: {
-                    BinaryTreeNode n = mTreeNumbers.findNode(mTree.get(mPosition).data);
-                    if(n.right != null) {
+                    BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+                    if(n.getRight() != null) {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
                     } else {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
@@ -298,8 +343,8 @@ public class BSTView extends View {
                 } break;
 
                 case ISROOT: {
-                    int value = mTree.get(mPosition).data;
-                    if (mTreeNumbers.root.data == value) {
+                    int value = mActivity.getTreeUser().get(mPosition).getData();
+                    if (mActivity.getTree().getRoot().getData() == value) {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
                     } else {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
@@ -308,8 +353,8 @@ public class BSTView extends View {
                 } break;
 
                 case ISINTERNAL: {
-                    int key = mTree.get(mPosition).data;
-                    if ((mTreeNumbers.getChildNode(key,true)!= Integer.MIN_VALUE) || (mTreeNumbers.getChildNode(key, false)!= Integer.MIN_VALUE)) {
+                    int key = mActivity.getTreeUser().get(mPosition).getData();
+                    if ((mActivity.getTree().getChildNode(key,true)!= Integer.MIN_VALUE) || (mActivity.getTree().getChildNode(key, false)!= Integer.MIN_VALUE)) {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
                     } else {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
@@ -318,8 +363,8 @@ public class BSTView extends View {
                 } break;
 
                 case ISEXTERNAL: {
-                    int key = mTree.get(mPosition).data;
-                    if ((mTreeNumbers.getChildNode(key,true) == Integer.MIN_VALUE) && (mTreeNumbers.getChildNode(key,false) == Integer.MIN_VALUE)) {
+                    int key = mActivity.getTreeUser().get(mPosition).getData();
+                    if ((mActivity.getTree().getChildNode(key,true) == Integer.MIN_VALUE) && (mActivity.getTree().getChildNode(key,false) == Integer.MIN_VALUE)) {
                         mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
                     } else {
                         mActivity.getBinding().BSTActivityReturnValue.setText( R.string.All_Data_Activity_False);
@@ -328,9 +373,9 @@ public class BSTView extends View {
                 } break;
 
                 case RIGHTCHILD: {
-                    BinaryTreeNode n = mTreeNumbers.findNode(mTree.get(mPosition).data);
-                    if(n.right != null) {
-                        mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", n.right.data));
+                    BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+                    if(n.getRight() != null) {
+                        mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", n.getRight().getData()));
                     } else {
                         mActivity.getBinding().BSTActivityReturnValue.setText("-");
                     }
@@ -338,9 +383,9 @@ public class BSTView extends View {
                 } break;
 
                 case LEFTCHILD: {
-                    BinaryTreeNode n = mTreeNumbers.findNode(mTree.get(mPosition).data);
-                    if(n.left != null) {
-                        mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", n.left.data));
+                    BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+                    if(n.getLeft() != null) {
+                        mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", n.getLeft().getData()));
                     } else {
                         mActivity.getBinding().BSTActivityReturnValue.setText("-");
                     }
@@ -348,8 +393,8 @@ public class BSTView extends View {
                 } break;
 
                 case PARENT: {
-                    int parent = mTreeNumbers.getParent(mTree.get(mPosition).data);
-                    if(parent > - 1) {
+                    BinaryTreeNode parent = mActivity.getTree().getParentNode(mActivity.getTreeUser().get(mPosition).getData());
+                    if(parent != null) {
                         mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", parent));
                     } else {
                         mActivity.getBinding().BSTActivityReturnValue.setText("-");
@@ -360,183 +405,9 @@ public class BSTView extends View {
         }
     }
 
-    private void drawCircle(Canvas _canvas, PointF _a, PointF _b, String _s, boolean _right) {
-
-        float posX = _a.x;
-        float posY = _a.y;
-
-        if(_right) {
-            posX = mMaxWidth/2 + posX;
-        } else {
-            posX = mMaxWidth/2 - posX;
-        }
-
-        BinaryTreeNode n = new BinaryTreeNode(Integer.parseInt(_s));
-        n.setPoint(new PointF(posX, posY));
-        mTree.add(n);
-
-        mItemTextPaint.getTextBounds(_s, 0, _s.length(), mBounds);
-        if(mPosition != -1 && ((mPosition == Integer.parseInt(_s)) ||(mTouched &&  mTree.get(mPosition).point.x == n.point.x && mTree.get(mPosition).point.y == n.point.y))) {
-            mItemPaintArea.setColor(mPrimaryColor);
-            mItemTextPaint.setColor(mOnPrimaryColor);
-        } else {
-            mItemPaintArea.setColor(mSurfaceColor);
-            mItemTextPaint.setColor(mOnSurfaceColor);
-        }
-        _canvas.drawCircle(posX, posY, mRadius, mItemPaintArea);
-        _canvas.drawCircle(posX, posY, mRadius, mItemPaint);
-        _canvas.drawText(_s, posX - 3 - mBounds.width() / 2 , posY + mBounds.height() / 2, mItemTextPaint);
-    }
-
-    private void drawLine(Canvas _canvas, PointF _a, PointF _b, int _times) {
-
-        float xA = _a.x;
-        float yA = _a.y;
-        float xB = 0;
-        float yB = 0;
-        float x = (float) (Math.cos(45) * mRadius);
-
-        if(_times < 5) {
-            if (_times == 1) {
-                xB = _b.x - x;
-                yB = _b.y + x + (mMinDistanceY);
-            } else if (_times == 2) {
-                xB = _b.x + x + (mMinDistanceX / 8);
-                yB = _b.y + x + mMinDistanceY / 8;
-            } else if (_times == 3) {
-                xB = _b.x - (x - (x * 2));
-                yB = _b.y + x + (mMinDistanceY);
-            } else if (_times == 4) {
-                xB = (_b.x - x) + (x * 2);
-                yB = _b.y + x + (mMinDistanceY);
-            } else if (_times == -1) {
-                xB = 0;
-                yB = 0;
-            }
-
-            xB = xB + mMaxWidth / 2;
-            xA = xA + mMaxWidth / 2;
-
-        } else {
-            if(_times == 5) {
-                xB = (_b.x - x) + (x * 2);
-                yB = _b.y + x + (mMinDistanceY);
-            } else if (_times == 6) {
-                xB = _b.x + x + (mMinDistanceX / 8);
-                yB = _b.y + x + mMinDistanceY / 8;
-            } else if (_times == 7) {
-                xB = _b.x - (x - (x * 2));
-                yB = _b.y + x + mMinDistanceY;
-            } else if (_times == 8) {
-                xB = _b.x + x + (mMinDistanceX / 4);
-                yB = _b.y + x;
-            } else if (_times == 9) {
-                xB = _b.x + x;
-                yB = _b.y + x + (mMinDistanceY);
-            } else if (_times == 10) {
-                xB = _b.x - x;
-                yB = _b.y + x + (mMinDistanceY);
-            }
-
-            xB = mMaxWidth / 2 - xB;
-            xA = mMaxWidth / 2 - xA;
-        }
-
-        _canvas.drawLine(xA, yA, xB, yB, mItemPaint);
-    }
-
-    private void drawAnimation(Canvas _canvas, BinaryTreeNode _node, BinaryTreeNode _old, PointF _currPoint, PointF _oldPoint) {
-
-        if (_node == null)
-            return;
-
-        int height = mTreeNumbers.getHeight(_node.data);
-        int times = 1;
-        int depth = mTreeNumbers.getDepth(_node.data);
-
-        Log.i(TAG, "PRINT: " + _node.data + " NODE OLD: " + _old.data + " , DEPTH : " + mTreeNumbers.getHeight(_node.data));
-        if( _old.data > _node.data) { // go in left tree
-            _currPoint.y = (mRadius * 4) + ((mRadius * 2) * depth + (mMinDistanceY * depth));
-            if(mTreeNumbers.root.data < _node.data) { // go in left subtree from right tree
-                _currPoint.x = _oldPoint.x - mMinDistanceX;
-
-                drawLine(_canvas,_currPoint, _oldPoint, times);
-                drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), true);
-            } else {
-                if (_node.right == null && _node.left == null) {
-                    _currPoint.x = _oldPoint.x + mMinDistanceX;
-                    times = 9;
-                } else if (_node.right == null && _node.left != null) {
-                    _currPoint.x = _oldPoint.x + mMinDistanceX;
-                    times = 7;
-                } else if (_node.right != null && _node.left != null && _old.right == null) {
-                    _currPoint.x = _currPoint.x + mMinDistanceX * (depth + 1);
-                } else if (_node.right != null && mTreeNumbers.root == _old) {
-                    _currPoint.x = mMinDistanceX * 2;
-                    times = 8;
-                }  else if (_node.right != null && _node.left != null && _old.right != null) {
-                    _currPoint.x = _oldPoint.x + mMinDistanceX * depth;
-                    times = 6;
-                } else if (_node.right != null && _node.left != null) {
-                    _currPoint.x = mMinDistanceX * (depth + 1);
-                } else if (_node.right != null) {
-                    _currPoint.x = mMinDistanceX;
-                }
-                drawLine(_canvas,_currPoint, _oldPoint, times);
-                drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), false);
-            }
-            _node.setPoint(_currPoint);
-
-        } else if (_old.data < _node.data) { // go in right tree
-            _currPoint.y = (mRadius * 4) + ((mRadius * 2) * depth) + (mMinDistanceY * depth);
-            if(mTreeNumbers.root.data > _node.data) { // go in right subtree from left tree
-                times = 7;
-                if(_node.left != null && _node.right != null) {
-                    _currPoint.x = _currPoint.x - (mMinDistanceX * (depth));
-                } else if(_node.left == null && _node.right == null) {
-                    times = 10;
-                    _currPoint.x = _oldPoint.x - mMinDistanceX;
-                } else if (_node.left != null && _node.right == null) {
-                    times = 10;
-                }
-                _node.setPoint(_currPoint);
-                drawLine(_canvas,_currPoint, _oldPoint,times);
-                drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), false);
-            } else { // go in right tree
-                if(_node.left == null && mTreeNumbers.root == _old) {
-                    times = 4;
-                } else if(_node.left != null && mTreeNumbers.root == _old) {
-                    _currPoint.x = mMinDistanceX * 2;
-                    times = 2;
-                } else if(_node.left == null && _node.right == null) {
-                    _currPoint.x = _oldPoint.x + mMinDistanceX;
-                    times = 4;
-                }  else if(_node.left != null && _node.right == null) {
-                    _currPoint.x = _oldPoint.x + (mMinDistanceX * (height - 1));
-                    times = 4;
-                } else if(_node.left == null && _node.right != null) {
-                    _currPoint.x = _oldPoint.x + mMinDistanceX;
-                    times = 3;
-                } else {
-                    _currPoint.x = mMinDistanceX * (depth);
-                    times = 3;
-                }
-                _node.setPoint(_currPoint);
-                drawLine(_canvas,_currPoint, _oldPoint,times);
-                drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), true);
-            }
-        } else {
-            _node.setPoint(_currPoint);
-            drawCircle(_canvas, _currPoint, _oldPoint, String.valueOf(_node.data), true);
-        }
-
-        if(_node.left != null) {
-            drawAnimation(_canvas, _node.left, _node, _node.left.point, _node.point);
-        }
-
-        if(_node.right != null) {
-            drawAnimation(_canvas, _node.right, _node, _node.right.point, _node.point);
-        }
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 
     @Override
@@ -546,8 +417,8 @@ public class BSTView extends View {
             float x = _event.getX();
             float y = _event.getY();
             int i = 0;
-            for (BinaryTreeNode n : mTree) {
-                if(x < n.point.x + mRadius && x > n.point.x - mRadius && y < n.point.y + mRadius && y > n.point.y - mRadius) {
+           /* for (BinaryTreeNode n : mTree) {
+                if(x < n.getPoint().x + mRadius && x > n.getPoint().x - mRadius && y < n.getPoint().y + mRadius && y > n.getPoint().y - mRadius) {
                     mTouched = true;
                     mPosition = i;
                     invalidate();
@@ -557,7 +428,7 @@ public class BSTView extends View {
                 }
                 i++;
                 invalidate();
-            }
+            }*/
         }
 
         if (_event.getAction() == MotionEvent.ACTION_MOVE) {

@@ -41,15 +41,11 @@ public class StackView extends View {
         PEEK,
         CLEAR,
         RANDOM,
-        SIZE,
         SAVE
     }
 
     // int that counts how often the operator pushed was used (by operator random)
     private int mPositionAnimation;
-
-    // int that specifies the radius of the corners of the drawn rectangles
-    private int mRadius = 4;
 
     // Animator for the last pushed element
     private ValueAnimator mAnimatorPush = new ValueAnimator();
@@ -424,6 +420,8 @@ public class StackView extends View {
      * @param _pos the current position the loop from the onDraw is in
      */
     private void animateOperation(Canvas _canvas, int _pos) {
+        // int that specifies the radius of the corners of the drawn rectangles
+        int mRadius = 4;
         switch (mCurrentOperation) {
             case PUSH: {
                 if(_pos == mStack.size() - 1) {

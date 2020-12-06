@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mBinding.MainActivityStackCard.setOnClickListener(this);
         mBinding.MainActivityQueueCard.setOnClickListener(this);
-        mBinding.MainActivityListCard.setOnClickListener(this);
+        mBinding.MainActivityDoubleListCard.setOnClickListener(this);
         mBinding.MainActivityTreeCard.setOnClickListener(this);
         mBinding.MainActivityAbout.setOnClickListener(this);
     }
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v == mBinding.MainActivityQueueCard) {
             Intent i = new Intent(this, QueueActivity.class);
             startActivity(i);
-        } else if (v == mBinding.MainActivityListCard) {
+        } else if (v == mBinding.MainActivityDoubleListCard) {
             Intent i = new Intent(this, LinkedListActivity.class);
             startActivity(i);
         } else if(v == mBinding.MainActivityTreeCard){

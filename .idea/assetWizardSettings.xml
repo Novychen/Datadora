@@ -337,8 +337,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_stack" />
-                            <entry key="sourceFile" value="C:\Users\edery\Documents\Datadora\Stack.svg" />
+                            <entry key="outputName" value="ic_doublelinkedlist" />
+                            <entry key="sourceFile" value="C:\Users\edery\Documents\Datadora\UI\Icons\DoubleLinkedList.svg" />
                           </map>
                         </option>
                       </PersistentState>
