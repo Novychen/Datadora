@@ -133,9 +133,10 @@ public class BinarySearchTree {
         n.setLeft(root.getLeft());
         n.setRight(root.getRight());
 
-        if (findNode(key) != null) {
+        if (findNode(key) == null) {
             return false;
         }
+
         n = findNode(key);
         size--;
         if (n.getLeft() == null && n.getRight() == null) {
@@ -145,10 +146,11 @@ public class BinarySearchTree {
             } else {
                 prev.setRight(null);
             }
+            updateChildCount(root);
             return true;
         } else if (root.getData() == n.getData()) {
 
-            if (n.getLeft().getRight() == null) {
+            if (n.getLeft().getRight() == null) { // TODO: error when only right subtree and deletion of root
                 n = root.getLeft();
                 n.setRight(root.getRight());
                 root = n;
@@ -163,7 +165,9 @@ public class BinarySearchTree {
                 temp.setRight(root.getRight());
                 root = temp;
             }
+            updateChildCount(root);
             return true;
+
         } else if (n.getLeft() != null && n.getRight() == null) {
             prev = getParentNode(n.getData());
             if (prev.getData() > n.getData()) {
@@ -202,6 +206,7 @@ public class BinarySearchTree {
             prev = getParentNode(prev.getData());
         }
         root = prev;
+        updateChildCount(root);
         return true;
     }
 

@@ -19,7 +19,6 @@ import at.fhooe.mc.datadora.R;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.slider.Slider;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.tabs.TabLayout;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -187,9 +186,6 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   public final VerticalSeekBar BSTActivitySeekBar;
 
   @NonNull
-  public final SwitchMaterial BSTActivitySwitch;
-
-  @NonNull
   public final TabLayout BSTActivityTabLayout;
 
   @NonNull
@@ -226,10 +222,9 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       @Nullable Slider BSTActivityInputSlider, @NonNull TextView BSTActivityInputValue,
       @NonNull Chip BSTActivityPostorder, @NonNull Chip BSTActivityPreorder,
       @Nullable TextView BSTActivityReturnText, @Nullable TextView BSTActivityReturnValue,
-      @Nullable VerticalSeekBar BSTActivitySeekBar, @NonNull SwitchMaterial BSTActivitySwitch,
-      @NonNull TabLayout BSTActivityTabLayout, @NonNull Toolbar BSTActivityToolbar,
-      @Nullable TextView BSTActivityVectorOutput, @NonNull BSTView BSTActivityView,
-      @NonNull ViewPager2 BSTActivityViewPager) {
+      @Nullable VerticalSeekBar BSTActivitySeekBar, @NonNull TabLayout BSTActivityTabLayout,
+      @NonNull Toolbar BSTActivityToolbar, @Nullable TextView BSTActivityVectorOutput,
+      @NonNull BSTView BSTActivityView, @NonNull ViewPager2 BSTActivityViewPager) {
     this.rootView = rootView;
     this.BSTActivityBoxReturn = BSTActivityBoxReturn;
     this.BSTActivityChipGroup = BSTActivityChipGroup;
@@ -246,7 +241,6 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
     this.BSTActivityReturnText = BSTActivityReturnText;
     this.BSTActivityReturnValue = BSTActivityReturnValue;
     this.BSTActivitySeekBar = BSTActivitySeekBar;
-    this.BSTActivitySwitch = BSTActivitySwitch;
     this.BSTActivityTabLayout = BSTActivityTabLayout;
     this.BSTActivityToolbar = BSTActivityToolbar;
     this.BSTActivityVectorOutput = BSTActivityVectorOutput;
@@ -347,12 +341,6 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       id = R.id.BST_Activity_SeekBar;
       VerticalSeekBar BSTActivitySeekBar = rootView.findViewById(id);
 
-      id = R.id.BST_Activity_Switch;
-      SwitchMaterial BSTActivitySwitch = rootView.findViewById(id);
-      if (BSTActivitySwitch == null) {
-        break missingId;
-      }
-
       id = R.id.BST_Activity_TabLayout;
       TabLayout BSTActivityTabLayout = rootView.findViewById(id);
       if (BSTActivityTabLayout == null) {
@@ -384,9 +372,8 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
           BSTActivityChipGroup, BSTActivityCurrentValue, BSTActivityFlowIcon, BSTActivityFlowText,
           BSTActivityGuidelineHor, BSTActivityGuidelineVer, BSTActivityInorder,
           BSTActivityInputSlider, BSTActivityInputValue, BSTActivityPostorder, BSTActivityPreorder,
-          BSTActivityReturnText, BSTActivityReturnValue, BSTActivitySeekBar, BSTActivitySwitch,
-          BSTActivityTabLayout, BSTActivityToolbar, BSTActivityVectorOutput, BSTActivityView,
-          BSTActivityViewPager);
+          BSTActivityReturnText, BSTActivityReturnValue, BSTActivitySeekBar, BSTActivityTabLayout,
+          BSTActivityToolbar, BSTActivityVectorOutput, BSTActivityView, BSTActivityViewPager);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

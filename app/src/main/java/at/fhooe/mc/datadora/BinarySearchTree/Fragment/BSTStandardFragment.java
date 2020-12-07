@@ -83,7 +83,7 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
     /**
      * removes a Node form the tree defined by the key value
      */
-    public void remove() {  mActivity.getBinding().BSTActivityView.remove(); }
+    public void remove() { mActivity.getBinding().BSTActivityView.remove(); }
 
     /**
      * adds a random node the value between -100 and 100 to the tree

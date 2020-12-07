@@ -1,7 +1,7 @@
-#Mon Dec 07 14:54:11 CET 2020
-base.0=C\:\\Gerald\\Dokumente\\FH Hagenberg\\5. Semester\\BAC\\BachelorProjectDatadora\\Datadora\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+#Mon Dec 07 14:44:28 CET 2020
+base.0=D\:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
-base.1=C\:\\Gerald\\Dokumente\\FH Hagenberg\\5. Semester\\BAC\\BachelorProjectDatadora\\Datadora\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\classes.dex
+base.1=D\:\\Repos\\AndroidStudioProjects\\Datadora\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\classes.dex
