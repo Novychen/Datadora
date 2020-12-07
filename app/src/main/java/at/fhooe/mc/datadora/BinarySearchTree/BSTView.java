@@ -46,28 +46,14 @@ public class BSTView extends View {
     PointF mEndF = new PointF();
 
     enum Operation {
-        ADD,
-        REMOVE,
-        RANDOM,
-        CLEAR,
-        SIZE,
-        HEIGHT,
-        DEPTH,
-        HASPARENT,
-        HASRIGHTCHILD,
-        HASLEFTCHILD,
-        ISROOT,
-        ISEXTERNAL,
-        ISINTERNAL,
-        ISEMPTY,
-        PARENT,
-        RIGHTCHILD,
-        LEFTCHILD,
-        ROOT,
-        EXTERNALNODES,
-        INTERNALNODES,
-        MAX,
-        MIN,
+        ADD, REMOVE, RANDOM, CLEAR,
+
+        SIZE, HEIGHT, DEPTH,
+
+        HASPARENT, HASRIGHTCHILD, HASLEFTCHILD, ISROOT, ISEXTERNAL, ISINTERNAL, ISEMPTY,
+
+        PARENT, RIGHTCHILD, LEFTCHILD, ROOT, EXTERNALNODES, INTERNALNODES, MAX, MIN,
+
         NONE
     }
 
@@ -118,88 +104,97 @@ public class BSTView extends View {
         mItemTextPaint.setColor(mOnSurfaceColor);
         mItemTextPaint.setTextSize(50);
 
-
         mBegin.x = -1;
     }
 
-    protected void add() {
+    public void add() {
         mCurrentOperation = Operation.ADD;
         invalidate();
     }
 
-    protected void remove() {
+    public void remove() {
         mCurrentOperation = Operation.REMOVE;
         invalidate();
     }
 
-    protected void clear() {
+    public void clear() {
         mCurrentOperation = Operation.CLEAR;
         invalidate();
     }
 
-    protected void depth() {
+    public void depth() {
         mCurrentOperation = Operation.DEPTH;
         invalidate();
     }
 
-    protected void height() {
+    public void height() {
         mCurrentOperation = Operation.HEIGHT;
         invalidate();
     }
 
-    protected void max(int _pos) {
+    public void getExternal() {
+        mCurrentOperation = Operation.EXTERNALNODES;
+        invalidate();
+    }
+
+    public void getInternal() {
+        mCurrentOperation = Operation.INTERNALNODES;
+        invalidate();
+    }
+
+    public void max(int _pos) {
         mCurrentOperation = Operation.MAX;
         mPosition = _pos;
         invalidate();
     }
 
-    protected void min(int _pos) {
+    public void min(int _pos) {
         mCurrentOperation = Operation.MIN;
         mPosition = _pos;
         invalidate();
     }
 
-    protected void hasParent() {
+    public void hasParent() {
         mCurrentOperation = Operation.HASPARENT;
         invalidate();
     }
 
-    protected void hasRightChild () {
+    public void hasRightChild() {
         mCurrentOperation = Operation.HASRIGHTCHILD;
         invalidate();
     }
 
-    protected void hasLeftChild () {
+    public void hasLeftChild() {
         mCurrentOperation = Operation.HASLEFTCHILD;
         invalidate();
     }
 
-    protected void isRoot() {
+    public void isRoot() {
         mCurrentOperation = Operation.ISROOT;
         invalidate();
     }
 
-    protected void isInternal() {
+    public void isInternal() {
         mCurrentOperation = Operation.ISINTERNAL;
         invalidate();
     }
 
-    protected void isExternal() {
+    public void isExternal() {
         mCurrentOperation = Operation.ISEXTERNAL;
         invalidate();
     }
 
-    protected void getParentNode() {
+    public void getParentNode() {
         mCurrentOperation = Operation.PARENT;
         invalidate();
     }
 
-    protected void getRightChild () {
+    public void getRightChild() {
         mCurrentOperation = Operation.RIGHTCHILD;
         invalidate();
     }
 
-    protected void getLeftChild () {
+    public void getLeftChild() {
         mCurrentOperation = Operation.LEFTCHILD;
         invalidate();
     }
@@ -236,12 +231,7 @@ public class BSTView extends View {
                 BinaryTreeNode n = tv.get(i);
                 BinaryTreeNode nPre = t.getParentNode(n.getData());
 
-                float direction;
-                if(nPre != null && n.getData() < nPre.getData()) {
-                    direction = -1;
-                } else {
-                    direction = 1;
-                }
+                float direction = getDirection(n, nPre);
 
                 if(i == 0) {
                     n.setPoint(mMaxWidth / 2, topSpace);
@@ -251,31 +241,35 @@ public class BSTView extends View {
                     float x = (n.getChildCount() * mMinDistanceX * direction) + xPre;
                     float y = (mMinDistanceX * t.getDepth(n.getData())) + topSpace;
                     n.setPoint(x,y);
+
+                    prepareAndDrawLine(n, nPre, _canvas);
                 }
 
                 String s = String.valueOf(n.getData());
                 mItemTextPaint.getTextBounds(s, 0, s.length(), mBounds);
 
-                if(i != 0) {
-
-                    float x = calculateX(n, nPre);
-                    float y = calculateY(n, nPre);
-
-                    double lengthX = Math.cos(calculateAngle(y,x));
-                    double lengthY = Math.cos(calculateAngle(x,y));
-
-                    float xPre = (float) (nPre.getPoint().x + (lengthX * direction) * mRadius);
-                    float yPre = (float) (nPre.getPoint().y + lengthY * mRadius);
-
-                    x = (float) (n.getPoint().x - (lengthX * direction) * mRadius);
-                    y = (float) (n.getPoint().y - lengthY * mRadius);
-
-                    _canvas.drawLine(xPre, yPre, x, y, mItemPaint);
-                }
                 _canvas.drawCircle(n.getPoint().x, n.getPoint().y, mRadius, mItemPaint);
                 _canvas.drawText(s, n.getPoint().x - 3 - mBounds.width() / 2f, n.getPoint().y + mBounds.height() / 2f, mItemTextPaint);
             }
         }
+    }
+
+    private void prepareAndDrawLine(BinaryTreeNode _n, BinaryTreeNode _nPre, Canvas _canvas) {
+        float x = calculateX(_n, _nPre);
+        float y = calculateY(_n, _nPre);
+
+        float direction = getDirection(_n, _nPre);
+
+        double lengthX = Math.cos(calculateAngle(y,x));
+        double lengthY = Math.cos(calculateAngle(x,y));
+
+        float xPre = (float) (_nPre.getPoint().x + (lengthX * direction) * mRadius);
+        float yPre = (float) (_nPre.getPoint().y + lengthY * mRadius);
+
+        x = (float) (_n.getPoint().x - (lengthX * direction) * mRadius);
+        y = (float) (_n.getPoint().y - lengthY * mRadius);
+
+        _canvas.drawLine(xPre, yPre, x, y, mItemPaint);
     }
 
     private double calculateAngle(float _a, float _b) {
@@ -288,6 +282,14 @@ public class BSTView extends View {
 
     private float calculateY (BinaryTreeNode _n, BinaryTreeNode _nPre) {
         return _n.getPoint().y - _nPre.getPoint().y;
+    }
+
+    private float getDirection (BinaryTreeNode _n, BinaryTreeNode _nPre) {
+        if(_nPre != null && _n.getData() < _nPre.getData()) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 
     private void setUpOperations() {

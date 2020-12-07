@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-43:12
+ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-42:12
 MERGED from [androidx.databinding:viewbinding:4.1.1] C:\Users\edery\.gradle\caches\transforms-2\files-2.1\a9a384bc23521084f27dc26e0a1d6de5\jetified-viewbinding-4.1.1\AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.android.material:material:1.2.0] C:\Users\edery\.gradle\caches\transforms-2\files-2.1\424a3706ab8a98e9f807d3b39ffe8f00\material-1.2.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.0-rc1] C:\Users\edery\.gradle\caches\transforms-2\files-2.1\3cba8d38372b86dbb6cc7bb81bcfb1a5\constraintlayout-2.0.0-rc1\AndroidManifest.xml:2:1-11:12
@@ -43,25 +43,25 @@ MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\edery\.gradle
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\edery\.gradle\caches\transforms-2\files-2.1\06bc4641de51b04d4df94808d6e05292\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\edery\.gradle\caches\transforms-2\files-2.1\1b64911e987df0fea019408e241659d7\core-runtime-2.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.annotation:annotation-experimental:1.0.0] C:\Users\edery\.gradle\caches\transforms-2\files-2.1\a77c810a56173ccf6fb339f045a6aacd\jetified-annotation-experimental-1.0.0\AndroidManifest.xml:17:1-24:12
-INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-42:12
 	package
 		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:3:5-35
 		INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml
 		INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-43:12
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-42:12
 		INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-43:12
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:1-42:12
 		INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:5:5-41:19
+ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:5:5-40:19
 MERGED from [com.google.android.material:material:1.2.0] C:\Users\edery\.gradle\caches\transforms-2\files-2.1\424a3706ab8a98e9f807d3b39ffe8f00\material-1.2.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.2.0] C:\Users\edery\.gradle\caches\transforms-2\files-2.1\424a3706ab8a98e9f807d3b39ffe8f00\material-1.2.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.0-rc1] C:\Users\edery\.gradle\caches\transforms-2\files-2.1\3cba8d38372b86dbb6cc7bb81bcfb1a5\constraintlayout-2.0.0-rc1\AndroidManifest.xml:9:5-20
@@ -107,39 +107,37 @@ ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.
 	android:name
 		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:20:13-48
 activity#at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity
-ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:23:9-26:58
-	android:screenOrientation
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:25:13-49
+ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:23:9-25:58
 	android:windowSoftInputMode
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:26:13-55
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:25:13-55
 	android:name
 		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:24:13-70
 activity#at.fhooe.mc.datadora.Stack.StackActivity
-ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:27:9-30:58
+ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:26:9-29:58
 	android:screenOrientation
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:29:13-49
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:28:13-49
 	android:windowSoftInputMode
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:30:13-55
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:29:13-55
 	android:name
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:28:13-48
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:27:13-48
 activity#at.fhooe.mc.datadora.MainActivity
-ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:31:9-40:20
+ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:30:9-39:20
 	android:screenOrientation
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:33:13-49
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:32:13-49
 	android:windowSoftInputMode
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:34:13-55
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:33:13-55
 	android:name
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:32:13-41
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:31:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:35:13-39:29
+ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:34:13-38:29
 action#android.intent.action.MAIN
-ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:36:17-69
+ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:35:17-69
 	android:name
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:36:25-66
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:35:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:38:17-77
+ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:37:17-77
 	android:name
-		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:38:27-74
+		ADDED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml:37:27-74
 uses-sdk
 INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Repos\AndroidStudioProjects\Datadora\app\src\main\AndroidManifest.xml

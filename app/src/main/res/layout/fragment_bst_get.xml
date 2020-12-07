@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/BST_Fragment_Parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/BST_Activity_Get_Parent"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_RightChild"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/BST_Fragment_ExternalNodes"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/BST_Fragment_RightChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/BST_Activity_Get_RightChild"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_LeftChild"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_Parent"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_Parent" />
+
+    <Button
+        android:id="@+id/BST_Fragment_LeftChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/BST_Activity_Get_LeftChild"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_Root"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_RightChild"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_RightChild" />
+
+    <Button
+        android:id="@+id/BST_Fragment_Root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/BST_Activity_Get_Root"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Fragment_Min"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_LeftChild"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_LeftChild" />
+
+    <Button
+        android:id="@+id/BST_Fragment_ExternalNodes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/BST_Activity_Get_External"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_InternalNodes"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Fragment_Parent" />
+
+    <Button
+        android:id="@+id/BST_Fragment_InternalNodes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/BST_Activity_Get_Internal"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_Max"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_ExternalNodes"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_ExternalNodes" />
+
+    <Button
+        android:id="@+id/BST_Fragment_Max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/BST_Activity_Get_Max"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_Min"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_InternalNodes"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_InternalNodes" />
+
+    <Button
+        android:id="@+id/BST_Fragment_Min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/BST_Activity_Get_Min"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_Max"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_Max" />
+</androidx.constraintlayout.widget.ConstraintLayout>

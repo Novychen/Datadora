@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/box_inset_layout_padding"
+    tools:context=".BinarySearchTree.BinarySearchTreeActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/BST_Activity_Toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/BST_Activity_FlowText"
+        style="@style/Surface.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_FlowIcon"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_FlowIcon"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_FlowIcon" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_FlowIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="80dp"
+        android:contentDescription="@string/Content_Description_Queue_FlowIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_View"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_View"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Box_Return" />
+
+    <at.fhooe.mc.datadora.BinarySearchTree.BSTView
+        android:id="@+id/BST_Activity_View"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Vector_Output"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Switch"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_Box_Return"
+        style="@style/Return"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/Content_Description_Queue_Return_Background"
+        app:layout_constraintDimensionRatio="1,1.5:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar" />
+
+    <TextView
+        android:id="@+id/BST_Activity_ReturnValue"
+        style="@style/Primary.Text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_ReturnText" />
+
+    <TextView
+        android:id="@+id/BST_Activity_ReturnText"
+        style="@style/Primary.Text.Return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/All_Data_Activity_Text_Return"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_ReturnValue"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_ReturnValue"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Box_Return" />
+
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/BST_Activity_Switch"
+        style="@style/AppTheme.Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Guideline_Ver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar" />
+
+    <TextView
+        android:id="@+id/BST_Activity_Vector_Output"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=" "
+        app:layout_constraintBottom_toTopOf="@+id/BST_Activity_ChipGroup"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_View"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/BST_Activity_ChipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Guideline_Hor">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/BST_Activity_Inorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Text_Inorder" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/BST_Activity_Postorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Text_Postorder" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/BST_Activity_Preorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Text_Preorder" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/BST_Activity_TabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_ChipGroup">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Standard_Title" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Structure_Title"
+            tools:viewBindingIgnore="true" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Check_Title" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Get_Title" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/BST_Activity_ViewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/BST_Activity_InputSlider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_TabLayout" />
+
+    <TextView
+        android:id="@+id/BST_Activity_InputValue"
+        style="@style/Surface.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/Slider_Default_Value"
+        app:layout_constraintBaseline_toBaselineOf="@+id/BST_Activity_CurrentValue"
+        app:layout_constraintStart_toEndOf="@+id/BST_Activity_CurrentValue" />
+
+    <TextView
+        android:id="@+id/BST_Activity_CurrentValue"
+        style="@style/Surface.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/Slider_Current_Value"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_InputSlider" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/BST_Activity_InputSlider"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_gravity="center"
+        android:theme="@style/AppTheme"
+        android:value="0.0"
+        android:valueFrom="-100.0"
+        android:valueTo="100.0"
+        app:labelBehavior="withinBounds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/BST_Activity_Guideline_Ver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/BST_Activity_Guideline_Hor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5512996" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

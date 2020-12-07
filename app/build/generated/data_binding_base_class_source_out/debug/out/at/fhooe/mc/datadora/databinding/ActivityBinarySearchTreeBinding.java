@@ -4,21 +4,23 @@ package at.fhooe.mc.datadora.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.viewbinding.ViewBinding;
+import androidx.viewpager2.widget.ViewPager2;
 import at.fhooe.mc.datadora.BinarySearchTree.BSTView;
+import at.fhooe.mc.datadora.BinarySearchTree.VerticalSeekBar;
 import at.fhooe.mc.datadora.R;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.tabs.TabLayout;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -27,98 +29,76 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   @NonNull
   private final ConstraintLayout rootView;
 
-  @NonNull
-  public final RadioButton BSTActivityAdd;
-
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   *   <li>layout-port/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   */
+  @Nullable
   public final ImageView BSTActivityBoxReturn;
 
   @NonNull
-  public final MotionLayout BSTActivityCheck;
+  public final ChipGroup BSTActivityChipGroup;
 
-  @NonNull
-  public final ImageView BSTActivityCheckArrow;
-
-  @NonNull
-  public final ImageView BSTActivityCheckBackground;
-
-  @NonNull
-  public final ConstraintLayout BSTActivityCheckConstraintLayout;
-
-  @NonNull
-  public final RadioButton BSTActivityCheckEmpty;
-
-  @NonNull
-  public final RadioButton BSTActivityCheckExternal;
-
-  @NonNull
-  public final RadioButton BSTActivityCheckInternal;
-
-  @NonNull
-  public final RadioButton BSTActivityCheckLeftChild;
-
-  @NonNull
-  public final RadioButton BSTActivityCheckParent;
-
-  @NonNull
-  public final RadioButton BSTActivityCheckRightChild;
-
-  @NonNull
-  public final RadioButton BSTActivityCheckRoot;
-
-  @NonNull
-  public final TextView BSTActivityCheckTitle;
-
-  @NonNull
-  public final RadioButton BSTActivityClear;
-
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   *   <li>layout-port/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   */
+  @Nullable
   public final TextView BSTActivityCurrentValue;
 
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   *   <li>layout-port/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   */
+  @Nullable
   public final ImageView BSTActivityFlowIcon;
 
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   *   <li>layout-port/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   */
+  @Nullable
   public final TextView BSTActivityFlowText;
-
-  @NonNull
-  public final MotionLayout BSTActivityGet;
-
-  @NonNull
-  public final ImageView BSTActivityGetArrow;
-
-  @NonNull
-  public final ImageView BSTActivityGetBackground;
-
-  @NonNull
-  public final ConstraintLayout BSTActivityGetConstraintLayout;
-
-  @NonNull
-  public final RadioButton BSTActivityGetExternal;
-
-  @NonNull
-  public final RadioButton BSTActivityGetInternal;
-
-  @NonNull
-  public final RadioButton BSTActivityGetLeftChild;
-
-  @NonNull
-  public final RadioButton BSTActivityGetMax;
-
-  @NonNull
-  public final RadioButton BSTActivityGetMin;
-
-  @NonNull
-  public final RadioButton BSTActivityGetParent;
-
-  @NonNull
-  public final RadioButton BSTActivityGetRightChild;
-
-  @NonNull
-  public final RadioButton BSTActivityGetRoot;
-
-  @NonNull
-  public final TextView BSTActivityGetTitle;
 
   @NonNull
   public final Guideline BSTActivityGuidelineHor;
@@ -127,151 +107,135 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   public final Guideline BSTActivityGuidelineVer;
 
   @NonNull
-  public final Button BSTActivityInorder;
+  public final Chip BSTActivityInorder;
 
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   *   <li>layout-port/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   */
+  @Nullable
   public final Slider BSTActivityInputSlider;
 
   @NonNull
   public final TextView BSTActivityInputValue;
 
   @NonNull
-  public final Button BSTActivityPostorder;
+  public final Chip BSTActivityPostorder;
 
   @NonNull
-  public final Button BSTActivityPreorder;
+  public final Chip BSTActivityPreorder;
 
-  @NonNull
-  public final RadioButton BSTActivityRandom;
-
-  @NonNull
-  public final RadioButton BSTActivityRemove;
-
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   *   <li>layout-port/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   */
+  @Nullable
   public final TextView BSTActivityReturnText;
 
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   *   <li>layout-port/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   */
+  @Nullable
   public final TextView BSTActivityReturnValue;
 
-  @NonNull
-  public final ImageView BSTActivityStandardArrow;
-
-  @NonNull
-  public final ImageView BSTActivityStandardBackground;
-
-  @NonNull
-  public final ConstraintLayout BSTActivityStandardConstraintLayout;
-
-  @NonNull
-  public final MotionLayout BSTActivityStandardOperations;
-
-  @NonNull
-  public final TextView BSTActivityStandardTitle;
-
-  @NonNull
-  public final MotionLayout BSTActivityStructure;
-
-  @NonNull
-  public final ImageView BSTActivityStructureArrow;
-
-  @NonNull
-  public final ImageView BSTActivityStructureBackground;
-
-  @NonNull
-  public final ConstraintLayout BSTActivityStructureConstraintLayout;
-
-  @NonNull
-  public final RadioButton BSTActivityStructureDepth;
-
-  @NonNull
-  public final RadioButton BSTActivityStructureHeight;
-
-  @NonNull
-  public final RadioButton BSTActivityStructureSize;
-
-  @NonNull
-  public final TextView BSTActivityStructureTitle;
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout/</li>
+   *   <li>layout-port/</li>
+   * </ul>
+   */
+  @Nullable
+  public final VerticalSeekBar BSTActivitySeekBar;
 
   @NonNull
   public final SwitchMaterial BSTActivitySwitch;
 
   @NonNull
-  public final Toolbar BSTActivityToolbar;
+  public final TabLayout BSTActivityTabLayout;
 
   @NonNull
+  public final Toolbar BSTActivityToolbar;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   *   <li>layout-port/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   */
+  @Nullable
   public final TextView BSTActivityVectorOutput;
 
   @NonNull
   public final BSTView BSTActivityView;
 
+  @NonNull
+  public final ViewPager2 BSTActivityViewPager;
+
   private ActivityBinarySearchTreeBinding(@NonNull ConstraintLayout rootView,
-      @NonNull RadioButton BSTActivityAdd, @NonNull ImageView BSTActivityBoxReturn,
-      @NonNull MotionLayout BSTActivityCheck, @NonNull ImageView BSTActivityCheckArrow,
-      @NonNull ImageView BSTActivityCheckBackground,
-      @NonNull ConstraintLayout BSTActivityCheckConstraintLayout,
-      @NonNull RadioButton BSTActivityCheckEmpty, @NonNull RadioButton BSTActivityCheckExternal,
-      @NonNull RadioButton BSTActivityCheckInternal, @NonNull RadioButton BSTActivityCheckLeftChild,
-      @NonNull RadioButton BSTActivityCheckParent, @NonNull RadioButton BSTActivityCheckRightChild,
-      @NonNull RadioButton BSTActivityCheckRoot, @NonNull TextView BSTActivityCheckTitle,
-      @NonNull RadioButton BSTActivityClear, @NonNull TextView BSTActivityCurrentValue,
-      @NonNull ImageView BSTActivityFlowIcon, @NonNull TextView BSTActivityFlowText,
-      @NonNull MotionLayout BSTActivityGet, @NonNull ImageView BSTActivityGetArrow,
-      @NonNull ImageView BSTActivityGetBackground,
-      @NonNull ConstraintLayout BSTActivityGetConstraintLayout,
-      @NonNull RadioButton BSTActivityGetExternal, @NonNull RadioButton BSTActivityGetInternal,
-      @NonNull RadioButton BSTActivityGetLeftChild, @NonNull RadioButton BSTActivityGetMax,
-      @NonNull RadioButton BSTActivityGetMin, @NonNull RadioButton BSTActivityGetParent,
-      @NonNull RadioButton BSTActivityGetRightChild, @NonNull RadioButton BSTActivityGetRoot,
-      @NonNull TextView BSTActivityGetTitle, @NonNull Guideline BSTActivityGuidelineHor,
-      @NonNull Guideline BSTActivityGuidelineVer, @NonNull Button BSTActivityInorder,
-      @NonNull Slider BSTActivityInputSlider, @NonNull TextView BSTActivityInputValue,
-      @NonNull Button BSTActivityPostorder, @NonNull Button BSTActivityPreorder,
-      @NonNull RadioButton BSTActivityRandom, @NonNull RadioButton BSTActivityRemove,
-      @NonNull TextView BSTActivityReturnText, @NonNull TextView BSTActivityReturnValue,
-      @NonNull ImageView BSTActivityStandardArrow, @NonNull ImageView BSTActivityStandardBackground,
-      @NonNull ConstraintLayout BSTActivityStandardConstraintLayout,
-      @NonNull MotionLayout BSTActivityStandardOperations,
-      @NonNull TextView BSTActivityStandardTitle, @NonNull MotionLayout BSTActivityStructure,
-      @NonNull ImageView BSTActivityStructureArrow,
-      @NonNull ImageView BSTActivityStructureBackground,
-      @NonNull ConstraintLayout BSTActivityStructureConstraintLayout,
-      @NonNull RadioButton BSTActivityStructureDepth,
-      @NonNull RadioButton BSTActivityStructureHeight,
-      @NonNull RadioButton BSTActivityStructureSize, @NonNull TextView BSTActivityStructureTitle,
-      @NonNull SwitchMaterial BSTActivitySwitch, @NonNull Toolbar BSTActivityToolbar,
-      @NonNull TextView BSTActivityVectorOutput, @NonNull BSTView BSTActivityView) {
+      @Nullable ImageView BSTActivityBoxReturn, @NonNull ChipGroup BSTActivityChipGroup,
+      @Nullable TextView BSTActivityCurrentValue, @Nullable ImageView BSTActivityFlowIcon,
+      @Nullable TextView BSTActivityFlowText, @NonNull Guideline BSTActivityGuidelineHor,
+      @NonNull Guideline BSTActivityGuidelineVer, @NonNull Chip BSTActivityInorder,
+      @Nullable Slider BSTActivityInputSlider, @NonNull TextView BSTActivityInputValue,
+      @NonNull Chip BSTActivityPostorder, @NonNull Chip BSTActivityPreorder,
+      @Nullable TextView BSTActivityReturnText, @Nullable TextView BSTActivityReturnValue,
+      @Nullable VerticalSeekBar BSTActivitySeekBar, @NonNull SwitchMaterial BSTActivitySwitch,
+      @NonNull TabLayout BSTActivityTabLayout, @NonNull Toolbar BSTActivityToolbar,
+      @Nullable TextView BSTActivityVectorOutput, @NonNull BSTView BSTActivityView,
+      @NonNull ViewPager2 BSTActivityViewPager) {
     this.rootView = rootView;
-    this.BSTActivityAdd = BSTActivityAdd;
     this.BSTActivityBoxReturn = BSTActivityBoxReturn;
-    this.BSTActivityCheck = BSTActivityCheck;
-    this.BSTActivityCheckArrow = BSTActivityCheckArrow;
-    this.BSTActivityCheckBackground = BSTActivityCheckBackground;
-    this.BSTActivityCheckConstraintLayout = BSTActivityCheckConstraintLayout;
-    this.BSTActivityCheckEmpty = BSTActivityCheckEmpty;
-    this.BSTActivityCheckExternal = BSTActivityCheckExternal;
-    this.BSTActivityCheckInternal = BSTActivityCheckInternal;
-    this.BSTActivityCheckLeftChild = BSTActivityCheckLeftChild;
-    this.BSTActivityCheckParent = BSTActivityCheckParent;
-    this.BSTActivityCheckRightChild = BSTActivityCheckRightChild;
-    this.BSTActivityCheckRoot = BSTActivityCheckRoot;
-    this.BSTActivityCheckTitle = BSTActivityCheckTitle;
-    this.BSTActivityClear = BSTActivityClear;
+    this.BSTActivityChipGroup = BSTActivityChipGroup;
     this.BSTActivityCurrentValue = BSTActivityCurrentValue;
     this.BSTActivityFlowIcon = BSTActivityFlowIcon;
     this.BSTActivityFlowText = BSTActivityFlowText;
-    this.BSTActivityGet = BSTActivityGet;
-    this.BSTActivityGetArrow = BSTActivityGetArrow;
-    this.BSTActivityGetBackground = BSTActivityGetBackground;
-    this.BSTActivityGetConstraintLayout = BSTActivityGetConstraintLayout;
-    this.BSTActivityGetExternal = BSTActivityGetExternal;
-    this.BSTActivityGetInternal = BSTActivityGetInternal;
-    this.BSTActivityGetLeftChild = BSTActivityGetLeftChild;
-    this.BSTActivityGetMax = BSTActivityGetMax;
-    this.BSTActivityGetMin = BSTActivityGetMin;
-    this.BSTActivityGetParent = BSTActivityGetParent;
-    this.BSTActivityGetRightChild = BSTActivityGetRightChild;
-    this.BSTActivityGetRoot = BSTActivityGetRoot;
-    this.BSTActivityGetTitle = BSTActivityGetTitle;
     this.BSTActivityGuidelineHor = BSTActivityGuidelineHor;
     this.BSTActivityGuidelineVer = BSTActivityGuidelineVer;
     this.BSTActivityInorder = BSTActivityInorder;
@@ -279,27 +243,15 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
     this.BSTActivityInputValue = BSTActivityInputValue;
     this.BSTActivityPostorder = BSTActivityPostorder;
     this.BSTActivityPreorder = BSTActivityPreorder;
-    this.BSTActivityRandom = BSTActivityRandom;
-    this.BSTActivityRemove = BSTActivityRemove;
     this.BSTActivityReturnText = BSTActivityReturnText;
     this.BSTActivityReturnValue = BSTActivityReturnValue;
-    this.BSTActivityStandardArrow = BSTActivityStandardArrow;
-    this.BSTActivityStandardBackground = BSTActivityStandardBackground;
-    this.BSTActivityStandardConstraintLayout = BSTActivityStandardConstraintLayout;
-    this.BSTActivityStandardOperations = BSTActivityStandardOperations;
-    this.BSTActivityStandardTitle = BSTActivityStandardTitle;
-    this.BSTActivityStructure = BSTActivityStructure;
-    this.BSTActivityStructureArrow = BSTActivityStructureArrow;
-    this.BSTActivityStructureBackground = BSTActivityStructureBackground;
-    this.BSTActivityStructureConstraintLayout = BSTActivityStructureConstraintLayout;
-    this.BSTActivityStructureDepth = BSTActivityStructureDepth;
-    this.BSTActivityStructureHeight = BSTActivityStructureHeight;
-    this.BSTActivityStructureSize = BSTActivityStructureSize;
-    this.BSTActivityStructureTitle = BSTActivityStructureTitle;
+    this.BSTActivitySeekBar = BSTActivitySeekBar;
     this.BSTActivitySwitch = BSTActivitySwitch;
+    this.BSTActivityTabLayout = BSTActivityTabLayout;
     this.BSTActivityToolbar = BSTActivityToolbar;
     this.BSTActivityVectorOutput = BSTActivityVectorOutput;
     this.BSTActivityView = BSTActivityView;
+    this.BSTActivityViewPager = BSTActivityViewPager;
   }
 
   @Override
@@ -329,191 +281,23 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.BST_Activity_Add;
-      RadioButton BSTActivityAdd = rootView.findViewById(id);
-      if (BSTActivityAdd == null) {
-        break missingId;
-      }
-
       id = R.id.BST_Activity_Box_Return;
       ImageView BSTActivityBoxReturn = rootView.findViewById(id);
-      if (BSTActivityBoxReturn == null) {
-        break missingId;
-      }
 
-      id = R.id.BST_Activity_Check;
-      MotionLayout BSTActivityCheck = rootView.findViewById(id);
-      if (BSTActivityCheck == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_Arrow;
-      ImageView BSTActivityCheckArrow = rootView.findViewById(id);
-      if (BSTActivityCheckArrow == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_Background;
-      ImageView BSTActivityCheckBackground = rootView.findViewById(id);
-      if (BSTActivityCheckBackground == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_ConstraintLayout;
-      ConstraintLayout BSTActivityCheckConstraintLayout = rootView.findViewById(id);
-      if (BSTActivityCheckConstraintLayout == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_Empty;
-      RadioButton BSTActivityCheckEmpty = rootView.findViewById(id);
-      if (BSTActivityCheckEmpty == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_External;
-      RadioButton BSTActivityCheckExternal = rootView.findViewById(id);
-      if (BSTActivityCheckExternal == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_Internal;
-      RadioButton BSTActivityCheckInternal = rootView.findViewById(id);
-      if (BSTActivityCheckInternal == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_LeftChild;
-      RadioButton BSTActivityCheckLeftChild = rootView.findViewById(id);
-      if (BSTActivityCheckLeftChild == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_Parent;
-      RadioButton BSTActivityCheckParent = rootView.findViewById(id);
-      if (BSTActivityCheckParent == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_RightChild;
-      RadioButton BSTActivityCheckRightChild = rootView.findViewById(id);
-      if (BSTActivityCheckRightChild == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_Root;
-      RadioButton BSTActivityCheckRoot = rootView.findViewById(id);
-      if (BSTActivityCheckRoot == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Check_Title;
-      TextView BSTActivityCheckTitle = rootView.findViewById(id);
-      if (BSTActivityCheckTitle == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Clear;
-      RadioButton BSTActivityClear = rootView.findViewById(id);
-      if (BSTActivityClear == null) {
+      id = R.id.BST_Activity_ChipGroup;
+      ChipGroup BSTActivityChipGroup = rootView.findViewById(id);
+      if (BSTActivityChipGroup == null) {
         break missingId;
       }
 
       id = R.id.BST_Activity_CurrentValue;
       TextView BSTActivityCurrentValue = rootView.findViewById(id);
-      if (BSTActivityCurrentValue == null) {
-        break missingId;
-      }
 
       id = R.id.BST_Activity_FlowIcon;
       ImageView BSTActivityFlowIcon = rootView.findViewById(id);
-      if (BSTActivityFlowIcon == null) {
-        break missingId;
-      }
 
       id = R.id.BST_Activity_FlowText;
       TextView BSTActivityFlowText = rootView.findViewById(id);
-      if (BSTActivityFlowText == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get;
-      MotionLayout BSTActivityGet = rootView.findViewById(id);
-      if (BSTActivityGet == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_Arrow;
-      ImageView BSTActivityGetArrow = rootView.findViewById(id);
-      if (BSTActivityGetArrow == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_Background;
-      ImageView BSTActivityGetBackground = rootView.findViewById(id);
-      if (BSTActivityGetBackground == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_ConstraintLayout;
-      ConstraintLayout BSTActivityGetConstraintLayout = rootView.findViewById(id);
-      if (BSTActivityGetConstraintLayout == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_External;
-      RadioButton BSTActivityGetExternal = rootView.findViewById(id);
-      if (BSTActivityGetExternal == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_Internal;
-      RadioButton BSTActivityGetInternal = rootView.findViewById(id);
-      if (BSTActivityGetInternal == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_LeftChild;
-      RadioButton BSTActivityGetLeftChild = rootView.findViewById(id);
-      if (BSTActivityGetLeftChild == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_Max;
-      RadioButton BSTActivityGetMax = rootView.findViewById(id);
-      if (BSTActivityGetMax == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_Min;
-      RadioButton BSTActivityGetMin = rootView.findViewById(id);
-      if (BSTActivityGetMin == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_Parent;
-      RadioButton BSTActivityGetParent = rootView.findViewById(id);
-      if (BSTActivityGetParent == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_RightChild;
-      RadioButton BSTActivityGetRightChild = rootView.findViewById(id);
-      if (BSTActivityGetRightChild == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_Root;
-      RadioButton BSTActivityGetRoot = rootView.findViewById(id);
-      if (BSTActivityGetRoot == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Get_Title;
-      TextView BSTActivityGetTitle = rootView.findViewById(id);
-      if (BSTActivityGetTitle == null) {
-        break missingId;
-      }
 
       id = R.id.BST_Activity_Guideline_Hor;
       Guideline BSTActivityGuidelineHor = rootView.findViewById(id);
@@ -528,16 +312,13 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       }
 
       id = R.id.BST_Activity_Inorder;
-      Button BSTActivityInorder = rootView.findViewById(id);
+      Chip BSTActivityInorder = rootView.findViewById(id);
       if (BSTActivityInorder == null) {
         break missingId;
       }
 
       id = R.id.BST_Activity_InputSlider;
       Slider BSTActivityInputSlider = rootView.findViewById(id);
-      if (BSTActivityInputSlider == null) {
-        break missingId;
-      }
 
       id = R.id.BST_Activity_InputValue;
       TextView BSTActivityInputValue = rootView.findViewById(id);
@@ -546,122 +327,35 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       }
 
       id = R.id.BST_Activity_Postorder;
-      Button BSTActivityPostorder = rootView.findViewById(id);
+      Chip BSTActivityPostorder = rootView.findViewById(id);
       if (BSTActivityPostorder == null) {
         break missingId;
       }
 
       id = R.id.BST_Activity_Preorder;
-      Button BSTActivityPreorder = rootView.findViewById(id);
+      Chip BSTActivityPreorder = rootView.findViewById(id);
       if (BSTActivityPreorder == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Random;
-      RadioButton BSTActivityRandom = rootView.findViewById(id);
-      if (BSTActivityRandom == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Remove;
-      RadioButton BSTActivityRemove = rootView.findViewById(id);
-      if (BSTActivityRemove == null) {
         break missingId;
       }
 
       id = R.id.BST_Activity_ReturnText;
       TextView BSTActivityReturnText = rootView.findViewById(id);
-      if (BSTActivityReturnText == null) {
-        break missingId;
-      }
 
       id = R.id.BST_Activity_ReturnValue;
       TextView BSTActivityReturnValue = rootView.findViewById(id);
-      if (BSTActivityReturnValue == null) {
-        break missingId;
-      }
 
-      id = R.id.BST_Activity_Standard_Arrow;
-      ImageView BSTActivityStandardArrow = rootView.findViewById(id);
-      if (BSTActivityStandardArrow == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Standard_Background;
-      ImageView BSTActivityStandardBackground = rootView.findViewById(id);
-      if (BSTActivityStandardBackground == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Standard_ConstraintLayout;
-      ConstraintLayout BSTActivityStandardConstraintLayout = rootView.findViewById(id);
-      if (BSTActivityStandardConstraintLayout == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_StandardOperations;
-      MotionLayout BSTActivityStandardOperations = rootView.findViewById(id);
-      if (BSTActivityStandardOperations == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Standard_Title;
-      TextView BSTActivityStandardTitle = rootView.findViewById(id);
-      if (BSTActivityStandardTitle == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Structure;
-      MotionLayout BSTActivityStructure = rootView.findViewById(id);
-      if (BSTActivityStructure == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Structure_Arrow;
-      ImageView BSTActivityStructureArrow = rootView.findViewById(id);
-      if (BSTActivityStructureArrow == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Structure_Background;
-      ImageView BSTActivityStructureBackground = rootView.findViewById(id);
-      if (BSTActivityStructureBackground == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Structure_ConstraintLayout;
-      ConstraintLayout BSTActivityStructureConstraintLayout = rootView.findViewById(id);
-      if (BSTActivityStructureConstraintLayout == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Structure_Depth;
-      RadioButton BSTActivityStructureDepth = rootView.findViewById(id);
-      if (BSTActivityStructureDepth == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Structure_Height;
-      RadioButton BSTActivityStructureHeight = rootView.findViewById(id);
-      if (BSTActivityStructureHeight == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Structure_Size;
-      RadioButton BSTActivityStructureSize = rootView.findViewById(id);
-      if (BSTActivityStructureSize == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Structure_Title;
-      TextView BSTActivityStructureTitle = rootView.findViewById(id);
-      if (BSTActivityStructureTitle == null) {
-        break missingId;
-      }
+      id = R.id.BST_Activity_SeekBar;
+      VerticalSeekBar BSTActivitySeekBar = rootView.findViewById(id);
 
       id = R.id.BST_Activity_Switch;
       SwitchMaterial BSTActivitySwitch = rootView.findViewById(id);
       if (BSTActivitySwitch == null) {
+        break missingId;
+      }
+
+      id = R.id.BST_Activity_TabLayout;
+      TabLayout BSTActivityTabLayout = rootView.findViewById(id);
+      if (BSTActivityTabLayout == null) {
         break missingId;
       }
 
@@ -673,9 +367,6 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
 
       id = R.id.BST_Activity_Vector_Output;
       TextView BSTActivityVectorOutput = rootView.findViewById(id);
-      if (BSTActivityVectorOutput == null) {
-        break missingId;
-      }
 
       id = R.id.BST_Activity_View;
       BSTView BSTActivityView = rootView.findViewById(id);
@@ -683,25 +374,19 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityBinarySearchTreeBinding((ConstraintLayout) rootView, BSTActivityAdd,
-          BSTActivityBoxReturn, BSTActivityCheck, BSTActivityCheckArrow, BSTActivityCheckBackground,
-          BSTActivityCheckConstraintLayout, BSTActivityCheckEmpty, BSTActivityCheckExternal,
-          BSTActivityCheckInternal, BSTActivityCheckLeftChild, BSTActivityCheckParent,
-          BSTActivityCheckRightChild, BSTActivityCheckRoot, BSTActivityCheckTitle, BSTActivityClear,
-          BSTActivityCurrentValue, BSTActivityFlowIcon, BSTActivityFlowText, BSTActivityGet,
-          BSTActivityGetArrow, BSTActivityGetBackground, BSTActivityGetConstraintLayout,
-          BSTActivityGetExternal, BSTActivityGetInternal, BSTActivityGetLeftChild,
-          BSTActivityGetMax, BSTActivityGetMin, BSTActivityGetParent, BSTActivityGetRightChild,
-          BSTActivityGetRoot, BSTActivityGetTitle, BSTActivityGuidelineHor, BSTActivityGuidelineVer,
-          BSTActivityInorder, BSTActivityInputSlider, BSTActivityInputValue, BSTActivityPostorder,
-          BSTActivityPreorder, BSTActivityRandom, BSTActivityRemove, BSTActivityReturnText,
-          BSTActivityReturnValue, BSTActivityStandardArrow, BSTActivityStandardBackground,
-          BSTActivityStandardConstraintLayout, BSTActivityStandardOperations,
-          BSTActivityStandardTitle, BSTActivityStructure, BSTActivityStructureArrow,
-          BSTActivityStructureBackground, BSTActivityStructureConstraintLayout,
-          BSTActivityStructureDepth, BSTActivityStructureHeight, BSTActivityStructureSize,
-          BSTActivityStructureTitle, BSTActivitySwitch, BSTActivityToolbar, BSTActivityVectorOutput,
-          BSTActivityView);
+      id = R.id.BST_Activity_ViewPager;
+      ViewPager2 BSTActivityViewPager = rootView.findViewById(id);
+      if (BSTActivityViewPager == null) {
+        break missingId;
+      }
+
+      return new ActivityBinarySearchTreeBinding((ConstraintLayout) rootView, BSTActivityBoxReturn,
+          BSTActivityChipGroup, BSTActivityCurrentValue, BSTActivityFlowIcon, BSTActivityFlowText,
+          BSTActivityGuidelineHor, BSTActivityGuidelineVer, BSTActivityInorder,
+          BSTActivityInputSlider, BSTActivityInputValue, BSTActivityPostorder, BSTActivityPreorder,
+          BSTActivityReturnText, BSTActivityReturnValue, BSTActivitySeekBar, BSTActivitySwitch,
+          BSTActivityTabLayout, BSTActivityToolbar, BSTActivityVectorOutput, BSTActivityView,
+          BSTActivityViewPager);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

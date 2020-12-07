@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/box_inset_layout_padding"
+    tools:context=".BinarySearchTree.BinarySearchTreeActivity">
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/BST_Activity_Switch"
+        style="@style/AppTheme.Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Guideline_Ver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar" />
+
+    <at.fhooe.mc.datadora.BinarySearchTree.BSTView
+        android:id="@+id/BST_Activity_View"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/BST_Activity_Guideline_Hor"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Guideline_Ver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/BST_Activity_Toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/BST_Activity_Guideline_Hor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <TextView
+        android:id="@+id/BST_Activity_InputValue"
+        style="@style/Surface.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/Slider_Default_Value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Guideline_Ver"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/BST_Activity_Guideline_Ver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/BST_Activity_ChipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_View"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Guideline_Ver"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/BST_Activity_Inorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Text_Inorder" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/BST_Activity_Postorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Text_Postorder" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/BST_Activity_Preorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Text_Preorder" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/BST_Activity_TabLayout"
+        tools:viewBindingIgnore="true"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Guideline_Ver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_View">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Standard_Title" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Structure_Title" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Check_Title" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Get_Title" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/BST_Activity_ViewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_TabLayout"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_TabLayout"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_TabLayout" />
+
+    <at.fhooe.mc.datadora.BinarySearchTree.VerticalSeekBar
+        android:id="@+id/BST_Activity_SeekBar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:foregroundGravity="right"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:theme="@style/AppTheme"
+        android:value="false"
+        android:valueFrom="-100.0"
+        android:valueTo="100.0"
+        app:labelBehavior="withinBounds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Guideline_Ver"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_InputValue" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

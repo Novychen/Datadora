@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/BST_Fragment_HasParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/BST_Activity_Check_Parent"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_HasRightChild"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/BST_Fragment_IsRoot"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/BST_Fragment_HasRightChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/BST_Activity_Check_RightChild"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_HasLeftChild"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_HasParent"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_HasParent" />
+
+    <Button
+        android:id="@+id/BST_Fragment_HasLeftChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/BST_Activity_Check_LeftChild"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Fragment_IsEmpty"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_HasRightChild"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_HasRightChild" />
+
+    <Button
+        android:id="@+id/BST_Fragment_IsRoot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/BST_Activity_Check_Root"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_IsExternal"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Fragment_HasParent" />
+
+    <Button
+        android:id="@+id/BST_Fragment_IsExternal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/BST_Activity_Check_External"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_IsInternal"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_IsRoot"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_IsRoot" />
+
+    <Button
+        android:id="@+id/BST_Fragment_IsInternal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/BST_Activity_Check_Internal"
+        app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_IsEmpty"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_IsExternal"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_IsExternal" />
+
+    <Button
+        android:id="@+id/BST_Fragment_IsEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/BST_Activity_Check_Empty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/BST_Fragment_IsInternal"
+        app:layout_constraintTop_toTopOf="@+id/BST_Fragment_IsInternal" />
+</androidx.constraintlayout.widget.ConstraintLayout>

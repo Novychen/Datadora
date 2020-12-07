@@ -280,6 +280,14 @@ public class BinarySearchTree {
         return null;
     }
 
+    public Vector<BinaryTreeNode> getExternalNodes() {
+        return null;
+    }
+
+    public Vector<BinaryTreeNode> getInternalNodes() {
+        return null;
+    }
+
     public boolean isExternal(BinaryTreeNode n) {
         return n.getLeft() != null && n.getRight() == null;
     }
@@ -441,16 +449,11 @@ public class BinarySearchTree {
     public int max() {
         if (root == null) {
             return Integer.MIN_VALUE;
-        }
-        if (root.getRight() == null) {
+        } else if (root.getRight() == null) {
             return root.getData();
         }
 
-        BinarySearchTree t = new BinarySearchTree();
-        BinaryTreeNode n = new BinaryTreeNode(root.getData());
-        n.setLeft(root.getLeft());
-        n.setRight(root.getRight());
-        t.root = n;
+        BinaryTreeNode n = root;
 
         while (n.getRight() != null) {
             n = n.getRight();
@@ -467,20 +470,16 @@ public class BinarySearchTree {
     public int min() {
         if (root == null) {
             return Integer.MIN_VALUE;
-        }
-        if (root.getLeft() == null) {
+        } else if (root.getLeft() == null) {
             return root.getData();
         }
 
-        BinarySearchTree t = new BinarySearchTree();
-        BinaryTreeNode n = new BinaryTreeNode(root.getData());
-        n.setLeft(root.getLeft());
-        n.setRight(root.getRight());
-        t.root = n;
+        BinaryTreeNode n = root;
 
         while (n.getLeft() != null) {
             n = n.getLeft();
         }
+
         return n.getData();
     }
 
