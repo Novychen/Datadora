@@ -161,8 +161,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
         mBinding.BSTActivityChipGroup.setSelectionRequired(true);
         mBinding.BSTActivityChipGroup.setOnCheckedChangeListener(this);
-
-        mBinding.BSTActivitySwitch.setOnCheckedChangeListener(this);
     }
 
     @Override

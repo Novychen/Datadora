@@ -49,8 +49,12 @@ public class BSTStructureFragment extends Fragment implements View.OnClickListen
     }
     private void size() { }
 
-    private void height() { mActivity.getBinding().BSTActivityView.height(); }
+    private void height() {
+        mActivity.getBinding().BSTActivityView.height();
+    }
 
-    private void depth() { mActivity.getBinding().BSTActivityView.depth(); }
+    private void depth() {
+        mActivity.getBinding().BSTActivityView.depth();
+    }
 
 }

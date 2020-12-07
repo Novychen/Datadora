@@ -1651,7 +1651,6 @@ id BST_Activity_Standard_ConstraintLayout
 id BST_Activity_Structure_Arrow
 id BST_Activity_Structure_Background
 id BST_Activity_Structure_ConstraintLayout
-id BST_Activity_Switch
 id BST_Activity_TabLayout
 id BST_Activity_Toolbar
 id BST_Activity_Vector_Output

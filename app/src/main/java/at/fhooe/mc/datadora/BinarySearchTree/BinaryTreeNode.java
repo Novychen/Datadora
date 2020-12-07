@@ -12,6 +12,7 @@ public class BinaryTreeNode {
     // If the node is in the right subtree then it counts its left children and versa-vista.
     private int mChildCount;
     private PointF mPoint;
+    private boolean mSelected;
     private int mData;
     private BinaryTreeNode mRight;
     private BinaryTreeNode mLeft;
@@ -48,6 +49,10 @@ public class BinaryTreeNode {
     public void decrementChildToCount () {
         mChildCount--;
     }
+
+    public boolean isSelected() { return mSelected; }
+
+    public void setSelected(boolean _selected) { mSelected = _selected; }
 
     public void setPoint(float x, float y) {
         mPoint.set(x,y);
