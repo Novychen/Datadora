@@ -1,4 +1,4 @@
-package at.fhooe.mc.datadora.BinarySearchTree;
+package at.fhooe.mc.datadora;
 
 import android.content.Context;
 import android.graphics.Canvas;

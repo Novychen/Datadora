@@ -8,14 +8,29 @@
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".BinarySearchTree.BinarySearchTreeActivity">
 
+    <ImageView
+        android:id="@+id/BST_Activity_Pan"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_View"
+        app:srcCompat="@drawable/ic_pan_tool" />
+
     <at.fhooe.mc.datadora.BinarySearchTree.BSTView
         android:id="@+id/BST_Activity_View"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/BST_Activity_Guideline_Hor"
         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Guideline_Ver"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar"
+        app:layout_constraintVertical_bias="1.0"
         tools:srcCompat="@tools:sample/avatars" />
 
     <androidx.appcompat.widget.Toolbar
@@ -42,11 +57,11 @@
         style="@style/Surface.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/Slider_Default_Value"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Guideline_Ver"
-        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Box_Return" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/BST_Activity_Guideline_Ver"
@@ -55,41 +70,14 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.85" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/BST_Activity_ChipGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_View"
-        app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Guideline_Ver"
-        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/BST_Activity_Inorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/BST_Activity_Text_Inorder" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/BST_Activity_Postorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/BST_Activity_Text_Postorder" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/BST_Activity_Preorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/BST_Activity_Text_Preorder" />
-    </com.google.android.material.chip.ChipGroup>
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/BST_Activity_TabLayout"
-        tools:viewBindingIgnore="true"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/BST_Activity_Guideline_Ver"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_View">
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_View"
+        tools:viewBindingIgnore="true">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -116,12 +104,14 @@
         android:id="@+id/BST_Activity_ViewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/BST_Activity_TabLayout"
         app:layout_constraintStart_toStartOf="@+id/BST_Activity_TabLayout"
         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_TabLayout" />
 
-    <at.fhooe.mc.datadora.BinarySearchTree.VerticalSeekBar
+    <at.fhooe.mc.datadora.VerticalSeekBar
         android:id="@+id/BST_Activity_SeekBar"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -138,5 +128,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/BST_Activity_Guideline_Ver"
         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_InputValue" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_Box_Return"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="h,1.5:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar"
+        app:srcCompat="@drawable/background_return" />
+
+    <TextView
+        android:id="@+id/BST_Activity_ReturnText"
+        style="@style/Primary.Text.Return"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/All_Data_Activity_Text_Return"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_ReturnValue"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_ReturnValue"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Box_Return" />
+
+    <TextView
+        android:id="@+id/BST_Activity_ReturnValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        style="@style/Primary.Text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_ReturnText" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.80" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

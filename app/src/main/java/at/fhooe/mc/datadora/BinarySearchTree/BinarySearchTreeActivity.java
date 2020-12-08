@@ -2,6 +2,7 @@ package at.fhooe.mc.datadora.BinarySearchTree;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
@@ -12,10 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.widget.ImageViewCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.tabs.TabLayout;
@@ -31,15 +33,14 @@ import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
 
 
-public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, ChipGroup.OnCheckedChangeListener {
+public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "BSTActivity :: ";
     private final BinarySearchTree mTree = new BinarySearchTree();
     private final Vector<BinaryTreeNode> mTreeUser = new Vector<>();
     private ActivityBinarySearchTreeBinding mBinding;
-    private BSTStandardFragment mFragmentStandard;
-
-    private String mDefaultValue = "empty";
+    private boolean mSelected = false;
+    private final String mDefaultValue = "empty";
 
     private SharedPreferences mSharedPreferences;
     private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.BSTSharedPreferenceFile.BST";
@@ -68,7 +69,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
         setUpToolbar();
         setUpTabLayout();
-        setOnClickListener();
 
         mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
@@ -78,6 +78,8 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         } else {
             setUpSlider();
         }
+
+        mBinding.BSTActivityPan.setOnClickListener(this);
     }
 
     private void setUpSeekBar() {
@@ -131,9 +133,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         TabLayout tabLayout = findViewById(R.id.BST_Activity_TabLayout);
 
         BinarySearchTreeTabAdapter adapter = new BinarySearchTreeTabAdapter(this);
-        mFragmentStandard = new BSTStandardFragment();
+        BSTStandardFragment fragmentStandard = new BSTStandardFragment();
 
-        adapter.addFragment(mFragmentStandard);
+        adapter.addFragment(fragmentStandard);
         adapter.addFragment(new BSTStructureFragment());
         adapter.addFragment(new BSTCheckFragment());
         adapter.addFragment(new BSTGetFragment());
@@ -155,12 +157,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
                 }
             }
         }).attach();
-    }
-
-    private void setOnClickListener() {
-
-        mBinding.BSTActivityChipGroup.setSelectionRequired(true);
-        mBinding.BSTActivityChipGroup.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -290,6 +286,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View view) {
 
+        mBinding.BSTActivityReturnValue.setText("");
+        mBinding.BSTActivityVectorOutput.setText("");
+
         if (mTree == null || mTree.getRoot() == null) {
             mBinding.BSTActivityFlowIcon.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear, this.getTheme()));
             mBinding.BSTActivityFlowText.setText(R.string.BST_Activity_Empty);
@@ -300,15 +299,17 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             mBinding.BSTActivityFlowIcon.setVisibility(View.INVISIBLE);
         }
 
-        assert mBinding.BSTActivityVectorOutput != null;
-
-        if (view == mBinding.BSTActivityInorder) {
-            mBinding.BSTActivityVectorOutput.setText(ArrayToSting(mTree.toArray(true)));
-        } else if (view == mBinding.BSTActivityPostorder) {
-            mTree.toArrayPostOrder();
-            mBinding.BSTActivityVectorOutput.setText(ArrayToSting(mTree.toArrayPostOrder()));
-        } else if (view == mBinding.BSTActivityPreorder) {
-            mBinding.BSTActivityVectorOutput.setText(ArrayToSting(mTree.toArrayPreOrder()));
+        if(view == mBinding.BSTActivityPan) {
+            int color;
+            if(!mSelected) {
+                color = ContextCompat.getColor(this, R.color.primaryColor);
+                mBinding.BSTActivityView.move(true);
+            } else {
+                color = ContextCompat.getColor(this, R.color.secondaryColor);
+                mBinding.BSTActivityView.move(false);
+            }
+            mSelected = !mSelected;
+            ImageViewCompat.setImageTintList( mBinding.BSTActivityPan, ColorStateList.valueOf(color));
         }
     }
 
@@ -332,26 +333,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         onBackPressed();
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return true;
-    }
-
-    private String ArrayToSting(int[] ints) {
-        if (ints == null) {
-            return "[]";
-        }
-        StringBuilder stringBuilder = new StringBuilder("[");
-        for (int i = 0; i < ints.length; i++) {
-            stringBuilder.append(ints[i]);
-            if (!(ints.length - 1 == i)) {
-                stringBuilder.append(",");
-            }
-        }
-        stringBuilder.append("]");
-        return stringBuilder.toString();
-    }
-
-    @Override
-    public void onCheckedChanged(ChipGroup _group, int _checkedId) {
-
     }
 }
 

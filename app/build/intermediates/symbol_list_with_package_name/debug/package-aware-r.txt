@@ -1570,6 +1570,7 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_pan_tool
 drawable ic_person
 drawable ic_queue
 drawable ic_save
@@ -1628,7 +1629,6 @@ id BST_Activity_Box_Return
 id BST_Activity_Check_Arrow
 id BST_Activity_Check_Background
 id BST_Activity_Check_ConstraintLayout
-id BST_Activity_ChipGroup
 id BST_Activity_CurrentValue
 id BST_Activity_FlowIcon
 id BST_Activity_FlowText
@@ -1637,11 +1637,9 @@ id BST_Activity_Get_Background
 id BST_Activity_Get_ConstraintLayout
 id BST_Activity_Guideline_Hor
 id BST_Activity_Guideline_Ver
-id BST_Activity_Inorder
 id BST_Activity_InputSlider
 id BST_Activity_InputValue
-id BST_Activity_Postorder
-id BST_Activity_Preorder
+id BST_Activity_Pan
 id BST_Activity_ReturnText
 id BST_Activity_ReturnValue
 id BST_Activity_SeekBar
@@ -1664,6 +1662,7 @@ id BST_Fragment_HasLeftChild
 id BST_Fragment_HasParent
 id BST_Fragment_HasRightChild
 id BST_Fragment_Height
+id BST_Fragment_Inorder
 id BST_Fragment_InternalNodes
 id BST_Fragment_IsEmpty
 id BST_Fragment_IsExternal
@@ -1673,7 +1672,10 @@ id BST_Fragment_LeftChild
 id BST_Fragment_Max
 id BST_Fragment_Min
 id BST_Fragment_Parent
+id BST_Fragment_Postorder
+id BST_Fragment_Preorder
 id BST_Fragment_Random
+id BST_Fragment_RandomTree
 id BST_Fragment_Remove
 id BST_Fragment_RightChild
 id BST_Fragment_Root
@@ -1905,6 +1907,8 @@ id clip_horizontal
 id clip_vertical
 id collapseActionView
 id confirm_button
+id constraintLayout
+id constraintLayout2
 id container
 id content
 id contentPanel
@@ -1967,6 +1971,7 @@ id group_divider
 id groups
 id guideline
 id guideline2
+id guideline3
 id hideable
 id home
 id homeAsUp
@@ -2366,7 +2371,8 @@ string BST_Activity_Get_RightChild
 string BST_Activity_Get_Root
 string BST_Activity_Get_Title
 string BST_Activity_Standard_Add
-string BST_Activity_Standard_NotRemoveAble
+string BST_Activity_Standard_Random
+string BST_Activity_Standard_Random_tree
 string BST_Activity_Standard_Remove
 string BST_Activity_Standard_Title
 string BST_Activity_Structure_Depth
@@ -2764,6 +2770,8 @@ style MaterialAlertDialog_MaterialComponents_Title_Panel
 style MaterialAlertDialog_MaterialComponents_Title_Panel_CenterStacked
 style MaterialAlertDialog_MaterialComponents_Title_Text
 style MaterialAlertDialog_MaterialComponents_Title_Text_CenterStacked
+style Pan_selected
+style Pan_unselected
 style Platform_AppCompat
 style Platform_AppCompat_Light
 style Platform_MaterialComponents
@@ -3053,9 +3061,7 @@ style ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox_Dense
 style ThemeOverlay_MaterialComponents_Toolbar_Primary
 style ThemeOverlay_MaterialComponents_Toolbar_Surface
 style ThemeOverlayColorAccentRed
-style Tree
 style Tree_Button
-style Tree_List
 style Widget_AppCompat_ActionBar
 style Widget_AppCompat_ActionBar_Solid
 style Widget_AppCompat_ActionBar_TabBar

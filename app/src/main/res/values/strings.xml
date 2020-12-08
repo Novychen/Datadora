@@ -97,12 +97,13 @@
     <string name="BST_Activity_Text_Preorder">Preorder</string>
     <string name="BST_Activity_Text_Postorder">Postorder</string>
 
-    <string name="BST_Activity_Standard_Title">Standard Operations</string>
+    <string name="BST_Activity_Standard_Title">add / remove</string>
     <string name="BST_Activity_Standard_Add">Add</string>
     <string name="BST_Activity_Standard_Remove">Remove</string>
-    <string name="BST_Activity_Standard_NotRemoveAble">Item is not in the Tree</string>
+    <string name="BST_Activity_Standard_Random">Random Add</string>
+    <string name="BST_Activity_Standard_Random_tree">Random Tree</string>
 
-    <string name="BST_Activity_Structure_Title">Structure</string>
+    <string name="BST_Activity_Structure_Title">Anatomy</string>
     <string name="BST_Activity_Structure_Size">Size</string>
     <string name="BST_Activity_Structure_Height">Height</string>
     <string name="BST_Activity_Structure_Depth">Depth</string>

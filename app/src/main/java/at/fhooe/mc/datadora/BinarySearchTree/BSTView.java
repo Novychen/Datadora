@@ -21,31 +21,25 @@ import at.fhooe.mc.datadora.R;
 public class BSTView extends View {
 
     private static final String TAG = "BSTView : ";
-    private Paint mItemPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mItemPaintArea = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mItemPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mItemPaintArea = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     // the current primary color of the currently used theme
-    int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
+    private final int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
 
     // the current surface color of the currently used theme
-    int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
+    private final int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
 
     // the current colorOnPrimary color of the currently used theme - for text
-    int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
+    private final int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
 
     // the current colorOnSurface color of the currently used theme - for text
-    int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
+    private final int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
 
     private BinarySearchTreeActivity mActivity;
-    private Matrix mMatrix = new Matrix();
-    Point mBegin = new Point();
-    Point mEnd = new Point();
 
-    PointF mBeginF = new PointF();
-    PointF mEndF = new PointF();
-
-    enum Operation {
+    private enum Operation {
         ADD, REMOVE, RANDOM, CLEAR,
 
         SIZE, HEIGHT, DEPTH,
@@ -59,20 +53,20 @@ public class BSTView extends View {
 
     private Operation mCurrentOperation;
 
-    private float mMaxHeight;
     private float mMaxWidth;
-    private float mRadius = 50;
+    private final float mRadius = 50;
     private float mMinDistanceX = 80;
-    private float mMinDistanceY = 20;
+    private PointF mBegin = new PointF();
+    private PointF mEnd = new PointF();
+    private Matrix mMatrix = new Matrix();
 
     // Rect in order to save the TextBounds from the current number
-    private Rect mBounds = new Rect();
-
-    private boolean mTouched;
+    private final Rect mBounds = new Rect();
+    private boolean mMove;
     private int mPosition;
 
-    private int mTranslateX;
-    private int mTranslateY;
+    private float mTranslateX;
+    private float mTranslateY;
 
     public BSTView(Context context) {
         super(context);
@@ -103,8 +97,10 @@ public class BSTView extends View {
 
         mItemTextPaint.setColor(mOnSurfaceColor);
         mItemTextPaint.setTextSize(50);
+    }
 
-        mBegin.x = -1;
+    public void move(boolean _selected) {
+        mMove = _selected;
     }
 
     public void add() {
@@ -112,12 +108,15 @@ public class BSTView extends View {
         invalidate();
     }
 
-    public void remove() { //TODO: Small visual error when deletion of root -> must be invalidated twice (?)
-        int data = mActivity.getTreeUser().get(mPosition).getData();
-        mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", data));
-        mActivity.getTree().remove(data);
-        mActivity.getTreeUser().remove(mPosition);
-        invalidate();
+    public void remove() {
+        if(mPosition != -1) {
+            int data = mActivity.getTreeUser().get(mPosition).getData();
+            mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", data));
+            mActivity.getTree().remove(data);
+            mActivity.getTreeUser().remove(mPosition);
+            invalidate();
+            mPosition = -1;
+        }
     }
 
     public void clear() {
@@ -252,10 +251,8 @@ public class BSTView extends View {
 
         // Account for padding
         float xpad = (float) (getPaddingLeft() + getPaddingRight());
-        float ypad = (float) (getPaddingTop() + getPaddingBottom());
 
         // size of parent of this view
-        mMaxHeight = (float) _h - ypad - 6;
         mMaxWidth = (float) _w - xpad - 6;
     }
 
@@ -268,11 +265,22 @@ public class BSTView extends View {
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
 
+        if(mMove) {
+            moveCanvas(_canvas);
+        }
+        drawTree(_canvas);
+    }
+
+    private void drawTree(Canvas _canvas) {
         float topSpace = 80;
         BinarySearchTree t = mActivity.getTree();
-        Vector<BinaryTreeNode> tv = mActivity.getTreeUser();
+        Vector<BinaryTreeNode> tv = t.toArrayPreOrder();
 
-        if (mActivity.getTreeUser() != null) {
+        if(t.getRoot() != null) {
+            t.getRoot().setPoint(mMaxWidth / 2, topSpace);
+        }
+
+        if (tv != null) {
             for (int i = 0; i < mActivity.getTreeUser().size(); i++) {
 
                 BinaryTreeNode n = tv.get(i);
@@ -280,9 +288,7 @@ public class BSTView extends View {
 
                 float direction = getDirection(n, nPre);
 
-                if(n == t.getRoot()) {
-                    n.setPoint(mMaxWidth / 2, topSpace);
-                } else {
+                if(n != t.getRoot()) {
                     float xPre = nPre.getPoint().x;
 
                     float x = (n.getChildCount() * mMinDistanceX * direction) + xPre;
@@ -351,35 +357,43 @@ public class BSTView extends View {
         }
     }
 
-    @Override
-    public boolean performClick() {
-        return super.performClick();
+    private void selectNode(float _x, float _y) {
+
+        int i = 0;
+        float space = mRadius / 1.5f;
+        for (BinaryTreeNode n : mActivity.getTreeUser()) {
+            if(_x < n.getPoint().x + space && _x > n.getPoint().x - space && _y < n.getPoint().y + space && _y > n.getPoint().y - space) {
+                n.setSelected(true);
+                mPosition = i;
+                invalidate();
+            } else {
+                n.setSelected(false);
+            }
+            i++;
+        }
+    }
+
+    private void moveCanvas(Canvas _canvas){
+        mMatrix.preTranslate(mTranslateX, mTranslateY);
+        _canvas.setMatrix(mMatrix);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent _event) {
 
-        if (_event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (_event.getAction() == MotionEvent.ACTION_DOWN && !mMove) {
             float x = _event.getX();
             float y = _event.getY();
-            int i = 0;
-            float space = mRadius / 1.5f;
-            for (BinaryTreeNode n : mActivity.getTreeUser()) {
-                if(x < n.getPoint().x + space && x > n.getPoint().x - space && y < n.getPoint().y + space && y > n.getPoint().y - space) {
-                    n.setSelected(true);
-                    mPosition = i;
-                    invalidate();
-                } else {
-                    n.setSelected(false);
-                }
-                i++;
-            }
+
+            selectNode(x,y);
+
             mActivity.getBinding().BSTActivityReturnValue.setText("");
             invalidate();
         }
 
         if (_event.getAction() == MotionEvent.ACTION_MOVE) {
-             /*   if(mBegin.x == -1) {
+            if(mMove) {
+                if(mBegin.x == -1) {
                     mBegin.y = (int) _event.getY();
                     mBegin.x = (int) _event.getX();
                 } else {
@@ -391,7 +405,8 @@ public class BSTView extends View {
                 }
                 if(mTranslateY < 20 || mTranslateX < 20) {
                     invalidate();
-                }*/
+                }
+            }
         }
         return true;
     }

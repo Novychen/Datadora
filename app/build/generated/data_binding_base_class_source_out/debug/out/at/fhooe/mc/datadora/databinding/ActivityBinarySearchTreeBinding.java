@@ -14,10 +14,8 @@ import androidx.constraintlayout.widget.Guideline;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewpager2.widget.ViewPager2;
 import at.fhooe.mc.datadora.BinarySearchTree.BSTView;
-import at.fhooe.mc.datadora.BinarySearchTree.VerticalSeekBar;
 import at.fhooe.mc.datadora.R;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
+import at.fhooe.mc.datadora.VerticalSeekBar;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.tabs.TabLayout;
 import java.lang.NullPointerException;
@@ -28,25 +26,8 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   @NonNull
   private final ConstraintLayout rootView;
 
-  /**
-   * This binding is not available in all configurations.
-   * <p>
-   * Present:
-   * <ul>
-   *   <li>layout/</li>
-   *   <li>layout-port/</li>
-   * </ul>
-   *
-   * Absent:
-   * <ul>
-   *   <li>layout-land/</li>
-   * </ul>
-   */
-  @Nullable
-  public final ImageView BSTActivityBoxReturn;
-
   @NonNull
-  public final ChipGroup BSTActivityChipGroup;
+  public final ImageView BSTActivityBoxReturn;
 
   /**
    * This binding is not available in all configurations.
@@ -105,9 +86,6 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   @NonNull
   public final Guideline BSTActivityGuidelineVer;
 
-  @NonNull
-  public final Chip BSTActivityInorder;
-
   /**
    * This binding is not available in all configurations.
    * <p>
@@ -129,43 +107,12 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   public final TextView BSTActivityInputValue;
 
   @NonNull
-  public final Chip BSTActivityPostorder;
+  public final ImageView BSTActivityPan;
 
   @NonNull
-  public final Chip BSTActivityPreorder;
-
-  /**
-   * This binding is not available in all configurations.
-   * <p>
-   * Present:
-   * <ul>
-   *   <li>layout/</li>
-   *   <li>layout-port/</li>
-   * </ul>
-   *
-   * Absent:
-   * <ul>
-   *   <li>layout-land/</li>
-   * </ul>
-   */
-  @Nullable
   public final TextView BSTActivityReturnText;
 
-  /**
-   * This binding is not available in all configurations.
-   * <p>
-   * Present:
-   * <ul>
-   *   <li>layout/</li>
-   *   <li>layout-port/</li>
-   * </ul>
-   *
-   * Absent:
-   * <ul>
-   *   <li>layout-land/</li>
-   * </ul>
-   */
-  @Nullable
+  @NonNull
   public final TextView BSTActivityReturnValue;
 
   /**
@@ -214,30 +161,43 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   @NonNull
   public final ViewPager2 BSTActivityViewPager;
 
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout/</li>
+   *   <li>layout-port/</li>
+   * </ul>
+   */
+  @Nullable
+  public final Guideline guideline3;
+
   private ActivityBinarySearchTreeBinding(@NonNull ConstraintLayout rootView,
-      @Nullable ImageView BSTActivityBoxReturn, @NonNull ChipGroup BSTActivityChipGroup,
-      @Nullable TextView BSTActivityCurrentValue, @Nullable ImageView BSTActivityFlowIcon,
-      @Nullable TextView BSTActivityFlowText, @NonNull Guideline BSTActivityGuidelineHor,
-      @NonNull Guideline BSTActivityGuidelineVer, @NonNull Chip BSTActivityInorder,
+      @NonNull ImageView BSTActivityBoxReturn, @Nullable TextView BSTActivityCurrentValue,
+      @Nullable ImageView BSTActivityFlowIcon, @Nullable TextView BSTActivityFlowText,
+      @NonNull Guideline BSTActivityGuidelineHor, @NonNull Guideline BSTActivityGuidelineVer,
       @Nullable Slider BSTActivityInputSlider, @NonNull TextView BSTActivityInputValue,
-      @NonNull Chip BSTActivityPostorder, @NonNull Chip BSTActivityPreorder,
-      @Nullable TextView BSTActivityReturnText, @Nullable TextView BSTActivityReturnValue,
-      @Nullable VerticalSeekBar BSTActivitySeekBar, @NonNull TabLayout BSTActivityTabLayout,
-      @NonNull Toolbar BSTActivityToolbar, @Nullable TextView BSTActivityVectorOutput,
-      @NonNull BSTView BSTActivityView, @NonNull ViewPager2 BSTActivityViewPager) {
+      @NonNull ImageView BSTActivityPan, @NonNull TextView BSTActivityReturnText,
+      @NonNull TextView BSTActivityReturnValue, @Nullable VerticalSeekBar BSTActivitySeekBar,
+      @NonNull TabLayout BSTActivityTabLayout, @NonNull Toolbar BSTActivityToolbar,
+      @Nullable TextView BSTActivityVectorOutput, @NonNull BSTView BSTActivityView,
+      @NonNull ViewPager2 BSTActivityViewPager, @Nullable Guideline guideline3) {
     this.rootView = rootView;
     this.BSTActivityBoxReturn = BSTActivityBoxReturn;
-    this.BSTActivityChipGroup = BSTActivityChipGroup;
     this.BSTActivityCurrentValue = BSTActivityCurrentValue;
     this.BSTActivityFlowIcon = BSTActivityFlowIcon;
     this.BSTActivityFlowText = BSTActivityFlowText;
     this.BSTActivityGuidelineHor = BSTActivityGuidelineHor;
     this.BSTActivityGuidelineVer = BSTActivityGuidelineVer;
-    this.BSTActivityInorder = BSTActivityInorder;
     this.BSTActivityInputSlider = BSTActivityInputSlider;
     this.BSTActivityInputValue = BSTActivityInputValue;
-    this.BSTActivityPostorder = BSTActivityPostorder;
-    this.BSTActivityPreorder = BSTActivityPreorder;
+    this.BSTActivityPan = BSTActivityPan;
     this.BSTActivityReturnText = BSTActivityReturnText;
     this.BSTActivityReturnValue = BSTActivityReturnValue;
     this.BSTActivitySeekBar = BSTActivitySeekBar;
@@ -246,6 +206,7 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
     this.BSTActivityVectorOutput = BSTActivityVectorOutput;
     this.BSTActivityView = BSTActivityView;
     this.BSTActivityViewPager = BSTActivityViewPager;
+    this.guideline3 = guideline3;
   }
 
   @Override
@@ -277,10 +238,7 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
     missingId: {
       id = R.id.BST_Activity_Box_Return;
       ImageView BSTActivityBoxReturn = rootView.findViewById(id);
-
-      id = R.id.BST_Activity_ChipGroup;
-      ChipGroup BSTActivityChipGroup = rootView.findViewById(id);
-      if (BSTActivityChipGroup == null) {
+      if (BSTActivityBoxReturn == null) {
         break missingId;
       }
 
@@ -305,12 +263,6 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.BST_Activity_Inorder;
-      Chip BSTActivityInorder = rootView.findViewById(id);
-      if (BSTActivityInorder == null) {
-        break missingId;
-      }
-
       id = R.id.BST_Activity_InputSlider;
       Slider BSTActivityInputSlider = rootView.findViewById(id);
 
@@ -320,23 +272,23 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.BST_Activity_Postorder;
-      Chip BSTActivityPostorder = rootView.findViewById(id);
-      if (BSTActivityPostorder == null) {
-        break missingId;
-      }
-
-      id = R.id.BST_Activity_Preorder;
-      Chip BSTActivityPreorder = rootView.findViewById(id);
-      if (BSTActivityPreorder == null) {
+      id = R.id.BST_Activity_Pan;
+      ImageView BSTActivityPan = rootView.findViewById(id);
+      if (BSTActivityPan == null) {
         break missingId;
       }
 
       id = R.id.BST_Activity_ReturnText;
       TextView BSTActivityReturnText = rootView.findViewById(id);
+      if (BSTActivityReturnText == null) {
+        break missingId;
+      }
 
       id = R.id.BST_Activity_ReturnValue;
       TextView BSTActivityReturnValue = rootView.findViewById(id);
+      if (BSTActivityReturnValue == null) {
+        break missingId;
+      }
 
       id = R.id.BST_Activity_SeekBar;
       VerticalSeekBar BSTActivitySeekBar = rootView.findViewById(id);
@@ -368,12 +320,15 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.guideline3;
+      Guideline guideline3 = rootView.findViewById(id);
+
       return new ActivityBinarySearchTreeBinding((ConstraintLayout) rootView, BSTActivityBoxReturn,
-          BSTActivityChipGroup, BSTActivityCurrentValue, BSTActivityFlowIcon, BSTActivityFlowText,
-          BSTActivityGuidelineHor, BSTActivityGuidelineVer, BSTActivityInorder,
-          BSTActivityInputSlider, BSTActivityInputValue, BSTActivityPostorder, BSTActivityPreorder,
-          BSTActivityReturnText, BSTActivityReturnValue, BSTActivitySeekBar, BSTActivityTabLayout,
-          BSTActivityToolbar, BSTActivityVectorOutput, BSTActivityView, BSTActivityViewPager);
+          BSTActivityCurrentValue, BSTActivityFlowIcon, BSTActivityFlowText,
+          BSTActivityGuidelineHor, BSTActivityGuidelineVer, BSTActivityInputSlider,
+          BSTActivityInputValue, BSTActivityPan, BSTActivityReturnText, BSTActivityReturnValue,
+          BSTActivitySeekBar, BSTActivityTabLayout, BSTActivityToolbar, BSTActivityVectorOutput,
+          BSTActivityView, BSTActivityViewPager, guideline3);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

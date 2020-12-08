@@ -51,6 +51,9 @@ public class BSTCheckFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
+        mActivity.getBinding().BSTActivityReturnValue.setText("");
+        mActivity.getBinding().BSTActivityVectorOutput.setText("");
+
 
     }
 

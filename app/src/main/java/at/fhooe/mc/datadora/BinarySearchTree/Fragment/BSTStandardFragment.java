@@ -50,12 +50,17 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
         b = _view.findViewById(R.id.BST_Fragment_Random);
         b.setOnClickListener(this);
 
+        b = _view.findViewById(R.id.BST_Fragment_RandomTree);
+        b.setOnClickListener(this);
+
         b = _view.findViewById(R.id.BST_Fragment_Clear);
         b.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View _view) {
+        mActivity.getBinding().BSTActivityReturnValue.setText("");
+        mActivity.getBinding().BSTActivityVectorOutput.setText("");
 
         if(_view.getId() == R.id.BST_Fragment_Add) {
            add(Integer.parseInt(mActivity.getBinding().BSTActivityInputValue.getText().toString()));
@@ -63,6 +68,8 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
             remove();
         } else if(_view.getId() == R.id.BST_Fragment_Random) {
             random();
+        } else if(_view.getId() == R.id.BST_Fragment_RandomTree) {
+            randomTree();
         } else if(_view.getId() == R.id.BST_Fragment_Clear) {
             clear();
         }
@@ -90,9 +97,18 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
      */
     private void random() {
         int number = createRandomNumber(-100, 100);
-        if (mTree.insertNode(number) != null) {
-            assert mActivity.getBinding().BSTActivityReturnValue != null;
-            mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", number));
+        add(number);
+    }
+
+    /**
+     * adds a random node the value between -100 and 100 to the tree
+     */
+    private void randomTree() {
+        clear();
+        int size = createRandomNumber(5, 10);
+
+        for (int i = 0; i <= size; i++) {
+            random();
         }
     }
 

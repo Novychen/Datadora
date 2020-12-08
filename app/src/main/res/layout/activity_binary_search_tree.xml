@@ -41,13 +41,35 @@
         app:layout_constraintStart_toStartOf="@+id/BST_Activity_View"
         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Box_Return" />
 
+    <TextView
+        android:id="@+id/BST_Activity_Vector_Output"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/BST_Activity_TabLayout"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_View"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_Pan"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/BST_Activity_View"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar"
+        app:srcCompat="@drawable/ic_pan_tool" />
+
     <at.fhooe.mc.datadora.BinarySearchTree.BSTView
         android:id="@+id/BST_Activity_View"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Vector_Output"
+        app:layout_constraintBottom_toTopOf="@+id/BST_Activity_TabLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,12 +88,12 @@
 
     <TextView
         android:id="@+id/BST_Activity_ReturnValue"
-        style="@style/Primary.Text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        style="@style/Primary.Text"
         android:maxLines="1"
         android:singleLine="true"
         android:textAlignment="center"
@@ -92,49 +114,13 @@
         app:layout_constraintTop_toTopOf="@+id/BST_Activity_Box_Return" />
 
 
-    <TextView
-        android:id="@+id/BST_Activity_Vector_Output"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text=" "
-        app:layout_constraintBottom_toTopOf="@+id/BST_Activity_ChipGroup"
-        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_View"
-        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View" />
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/BST_Activity_ChipGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Guideline_Hor">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/BST_Activity_Inorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/BST_Activity_Text_Inorder" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/BST_Activity_Postorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/BST_Activity_Text_Postorder" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/BST_Activity_Preorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/BST_Activity_Text_Preorder" />
-    </com.google.android.material.chip.ChipGroup>
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/BST_Activity_TabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_ChipGroup">
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Guideline_Hor">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -213,6 +199,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5512996" />
+        app:layout_constraintGuide_percent="0.56" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

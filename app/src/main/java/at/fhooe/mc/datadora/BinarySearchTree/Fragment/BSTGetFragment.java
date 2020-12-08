@@ -57,6 +57,8 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View _view) {
+        mActivity.getBinding().BSTActivityReturnValue.setText("");
+        mActivity.getBinding().BSTActivityVectorOutput.setText("");
 
         if (_view.getId() == R.id.BST_Fragment_Parent) {
             getParent();
