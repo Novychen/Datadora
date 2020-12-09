@@ -2,8 +2,6 @@ package at.fhooe.mc.datadora.BinarySearchTree;
 
 import androidx.annotation.NonNull;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Vector;
 
 /**
@@ -244,11 +242,36 @@ public class BinarySearchTree {
     }
 
     public Vector<BinaryTreeNode> getExternalNodes() {
-        return null;
+
+        Vector<BinaryTreeNode> tree = toArrayPostOrder();
+        Vector<BinaryTreeNode> vector = new Vector<>();
+
+        for (BinaryTreeNode n : tree) {
+            if (n.getRight() == null && n.getLeft() == null) {
+                vector.add(n);
+                n.setSelected(true);
+            } else {
+                n.setSelected(false);
+            }
+        }
+
+        return vector;
     }
 
     public Vector<BinaryTreeNode> getInternalNodes() {
-        return null;
+        Vector<BinaryTreeNode> tree = toArrayPostOrder();
+        Vector<BinaryTreeNode> vector = new Vector<>();
+
+        for (BinaryTreeNode n : tree) {
+            if (n.getRight() != null || n.getLeft() != null) {
+                vector.add(n);
+                n.setSelected(true);
+            } else {
+                n.setSelected(false);
+            }
+        }
+
+        return vector;
     }
 
     /**
@@ -520,30 +543,31 @@ public class BinarySearchTree {
      */
     public int getHeight(int key) {
         BinaryTreeNode n = findNode(key);
-        // Base Case
+
         if (n == null)
             return 0;
 
-        Queue<BinaryTreeNode> q = new LinkedList();
+        Vector<BinaryTreeNode> v = new Vector<>();
 
-        q.add(n);
+        v.add(n);
         int height = 0;
 
-        while (1 == 1)
+        while (true)
         {
-            int nodeCount = q.size();
-            if (nodeCount == 0)
+            int nodeCount = v.size();
+            if (nodeCount == 0) {
                 return height;
+            }
             height++;
 
             while (nodeCount > 0)
             {
-                BinaryTreeNode newnode = q.peek();
-                q.remove();
-                if (newnode.getLeft() != null)
-                    q.add(newnode.getLeft());
-                if (newnode.getRight() != null)
-                    q.add(newnode.getRight());
+                BinaryTreeNode newNode = v.get(0);
+                v.remove(0);
+                if (newNode.getLeft() != null)
+                    v.add(newNode.getLeft());
+                if (newNode.getRight() != null)
+                    v.add(newNode.getRight());
                 nodeCount--;
             }
         }

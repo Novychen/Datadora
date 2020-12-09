@@ -50,11 +50,25 @@ public class BSTCheckFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View _view) {
         mActivity.getBinding().BSTActivityReturnValue.setText("");
         mActivity.getBinding().BSTActivityVectorOutput.setText("");
 
-
+        if (_view.getId() == R.id.BST_Fragment_HasParent) {
+            hasParent();
+        } else if (_view.getId() == R.id.BST_Fragment_HasRightChild) {
+            hasRightChild();
+        } else if (_view.getId() == R.id.BST_Fragment_HasLeftChild) {
+            hasLeftChild();
+        } else if (_view.getId() == R.id.BST_Fragment_IsRoot) {
+            isRoot();
+        } else if (_view.getId() == R.id.BST_Fragment_IsExternal) {
+            isExternal();
+        } else if (_view.getId() == R.id.BST_Fragment_IsInternal) {
+            isInternal();
+        } else if (_view.getId() == R.id.BST_Fragment_IsEmpty) {
+            isEmpty();
+        }
     }
 
     private void hasParent() { mActivity.getBinding().BSTActivityView.hasParent(); }

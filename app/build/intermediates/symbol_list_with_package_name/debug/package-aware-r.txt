@@ -1561,6 +1561,9 @@ drawable design_snackbar_background
 drawable ic_arrow_drop_down
 drawable ic_bst
 drawable ic_card
+drawable ic_center_list
+drawable ic_center_normal
+drawable ic_center_pressed
 drawable ic_check
 drawable ic_clear
 drawable ic_doublelinkedlist
@@ -1626,6 +1629,7 @@ id About_Activity_Yvonne
 id BOTTOM_END
 id BOTTOM_START
 id BST_Activity_Box_Return
+id BST_Activity_Center
 id BST_Activity_Check_Arrow
 id BST_Activity_Check_Background
 id BST_Activity_Check_ConstraintLayout
@@ -2350,6 +2354,7 @@ string All_Data_Activity_Text_Return
 string All_Data_Activity_Text_Saved
 string All_Data_Activity_Text_Size
 string All_Data_Activity_True
+string BST_Activity_Center
 string BST_Activity_Check_Child
 string BST_Activity_Check_Empty
 string BST_Activity_Check_External

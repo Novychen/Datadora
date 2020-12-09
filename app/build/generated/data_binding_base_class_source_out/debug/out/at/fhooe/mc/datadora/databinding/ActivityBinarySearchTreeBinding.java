@@ -29,6 +29,9 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   @NonNull
   public final ImageView BSTActivityBoxReturn;
 
+  @NonNull
+  public final ImageView BSTActivityCenter;
+
   /**
    * This binding is not available in all configurations.
    * <p>
@@ -138,21 +141,7 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   @NonNull
   public final Toolbar BSTActivityToolbar;
 
-  /**
-   * This binding is not available in all configurations.
-   * <p>
-   * Present:
-   * <ul>
-   *   <li>layout/</li>
-   *   <li>layout-port/</li>
-   * </ul>
-   *
-   * Absent:
-   * <ul>
-   *   <li>layout-land/</li>
-   * </ul>
-   */
-  @Nullable
+  @NonNull
   public final TextView BSTActivityVectorOutput;
 
   @NonNull
@@ -179,17 +168,19 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   public final Guideline guideline3;
 
   private ActivityBinarySearchTreeBinding(@NonNull ConstraintLayout rootView,
-      @NonNull ImageView BSTActivityBoxReturn, @Nullable TextView BSTActivityCurrentValue,
-      @Nullable ImageView BSTActivityFlowIcon, @Nullable TextView BSTActivityFlowText,
-      @NonNull Guideline BSTActivityGuidelineHor, @NonNull Guideline BSTActivityGuidelineVer,
-      @Nullable Slider BSTActivityInputSlider, @NonNull TextView BSTActivityInputValue,
-      @NonNull ImageView BSTActivityPan, @NonNull TextView BSTActivityReturnText,
-      @NonNull TextView BSTActivityReturnValue, @Nullable VerticalSeekBar BSTActivitySeekBar,
-      @NonNull TabLayout BSTActivityTabLayout, @NonNull Toolbar BSTActivityToolbar,
-      @Nullable TextView BSTActivityVectorOutput, @NonNull BSTView BSTActivityView,
-      @NonNull ViewPager2 BSTActivityViewPager, @Nullable Guideline guideline3) {
+      @NonNull ImageView BSTActivityBoxReturn, @NonNull ImageView BSTActivityCenter,
+      @Nullable TextView BSTActivityCurrentValue, @Nullable ImageView BSTActivityFlowIcon,
+      @Nullable TextView BSTActivityFlowText, @NonNull Guideline BSTActivityGuidelineHor,
+      @NonNull Guideline BSTActivityGuidelineVer, @Nullable Slider BSTActivityInputSlider,
+      @NonNull TextView BSTActivityInputValue, @NonNull ImageView BSTActivityPan,
+      @NonNull TextView BSTActivityReturnText, @NonNull TextView BSTActivityReturnValue,
+      @Nullable VerticalSeekBar BSTActivitySeekBar, @NonNull TabLayout BSTActivityTabLayout,
+      @NonNull Toolbar BSTActivityToolbar, @NonNull TextView BSTActivityVectorOutput,
+      @NonNull BSTView BSTActivityView, @NonNull ViewPager2 BSTActivityViewPager,
+      @Nullable Guideline guideline3) {
     this.rootView = rootView;
     this.BSTActivityBoxReturn = BSTActivityBoxReturn;
+    this.BSTActivityCenter = BSTActivityCenter;
     this.BSTActivityCurrentValue = BSTActivityCurrentValue;
     this.BSTActivityFlowIcon = BSTActivityFlowIcon;
     this.BSTActivityFlowText = BSTActivityFlowText;
@@ -239,6 +230,12 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       id = R.id.BST_Activity_Box_Return;
       ImageView BSTActivityBoxReturn = rootView.findViewById(id);
       if (BSTActivityBoxReturn == null) {
+        break missingId;
+      }
+
+      id = R.id.BST_Activity_Center;
+      ImageView BSTActivityCenter = rootView.findViewById(id);
+      if (BSTActivityCenter == null) {
         break missingId;
       }
 
@@ -307,6 +304,9 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
 
       id = R.id.BST_Activity_Vector_Output;
       TextView BSTActivityVectorOutput = rootView.findViewById(id);
+      if (BSTActivityVectorOutput == null) {
+        break missingId;
+      }
 
       id = R.id.BST_Activity_View;
       BSTView BSTActivityView = rootView.findViewById(id);
@@ -324,7 +324,7 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       Guideline guideline3 = rootView.findViewById(id);
 
       return new ActivityBinarySearchTreeBinding((ConstraintLayout) rootView, BSTActivityBoxReturn,
-          BSTActivityCurrentValue, BSTActivityFlowIcon, BSTActivityFlowText,
+          BSTActivityCenter, BSTActivityCurrentValue, BSTActivityFlowIcon, BSTActivityFlowText,
           BSTActivityGuidelineHor, BSTActivityGuidelineVer, BSTActivityInputSlider,
           BSTActivityInputValue, BSTActivityPan, BSTActivityReturnText, BSTActivityReturnValue,
           BSTActivitySeekBar, BSTActivityTabLayout, BSTActivityToolbar, BSTActivityVectorOutput,

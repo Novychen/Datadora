@@ -57,6 +57,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
+        android:padding="3dp"
         app:layout_constraintBottom_toTopOf="@+id/BST_Activity_View"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
@@ -200,5 +201,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.56" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_Center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/ic_center_list"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Pan"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Pan"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Pan" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

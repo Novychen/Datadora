@@ -21,7 +21,7 @@
             <Button
                 android:id="@+id/BST_Fragment_Parent"
                 style="@style/Tree_Button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/BST_Activity_Get_Parent"
                 app:layout_constraintBottom_toTopOf="@+id/BST_Fragment_InternalNodes"

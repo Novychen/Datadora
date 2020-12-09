@@ -69,7 +69,17 @@ public class BSTStructureFragment extends Fragment implements View.OnClickListen
             postorder();
         }
     }
-    private void size() { }
+    private void size() {
+        String size;
+        if(mActivity.getTree() != null) {
+            size = String.valueOf(mActivity.getTree().size());
+        } else {
+            size = "0";
+        }
+
+        mActivity.getBinding().BSTActivityReturnValue.setText(size);
+
+    }
 
     private void height() {
         mActivity.getBinding().BSTActivityView.height();

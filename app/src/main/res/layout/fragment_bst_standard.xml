@@ -21,9 +21,10 @@
                 android:id="@+id/BST_Fragment_Add"
                 style="@style/Tree_Button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:text="@string/BST_Activity_Standard_Add"
+                app:layout_constraintBottom_toBottomOf="@+id/BST_Fragment_Random"
                 app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_Random"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/BST_Fragment_Random" />
@@ -32,9 +33,10 @@
                 android:id="@+id/BST_Fragment_RandomTree"
                 style="@style/Tree_Button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/BST_Activity_Standard_Random_tree"
+                app:layout_constraintBottom_toBottomOf="@+id/BST_Fragment_Random"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/BST_Fragment_Random"
                 app:layout_constraintTop_toTopOf="@+id/BST_Fragment_Random" />
@@ -48,7 +50,7 @@
                 android:text="@string/BST_Activity_Standard_Remove"
                 app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_Clear"
                 app:layout_constraintStart_toStartOf="@+id/BST_Fragment_Add"
-                app:layout_constraintTop_toBottomOf="@+id/BST_Fragment_Random" />
+                app:layout_constraintTop_toBottomOf="@+id/BST_Fragment_Add" />
 
             <Button
                 android:id="@+id/BST_Fragment_Random"
@@ -59,7 +61,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/BST_Activity_Standard_Random"
-                app:layout_constraintBottom_toTopOf="@+id/BST_Fragment_Remove"
                 app:layout_constraintEnd_toStartOf="@+id/BST_Fragment_RandomTree"
                 app:layout_constraintStart_toEndOf="@+id/BST_Fragment_Add"
                 app:layout_constraintTop_toTopOf="parent"

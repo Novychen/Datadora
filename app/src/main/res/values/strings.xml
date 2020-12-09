@@ -97,13 +97,13 @@
     <string name="BST_Activity_Text_Preorder">Preorder</string>
     <string name="BST_Activity_Text_Postorder">Postorder</string>
 
-    <string name="BST_Activity_Standard_Title">add / remove</string>
+    <string name="BST_Activity_Standard_Title">Standard</string>
     <string name="BST_Activity_Standard_Add">Add</string>
     <string name="BST_Activity_Standard_Remove">Remove</string>
     <string name="BST_Activity_Standard_Random">Random Add</string>
     <string name="BST_Activity_Standard_Random_tree">Random Tree</string>
 
-    <string name="BST_Activity_Structure_Title">Anatomy</string>
+    <string name="BST_Activity_Structure_Title">Structure</string>
     <string name="BST_Activity_Structure_Size">Size</string>
     <string name="BST_Activity_Structure_Height">Height</string>
     <string name="BST_Activity_Structure_Depth">Depth</string>
@@ -157,6 +157,7 @@
     <string name="LinkedList_Activity_Pre_Succ_Hint">Select element</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="BST_Activity_Center">Tree is already in the center</string>
 
 
 </resources>

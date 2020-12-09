@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,6 +81,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         }
 
         mBinding.BSTActivityPan.setOnClickListener(this);
+        mBinding.BSTActivityCenter.setOnClickListener(this);
     }
 
     private void setUpSeekBar() {
@@ -131,6 +133,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
     private void setUpTabLayout() {
         TabLayout tabLayout = findViewById(R.id.BST_Activity_TabLayout);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_START);
 
         BinarySearchTreeTabAdapter adapter = new BinarySearchTreeTabAdapter(this);
         BSTStandardFragment fragmentStandard = new BSTStandardFragment();
@@ -284,7 +287,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View _view) {
 
         mBinding.BSTActivityReturnValue.setText("");
         mBinding.BSTActivityVectorOutput.setText("");
@@ -299,7 +302,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             mBinding.BSTActivityFlowIcon.setVisibility(View.INVISIBLE);
         }
 
-        if(view == mBinding.BSTActivityPan) {
+        if(_view == mBinding.BSTActivityPan) {
             int color;
             if(!mSelected) {
                 color = ContextCompat.getColor(this, R.color.primaryColor);
@@ -310,6 +313,16 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             }
             mSelected = !mSelected;
             ImageViewCompat.setImageTintList( mBinding.BSTActivityPan, ColorStateList.valueOf(color));
+        } else if (_view == mBinding.BSTActivityCenter) {
+            float x = mBinding.BSTActivityView.getTranslateX();
+            float y = mBinding.BSTActivityView.getTranslateY();
+
+            if (x == 0 && y == 0) {
+                Toast.makeText(this, R.string.BST_Activity_Center, Toast.LENGTH_SHORT).show();
+            } else {
+                mBinding.BSTActivityView.setTranslate(0,0);
+                mBinding.BSTActivityView.invalidate();
+            }
         }
     }
 

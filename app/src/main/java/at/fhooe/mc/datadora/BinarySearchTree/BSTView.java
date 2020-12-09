@@ -55,18 +55,17 @@ public class BSTView extends View {
 
     private float mMaxWidth;
     private final float mRadius = 50;
-    private float mMinDistanceX = 80;
+
+    private final Matrix mMatrix = new Matrix();
     private PointF mBegin = new PointF();
     private PointF mEnd = new PointF();
-    private Matrix mMatrix = new Matrix();
+    private float mX;
+    private float mY;
 
     // Rect in order to save the TextBounds from the current number
     private final Rect mBounds = new Rect();
-    private boolean mMove;
+    private boolean mMove = false;
     private int mPosition;
-
-    private float mTranslateX;
-    private float mTranslateY;
 
     public BSTView(Context context) {
         super(context);
@@ -103,6 +102,19 @@ public class BSTView extends View {
         mMove = _selected;
     }
 
+    public void setTranslate(float _x, float _y) {
+        mX = _x;
+        mY = _y;
+    }
+
+    public float getTranslateX() {
+       return mX;
+    }
+
+    public float getTranslateY() {
+        return mY;
+    }
+
     public void add() {
         mCurrentOperation = Operation.ADD;
         invalidate();
@@ -125,20 +137,22 @@ public class BSTView extends View {
     }
 
     public void depth() {
-        mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s",  mActivity.getTree().getDepth(mActivity.getTreeUser().get(mPosition).getData())));
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
+            mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", mActivity.getTree().getDepth(mActivity.getTreeUser().get(mPosition).getData())));
+        }
     }
 
     public void height() {
-        mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", mActivity.getTree().getHeight(mActivity.getTreeUser().get(mPosition).getData())));
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
+            mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", mActivity.getTree().getHeight(mActivity.getTreeUser().get(mPosition).getData())));
+        }
     }
 
     public void getExternal() {
-        mCurrentOperation = Operation.EXTERNALNODES;
         invalidate();
     }
 
     public void getInternal() {
-        mCurrentOperation = Operation.INTERNALNODES;
         invalidate();
     }
 
@@ -155,93 +169,119 @@ public class BSTView extends View {
     }
 
     public void hasParent() {
-        BinaryTreeNode parent = mActivity.getTree().getParentNode(mActivity.getTreeUser().get(mPosition).getData());
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
-        if(parent != null) {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
-        } else {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            BinaryTreeNode parent = mActivity.getTree().getParentNode(mActivity.getTreeUser().get(mPosition).getData());
+
+            if (parent != null) {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
+            } else {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            }
         }
     }
 
     public void hasRightChild() {
-        BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
-        if(n.getRight() != null) {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
-        } else {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+
+            if (n.getRight() != null) {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
+            } else {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            }
         }
     }
 
     public void hasLeftChild() {
-        BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
-        if(n.getLeft() != null) {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
-        } else {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+
+            if (n.getLeft() != null) {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
+            } else {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            }
         }
     }
 
     public void isRoot() {
-        BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
-        if (mActivity.getTree().getRoot() == n) {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
-        } else {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+
+            if (mActivity.getTree().getRoot() == n) {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
+            } else {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            }
         }
     }
 
     public void isInternal() {
-        BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
-        if (n.getRight() != null || n.getLeft() != null) {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
-        } else {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+
+            if (n.getRight() != null || n.getLeft() != null) {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
+            } else {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            }
         }
     }
 
     public void isExternal() {
-        BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
-        if (n.getRight() == null && n.getLeft() == null) {
-            mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
-        } else {
-            mActivity.getBinding().BSTActivityReturnValue.setText( R.string.All_Data_Activity_False);
+            BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+
+            if (n.getRight() == null && n.getLeft() == null) {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_True);
+            } else {
+                mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
+            }
         }
     }
 
     public void getParentNode() {
-        BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
-        BinaryTreeNode parent = mActivity.getTree().getParentNode(n.getData());
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
+            BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+            BinaryTreeNode parent = mActivity.getTree().getParentNode(n.getData());
 
-        if(parent != null) {
-            mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", parent.getData()));
-        } else {
-            mActivity.getBinding().BSTActivityReturnValue.setText("-");
+            if (parent != null) {
+                mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", parent.getData()));
+            } else {
+                mActivity.getBinding().BSTActivityReturnValue.setText("-");
+            }
         }
     }
 
     public void getRightChild() {
-        BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
-        if(n.getRight() != null) {
-            mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", n.getRight().getData()));
-        } else {
-            mActivity.getBinding().BSTActivityReturnValue.setText("-");
+            BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+
+            if (n.getRight() != null) {
+                mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", n.getRight().getData()));
+            } else {
+                mActivity.getBinding().BSTActivityReturnValue.setText("-");
+            }
         }
     }
 
     public void getLeftChild() {
-        BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+        if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
-        if(n.getLeft() != null) {
-            mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", n.getLeft().getData()));
-        } else {
-            mActivity.getBinding().BSTActivityReturnValue.setText("-");
+            BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
+
+            if (n.getLeft() != null) {
+                mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", n.getLeft().getData()));
+            } else {
+                mActivity.getBinding().BSTActivityReturnValue.setText("-");
+            }
         }
     }
 
@@ -264,10 +304,6 @@ public class BSTView extends View {
     @Override
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
-
-        if(mMove) {
-            moveCanvas(_canvas);
-        }
         drawTree(_canvas);
     }
 
@@ -277,7 +313,13 @@ public class BSTView extends View {
         Vector<BinaryTreeNode> tv = t.toArrayPreOrder();
 
         if(t.getRoot() != null) {
-            t.getRoot().setPoint(mMaxWidth / 2, topSpace);
+            float x = mMaxWidth / 2;
+            float y = topSpace;
+
+            x = x + (mX);
+            y = y + (mY);
+
+            t.getRoot().setPoint(x, y);
         }
 
         if (tv != null) {
@@ -291,8 +333,9 @@ public class BSTView extends View {
                 if(n != t.getRoot()) {
                     float xPre = nPre.getPoint().x;
 
+                    float mMinDistanceX = 80;
                     float x = (n.getChildCount() * mMinDistanceX * direction) + xPre;
-                    float y = (mMinDistanceX * t.getDepth(n.getData())) + topSpace;
+                    float y = (mMinDistanceX * t.getDepth(n.getData())) + topSpace + mY;
                     n.setPoint(x,y);
 
                     prepareAndDrawLine(n, nPre, _canvas);
@@ -373,41 +416,37 @@ public class BSTView extends View {
         }
     }
 
-    private void moveCanvas(Canvas _canvas){
-        mMatrix.preTranslate(mTranslateX, mTranslateY);
-        _canvas.setMatrix(mMatrix);
-    }
 
     @Override
     public boolean onTouchEvent(MotionEvent _event) {
 
-        if (_event.getAction() == MotionEvent.ACTION_DOWN && !mMove) {
+        if (_event.getAction() == MotionEvent.ACTION_DOWN) {
             float x = _event.getX();
             float y = _event.getY();
-
-            selectNode(x,y);
+            if(!mMove) {
+                selectNode(x, y);
+            } else {
+                mBegin.x = x;
+                mBegin.y = y;
+            }
 
             mActivity.getBinding().BSTActivityReturnValue.setText("");
             invalidate();
-        }
-
-        if (_event.getAction() == MotionEvent.ACTION_MOVE) {
+        } else if (_event.getAction() == MotionEvent.ACTION_MOVE) {
             if(mMove) {
-                if(mBegin.x == -1) {
-                    mBegin.y = (int) _event.getY();
-                    mBegin.x = (int) _event.getX();
-                } else {
-                    mEnd.y = (int) _event.getY();
-                    mEnd.x = (int) _event.getX();
-                    mTranslateY = mEnd.y - mBegin.y;
-                    mTranslateX = mEnd.x - mBegin.x;
-                    mBegin.x = -1;
-                }
-                if(mTranslateY < 20 || mTranslateX < 20) {
-                    invalidate();
-                }
+                float x = _event.getX();
+                float y = _event.getY();
+
+                mEnd.x = x;
+                mEnd.y = y;
+
+                mX = mEnd.x - mBegin.x;
+                mY = mEnd.y - mBegin.y;
+
+                invalidate();
             }
         }
+
         return true;
     }
 
