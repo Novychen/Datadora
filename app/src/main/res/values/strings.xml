@@ -129,6 +129,11 @@
     <string name="BST_Activity_Get_Max">Max</string>
     <string name="BST_Activity_Get_Min">Min</string>
 
+    <string name="BST_Activity_Center">Tree is already in the center</string>
+    <string name="BST_Activity_Select_Toast">Please choose a node</string>
+    <string name="BST_Activity_Add_Toast">This number is already in the tree</string>
+
+
     // Toolbar
     <string name="Toolbar_Action_Settings">Settings</string>
     <string name="Toolbar_Action_ModeSwitch">Switch modes</string>
@@ -155,9 +160,7 @@
     <string name="Content_Description_LinkedList_Get_Background">A rectangle that serves as the background of the operation group get</string>
     <string name="Content_Description_LinkedList_Get_Arrow">An arrow that opens and closes the available operations of the group get</string>
     <string name="LinkedList_Activity_Pre_Succ_Hint">Select element</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="BST_Activity_Center">Tree is already in the center</string>
+
 
 
 </resources>

@@ -8,6 +8,30 @@
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".BinarySearchTree.BinarySearchTreeActivity">
 
+    <ToggleButton
+        android:id="@+id/BST_Activity_Switch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/switch_list"
+        android:textOff=''
+        android:textOn=''
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Center_Node"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Center_Node"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Center_Node" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_Center_Node"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Center"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Center"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Center"
+        app:srcCompat="@drawable/ic_center_node_list" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/BST_Activity_Toolbar"
         android:layout_width="0dp"

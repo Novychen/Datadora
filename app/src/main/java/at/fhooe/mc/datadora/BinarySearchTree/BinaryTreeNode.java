@@ -11,7 +11,7 @@ public class BinaryTreeNode {
     // Count of the children of the node (on the opposite side from where the node is in the tree)
     // If the node is in the right subtree then it counts its left children and versa-vista.
     private int mChildCount;
-    private PointF mPoint;
+    private final PointF mPoint;
     private boolean mSelected;
     private int mData;
     private BinaryTreeNode mRight;

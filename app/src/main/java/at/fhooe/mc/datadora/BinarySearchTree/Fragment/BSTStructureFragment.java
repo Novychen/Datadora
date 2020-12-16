@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -82,17 +83,19 @@ public class BSTStructureFragment extends Fragment implements View.OnClickListen
     }
 
     private void height() {
-        mActivity.getBinding().BSTActivityView.height();
+        if(!mActivity.getBinding().BSTActivityView.height()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void depth() {
-        mActivity.getBinding().BSTActivityView.depth();
+        if(!mActivity.getBinding().BSTActivityView.depth()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void inorder() {
-        Vector<BinaryTreeNode> vector = mActivity.getTree().toInOrder(true);
-        String tree = vectorToString(vector);
-        mActivity.getBinding().BSTActivityVectorOutput.setText(tree);
+        mActivity.getBinding().BSTActivityView.inOrder();
     }
 
     private void preorder() {

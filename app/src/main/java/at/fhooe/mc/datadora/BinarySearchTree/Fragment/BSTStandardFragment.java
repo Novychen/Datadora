@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Random;
 import java.util.Vector;
@@ -23,6 +24,8 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
     private BinarySearchTreeActivity mActivity;
     private BinarySearchTree mTree;
     private Vector<BinaryTreeNode> mTreeUser;
+
+    private boolean mRandom = false;
 
     @Override
     public View onCreateView(LayoutInflater _inflater, ViewGroup _container, Bundle _savedInstanceState) {
@@ -81,19 +84,27 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
             mTree.updateChildCount(mTree.getRoot());
             mTreeUser.add(n);
             mActivity.getBinding().BSTActivityView.add();
+            mRandom = false;
+        } else if (!mRandom) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Add_Toast, Toast.LENGTH_SHORT).show();
         }
     }
 
     /**
      * removes a Node form the tree defined by the key value
      */
-    public void remove() { mActivity.getBinding().BSTActivityView.remove(); }
+    public void remove() {
+        if(!mActivity.getBinding().BSTActivityView.remove()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     /**
      * adds a random node the value between -100 and 100 to the tree
      */
     private void random() {
         int number = createRandomNumber(-100, 100);
+        mRandom = true;
         add(number);
     }
 
@@ -116,6 +127,7 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
         mTree.clear();
         mTreeUser.clear();
         mActivity.getBinding().BSTActivityView.clear();
+        mActivity.getBinding().BSTActivityView.setTranslate(0,0);
     }
 
     private int createRandomNumber(int _min, int _max) {

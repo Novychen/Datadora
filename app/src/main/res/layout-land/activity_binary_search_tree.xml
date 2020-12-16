@@ -8,6 +8,52 @@
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".BinarySearchTree.BinarySearchTreeActivity">
 
+    <ToggleButton
+        android:id="@+id/BST_Activity_Switch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/switch_list"
+        android:textOff=''
+        android:textOn=''
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Center_Node"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Center_Node"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Center_Node" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_Center_Node"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Center"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Center"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Center"
+        app:srcCompat="@drawable/ic_center_node_list" />
+
+    <TextView
+        android:id="@+id/BST_Activity_FlowText"
+        style="@style/Surface.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_FlowIcon"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_FlowIcon"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Activity_FlowIcon" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_FlowIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:contentDescription="@string/Content_Description_Queue_FlowIcon"
+        app:layout_constraintBottom_toTopOf="@+id/BST_Activity_Vector_Output"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@+id/BST_Activity_View"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_View" />
+
     <TextView
         android:id="@+id/BST_Activity_Vector_Output"
         android:layout_width="0dp"
@@ -15,19 +61,6 @@
         app:layout_constraintBottom_toTopOf="@+id/BST_Activity_Guideline_Hor"
         app:layout_constraintEnd_toEndOf="@+id/BST_Activity_View"
         app:layout_constraintStart_toStartOf="@+id/BST_Activity_View" />
-
-    <ImageView
-        android:id="@+id/BST_Activity_Pan"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Box_Return"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View"
-        app:layout_constraintTop_toTopOf="@+id/BST_Activity_View"
-        app:srcCompat="@drawable/ic_pan_tool" />
 
     <at.fhooe.mc.datadora.BinarySearchTree.BSTView
         android:id="@+id/BST_Activity_View"
@@ -38,8 +71,23 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_Toolbar"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_Pan"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Box_Return"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toStartOf="@+id/BST_Activity_View"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_View"
+        app:srcCompat="@drawable/ic_pan_tool" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/BST_Activity_Toolbar"
@@ -159,12 +207,12 @@
 
     <TextView
         android:id="@+id/BST_Activity_ReturnValue"
+        style="@style/Primary.Text"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        style="@style/Primary.Text"
         android:maxLines="1"
         android:singleLine="true"
         android:textAlignment="center"
@@ -191,5 +239,12 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toEndOf="@+id/BST_Activity_Pan"
         app:layout_constraintTop_toTopOf="@+id/BST_Activity_Pan" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.35" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

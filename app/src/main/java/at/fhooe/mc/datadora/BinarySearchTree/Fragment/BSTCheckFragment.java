@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -71,23 +72,47 @@ public class BSTCheckFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void hasParent() { mActivity.getBinding().BSTActivityView.hasParent(); }
+    private void hasParent() {
+        if(!mActivity.getBinding().BSTActivityView.hasParent()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+         }
+    }
 
-    private void hasRightChild() {  mActivity.getBinding().BSTActivityView.hasRightChild(); }
+    private void hasRightChild() {
+        if(!mActivity.getBinding().BSTActivityView.hasRightChild()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
+    }
 
-    private void hasLeftChild() {  mActivity.getBinding().BSTActivityView.hasLeftChild(); }
+    private void hasLeftChild() {
+        if(!mActivity.getBinding().BSTActivityView.hasLeftChild()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
+    }
 
-    private void isRoot() {  mActivity.getBinding().BSTActivityView.isRoot(); }
+    private void isRoot() {
+        if(!mActivity.getBinding().BSTActivityView.isRoot()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     /**
      * returns a boolean if the node given by the key is an external node
      */
-    public void isExternal() {  mActivity.getBinding().BSTActivityView.isExternal(); }
+    public void isExternal() {
+        if(!mActivity.getBinding().BSTActivityView.isExternal()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     /**
      * returns a boolean if the node given by the key is an internal node
      */
-    public void isInternal() {  mActivity.getBinding().BSTActivityView.isInternal(); }
+    public void isInternal() {
+        if(!mActivity.getBinding().BSTActivityView.isInternal()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void isEmpty() {
         if (mActivity.getTree() == null || mActivity.getTree().getRoot() == null) {
