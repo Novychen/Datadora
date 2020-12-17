@@ -124,6 +124,8 @@ public class StackView extends View {
 
     private StackActivity mStackActivity;
 
+    private boolean mSwitch;
+
     public StackView(Context context) {
         super(context);
         init();
@@ -140,8 +142,12 @@ public class StackView extends View {
     }
 
     protected Vector<Integer> getStackNumbers() {
-
         return mStackNumbers;
+    }
+
+    public void setSwitch(boolean isChecked) {
+        mSwitch = isChecked;
+        invalidate();
     }
 
     /**

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/BST_Activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -167,7 +168,7 @@
         app:layout_constraintStart_toStartOf="@+id/BST_Activity_TabLayout"
         app:layout_constraintTop_toBottomOf="@+id/BST_Activity_TabLayout" />
 
-    <at.fhooe.mc.datadora.VerticalSeekBar
+    <at.fhooe.mc.datadora.CustomUIElements.VerticalSeekBar
         android:id="@+id/BST_Activity_SeekBar"
         android:layout_width="0dp"
         android:layout_height="0dp"

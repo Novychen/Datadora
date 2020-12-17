@@ -2,10 +2,26 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Stack_Activity"
+    style="@style/Surface"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/Surface"
     tools:context=".MainActivity">
+
+    <ToggleButton
+        android:id="@+id/Stack_Activity_Switch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/switch_list"
+        android:textOff=''
+        android:textOn=''
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toStartOf="@+id/Stack_Activity_Guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Toolbar" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/Stack_Activity_Toolbar"
@@ -235,15 +251,6 @@
         android:text="@string/Slider_Current_Value"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_ViewContainer"
         app:layout_constraintTop_toTopOf="@+id/Stack_Activity_InputSlider" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/Stack_Activity_Switch"
-        style="@style/AppTheme.Switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/Stack_Activity_Guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Toolbar" />
 
     <ImageView
         android:id="@+id/Stack_Activity_Line"

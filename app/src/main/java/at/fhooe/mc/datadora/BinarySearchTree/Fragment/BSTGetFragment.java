@@ -104,6 +104,8 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
      * returns a String with all external nodes of the tree
      */
     public void getExternalNodes() {
+
+        mActivity.getTree().getExternalNodes();
         mActivity.getBinding().BSTActivityView.getExternal();
     }
 
@@ -111,6 +113,8 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
      * returns a String with all internal nodes of the tree
      */
     public void getInternalNodes() {
+
+        mActivity.getTree().getInternalNodes();
         mActivity.getBinding().BSTActivityView.getInternal();
     }
 

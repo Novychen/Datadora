@@ -21,6 +21,9 @@ public final class ActivityAboutBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
+  public final ConstraintLayout AboutActivity;
+
+  @NonNull
   public final ImageView AboutActivityAppIcon;
 
   @NonNull
@@ -57,13 +60,15 @@ public final class ActivityAboutBinding implements ViewBinding {
   public final TextView AboutActivityYvonne;
 
   private ActivityAboutBinding(@NonNull ConstraintLayout rootView,
-      @NonNull ImageView AboutActivityAppIcon, @NonNull TextView AboutActivityAppName,
-      @NonNull TextView AboutActivityAppSlogan, @NonNull TextView AboutActivityBlockText,
-      @NonNull TextView AboutActivityDeveloper, @NonNull TextView AboutActivityGerald,
-      @NonNull TextView AboutActivityInes, @NonNull ImageView AboutActivityLine1,
-      @NonNull ImageView AboutActivityLine2, @NonNull Toolbar AboutActivityToolbar,
-      @NonNull TextView AboutActivityUniversity, @NonNull TextView AboutActivityYvonne) {
+      @NonNull ConstraintLayout AboutActivity, @NonNull ImageView AboutActivityAppIcon,
+      @NonNull TextView AboutActivityAppName, @NonNull TextView AboutActivityAppSlogan,
+      @NonNull TextView AboutActivityBlockText, @NonNull TextView AboutActivityDeveloper,
+      @NonNull TextView AboutActivityGerald, @NonNull TextView AboutActivityInes,
+      @NonNull ImageView AboutActivityLine1, @NonNull ImageView AboutActivityLine2,
+      @NonNull Toolbar AboutActivityToolbar, @NonNull TextView AboutActivityUniversity,
+      @NonNull TextView AboutActivityYvonne) {
     this.rootView = rootView;
+    this.AboutActivity = AboutActivity;
     this.AboutActivityAppIcon = AboutActivityAppIcon;
     this.AboutActivityAppName = AboutActivityAppName;
     this.AboutActivityAppSlogan = AboutActivityAppSlogan;
@@ -105,6 +110,8 @@ public final class ActivityAboutBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      ConstraintLayout AboutActivity = (ConstraintLayout) rootView;
+
       id = R.id.About_Activity_App_Icon;
       ImageView AboutActivityAppIcon = rootView.findViewById(id);
       if (AboutActivityAppIcon == null) {
@@ -177,10 +184,11 @@ public final class ActivityAboutBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityAboutBinding((ConstraintLayout) rootView, AboutActivityAppIcon,
-          AboutActivityAppName, AboutActivityAppSlogan, AboutActivityBlockText,
-          AboutActivityDeveloper, AboutActivityGerald, AboutActivityInes, AboutActivityLine1,
-          AboutActivityLine2, AboutActivityToolbar, AboutActivityUniversity, AboutActivityYvonne);
+      return new ActivityAboutBinding((ConstraintLayout) rootView, AboutActivity,
+          AboutActivityAppIcon, AboutActivityAppName, AboutActivityAppSlogan,
+          AboutActivityBlockText, AboutActivityDeveloper, AboutActivityGerald, AboutActivityInes,
+          AboutActivityLine1, AboutActivityLine2, AboutActivityToolbar, AboutActivityUniversity,
+          AboutActivityYvonne);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

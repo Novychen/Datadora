@@ -60,11 +60,12 @@ public class BSTView extends View {
     private float mMaxWidth;
 
     private final float mRadius = 50;
+    private int mColor;
 
-    private PointF mBegin = new PointF();
-    private PointF mEnd = new PointF();
+    private final PointF mBegin = new PointF();
+    private final PointF mEnd = new PointF();
 
-    private float mTopSpace = 80;
+    private final float mTopSpace = 80;
     private BinarySearchTree mTree;
     float mLength = 25;
 
@@ -74,6 +75,7 @@ public class BSTView extends View {
     // Rect in order to save the TextBounds from the current number
     private final Rect mBounds = new Rect();
     private boolean mMove = false;
+    private boolean mDown = false;
     private int mPosition = -1;
 
     public BSTView(Context context) {
@@ -327,15 +329,23 @@ public class BSTView extends View {
     public void inOrder() {
         final Vector<BinaryTreeNode> inOrder = mActivity.getTree().toInOrder(true);
         final StringBuilder builder = new StringBuilder();
+
         ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), mSurfaceColor, mPrimaryColor);
         animator.setRepeatCount(inOrder.size() - 1);
         animator.setDuration(500);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mColor = (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 inOrder.get(mCount).setSelected(true);
-                builder.append( inOrder.get(mCount).getData());
+                builder.append(inOrder.get(mCount).getData());
                 mActivity.getBinding().BSTActivityVectorOutput.setText(builder.toString());
                 invalidate();
             }
@@ -359,9 +369,10 @@ public class BSTView extends View {
                 inOrder.get(mCount).setSelected(true);
                 builder.append("   ").append(inOrder.get(mCount).getData());
                 mActivity.getBinding().BSTActivityVectorOutput.setText(builder.toString());
-                invalidate();
             }
         });
+
+
         animator.start();
 
     }
@@ -393,11 +404,21 @@ public class BSTView extends View {
         Vector<BinaryTreeNode> tv = mTree.toArrayPreOrder();
 
         if(mTree.getRoot() != null) {
-            float x = mMaxWidth / 2;
-            float y = mTopSpace;
+            float x;
+            float y;
 
-            x = x + (mX);
-            y = y + (mY);
+            if (mX != 0 && mY != 0) {
+                x = mTree.getRoot().getPoint().x;
+                y = mTree.getRoot().getPoint().y;
+            } else {
+                x = mMaxWidth / 2;
+                y = mTopSpace;
+            }
+
+            if(mMove) {
+                x = x + (mX);
+                y = y + (mY);
+            }
 
             mTree.getRoot().setPoint(x, y);
         }
@@ -474,6 +495,8 @@ public class BSTView extends View {
         float direction = getDirection(_n, _nPre);
 
         float xPre = _nPre.getPoint().x;
+        float yPre = _nPre.getPoint().y;
+
         int minDistanceX;
         if(mSwitch) {
             minDistanceX = 100;
@@ -481,10 +504,14 @@ public class BSTView extends View {
             minDistanceX = 80;
         }
         float x = (_n.getChildCount() * minDistanceX * direction) + xPre;
-        float y = (minDistanceX * mTree.getDepth(_n.getData())) + mTopSpace + mY;
+        float y;
+        if(mY == 0) {
+            y = (minDistanceX * mTree.getDepth(_n.getData())) + mTopSpace + mY;
+        } else {
+            y = yPre + minDistanceX;
+        }
         _n.setPoint(x,y);
     }
-
 
     private void prepareAndDrawLine(BinaryTreeNode _n, BinaryTreeNode _nPre, Canvas _canvas) {
 
@@ -573,6 +600,8 @@ public class BSTView extends View {
     public boolean onTouchEvent(MotionEvent _event) {
 
         if (_event.getAction() == MotionEvent.ACTION_DOWN) {
+            mDown = true;
+
             float x = _event.getX();
             float y = _event.getY();
             if(!mMove) {
@@ -588,6 +617,13 @@ public class BSTView extends View {
             if(mMove) {
                 float x = _event.getX();
                 float y = _event.getY();
+
+                if(mDown) {
+                    mDown = false;
+                } else {
+                    mBegin.x = mEnd.x;
+                    mBegin.y = mEnd.y;
+                }
 
                 mEnd.x = x;
                 mEnd.y = y;

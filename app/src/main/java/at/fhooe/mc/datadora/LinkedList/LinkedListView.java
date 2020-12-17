@@ -42,35 +42,35 @@ public class LinkedListView extends View {
     private static final String PROPERTY_ALPHA_RANDOM = "PROPERTY_ALPHA_RANDOM";
 
 
-    Paint mItemPaint = new Paint();
-    Paint mTypePaint = new Paint();
-    Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    Paint mPositionTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    Paint mTypeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mItemPaint = new Paint();
+    private final Paint mTypePaint = new Paint();
+    private final Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mPositionTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mTypeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     // Animator for the appended element
-    private ValueAnimator mAnimatorAppend = new ValueAnimator();
+    private final ValueAnimator mAnimatorAppend = new ValueAnimator();
 
     // Animator for the prepended element
-    private ValueAnimator mAnimatorPrepend = new ValueAnimator();
+    private final ValueAnimator mAnimatorPrepend = new ValueAnimator();
 
     // Animator for the inserted element
-    private  ValueAnimator mAnimatorInsert = new ValueAnimator();
+    private final ValueAnimator mAnimatorInsert = new ValueAnimator();
 
     // Animator for the alpha value of the inserted element
-    private ValueAnimator mAnimatorInsertAlpha = new ValueAnimator();
+    private final ValueAnimator mAnimatorInsertAlpha = new ValueAnimator();
 
     // Animator for the deleteLast element
-    private ValueAnimator mAnimatorDeleteFirst  = new ValueAnimator();
+    private final ValueAnimator mAnimatorDeleteFirst  = new ValueAnimator();
 
     // Animator for the deletedAt element
-    private  ValueAnimator mAnimatorDeleteAt = new ValueAnimator();
+    private final ValueAnimator mAnimatorDeleteAt = new ValueAnimator();
 
     // Animator for the alpha value of the deletedAt element
-    private ValueAnimator mAnimatorDeleteAtAlpha = new ValueAnimator();
+    private final ValueAnimator mAnimatorDeleteAtAlpha = new ValueAnimator();
 
     // Animator for the deleteLast element
-    private ValueAnimator mAnimatorDeleteLast  = new ValueAnimator();
+    private final ValueAnimator mAnimatorDeleteLast  = new ValueAnimator();
 
     // Animator for the get operations
     private ValueAnimator mAnimatorGetText  = new ValueAnimator();
@@ -79,7 +79,7 @@ public class LinkedListView extends View {
     private ValueAnimator mAnimatorGetArea  = new ValueAnimator();
 
     // Animator for the created random list
-    private ValueAnimator mAnimatorRandom  = new ValueAnimator();
+    private final ValueAnimator mAnimatorRandom  = new ValueAnimator();
 
     // the current translation on the y-axis - used for the append animation
     private  int mTranslateYAppend;
@@ -118,10 +118,10 @@ public class LinkedListView extends View {
     private int mAlphaDeleteLast;
 
     // the current color value - used for get animation (for the area of one item)
-    int mColorAreaGet;
+    private int mColorAreaGet;
 
     // the current color value - used for get animation (for the text of one item)
-    int mColorTextGet;
+    private int mColorTextGet;
 
     // the current alpha value - used for the random animation
     private int mAlphaRandom;
@@ -167,70 +167,72 @@ public class LinkedListView extends View {
         HEAD_TAIL
     }
 
-    LinkedListActivity mActivity;
+    private LinkedListActivity mActivity;
 
     // Vector that contains all Rects, that are drawn
-    Vector<RectF> mLinkedList = new Vector<>();
+    private final Vector<RectF> mLinkedList = new Vector<>();
 
     // Vector that contains all Integers, that are drawn / the user put in
-    Vector<Integer> mLinkedListNumbers = new Vector<>();
+    private final Vector<Integer> mLinkedListNumbers = new Vector<>();
 
     // Vector used for animation
-    Vector<Integer> mLinkedListAnimation = new Vector<>();
+    private final Vector<Integer> mLinkedListAnimation = new Vector<>();
 
     // Rect in order to save the TextBounds from the current number
-    Rect mBounds = new Rect();
+    private final Rect mBounds = new Rect();
 
     // int that specifies the radius of the corners of the drawn rectangles
-    int mRadius = 4;
+    private final int mRadius = 4;
 
     // factor for the change of height of the Queue item boxes, when the LinkedList is too high
-    float mScale = 1;
+    private float mScale = 1;
 
     // factor for the change of width of the LinkedList item boxes, when the number is to big for the current width
-    int mResize = 1;
+    private int mResize = 1;
 
     // the current primary color of the currently used theme
-    int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
+    private final int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
 
     // the current surface color of the currently used theme
-    int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
+    private final int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
 
     // the current colorOnPrimary color of the currently used theme - for text
-    int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
+    private final int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
 
     // the current colorOnSurface color of the currently used theme - for text
-    int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
+    private final int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
 
     // current width of the LinkedListView within the layout
-    float mMaxWidth;
+    private float mMaxWidth;
 
     // current height of the LinkedListView within the layout
-    float mMaxHeight;
+    private float mMaxHeight;
 
     // the current operation
-    Operation mCurrentOperation;
+    private Operation mCurrentOperation;
 
     // the current type
-    Type mCurrentType;
+    private Type mCurrentType;
 
     // the current filter (sorted or unsorted)
-    Filter mCurrentFilter;
+    private Filter mCurrentFilter;
 
     // the RectF for head, tail or both
-    RectF mTypeRect = new RectF();
+    private RectF mTypeRect = new RectF();
 
     // First point of the triangle used in the background to display the type of the linked list
-    Point mFirst = new Point();
+    private Point mFirst = new Point();
 
     // Second point of the triangle used in the background to display the type of the linked list
-    Point mSecond = new Point();
+    private Point mSecond = new Point();
 
     // Third point of the triangle used in the background to display the type of the linked list
-    Point mThird = new Point();
+    private Point mThird = new Point();
 
     // Path of the drawn triangle used in the background to display the type of the linked list
-    Path mTriangle = new Path();
+    private Path mTriangle = new Path();
+
+    private boolean mSwitch;
 
     public LinkedListView(Context context) {
         super(context);
@@ -270,6 +272,15 @@ public class LinkedListView extends View {
 
     protected void setActivity(LinkedListActivity _activity) {
         mActivity = _activity;
+    }
+
+    public void setSwitch(boolean isChecked) {
+        mSwitch = isChecked;
+        invalidate();
+    }
+
+    public Vector<Integer> getLinkedListNumbers() {
+        return mLinkedListNumbers;
     }
 
     protected void sorted(){

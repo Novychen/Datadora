@@ -21,17 +21,19 @@ import com.google.android.material.slider.Slider;
 import java.util.Random;
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.Animation;
 import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityStackBinding;
 
-public class StackActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class StackActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "StackActivity : ";
     private ActivityStackBinding mBinding;
 
-    private Vector<Integer> mStack = new Vector<>();
+    private final Vector<Integer> mStack = new Vector<>();
     private boolean mPressedRandom;
     private boolean mPressedPop;
+    private Animation mAnimation;
 
     public boolean getPressedRandom() {
         return mPressedRandom;
@@ -66,6 +68,9 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         decorView.setSystemUiVisibility(uiOptions);
 
         mBinding.StackActivityStackView.setActivity(this);
+
+        View layout = mBinding.StackActivity;
+        mAnimation = new Animation(layout, getIntent(), this);
 
         mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
@@ -102,7 +107,12 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         mBinding.StackActivityButtonEmpty.setOnClickListener(this);
         mBinding.StackActivityButtonClear.setOnClickListener(this);
         mBinding.StackActivityButtonRandom.setOnClickListener(this);
-        mBinding.StackActivitySwitch.setOnCheckedChangeListener(this);
+        mBinding.StackActivitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean _isChecked) {
+                mBinding.StackActivityStackView.setSwitch(_isChecked);
+            }
+        });
     }
 
     @Override
@@ -382,24 +392,13 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        mAnimation.circularUnreveal();
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return true;
-    }
-
-
-    @Override
-    public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
-        if (_isChecked) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
     }
 }

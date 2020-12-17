@@ -28,6 +28,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.Animation;
 import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTCheckFragment;
 import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTGetFragment;
 import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTStandardFragment;
@@ -44,6 +45,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     private ActivityBinarySearchTreeBinding mBinding;
     private boolean mSelected = false;
     private final String mDefaultValue = "empty";
+    private Animation mAnimation;
 
     private SharedPreferences mSharedPreferences;
     private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.BSTSharedPreferenceFile.BST";
@@ -68,6 +70,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         View view = mBinding.getRoot();
         setContentView(view);
 
+        View layout = mBinding.BSTActivity;
+        mAnimation = new Animation(layout, getIntent(), this);
+
         mBinding.BSTActivityView.setActivity(this);
 
         setUpToolbar();
@@ -90,6 +95,8 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
                 mBinding.BSTActivityView.setSwitch(isChecked);
             }
         });
+
+        setTheme(R.style.AppTheme);
     }
 
     private void setUpSeekBar() {
@@ -353,14 +360,12 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        mAnimation.circularUnreveal();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return true;
     }
 }

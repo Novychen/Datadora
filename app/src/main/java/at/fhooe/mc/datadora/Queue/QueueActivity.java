@@ -20,19 +20,21 @@ import com.google.android.material.slider.Slider;
 import java.util.Random;
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.Animation;
 import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityQueueBinding;
 
 
-public class QueueActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class QueueActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private static final String TAG = "QueueActivity : ";
     private ActivityQueueBinding mBinding;
 
-    private Vector<Integer> mQueue = new Vector<>();
+    private final Vector<Integer> mQueue = new Vector<>();
     private boolean mPressedRandom;
     private boolean mPressedDequeue;
+    private Animation mAnimation;
 
 
     public boolean getPressedRandom() {
@@ -69,6 +71,9 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
 
         mBinding.QueueActivityQueueView.setActivity(this);
 
+        View layout = mBinding.QueueActivity;
+        mAnimation = new Animation(layout, getIntent(), this);
+
         mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
         // set up the slider
@@ -87,12 +92,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        // setup Toolbar
-        Toolbar myToolbar = mBinding.QueueActivityToolbar;
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle(R.string.All_Data_Activity_Queue);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+       setUpToolbar();
 
         // set FlowIcon & Text invisible
         makeInVisible();
@@ -104,7 +104,20 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         mBinding.QueueActivityButtonEmpty.setOnClickListener(this);
         mBinding.QueueActivityButtonClear.setOnClickListener(this);
         mBinding.QueueActivityButtonRandom.setOnClickListener(this);
-        mBinding.QueueActivitySwitch.setOnCheckedChangeListener(this);
+        mBinding.QueueActivitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
+                mBinding.QueueActivityQueueView.setSwitch(_isChecked);
+            }
+        });
+    }
+
+    private void setUpToolbar() {
+        final Toolbar myToolbar = mBinding.QueueActivityToolbar;
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle(R.string.All_Data_Activity_Queue);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
@@ -389,23 +402,13 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        mAnimation.circularUnreveal();
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return true;
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
-        if (_isChecked) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
     }
 }

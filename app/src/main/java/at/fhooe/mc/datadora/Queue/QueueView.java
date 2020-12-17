@@ -129,6 +129,8 @@ public class QueueView extends View {
     // current height of the QueueView within the layout
     private float mMaxHeightQueue;
 
+    private boolean mSwitch;
+
     private QueueActivity mQueueActivity;
 
     public QueueView(Context context) {
@@ -150,6 +152,10 @@ public class QueueView extends View {
         return mQueueNumbers;
     }
 
+    public void setSwitch(boolean isChecked) {
+        mSwitch = isChecked;
+        invalidate();
+    }
 
     /**
      * Initializes the key components such as Paint

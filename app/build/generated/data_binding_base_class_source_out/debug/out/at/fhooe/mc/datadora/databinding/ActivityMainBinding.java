@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,9 @@ import java.lang.String;
 public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   private final ConstraintLayout rootView;
+
+  @NonNull
+  public final ConstraintLayout MainActivity;
 
   @NonNull
   public final TextView MainActivityAbout;
@@ -85,9 +89,13 @@ public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   public final Guideline guideline2;
 
+  @NonNull
+  public final ScrollView scrollView3;
+
   private ActivityMainBinding(@NonNull ConstraintLayout rootView,
-      @NonNull TextView MainActivityAbout, @NonNull ImageView MainActivityAppIcon,
-      @NonNull TextView MainActivityAppName, @NonNull ImageButton MainActivityDoubleListCard,
+      @NonNull ConstraintLayout MainActivity, @NonNull TextView MainActivityAbout,
+      @NonNull ImageView MainActivityAppIcon, @NonNull TextView MainActivityAppName,
+      @NonNull ImageButton MainActivityDoubleListCard,
       @NonNull ImageView MainActivityDoubleListIcon, @NonNull TextView MainActivityDoubleListText,
       @NonNull ImageButton MainActivityQueueCard, @NonNull ImageView MainActivityQueueIcon,
       @NonNull TextView MainActivityQueueText, @NonNull ImageButton MainActivitySingleListCard,
@@ -96,8 +104,9 @@ public final class ActivityMainBinding implements ViewBinding {
       @NonNull TextView MainActivityStackText, @NonNull Toolbar MainActivityToolbar,
       @NonNull ImageButton MainActivityTreeCard, @NonNull ImageView MainActivityTreeIcon,
       @NonNull TextView MainActivityTreeText, @NonNull Guideline guideline,
-      @NonNull Guideline guideline2) {
+      @NonNull Guideline guideline2, @NonNull ScrollView scrollView3) {
     this.rootView = rootView;
+    this.MainActivity = MainActivity;
     this.MainActivityAbout = MainActivityAbout;
     this.MainActivityAppIcon = MainActivityAppIcon;
     this.MainActivityAppName = MainActivityAppName;
@@ -119,6 +128,7 @@ public final class ActivityMainBinding implements ViewBinding {
     this.MainActivityTreeText = MainActivityTreeText;
     this.guideline = guideline;
     this.guideline2 = guideline2;
+    this.scrollView3 = scrollView3;
   }
 
   @Override
@@ -148,6 +158,8 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      ConstraintLayout MainActivity = (ConstraintLayout) rootView;
+
       id = R.id.Main_Activity_About;
       TextView MainActivityAbout = rootView.findViewById(id);
       if (MainActivityAbout == null) {
@@ -274,13 +286,19 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((ConstraintLayout) rootView, MainActivityAbout,
+      id = R.id.scrollView3;
+      ScrollView scrollView3 = rootView.findViewById(id);
+      if (scrollView3 == null) {
+        break missingId;
+      }
+
+      return new ActivityMainBinding((ConstraintLayout) rootView, MainActivity, MainActivityAbout,
           MainActivityAppIcon, MainActivityAppName, MainActivityDoubleListCard,
           MainActivityDoubleListIcon, MainActivityDoubleListText, MainActivityQueueCard,
           MainActivityQueueIcon, MainActivityQueueText, MainActivitySingleListCard,
           MainActivitySingleListIcon, MainActivitySingleListText, MainActivityStackCard,
           MainActivityStackIcon, MainActivityStackText, MainActivityToolbar, MainActivityTreeCard,
-          MainActivityTreeIcon, MainActivityTreeText, guideline, guideline2);
+          MainActivityTreeIcon, MainActivityTreeText, guideline, guideline2, scrollView3);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

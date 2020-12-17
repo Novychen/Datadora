@@ -160,7 +160,8 @@
     <string name="Content_Description_LinkedList_Get_Background">A rectangle that serves as the background of the operation group get</string>
     <string name="Content_Description_LinkedList_Get_Arrow">An arrow that opens and closes the available operations of the group get</string>
     <string name="LinkedList_Activity_Pre_Succ_Hint">Select element</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -18,7 +19,6 @@ import androidx.viewbinding.ViewBinding;
 import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.Stack.StackView;
 import com.google.android.material.slider.Slider;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -26,6 +26,9 @@ import java.lang.String;
 public final class ActivityStackBinding implements ViewBinding {
   @NonNull
   private final ConstraintLayout rootView;
+
+  @NonNull
+  public final ConstraintLayout StackActivity;
 
   @NonNull
   public final ImageView StackActivityBoxReturn;
@@ -85,7 +88,7 @@ public final class ActivityStackBinding implements ViewBinding {
   public final StackView StackActivityStackView;
 
   @NonNull
-  public final SwitchMaterial StackActivitySwitch;
+  public final ToggleButton StackActivitySwitch;
 
   @NonNull
   public final Toolbar StackActivityToolbar;
@@ -94,19 +97,20 @@ public final class ActivityStackBinding implements ViewBinding {
   public final FrameLayout StackActivityViewContainer;
 
   private ActivityStackBinding(@NonNull ConstraintLayout rootView,
-      @NonNull ImageView StackActivityBoxReturn, @NonNull Button StackActivityButtonClear,
-      @NonNull Button StackActivityButtonEmpty, @NonNull Button StackActivityButtonPeek,
-      @NonNull Button StackActivityButtonPop, @NonNull Button StackActivityButtonPush,
-      @NonNull Button StackActivityButtonRandom, @NonNull Button StackActivityButtonSize,
-      @NonNull TextView StackActivityCurrentValue, @NonNull ImageView StackActivityFlowIcon,
-      @NonNull TextView StackActivityFlowText, @NonNull Guideline StackActivityGuideline,
-      @NonNull Slider StackActivityInputSlider, @NonNull TextView StackActivityInputValue,
-      @NonNull ImageView StackActivityLine, @NonNull TextView StackActivityReturnText,
-      @NonNull TextView StackActivityReturnValue,
+      @NonNull ConstraintLayout StackActivity, @NonNull ImageView StackActivityBoxReturn,
+      @NonNull Button StackActivityButtonClear, @NonNull Button StackActivityButtonEmpty,
+      @NonNull Button StackActivityButtonPeek, @NonNull Button StackActivityButtonPop,
+      @NonNull Button StackActivityButtonPush, @NonNull Button StackActivityButtonRandom,
+      @NonNull Button StackActivityButtonSize, @NonNull TextView StackActivityCurrentValue,
+      @NonNull ImageView StackActivityFlowIcon, @NonNull TextView StackActivityFlowText,
+      @NonNull Guideline StackActivityGuideline, @NonNull Slider StackActivityInputSlider,
+      @NonNull TextView StackActivityInputValue, @NonNull ImageView StackActivityLine,
+      @NonNull TextView StackActivityReturnText, @NonNull TextView StackActivityReturnValue,
       @NonNull ScrollView StackActivityScrollViewButtons, @NonNull StackView StackActivityStackView,
-      @NonNull SwitchMaterial StackActivitySwitch, @NonNull Toolbar StackActivityToolbar,
+      @NonNull ToggleButton StackActivitySwitch, @NonNull Toolbar StackActivityToolbar,
       @NonNull FrameLayout StackActivityViewContainer) {
     this.rootView = rootView;
+    this.StackActivity = StackActivity;
     this.StackActivityBoxReturn = StackActivityBoxReturn;
     this.StackActivityButtonClear = StackActivityButtonClear;
     this.StackActivityButtonEmpty = StackActivityButtonEmpty;
@@ -158,6 +162,8 @@ public final class ActivityStackBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      ConstraintLayout StackActivity = (ConstraintLayout) rootView;
+
       id = R.id.Stack_Activity_Box_Return;
       ImageView StackActivityBoxReturn = rootView.findViewById(id);
       if (StackActivityBoxReturn == null) {
@@ -273,7 +279,7 @@ public final class ActivityStackBinding implements ViewBinding {
       }
 
       id = R.id.Stack_Activity_Switch;
-      SwitchMaterial StackActivitySwitch = rootView.findViewById(id);
+      ToggleButton StackActivitySwitch = rootView.findViewById(id);
       if (StackActivitySwitch == null) {
         break missingId;
       }
@@ -290,14 +296,15 @@ public final class ActivityStackBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityStackBinding((ConstraintLayout) rootView, StackActivityBoxReturn,
-          StackActivityButtonClear, StackActivityButtonEmpty, StackActivityButtonPeek,
-          StackActivityButtonPop, StackActivityButtonPush, StackActivityButtonRandom,
-          StackActivityButtonSize, StackActivityCurrentValue, StackActivityFlowIcon,
-          StackActivityFlowText, StackActivityGuideline, StackActivityInputSlider,
-          StackActivityInputValue, StackActivityLine, StackActivityReturnText,
-          StackActivityReturnValue, StackActivityScrollViewButtons, StackActivityStackView,
-          StackActivitySwitch, StackActivityToolbar, StackActivityViewContainer);
+      return new ActivityStackBinding((ConstraintLayout) rootView, StackActivity,
+          StackActivityBoxReturn, StackActivityButtonClear, StackActivityButtonEmpty,
+          StackActivityButtonPeek, StackActivityButtonPop, StackActivityButtonPush,
+          StackActivityButtonRandom, StackActivityButtonSize, StackActivityCurrentValue,
+          StackActivityFlowIcon, StackActivityFlowText, StackActivityGuideline,
+          StackActivityInputSlider, StackActivityInputValue, StackActivityLine,
+          StackActivityReturnText, StackActivityReturnValue, StackActivityScrollViewButtons,
+          StackActivityStackView, StackActivitySwitch, StackActivityToolbar,
+          StackActivityViewContainer);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
