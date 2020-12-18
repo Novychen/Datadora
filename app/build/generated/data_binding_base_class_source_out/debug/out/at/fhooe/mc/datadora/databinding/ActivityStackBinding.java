@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -88,9 +87,6 @@ public final class ActivityStackBinding implements ViewBinding {
   public final StackView StackActivityStackView;
 
   @NonNull
-  public final ToggleButton StackActivitySwitch;
-
-  @NonNull
   public final Toolbar StackActivityToolbar;
 
   @NonNull
@@ -107,8 +103,7 @@ public final class ActivityStackBinding implements ViewBinding {
       @NonNull TextView StackActivityInputValue, @NonNull ImageView StackActivityLine,
       @NonNull TextView StackActivityReturnText, @NonNull TextView StackActivityReturnValue,
       @NonNull ScrollView StackActivityScrollViewButtons, @NonNull StackView StackActivityStackView,
-      @NonNull ToggleButton StackActivitySwitch, @NonNull Toolbar StackActivityToolbar,
-      @NonNull FrameLayout StackActivityViewContainer) {
+      @NonNull Toolbar StackActivityToolbar, @NonNull FrameLayout StackActivityViewContainer) {
     this.rootView = rootView;
     this.StackActivity = StackActivity;
     this.StackActivityBoxReturn = StackActivityBoxReturn;
@@ -130,7 +125,6 @@ public final class ActivityStackBinding implements ViewBinding {
     this.StackActivityReturnValue = StackActivityReturnValue;
     this.StackActivityScrollViewButtons = StackActivityScrollViewButtons;
     this.StackActivityStackView = StackActivityStackView;
-    this.StackActivitySwitch = StackActivitySwitch;
     this.StackActivityToolbar = StackActivityToolbar;
     this.StackActivityViewContainer = StackActivityViewContainer;
   }
@@ -278,12 +272,6 @@ public final class ActivityStackBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.Stack_Activity_Switch;
-      ToggleButton StackActivitySwitch = rootView.findViewById(id);
-      if (StackActivitySwitch == null) {
-        break missingId;
-      }
-
       id = R.id.Stack_Activity_Toolbar;
       Toolbar StackActivityToolbar = rootView.findViewById(id);
       if (StackActivityToolbar == null) {
@@ -303,8 +291,7 @@ public final class ActivityStackBinding implements ViewBinding {
           StackActivityFlowIcon, StackActivityFlowText, StackActivityGuideline,
           StackActivityInputSlider, StackActivityInputValue, StackActivityLine,
           StackActivityReturnText, StackActivityReturnValue, StackActivityScrollViewButtons,
-          StackActivityStackView, StackActivitySwitch, StackActivityToolbar,
-          StackActivityViewContainer);
+          StackActivityStackView, StackActivityToolbar, StackActivityViewContainer);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

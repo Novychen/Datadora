@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -628,7 +629,16 @@ public class LinkedListView extends View {
             @Override
             public void onAnimationEnd(Animator animator) {
                 if(mCurrentOperation == Operation.PREDECESSOR || mCurrentOperation == Operation.SUCCESSOR) {
-                    mActivity.getBinding().LinkedListActivityReturnValue.setText(String.format("%s", mLinkedListNumbers.get(mPosition).toString()));
+
+                    if (mCurrentOperation == Operation.PREDECESSOR && mPosition < 0) {
+                        Toast.makeText(mActivity, R.string.LinkedList_Activity_Pre_Empty, Toast.LENGTH_SHORT).show();
+                    } else if (mCurrentOperation == Operation.SUCCESSOR && mPosition >= mLinkedListNumbers.size()) {
+                        Toast.makeText(mActivity, R.string.LinkedList_Activity_Succ_Empty, Toast.LENGTH_SHORT).show();
+                    } else {
+                        mActivity.getBinding().LinkedListActivityReturnValue.setText(String.format("%s", mLinkedListNumbers.get(mPosition).toString()));
+                    }
+                    mTouched = false;
+
                 }
             }
 

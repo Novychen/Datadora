@@ -1799,7 +1799,6 @@ id Queue_Activity_QueueView
 id Queue_Activity_ReturnText
 id Queue_Activity_ReturnValue
 id Queue_Activity_ScrollViewButtons
-id Queue_Activity_Switch
 id Queue_Activity_Toolbar
 id Queue_Activity_ViewContainer
 id SHIFT
@@ -1827,7 +1826,6 @@ id Stack_Activity_ReturnText
 id Stack_Activity_ReturnValue
 id Stack_Activity_ScrollViewButtons
 id Stack_Activity_StackView
-id Stack_Activity_Switch
 id Stack_Activity_Toolbar
 id Stack_Activity_ViewContainer
 id TOP_END
@@ -2433,7 +2431,9 @@ string LinkedList_Activity_Get_Last
 string LinkedList_Activity_Get_Predecessor
 string LinkedList_Activity_Get_Successor
 string LinkedList_Activity_Get_Title
+string LinkedList_Activity_Pre_Empty
 string LinkedList_Activity_Pre_Succ_Hint
+string LinkedList_Activity_Succ_Empty
 string LinkedList_Activity_Toast_Empty
 string LinkedList_Activity_Toast_Feature
 string LinkedList_Activity_Toast_Full

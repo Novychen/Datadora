@@ -233,7 +233,6 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
      */
     private void preparePositionSlider(){
 
-
         if (mLinkedList.size() == 0) {
 
             mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.INVISIBLE);
@@ -422,12 +421,12 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void getPredecessor() {
-        mBinding.LinkedListActivityReturnText.setText(R.string.LinkedList_Activity_Pre_Succ_Hint);
+        Toast.makeText(this, R.string.LinkedList_Activity_Pre_Succ_Hint, Toast.LENGTH_SHORT).show();
         mBinding.LinkedListActivityLinkedListView.predecessor();
     }
 
     private void getSuccessor() {
-        mBinding.LinkedListActivityReturnText.setText(R.string.LinkedList_Activity_Pre_Succ_Hint);
+        Toast.makeText(this, R.string.LinkedList_Activity_Pre_Succ_Hint, Toast.LENGTH_SHORT).show();
         mBinding.LinkedListActivityLinkedListView.successor();
     }
 
