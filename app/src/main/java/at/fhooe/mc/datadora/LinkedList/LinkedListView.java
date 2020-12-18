@@ -9,9 +9,11 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -42,8 +44,8 @@ public class LinkedListView extends View {
     private static final String PROPERTY_ALPHA_RANDOM = "PROPERTY_ALPHA_RANDOM";
 
 
-    private final Paint mItemPaint = new Paint();
-    private final Paint mTypePaint = new Paint();
+    private final Paint mItemPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mTypePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint mPositionTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint mTypeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -138,6 +140,8 @@ public class LinkedListView extends View {
     // the position for animation of random & size
     private int mPositionAnimation = 0;
 
+    private Path mPath = new Path();
+
     enum Operation {
         PREPEND,
         APPEND,
@@ -192,6 +196,9 @@ public class LinkedListView extends View {
 
     // the current primary color of the currently used theme
     private final int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
+
+    // the current secondary color of the currently used theme
+    private final int mSecondaryColor = getResources().getColor(R.color.secondaryColor, this.getContext().getTheme());
 
     // the current surface color of the currently used theme
     private final int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
@@ -255,6 +262,7 @@ public class LinkedListView extends View {
     private void init() {
         mItemPaint.setColor(mPrimaryColor);
         mItemPaint.setStyle(Paint.Style.STROKE);
+        mItemPaint.setStrokeCap(Paint.Cap.ROUND);
         mItemPaint.setStrokeWidth(6);
 
         mTypePaint.setColor(mPrimaryColor);
@@ -906,6 +914,99 @@ public class LinkedListView extends View {
         _canvas.drawRoundRect(mLinkedList.get(_pos), mRadius, mRadius, mItemPaint);
         _canvas.drawText(mLinkedListNumbers.get(_pos).toString(), getExactCenterX(mLinkedList.get(_pos)) - mBounds.exactCenterX(), (getExactCenterY(mLinkedList.get(_pos)) - mBounds.exactCenterY()), mItemTextPaint);
 
+        if(mSwitch) {
+            drawArrows(_canvas, _pos);
+        }
+    }
+
+    private void drawArrows(Canvas _canvas, int _pos) {
+
+        float length;
+        double angle = Math.toRadians(45);
+        boolean end;
+
+        float height = 76 / 2f;
+        float lineHeight = 66;
+        float lineWidth = 55;
+
+        if (_pos == mLinkedListNumbers.size() - 1) {
+            length = 10;
+            end = true;
+        } else {
+            length = 20;
+            end = false;
+        }
+
+        float y = (float) (Math.sin(angle) * length);
+        float x = (float) (Math.cos(angle) * length);
+
+        mItemPaint.setColor(mPrimaryColor);
+        Log.i(TAG, "TREE: primary");
+        PointF p = drawLine(_canvas, _pos, height, lineHeight, lineWidth, true, end);
+        drawArrow(_canvas, p, x, y, end);
+
+        if (_pos == 0) {
+            length = 10;
+            end = true;
+        } else {
+            length = 20;
+            end = false;
+        }
+
+        y = (float) (Math.sin(Math.toRadians(180) - angle) * length);
+        x = (float) (Math.cos(Math.toRadians(180) - angle) * length);
+
+        mItemPaint.setColor(mSecondaryColor);
+        Log.i(TAG, "TREE: secondary");
+        p = drawLine(_canvas, _pos, height - mLinkedList.get(_pos).height(), lineHeight, lineWidth, false, end);
+        drawArrow(_canvas, p, x, y, end);
+    }
+
+    private PointF drawLine(Canvas _canvas, int _pos, float _height, float _lineHeight, float _lineWidth, boolean right, boolean end) {
+        float x;
+        float y = mLinkedList.get(_pos).top - _height;
+
+        if (right) {
+            x = mLinkedList.get(_pos).right;
+        } else {
+            x = mLinkedList.get(_pos).left;
+        }
+
+        mPath.moveTo(x, y + _lineHeight);
+
+        if (right && end) {
+            mPath.cubicTo(x, y + _lineHeight, x , y + _lineHeight, x + (_lineWidth / 2 ), y + _lineHeight);
+         //  mPath.cubicTo(x + _lineWidth - 14, y + _lineHeight, x + _lineWidth - 14, (y + (_lineHeight / 2)),x + _lineWidth - 14, y + (_lineHeight / 2));
+        } else if (right) {
+            mPath.cubicTo(x + _lineWidth, y + _lineHeight, x + _lineWidth, y, x, y);
+        } else if (end) {
+            mPath.moveTo(x, y);
+            mPath.cubicTo(x, y, x - _lineWidth, y, x, y);
+        } else {
+            mPath.cubicTo(x - _lineWidth, y + _lineHeight, x - _lineWidth, y, x, y);
+        }
+
+        _canvas.drawPath(mPath, mItemPaint);
+
+        if (right && end) {
+            return new PointF(x + _lineWidth / 2, y + _lineHeight);
+        } else if (right) {
+            return new PointF(x, y);
+        } else if (end) {
+            return new PointF(x - _lineWidth / 2, y);
+        } else {
+            return new PointF(x, y + _lineHeight);
+        }
+    }
+
+    private void drawArrow(Canvas _canvas, PointF _p, float x, float y, boolean _end) {
+
+        if(!_end) {
+            _canvas.drawLine(_p.x, _p.y, _p.x + x, _p.y - y, mItemPaint);
+            _canvas.drawLine(_p.x + x, _p.y + y, _p.x, _p.y, mItemPaint);
+        } else {
+            _canvas.drawLine(_p.x,_p.y + y, _p.x,_p.y - y, mItemPaint);
+        }
     }
 
     @Override
