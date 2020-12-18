@@ -140,36 +140,21 @@ public class LinkedListView extends View {
     // the position for animation of random & size
     private int mPositionAnimation = 0;
 
-    private Path mPath = new Path();
+    private final Path mPath = new Path();
 
     enum Operation {
-        PREPEND,
-        APPEND,
-        INSERT_AT,
-        CLEAR,
-        DELETE_FIRST,
-        DELETE_LAST,
-        DELETE_AT,
-        GET_SIZE,
-        PREDECESSOR,
-        SUCCESSOR,
-        GET_FIRST,
-        GET_LAST,
-        GET_AT,
-        RANDOM,
-        SAVE
+        PREPEND, APPEND, INSERT_AT,
+
+        CLEAR, DELETE_FIRST, DELETE_LAST, DELETE_AT,
+
+        GET_SIZE, PREDECESSOR, SUCCESSOR, GET_FIRST, GET_LAST, GET_AT,
+
+        RANDOM, SAVE
     }
 
-    enum Filter {
-        SORTED,
-        UNSORTED
-    }
+    enum Filter {SORTED, UNSORTED}
 
-    enum Type {
-        HEAD,
-        TAIL,
-        HEAD_TAIL
-    }
+    enum Type {HEAD, TAIL, HEAD_TAIL}
 
     private LinkedListActivity mActivity;
 
@@ -192,13 +177,13 @@ public class LinkedListView extends View {
     private float mScale = 1;
 
     // factor for the change of width of the LinkedList item boxes, when the number is to big for the current width
-    private int mResize = 1;
+    private final int mResize = 1;
 
     // the current primary color of the currently used theme
     private final int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
 
     // the current secondary color of the currently used theme
-    private final int mSecondaryColor = getResources().getColor(R.color.secondaryColor, this.getContext().getTheme());
+    private final int mSecondaryColor = getResources().getColor(R.color.primaryLightColor, this.getContext().getTheme());
 
     // the current surface color of the currently used theme
     private final int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
@@ -225,19 +210,19 @@ public class LinkedListView extends View {
     private Filter mCurrentFilter;
 
     // the RectF for head, tail or both
-    private RectF mTypeRect = new RectF();
+    private final RectF mTypeRect = new RectF();
 
     // First point of the triangle used in the background to display the type of the linked list
-    private Point mFirst = new Point();
+    private final Point mFirst = new Point();
 
     // Second point of the triangle used in the background to display the type of the linked list
-    private Point mSecond = new Point();
+    private final Point mSecond = new Point();
 
     // Third point of the triangle used in the background to display the type of the linked list
-    private Point mThird = new Point();
+    private final Point mThird = new Point();
 
     // Path of the drawn triangle used in the background to display the type of the linked list
-    private Path mTriangle = new Path();
+    private final Path mTriangle = new Path();
 
     private boolean mSwitch;
 
@@ -910,13 +895,14 @@ public class LinkedListView extends View {
         mLinkedList.get(_pos).right = (int) (mLinkedList.get(_pos).left + (mMaxWidth / 4) + mResize);
         mLinkedList.get(_pos).bottom = (int) (mLinkedList.get(_pos).top + ((mMaxWidth / 4) * mScale) - 10);
 
+        if(mSwitch) {
+            drawArrows(_canvas, _pos);
+        }
+
         // get BoundingBox from Text & draw Text + LinkedList item
         _canvas.drawRoundRect(mLinkedList.get(_pos), mRadius, mRadius, mItemPaint);
         _canvas.drawText(mLinkedListNumbers.get(_pos).toString(), getExactCenterX(mLinkedList.get(_pos)) - mBounds.exactCenterX(), (getExactCenterY(mLinkedList.get(_pos)) - mBounds.exactCenterY()), mItemTextPaint);
 
-        if(mSwitch) {
-            drawArrows(_canvas, _pos);
-        }
     }
 
     private void drawArrows(Canvas _canvas, int _pos) {
@@ -940,10 +926,8 @@ public class LinkedListView extends View {
         float y = (float) (Math.sin(angle) * length);
         float x = (float) (Math.cos(angle) * length);
 
-        mItemPaint.setColor(mPrimaryColor);
-        Log.i(TAG, "TREE: primary");
         PointF p = drawLine(_canvas, _pos, height, lineHeight, lineWidth, true, end);
-        drawArrow(_canvas, p, x, y, end);
+        drawArrow(_canvas, p, x, y,true, end);
 
         if (_pos == 0) {
             length = 10;
@@ -957,26 +941,23 @@ public class LinkedListView extends View {
         x = (float) (Math.cos(Math.toRadians(180) - angle) * length);
 
         mItemPaint.setColor(mSecondaryColor);
-        Log.i(TAG, "TREE: secondary");
         p = drawLine(_canvas, _pos, height - mLinkedList.get(_pos).height(), lineHeight, lineWidth, false, end);
-        drawArrow(_canvas, p, x, y, end);
+        drawArrow(_canvas, p, x, y, false, end);
+
+        mItemPaint.setColor(mPrimaryColor);
     }
 
     private PointF drawLine(Canvas _canvas, int _pos, float _height, float _lineHeight, float _lineWidth, boolean right, boolean end) {
         float x;
         float y = mLinkedList.get(_pos).top - _height;
 
-        if (right) {
-            x = mLinkedList.get(_pos).right;
-        } else {
-            x = mLinkedList.get(_pos).left;
-        }
+        if (right) { x = mLinkedList.get(_pos).right;
+        } else { x = mLinkedList.get(_pos).left; }
 
         mPath.moveTo(x, y + _lineHeight);
 
         if (right && end) {
             mPath.cubicTo(x, y + _lineHeight, x , y + _lineHeight, x + (_lineWidth / 2 ), y + _lineHeight);
-         //  mPath.cubicTo(x + _lineWidth - 14, y + _lineHeight, x + _lineWidth - 14, (y + (_lineHeight / 2)),x + _lineWidth - 14, y + (_lineHeight / 2));
         } else if (right) {
             mPath.cubicTo(x + _lineWidth, y + _lineHeight, x + _lineWidth, y, x, y);
         } else if (end) {
@@ -987,23 +968,33 @@ public class LinkedListView extends View {
         }
 
         _canvas.drawPath(mPath, mItemPaint);
+        mPath.reset();
 
-        if (right && end) {
-            return new PointF(x + _lineWidth / 2, y + _lineHeight);
-        } else if (right) {
-            return new PointF(x, y);
-        } else if (end) {
-            return new PointF(x - _lineWidth / 2, y);
-        } else {
-            return new PointF(x, y + _lineHeight);
-        }
+        if (right && end) { return new PointF(x + _lineWidth / 2, y + _lineHeight);
+        } else if (right) { return new PointF(x, y);
+        } else if (end) { return new PointF(x - _lineWidth / 2, y);
+        } else { return new PointF(x, y + _lineHeight); }
     }
 
-    private void drawArrow(Canvas _canvas, PointF _p, float x, float y, boolean _end) {
+    private void drawArrow(Canvas _canvas, PointF _p, float x, float y, boolean right, boolean _end) {
+
+        float paddingY;
+        float paddingX;
+        float paddingX2;
+
+        if(right) {
+            paddingY = 4;
+            paddingX = 0;
+            paddingX2 = 0;
+        } else {
+            paddingY = 0;
+            paddingX = 2;
+            paddingX2 = 4;
+        }
 
         if(!_end) {
-            _canvas.drawLine(_p.x, _p.y, _p.x + x, _p.y - y, mItemPaint);
-            _canvas.drawLine(_p.x + x, _p.y + y, _p.x, _p.y, mItemPaint);
+            _canvas.drawLine(_p.x, _p.y, _p.x + x + paddingX, _p.y - y + paddingY, mItemPaint);
+            _canvas.drawLine(_p.x + x + paddingX2, _p.y + y, _p.x, _p.y, mItemPaint);
         } else {
             _canvas.drawLine(_p.x,_p.y + y, _p.x,_p.y - y, mItemPaint);
         }

@@ -8,21 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ToggleButton
-        android:id="@+id/Queue_Activity_Switch"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="60dp"
-        android:background="@drawable/switch_list"
-        android:textOff=''
-        android:textOn=''
-        app:layout_constraintDimensionRatio="2:1"
-        app:layout_constraintEnd_toStartOf="@+id/Queue_Activity_Guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Toolbar" />
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/Queue_Activity_Toolbar"
         android:layout_width="0dp"
@@ -205,11 +190,12 @@
         android:id="@+id/Queue_Activity_ViewContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/Queue_Activity_InputValue"
         app:layout_constraintEnd_toStartOf="@+id/Queue_Activity_ScrollViewButtons"
         app:layout_constraintStart_toStartOf="@+id/Queue_Activity_InputSlider"
-        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Switch">
+        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Toolbar">
 
         <at.fhooe.mc.datadora.Queue.QueueView
             android:id="@+id/Queue_Activity_QueueView"

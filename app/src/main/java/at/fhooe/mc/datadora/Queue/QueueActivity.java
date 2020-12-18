@@ -104,12 +104,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         mBinding.QueueActivityButtonEmpty.setOnClickListener(this);
         mBinding.QueueActivityButtonClear.setOnClickListener(this);
         mBinding.QueueActivityButtonRandom.setOnClickListener(this);
-        mBinding.QueueActivitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
-                mBinding.QueueActivityQueueView.setSwitch(_isChecked);
-            }
-        });
     }
 
     private void setUpToolbar() {

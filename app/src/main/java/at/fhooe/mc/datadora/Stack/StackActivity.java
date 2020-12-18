@@ -107,12 +107,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         mBinding.StackActivityButtonEmpty.setOnClickListener(this);
         mBinding.StackActivityButtonClear.setOnClickListener(this);
         mBinding.StackActivityButtonRandom.setOnClickListener(this);
-        mBinding.StackActivitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean _isChecked) {
-                mBinding.StackActivityStackView.setSwitch(_isChecked);
-            }
-        });
     }
 
     @Override
