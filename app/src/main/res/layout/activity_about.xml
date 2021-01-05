@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/About_Activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AboutActivity">
+tools:context=".AboutActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/About_Activity_Toolbar"
@@ -14,13 +15,14 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/About_Activity_App_Icon"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,9 +100,9 @@
 
     <TextView
         android:id="@+id/About_Activity_Yvonne"
+        style="@style/Text.TextBlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Text.TextBlock"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
@@ -111,9 +113,9 @@
 
     <TextView
         android:id="@+id/About_Activity_Ines"
+        style="@style/Text.TextBlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Text.TextBlock"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"

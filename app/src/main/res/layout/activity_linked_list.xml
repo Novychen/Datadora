@@ -2,10 +2,26 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinkedList_Activity"
     style="@style/Surface"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LinkedList.LinkedListActivity">
+
+    <ToggleButton
+        android:id="@+id/LinkedList_Activity_Switch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/switch_list"
+        android:textOff=''
+        android:textOn=''
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toStartOf="@+id/LinkedList_Activity_Guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Toolbar" />
 
     <ImageView
         android:id="@+id/LinkedList_Activity_Box_Return"
@@ -57,16 +73,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/LinkedList_Activity_Switch"
-        style="@style/AppTheme.Switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/LinkedList_Activity_Guideline"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Toolbar" />
-
     <FrameLayout
         android:id="@+id/LinkedList_Activity_ViewContainer"
         android:layout_width="0dp"
@@ -86,7 +92,7 @@
     </FrameLayout>
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/DLL_Activity_Container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -384,9 +390,9 @@
 
                     <TextView
                         android:id="@+id/LinkedList_Activity_Delete_Position_Zero"
+                        style="@style/Surface.Text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Surface.Text"
                         android:text="@string/Slider_Default_Value"
                         app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Delete_Position_Slider"
                         app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Delete_Position_Slider"
@@ -558,9 +564,9 @@
 
                     <TextView
                         android:id="@+id/LinkedList_Activity_Get_Position_Zero"
+                        style="@style/Surface.Text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Surface.Text"
                         android:layout_marginEnd="16dp"
                         android:text="@string/Slider_Default_Value"
                         app:layout_constraintBottom_toBottomOf="parent"

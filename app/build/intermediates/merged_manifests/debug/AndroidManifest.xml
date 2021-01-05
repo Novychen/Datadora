@@ -21,10 +21,12 @@
         <activity
             android:name="at.fhooe.mc.datadora.AboutActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="at.fhooe.mc.datadora.LinkedList.LinkedListActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="at.fhooe.mc.datadora.Queue.QueueActivity"
@@ -32,10 +34,13 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity"
+            android:screenOrientation="sensor"
+            android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="at.fhooe.mc.datadora.Stack.StackActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="at.fhooe.mc.datadora.MainActivity"

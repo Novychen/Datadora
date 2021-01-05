@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
@@ -26,6 +28,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.Animation;
 import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTCheckFragment;
 import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTGetFragment;
 import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTStandardFragment;
@@ -34,7 +37,7 @@ import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
 
 
-public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "BSTActivity :: ";
     private final BinarySearchTree mTree = new BinarySearchTree();
@@ -42,6 +45,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     private ActivityBinarySearchTreeBinding mBinding;
     private boolean mSelected = false;
     private final String mDefaultValue = "empty";
+    private Animation mAnimation;
 
     private SharedPreferences mSharedPreferences;
     private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.BSTSharedPreferenceFile.BST";
@@ -66,6 +70,9 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         View view = mBinding.getRoot();
         setContentView(view);
 
+        View layout = mBinding.BSTActivity;
+        mAnimation = new Animation(layout, getIntent(), this);
+
         mBinding.BSTActivityView.setActivity(this);
 
         setUpToolbar();
@@ -82,14 +89,30 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
         mBinding.BSTActivityPan.setOnClickListener(this);
         mBinding.BSTActivityCenter.setOnClickListener(this);
+        mBinding.BSTActivitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mBinding.BSTActivityView.setSwitch(isChecked);
+            }
+        });
+
+        setTheme(R.style.AppTheme);
     }
 
     private void setUpSeekBar() {
+        assert mBinding.BSTActivitySeekBar != null;
         mBinding.BSTActivitySeekBar.setMax(200);
         mBinding.BSTActivitySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 mBinding.BSTActivityInputValue.setText(String.valueOf(i - 100));
+                Resources.Theme theme = getTheme();
+                //TODO: Doesn't work
+                if(b) {
+                    theme.applyStyle(R.style.AppTheme_Mode, true);
+                } else {
+                    theme.applyStyle(R.style.AppTheme, true);
+                }
             }
 
             @Override
@@ -303,48 +326,46 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         }
 
         if(_view == mBinding.BSTActivityPan) {
-            int color;
-            if(!mSelected) {
-                color = ContextCompat.getColor(this, R.color.primaryColor);
-                mBinding.BSTActivityView.move(true);
-            } else {
-                color = ContextCompat.getColor(this, R.color.secondaryColor);
-                mBinding.BSTActivityView.move(false);
-            }
-            mSelected = !mSelected;
-            ImageViewCompat.setImageTintList( mBinding.BSTActivityPan, ColorStateList.valueOf(color));
+            pan();
         } else if (_view == mBinding.BSTActivityCenter) {
-            float x = mBinding.BSTActivityView.getTranslateX();
-            float y = mBinding.BSTActivityView.getTranslateY();
-
-            if (x == 0 && y == 0) {
-                Toast.makeText(this, R.string.BST_Activity_Center, Toast.LENGTH_SHORT).show();
-            } else {
-                mBinding.BSTActivityView.setTranslate(0,0);
-                mBinding.BSTActivityView.invalidate();
-            }
+            center();
         }
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
-        if (_isChecked) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+    private void pan() {
+        int color;
+
+        if(!mSelected) {
+            color = ContextCompat.getColor(this, R.color.primaryColor);
+            mBinding.BSTActivityView.move(true);
         } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            color = ContextCompat.getColor(this, R.color.secondaryColor);
+            mBinding.BSTActivityView.move(false);
+        }
+        mSelected = !mSelected;
+        ImageViewCompat.setImageTintList( mBinding.BSTActivityPan, ColorStateList.valueOf(color));
+    }
+
+    private void center() {
+        float x = mBinding.BSTActivityView.getTranslateX();
+        float y = mBinding.BSTActivityView.getTranslateY();
+
+        if (x == 0 && y == 0) {
+            Toast.makeText(this, R.string.BST_Activity_Center, Toast.LENGTH_SHORT).show();
+        } else {
+            mBinding.BSTActivityView.setTranslate(0,0);
+            mBinding.BSTActivityView.invalidate();
         }
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        mAnimation.circularUnreveal();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return true;
     }
 }

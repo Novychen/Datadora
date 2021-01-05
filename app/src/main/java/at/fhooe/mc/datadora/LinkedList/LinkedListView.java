@@ -9,13 +9,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -42,35 +45,35 @@ public class LinkedListView extends View {
     private static final String PROPERTY_ALPHA_RANDOM = "PROPERTY_ALPHA_RANDOM";
 
 
-    Paint mItemPaint = new Paint();
-    Paint mTypePaint = new Paint();
-    Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    Paint mPositionTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    Paint mTypeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mItemPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mTypePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mPositionTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mTypeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     // Animator for the appended element
-    private ValueAnimator mAnimatorAppend = new ValueAnimator();
+    private final ValueAnimator mAnimatorAppend = new ValueAnimator();
 
     // Animator for the prepended element
-    private ValueAnimator mAnimatorPrepend = new ValueAnimator();
+    private final ValueAnimator mAnimatorPrepend = new ValueAnimator();
 
     // Animator for the inserted element
-    private  ValueAnimator mAnimatorInsert = new ValueAnimator();
+    private final ValueAnimator mAnimatorInsert = new ValueAnimator();
 
     // Animator for the alpha value of the inserted element
-    private ValueAnimator mAnimatorInsertAlpha = new ValueAnimator();
+    private final ValueAnimator mAnimatorInsertAlpha = new ValueAnimator();
 
     // Animator for the deleteLast element
-    private ValueAnimator mAnimatorDeleteFirst  = new ValueAnimator();
+    private final ValueAnimator mAnimatorDeleteFirst  = new ValueAnimator();
 
     // Animator for the deletedAt element
-    private  ValueAnimator mAnimatorDeleteAt = new ValueAnimator();
+    private final ValueAnimator mAnimatorDeleteAt = new ValueAnimator();
 
     // Animator for the alpha value of the deletedAt element
-    private ValueAnimator mAnimatorDeleteAtAlpha = new ValueAnimator();
+    private final ValueAnimator mAnimatorDeleteAtAlpha = new ValueAnimator();
 
     // Animator for the deleteLast element
-    private ValueAnimator mAnimatorDeleteLast  = new ValueAnimator();
+    private final ValueAnimator mAnimatorDeleteLast  = new ValueAnimator();
 
     // Animator for the get operations
     private ValueAnimator mAnimatorGetText  = new ValueAnimator();
@@ -79,7 +82,7 @@ public class LinkedListView extends View {
     private ValueAnimator mAnimatorGetArea  = new ValueAnimator();
 
     // Animator for the created random list
-    private ValueAnimator mAnimatorRandom  = new ValueAnimator();
+    private final ValueAnimator mAnimatorRandom  = new ValueAnimator();
 
     // the current translation on the y-axis - used for the append animation
     private  int mTranslateYAppend;
@@ -118,10 +121,10 @@ public class LinkedListView extends View {
     private int mAlphaDeleteLast;
 
     // the current color value - used for get animation (for the area of one item)
-    int mColorAreaGet;
+    private int mColorAreaGet;
 
     // the current color value - used for get animation (for the text of one item)
-    int mColorTextGet;
+    private int mColorTextGet;
 
     // the current alpha value - used for the random animation
     private int mAlphaRandom;
@@ -138,99 +141,91 @@ public class LinkedListView extends View {
     // the position for animation of random & size
     private int mPositionAnimation = 0;
 
+    private final Path mPath = new Path();
+
     enum Operation {
-        PREPEND,
-        APPEND,
-        INSERT_AT,
-        CLEAR,
-        DELETE_FIRST,
-        DELETE_LAST,
-        DELETE_AT,
-        GET_SIZE,
-        PREDECESSOR,
-        SUCCESSOR,
-        GET_FIRST,
-        GET_LAST,
-        GET_AT,
-        RANDOM,
-        SAVE
+        PREPEND, APPEND, INSERT_AT,
+
+        CLEAR, DELETE_FIRST, DELETE_LAST, DELETE_AT,
+
+        GET_SIZE, PREDECESSOR, SUCCESSOR, GET_FIRST, GET_LAST, GET_AT,
+
+        RANDOM, SAVE
     }
 
-    enum Filter {
-        SORTED,
-        UNSORTED
-    }
+    enum Filter {SORTED, UNSORTED}
 
-    enum Type {
-        HEAD,
-        TAIL,
-        HEAD_TAIL
-    }
+    enum Type {HEAD, TAIL, HEAD_TAIL}
 
-    LinkedListActivity mActivity;
+    private LinkedListActivity mActivity;
 
     // Vector that contains all Rects, that are drawn
-    Vector<RectF> mLinkedList = new Vector<>();
+    private final Vector<RectF> mLinkedList = new Vector<>();
 
     // Vector that contains all Integers, that are drawn / the user put in
-    Vector<Integer> mLinkedListNumbers = new Vector<>();
+    private final Vector<Integer> mLinkedListNumbers = new Vector<>();
 
     // Vector used for animation
-    Vector<Integer> mLinkedListAnimation = new Vector<>();
+    private final Vector<Integer> mLinkedListAnimation = new Vector<>();
 
     // Rect in order to save the TextBounds from the current number
-    Rect mBounds = new Rect();
+    private final Rect mBounds = new Rect();
 
     // int that specifies the radius of the corners of the drawn rectangles
-    int mRadius = 4;
+    private final int mRadius = 4;
 
     // factor for the change of height of the Queue item boxes, when the LinkedList is too high
-    float mScale = 1;
+    private float mScale = 1;
 
     // factor for the change of width of the LinkedList item boxes, when the number is to big for the current width
-    int mResize = 1;
+    private final int mResize = 1;
 
     // the current primary color of the currently used theme
-    int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
+    private final int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
+
+    // the current secondary color of the currently used theme
+    private final int mSecondaryColor = getResources().getColor(R.color.primaryLightColor, this.getContext().getTheme());
 
     // the current surface color of the currently used theme
-    int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
+    private final int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
 
     // the current colorOnPrimary color of the currently used theme - for text
-    int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
+    private final int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
 
     // the current colorOnSurface color of the currently used theme - for text
-    int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
+    private final int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
 
     // current width of the LinkedListView within the layout
-    float mMaxWidth;
+    private float mMaxWidth;
 
     // current height of the LinkedListView within the layout
-    float mMaxHeight;
+    private float mMaxHeight;
 
     // the current operation
-    Operation mCurrentOperation;
+    private Operation mCurrentOperation;
 
     // the current type
-    Type mCurrentType;
+    private Type mCurrentType;
 
     // the current filter (sorted or unsorted)
-    Filter mCurrentFilter;
+    private Filter mCurrentFilter;
 
     // the RectF for head, tail or both
-    RectF mTypeRect = new RectF();
+    private final RectF mTypeRect = new RectF();
 
     // First point of the triangle used in the background to display the type of the linked list
-    Point mFirst = new Point();
+    private final Point mFirst = new Point();
 
     // Second point of the triangle used in the background to display the type of the linked list
-    Point mSecond = new Point();
+    private final Point mSecond = new Point();
 
     // Third point of the triangle used in the background to display the type of the linked list
-    Point mThird = new Point();
+    private final Point mThird = new Point();
 
     // Path of the drawn triangle used in the background to display the type of the linked list
-    Path mTriangle = new Path();
+    private final Path mTriangle = new Path();
+
+    private boolean mSwitch;
 
     public LinkedListView(Context context) {
         super(context);
@@ -253,6 +248,7 @@ public class LinkedListView extends View {
     private void init() {
         mItemPaint.setColor(mPrimaryColor);
         mItemPaint.setStyle(Paint.Style.STROKE);
+        mItemPaint.setStrokeCap(Paint.Cap.ROUND);
         mItemPaint.setStrokeWidth(6);
 
         mTypePaint.setColor(mPrimaryColor);
@@ -270,6 +266,15 @@ public class LinkedListView extends View {
 
     protected void setActivity(LinkedListActivity _activity) {
         mActivity = _activity;
+    }
+
+    public void setSwitch(boolean isChecked) {
+        mSwitch = isChecked;
+        invalidate();
+    }
+
+    public Vector<Integer> getLinkedListNumbers() {
+        return mLinkedListNumbers;
     }
 
     protected void sorted(){
@@ -624,7 +629,16 @@ public class LinkedListView extends View {
             @Override
             public void onAnimationEnd(Animator animator) {
                 if(mCurrentOperation == Operation.PREDECESSOR || mCurrentOperation == Operation.SUCCESSOR) {
-                    mActivity.getBinding().LinkedListActivityReturnValue.setText(String.format("%s", mLinkedListNumbers.get(mPosition).toString()));
+
+                    if (mCurrentOperation == Operation.PREDECESSOR && mPosition < 0) {
+                        Toast.makeText(mActivity, R.string.LinkedList_Activity_Pre_Empty, Toast.LENGTH_SHORT).show();
+                    } else if (mCurrentOperation == Operation.SUCCESSOR && mPosition >= mLinkedListNumbers.size()) {
+                        Toast.makeText(mActivity, R.string.LinkedList_Activity_Succ_Empty, Toast.LENGTH_SHORT).show();
+                    } else {
+                        mActivity.getBinding().LinkedListActivityReturnValue.setText(String.format("%s", mLinkedListNumbers.get(mPosition).toString()));
+                    }
+                    mTouched = false;
+
                 }
             }
 
@@ -891,10 +905,109 @@ public class LinkedListView extends View {
         mLinkedList.get(_pos).right = (int) (mLinkedList.get(_pos).left + (mMaxWidth / 4) + mResize);
         mLinkedList.get(_pos).bottom = (int) (mLinkedList.get(_pos).top + ((mMaxWidth / 4) * mScale) - 10);
 
+        if(mSwitch) {
+            drawArrows(_canvas, _pos);
+        }
+
         // get BoundingBox from Text & draw Text + LinkedList item
         _canvas.drawRoundRect(mLinkedList.get(_pos), mRadius, mRadius, mItemPaint);
         _canvas.drawText(mLinkedListNumbers.get(_pos).toString(), getExactCenterX(mLinkedList.get(_pos)) - mBounds.exactCenterX(), (getExactCenterY(mLinkedList.get(_pos)) - mBounds.exactCenterY()), mItemTextPaint);
 
+    }
+
+    private void drawArrows(Canvas _canvas, int _pos) {
+
+        float length;
+        double angle = Math.toRadians(45);
+        boolean end;
+
+        float height = 76 / 2f;
+        float lineHeight = 66;
+        float lineWidth = 55;
+
+        if (_pos == mLinkedListNumbers.size() - 1) {
+            length = 10;
+            end = true;
+        } else {
+            length = 20;
+            end = false;
+        }
+
+        float y = (float) (Math.sin(angle) * length);
+        float x = (float) (Math.cos(angle) * length);
+
+        PointF p = drawLine(_canvas, _pos, height, lineHeight, lineWidth, true, end);
+        drawArrow(_canvas, p, x, y,true, end);
+
+        if (_pos == 0) {
+            length = 10;
+            end = true;
+        } else {
+            length = 20;
+            end = false;
+        }
+
+        y = (float) (Math.sin(Math.toRadians(180) - angle) * length);
+        x = (float) (Math.cos(Math.toRadians(180) - angle) * length);
+
+        mItemPaint.setColor(mSecondaryColor);
+        p = drawLine(_canvas, _pos, height - mLinkedList.get(_pos).height(), lineHeight, lineWidth, false, end);
+        drawArrow(_canvas, p, x, y, false, end);
+
+        mItemPaint.setColor(mPrimaryColor);
+    }
+
+    private PointF drawLine(Canvas _canvas, int _pos, float _height, float _lineHeight, float _lineWidth, boolean right, boolean end) {
+        float x;
+        float y = mLinkedList.get(_pos).top - _height;
+
+        if (right) { x = mLinkedList.get(_pos).right;
+        } else { x = mLinkedList.get(_pos).left; }
+
+        mPath.moveTo(x, y + _lineHeight);
+
+        if (right && end) {
+            mPath.cubicTo(x, y + _lineHeight, x , y + _lineHeight, x + (_lineWidth / 2 ), y + _lineHeight);
+        } else if (right) {
+            mPath.cubicTo(x + _lineWidth, y + _lineHeight, x + _lineWidth, y, x, y);
+        } else if (end) {
+            mPath.moveTo(x, y);
+            mPath.cubicTo(x, y, x - _lineWidth, y, x, y);
+        } else {
+            mPath.cubicTo(x - _lineWidth, y + _lineHeight, x - _lineWidth, y, x, y);
+        }
+
+        _canvas.drawPath(mPath, mItemPaint);
+        mPath.reset();
+
+        if (right && end) { return new PointF(x + _lineWidth / 2, y + _lineHeight);
+        } else if (right) { return new PointF(x, y);
+        } else if (end) { return new PointF(x - _lineWidth / 2, y);
+        } else { return new PointF(x, y + _lineHeight); }
+    }
+
+    private void drawArrow(Canvas _canvas, PointF _p, float x, float y, boolean right, boolean _end) {
+
+        float paddingY;
+        float paddingX;
+        float paddingX2;
+
+        if(right) {
+            paddingY = 4;
+            paddingX = 0;
+            paddingX2 = 0;
+        } else {
+            paddingY = 0;
+            paddingX = 2;
+            paddingX2 = 4;
+        }
+
+        if(!_end) {
+            _canvas.drawLine(_p.x, _p.y, _p.x + x + paddingX, _p.y - y + paddingY, mItemPaint);
+            _canvas.drawLine(_p.x + x + paddingX2, _p.y + y, _p.x, _p.y, mItemPaint);
+        } else {
+            _canvas.drawLine(_p.x,_p.y + y, _p.x,_p.y - y, mItemPaint);
+        }
     }
 
     @Override

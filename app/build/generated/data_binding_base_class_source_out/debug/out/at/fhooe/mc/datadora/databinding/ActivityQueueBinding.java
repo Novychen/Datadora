@@ -18,7 +18,6 @@ import androidx.viewbinding.ViewBinding;
 import at.fhooe.mc.datadora.Queue.QueueView;
 import at.fhooe.mc.datadora.R;
 import com.google.android.material.slider.Slider;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -26,6 +25,9 @@ import java.lang.String;
 public final class ActivityQueueBinding implements ViewBinding {
   @NonNull
   private final ConstraintLayout rootView;
+
+  @NonNull
+  public final ConstraintLayout QueueActivity;
 
   @NonNull
   public final ImageView QueueActivityBoxReturn;
@@ -85,28 +87,26 @@ public final class ActivityQueueBinding implements ViewBinding {
   public final ScrollView QueueActivityScrollViewButtons;
 
   @NonNull
-  public final SwitchMaterial QueueActivitySwitch;
-
-  @NonNull
   public final Toolbar QueueActivityToolbar;
 
   @NonNull
   public final FrameLayout QueueActivityViewContainer;
 
   private ActivityQueueBinding(@NonNull ConstraintLayout rootView,
-      @NonNull ImageView QueueActivityBoxReturn, @NonNull Button QueueActivityButtonClear,
-      @NonNull Button QueueActivityButtonDequeue, @NonNull Button QueueActivityButtonEmpty,
-      @NonNull Button QueueActivityButtonEnqueue, @NonNull Button QueueActivityButtonPeek,
-      @NonNull Button QueueActivityButtonRandom, @NonNull Button QueueActivityButtonSize,
-      @NonNull TextView QueueActivityCurrentValue, @NonNull ImageView QueueActivityFlowIcon,
-      @NonNull TextView QueueActivityFlowText, @NonNull Guideline QueueActivityGuideline,
-      @NonNull Slider QueueActivityInputSlider, @NonNull TextView QueueActivityInputValue,
-      @NonNull ImageView QueueActivityLine, @NonNull QueueView QueueActivityQueueView,
-      @NonNull TextView QueueActivityReturnText, @NonNull TextView QueueActivityReturnValue,
-      @NonNull ScrollView QueueActivityScrollViewButtons,
-      @NonNull SwitchMaterial QueueActivitySwitch, @NonNull Toolbar QueueActivityToolbar,
+      @NonNull ConstraintLayout QueueActivity, @NonNull ImageView QueueActivityBoxReturn,
+      @NonNull Button QueueActivityButtonClear, @NonNull Button QueueActivityButtonDequeue,
+      @NonNull Button QueueActivityButtonEmpty, @NonNull Button QueueActivityButtonEnqueue,
+      @NonNull Button QueueActivityButtonPeek, @NonNull Button QueueActivityButtonRandom,
+      @NonNull Button QueueActivityButtonSize, @NonNull TextView QueueActivityCurrentValue,
+      @NonNull ImageView QueueActivityFlowIcon, @NonNull TextView QueueActivityFlowText,
+      @NonNull Guideline QueueActivityGuideline, @NonNull Slider QueueActivityInputSlider,
+      @NonNull TextView QueueActivityInputValue, @NonNull ImageView QueueActivityLine,
+      @NonNull QueueView QueueActivityQueueView, @NonNull TextView QueueActivityReturnText,
+      @NonNull TextView QueueActivityReturnValue,
+      @NonNull ScrollView QueueActivityScrollViewButtons, @NonNull Toolbar QueueActivityToolbar,
       @NonNull FrameLayout QueueActivityViewContainer) {
     this.rootView = rootView;
+    this.QueueActivity = QueueActivity;
     this.QueueActivityBoxReturn = QueueActivityBoxReturn;
     this.QueueActivityButtonClear = QueueActivityButtonClear;
     this.QueueActivityButtonDequeue = QueueActivityButtonDequeue;
@@ -126,7 +126,6 @@ public final class ActivityQueueBinding implements ViewBinding {
     this.QueueActivityReturnText = QueueActivityReturnText;
     this.QueueActivityReturnValue = QueueActivityReturnValue;
     this.QueueActivityScrollViewButtons = QueueActivityScrollViewButtons;
-    this.QueueActivitySwitch = QueueActivitySwitch;
     this.QueueActivityToolbar = QueueActivityToolbar;
     this.QueueActivityViewContainer = QueueActivityViewContainer;
   }
@@ -158,6 +157,8 @@ public final class ActivityQueueBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      ConstraintLayout QueueActivity = (ConstraintLayout) rootView;
+
       id = R.id.Queue_Activity_Box_Return;
       ImageView QueueActivityBoxReturn = rootView.findViewById(id);
       if (QueueActivityBoxReturn == null) {
@@ -272,12 +273,6 @@ public final class ActivityQueueBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.Queue_Activity_Switch;
-      SwitchMaterial QueueActivitySwitch = rootView.findViewById(id);
-      if (QueueActivitySwitch == null) {
-        break missingId;
-      }
-
       id = R.id.Queue_Activity_Toolbar;
       Toolbar QueueActivityToolbar = rootView.findViewById(id);
       if (QueueActivityToolbar == null) {
@@ -290,14 +285,14 @@ public final class ActivityQueueBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityQueueBinding((ConstraintLayout) rootView, QueueActivityBoxReturn,
-          QueueActivityButtonClear, QueueActivityButtonDequeue, QueueActivityButtonEmpty,
-          QueueActivityButtonEnqueue, QueueActivityButtonPeek, QueueActivityButtonRandom,
-          QueueActivityButtonSize, QueueActivityCurrentValue, QueueActivityFlowIcon,
-          QueueActivityFlowText, QueueActivityGuideline, QueueActivityInputSlider,
-          QueueActivityInputValue, QueueActivityLine, QueueActivityQueueView,
-          QueueActivityReturnText, QueueActivityReturnValue, QueueActivityScrollViewButtons,
-          QueueActivitySwitch, QueueActivityToolbar, QueueActivityViewContainer);
+      return new ActivityQueueBinding((ConstraintLayout) rootView, QueueActivity,
+          QueueActivityBoxReturn, QueueActivityButtonClear, QueueActivityButtonDequeue,
+          QueueActivityButtonEmpty, QueueActivityButtonEnqueue, QueueActivityButtonPeek,
+          QueueActivityButtonRandom, QueueActivityButtonSize, QueueActivityCurrentValue,
+          QueueActivityFlowIcon, QueueActivityFlowText, QueueActivityGuideline,
+          QueueActivityInputSlider, QueueActivityInputValue, QueueActivityLine,
+          QueueActivityQueueView, QueueActivityReturnText, QueueActivityReturnValue,
+          QueueActivityScrollViewButtons, QueueActivityToolbar, QueueActivityViewContainer);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

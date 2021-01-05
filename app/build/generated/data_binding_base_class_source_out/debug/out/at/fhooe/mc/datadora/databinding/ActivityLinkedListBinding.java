@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -20,7 +21,6 @@ import androidx.viewbinding.ViewBinding;
 import at.fhooe.mc.datadora.LinkedList.LinkedListView;
 import at.fhooe.mc.datadora.R;
 import com.google.android.material.slider.Slider;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -28,6 +28,12 @@ import java.lang.String;
 public final class ActivityLinkedListBinding implements ViewBinding {
   @NonNull
   private final ConstraintLayout rootView;
+
+  @NonNull
+  public final ScrollView DLLActivityContainer;
+
+  @NonNull
+  public final ConstraintLayout LinkedListActivity;
 
   @NonNull
   public final RadioButton LinkedListActivityAddAppendRadioButton;
@@ -171,7 +177,7 @@ public final class ActivityLinkedListBinding implements ViewBinding {
   public final TextView LinkedListActivityReturnValue;
 
   @NonNull
-  public final SwitchMaterial LinkedListActivitySwitch;
+  public final ToggleButton LinkedListActivitySwitch;
 
   @NonNull
   public final Toolbar LinkedListActivityToolbar;
@@ -206,10 +212,8 @@ public final class ActivityLinkedListBinding implements ViewBinding {
   @NonNull
   public final FrameLayout LinkedListActivityViewContainer;
 
-  @NonNull
-  public final ScrollView scrollView2;
-
   private ActivityLinkedListBinding(@NonNull ConstraintLayout rootView,
+      @NonNull ScrollView DLLActivityContainer, @NonNull ConstraintLayout LinkedListActivity,
       @NonNull RadioButton LinkedListActivityAddAppendRadioButton,
       @NonNull ImageView LinkedListActivityAddArrow,
       @NonNull RadioButton LinkedListActivityAddAtRadioButton,
@@ -254,7 +258,7 @@ public final class ActivityLinkedListBinding implements ViewBinding {
       @NonNull TextView LinkedListActivityRandomText,
       @NonNull TextView LinkedListActivityReturnText,
       @NonNull TextView LinkedListActivityReturnValue,
-      @NonNull SwitchMaterial LinkedListActivitySwitch, @NonNull Toolbar LinkedListActivityToolbar,
+      @NonNull ToggleButton LinkedListActivitySwitch, @NonNull Toolbar LinkedListActivityToolbar,
       @NonNull ImageView LinkedListActivityTypeArrow,
       @NonNull ImageView LinkedListActivityTypeBackground,
       @NonNull RadioButton LinkedListActivityTypeBothRadioButton,
@@ -264,8 +268,10 @@ public final class ActivityLinkedListBinding implements ViewBinding {
       @NonNull RadioGroup LinkedListActivityTypeRadioGroup,
       @NonNull RadioButton LinkedListActivityTypeTailRadioButton,
       @NonNull TextView LinkedListActivityTypeTitle,
-      @NonNull FrameLayout LinkedListActivityViewContainer, @NonNull ScrollView scrollView2) {
+      @NonNull FrameLayout LinkedListActivityViewContainer) {
     this.rootView = rootView;
+    this.DLLActivityContainer = DLLActivityContainer;
+    this.LinkedListActivity = LinkedListActivity;
     this.LinkedListActivityAddAppendRadioButton = LinkedListActivityAddAppendRadioButton;
     this.LinkedListActivityAddArrow = LinkedListActivityAddArrow;
     this.LinkedListActivityAddAtRadioButton = LinkedListActivityAddAtRadioButton;
@@ -325,7 +331,6 @@ public final class ActivityLinkedListBinding implements ViewBinding {
     this.LinkedListActivityTypeTailRadioButton = LinkedListActivityTypeTailRadioButton;
     this.LinkedListActivityTypeTitle = LinkedListActivityTypeTitle;
     this.LinkedListActivityViewContainer = LinkedListActivityViewContainer;
-    this.scrollView2 = scrollView2;
   }
 
   @Override
@@ -355,6 +360,14 @@ public final class ActivityLinkedListBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.DLL_Activity_Container;
+      ScrollView DLLActivityContainer = rootView.findViewById(id);
+      if (DLLActivityContainer == null) {
+        break missingId;
+      }
+
+      ConstraintLayout LinkedListActivity = (ConstraintLayout) rootView;
+
       id = R.id.LinkedList_Activity_Add_Append_RadioButton;
       RadioButton LinkedListActivityAddAppendRadioButton = rootView.findViewById(id);
       if (LinkedListActivityAddAppendRadioButton == null) {
@@ -638,7 +651,7 @@ public final class ActivityLinkedListBinding implements ViewBinding {
       }
 
       id = R.id.LinkedList_Activity_Switch;
-      SwitchMaterial LinkedListActivitySwitch = rootView.findViewById(id);
+      ToggleButton LinkedListActivitySwitch = rootView.findViewById(id);
       if (LinkedListActivitySwitch == null) {
         break missingId;
       }
@@ -709,14 +722,8 @@ public final class ActivityLinkedListBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.scrollView2;
-      ScrollView scrollView2 = rootView.findViewById(id);
-      if (scrollView2 == null) {
-        break missingId;
-      }
-
-      return new ActivityLinkedListBinding((ConstraintLayout) rootView,
-          LinkedListActivityAddAppendRadioButton, LinkedListActivityAddArrow,
+      return new ActivityLinkedListBinding((ConstraintLayout) rootView, DLLActivityContainer,
+          LinkedListActivity, LinkedListActivityAddAppendRadioButton, LinkedListActivityAddArrow,
           LinkedListActivityAddAtRadioButton, LinkedListActivityAddBackground,
           LinkedListActivityAddConstraintLayout, LinkedListActivityAddMotionLayout,
           LinkedListActivityAddPositionSlider, LinkedListActivityAddPositionZero,
@@ -743,7 +750,7 @@ public final class ActivityLinkedListBinding implements ViewBinding {
           LinkedListActivityTypeConstraintLayout, LinkedListActivityTypeHeadRadioButton,
           LinkedListActivityTypeMotionLayout, LinkedListActivityTypeRadioGroup,
           LinkedListActivityTypeTailRadioButton, LinkedListActivityTypeTitle,
-          LinkedListActivityViewContainer, scrollView2);
+          LinkedListActivityViewContainer);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

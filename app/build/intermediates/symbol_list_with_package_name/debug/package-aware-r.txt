@@ -1562,6 +1562,9 @@ drawable ic_arrow_drop_down
 drawable ic_bst
 drawable ic_card
 drawable ic_center_list
+drawable ic_center_node_list
+drawable ic_center_node_normal
+drawable ic_center_node_pressed
 drawable ic_center_normal
 drawable ic_center_pressed
 drawable ic_check
@@ -1610,10 +1613,14 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable switch_list
+drawable switch_modes_off
+drawable switch_modes_on
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 id ALT
+id About_Activity
 id About_Activity_App_Icon
 id About_Activity_App_Name
 id About_Activity_App_Slogan
@@ -1628,8 +1635,10 @@ id About_Activity_University
 id About_Activity_Yvonne
 id BOTTOM_END
 id BOTTOM_START
+id BST_Activity
 id BST_Activity_Box_Return
 id BST_Activity_Center
+id BST_Activity_Center_Node
 id BST_Activity_Check_Arrow
 id BST_Activity_Check_Background
 id BST_Activity_Check_ConstraintLayout
@@ -1653,6 +1662,7 @@ id BST_Activity_Standard_ConstraintLayout
 id BST_Activity_Structure_Arrow
 id BST_Activity_Structure_Background
 id BST_Activity_Structure_ConstraintLayout
+id BST_Activity_Switch
 id BST_Activity_TabLayout
 id BST_Activity_Toolbar
 id BST_Activity_Vector_Output
@@ -1685,7 +1695,9 @@ id BST_Fragment_RightChild
 id BST_Fragment_Root
 id BST_Fragment_Size
 id CTRL
+id DLL_Activity_Container
 id FUNCTION
+id LinkedList_Activity
 id LinkedList_Activity_Add_Append_RadioButton
 id LinkedList_Activity_Add_Arrow
 id LinkedList_Activity_Add_At_RadioButton
@@ -1746,6 +1758,7 @@ id LinkedList_Activity_Type_Tail_RadioButton
 id LinkedList_Activity_Type_Title
 id LinkedList_Activity_ViewContainer
 id META
+id Main_Activity
 id Main_Activity_About
 id Main_Activity_App_Icon
 id Main_Activity_App_Name
@@ -1766,6 +1779,7 @@ id Main_Activity_Tree_Card
 id Main_Activity_Tree_Icon
 id Main_Activity_Tree_Text
 id NO_DEBUG
+id Queue_Activity
 id Queue_Activity_Box_Return
 id Queue_Activity_Button_Clear
 id Queue_Activity_Button_Dequeue
@@ -1785,7 +1799,6 @@ id Queue_Activity_QueueView
 id Queue_Activity_ReturnText
 id Queue_Activity_ReturnValue
 id Queue_Activity_ScrollViewButtons
-id Queue_Activity_Switch
 id Queue_Activity_Toolbar
 id Queue_Activity_ViewContainer
 id SHIFT
@@ -1793,6 +1806,7 @@ id SHOW_ALL
 id SHOW_PATH
 id SHOW_PROGRESS
 id SYM
+id Stack_Activity
 id Stack_Activity_Box_Return
 id Stack_Activity_Button_Clear
 id Stack_Activity_Button_Empty
@@ -1812,7 +1826,6 @@ id Stack_Activity_ReturnText
 id Stack_Activity_ReturnValue
 id Stack_Activity_ScrollViewButtons
 id Stack_Activity_StackView
-id Stack_Activity_Switch
 id Stack_Activity_Toolbar
 id Stack_Activity_ViewContainer
 id TOP_END
@@ -1976,6 +1989,7 @@ id groups
 id guideline
 id guideline2
 id guideline3
+id guideline4
 id hideable
 id home
 id homeAsUp
@@ -2080,7 +2094,7 @@ id scroll
 id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
-id scrollView2
+id scrollView3
 id scrollable
 id search_badge
 id search_bar
@@ -2354,6 +2368,7 @@ string All_Data_Activity_Text_Return
 string All_Data_Activity_Text_Saved
 string All_Data_Activity_Text_Size
 string All_Data_Activity_True
+string BST_Activity_Add_Toast
 string BST_Activity_Center
 string BST_Activity_Check_Child
 string BST_Activity_Check_Empty
@@ -2375,6 +2390,7 @@ string BST_Activity_Get_Parent
 string BST_Activity_Get_RightChild
 string BST_Activity_Get_Root
 string BST_Activity_Get_Title
+string BST_Activity_Select_Toast
 string BST_Activity_Standard_Add
 string BST_Activity_Standard_Random
 string BST_Activity_Standard_Random_tree
@@ -2415,7 +2431,9 @@ string LinkedList_Activity_Get_Last
 string LinkedList_Activity_Get_Predecessor
 string LinkedList_Activity_Get_Successor
 string LinkedList_Activity_Get_Title
+string LinkedList_Activity_Pre_Empty
 string LinkedList_Activity_Pre_Succ_Hint
+string LinkedList_Activity_Succ_Empty
 string LinkedList_Activity_Toast_Empty
 string LinkedList_Activity_Toast_Feature
 string LinkedList_Activity_Toast_Full
@@ -2543,7 +2561,9 @@ style Animation_Design_BottomSheetDialog
 style Animation_MaterialComponents_BottomSheetDialog
 style AppTheme
 style AppTheme_Switch
+style AppTheme_Transparent
 style AppTheme_DarkMode
+style AppTheme_Mode
 style Base_AlertDialog_AppCompat
 style Base_AlertDialog_AppCompat_Light
 style Base_Animation_AppCompat_Dialog
@@ -3348,7 +3368,7 @@ styleable ScrollingViewBehavior_Layout behavior_overlapTop
 styleable SearchView android_focusable android_maxWidth android_inputType android_imeOptions closeIcon commitIcon defaultQueryHint goIcon iconifiedByDefault layout queryBackground queryHint searchHintIcon searchIcon submitBackground suggestionRowLayout voiceIcon
 styleable ShapeAppearance cornerFamily cornerFamilyBottomLeft cornerFamilyBottomRight cornerFamilyTopLeft cornerFamilyTopRight cornerSize cornerSizeBottomLeft cornerSizeBottomRight cornerSizeTopLeft cornerSizeTopRight
 styleable ShapeableImageView shapeAppearance shapeAppearanceOverlay strokeColor strokeWidth
-styleable Slider android_value android_stepSize android_valueFrom android_valueTo haloColor haloRadius labelBehavior labelStyle thumbColor thumbElevation thumbRadius tickColor tickColorActive tickColorInactive trackColor trackColorActive trackColorInactive trackHeight
+styleable Slider android_enabled android_value android_stepSize android_valueFrom android_valueTo haloColor haloRadius labelBehavior labelStyle thumbColor thumbElevation thumbRadius tickColor tickColorActive tickColorInactive trackColor trackColorActive trackColorInactive trackHeight
 styleable Snackbar snackbarButtonStyle snackbarStyle snackbarTextViewStyle
 styleable SnackbarLayout android_maxWidth actionTextColorAlpha animationMode backgroundOverlayColorAlpha backgroundTint backgroundTintMode elevation maxActionInlineWidth
 styleable Spinner android_entries android_popupBackground android_prompt android_dropDownWidth popupTheme

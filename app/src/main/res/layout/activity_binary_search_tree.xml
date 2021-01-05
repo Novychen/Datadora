@@ -2,11 +2,36 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/BST_Activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".BinarySearchTree.BinarySearchTreeActivity">
+
+    <ToggleButton
+        android:id="@+id/BST_Activity_Switch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/switch_list"
+        android:textOff=''
+        android:textOn=''
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Center_Node"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Center_Node"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Center_Node" />
+
+    <ImageView
+        android:id="@+id/BST_Activity_Center_Node"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/BST_Activity_Center"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintStart_toEndOf="@+id/BST_Activity_Center"
+        app:layout_constraintTop_toTopOf="@+id/BST_Activity_Center"
+        app:srcCompat="@drawable/ic_center_node_list" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/BST_Activity_Toolbar"
@@ -89,12 +114,12 @@
 
     <TextView
         android:id="@+id/BST_Activity_ReturnValue"
+        style="@style/Primary.Text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        style="@style/Primary.Text"
         android:maxLines="1"
         android:singleLine="true"
         android:textAlignment="center"

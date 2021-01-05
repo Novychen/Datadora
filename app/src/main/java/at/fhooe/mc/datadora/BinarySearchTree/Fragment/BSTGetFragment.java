@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -79,11 +80,23 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void getParent() { mActivity.getBinding().BSTActivityView.getParentNode(); }
+    private void getParent() {
+        if(!mActivity.getBinding().BSTActivityView.getParentNode()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
+    }
 
-    private void getRightChild() { mActivity.getBinding().BSTActivityView.getRightChild(); }
+    private void getRightChild() {
+        if(!mActivity.getBinding().BSTActivityView.getRightChild()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
+    }
 
-    private void getLeftChild() { mActivity.getBinding().BSTActivityView.getLeftChild(); }
+    private void getLeftChild() {
+        if(!mActivity.getBinding().BSTActivityView.getLeftChild()) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void getRoot() { mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", mActivity.getTree().getRoot().getData())); }
 
@@ -91,7 +104,8 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
      * returns a String with all external nodes of the tree
      */
     public void getExternalNodes() {
-        Vector<BinaryTreeNode> external = mActivity.getTree().getExternalNodes();
+
+        mActivity.getTree().getExternalNodes();
         mActivity.getBinding().BSTActivityView.getExternal();
     }
 
@@ -99,7 +113,8 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
      * returns a String with all internal nodes of the tree
      */
     public void getInternalNodes() {
-        Vector<BinaryTreeNode> internal = mActivity.getTree().getInternalNodes();
+
+        mActivity.getTree().getInternalNodes();
         mActivity.getBinding().BSTActivityView.getInternal();
     }
 

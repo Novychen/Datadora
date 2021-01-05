@@ -48,10 +48,10 @@ public class StackView extends View {
     private int mPositionAnimation;
 
     // Animator for the last pushed element
-    private ValueAnimator mAnimatorPush = new ValueAnimator();
+    private final ValueAnimator mAnimatorPush = new ValueAnimator();
 
     // Animator for the last pushed element
-    private ValueAnimator mAnimatorPop = new ValueAnimator();
+    private final ValueAnimator mAnimatorPop = new ValueAnimator();
 
     // Animator for the operation peek (for the area of one item)
     private ValueAnimator mAnimatorPeekArea = new ValueAnimator();
@@ -60,19 +60,19 @@ public class StackView extends View {
     private ValueAnimator mAnimatorPeekText = new ValueAnimator();
 
     // Animator for the operation random
-    private ValueAnimator mAnimatorRandom = new ValueAnimator();
+    private final ValueAnimator mAnimatorRandom = new ValueAnimator();
 
     // Vector that contains all Rects, that are drawn
-    private Vector<RectF> mStack = new Vector<>();
+    private final Vector<RectF> mStack = new Vector<>();
 
     // Vector that contains all Integers, that are drawn / the user put in
-    private Vector<Integer> mStackNumbers = new Vector<>();
+    private final Vector<Integer> mStackNumbers = new Vector<>();
 
     // Vector for the animation of the operation random
-    private Vector<Integer> mStackAnimation = new Vector<>();
+    private final Vector<Integer> mStackAnimation = new Vector<>();
 
     // Rect in order to save the TextBounds from the current number
-    private Rect mBounds = new Rect();
+    private final Rect mBounds = new Rect();
 
     // factor for the change of height of the stack item boxes, when the stack is too high
     private float mScale = 1;
@@ -102,19 +102,19 @@ public class StackView extends View {
     private int mColorTextPeek;
 
     // the current primary color of the currently used theme
-    private int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
+    private final int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
 
     // the current surface color of the currently used theme
-    private int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
+    private final int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
 
     // the current colorOnPrimary color of the currently used theme - for text
-    private int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
+    private final int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
 
     // the current colorOnSurface color of the currently used theme - for text
-    private int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
+    private final int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
 
-    private Paint mItemPaint = new Paint();
-    private Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mItemPaint = new Paint();
+    private final Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     // current width of the StackView within the layout
     private float mMaxWidth;
@@ -140,7 +140,6 @@ public class StackView extends View {
     }
 
     protected Vector<Integer> getStackNumbers() {
-
         return mStackNumbers;
     }
 

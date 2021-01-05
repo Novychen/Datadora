@@ -1,16 +1,18 @@
 package at.fhooe.mc.datadora.BinarySearchTree;
 
+import android.animation.Animator;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.Nullable;
 
@@ -38,6 +40,8 @@ public class BSTView extends View {
     private final int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
 
     private BinarySearchTreeActivity mActivity;
+    private int mCount = 0;
+    private boolean mSwitch;
 
     private enum Operation {
         ADD, REMOVE, RANDOM, CLEAR,
@@ -54,18 +58,25 @@ public class BSTView extends View {
     private Operation mCurrentOperation;
 
     private float mMaxWidth;
-    private final float mRadius = 50;
 
-    private final Matrix mMatrix = new Matrix();
-    private PointF mBegin = new PointF();
-    private PointF mEnd = new PointF();
+    private final float mRadius = 50;
+    private int mColor;
+
+    private final PointF mBegin = new PointF();
+    private final PointF mEnd = new PointF();
+
+    private final float mTopSpace = 80;
+    private BinarySearchTree mTree;
+    float mLength = 25;
+
     private float mX;
     private float mY;
 
     // Rect in order to save the TextBounds from the current number
     private final Rect mBounds = new Rect();
     private boolean mMove = false;
-    private int mPosition;
+    private boolean mDown = false;
+    private int mPosition = -1;
 
     public BSTView(Context context) {
         super(context);
@@ -89,6 +100,7 @@ public class BSTView extends View {
     private void init() {
         mItemPaint.setColor(mPrimaryColor);
         mItemPaint.setStyle(Paint.Style.STROKE);
+        mItemPaint.setStrokeCap(Paint.Cap.ROUND);
         mItemPaint.setStrokeWidth(6);
 
         mItemPaintArea.setColor(mSurfaceColor);
@@ -115,12 +127,17 @@ public class BSTView extends View {
         return mY;
     }
 
+    public void setSwitch(boolean isChecked) {
+        mSwitch = isChecked;
+        invalidate();
+    }
+
     public void add() {
         mCurrentOperation = Operation.ADD;
         invalidate();
     }
 
-    public void remove() {
+    public boolean remove() {
         if(mPosition != -1) {
             int data = mActivity.getTreeUser().get(mPosition).getData();
             mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", data));
@@ -128,7 +145,9 @@ public class BSTView extends View {
             mActivity.getTreeUser().remove(mPosition);
             invalidate();
             mPosition = -1;
+            return true;
         }
+        return false;
     }
 
     public void clear() {
@@ -136,16 +155,20 @@ public class BSTView extends View {
         invalidate();
     }
 
-    public void depth() {
+    public boolean depth() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
             mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", mActivity.getTree().getDepth(mActivity.getTreeUser().get(mPosition).getData())));
+            return true;
         }
+        return false;
     }
 
-    public void height() {
+    public boolean height() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
             mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", mActivity.getTree().getHeight(mActivity.getTreeUser().get(mPosition).getData())));
+            return true;
         }
+        return false;
     }
 
     public void getExternal() {
@@ -168,7 +191,7 @@ public class BSTView extends View {
         invalidate();
     }
 
-    public void hasParent() {
+    public boolean hasParent() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
             BinaryTreeNode parent = mActivity.getTree().getParentNode(mActivity.getTreeUser().get(mPosition).getData());
@@ -178,10 +201,12 @@ public class BSTView extends View {
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
+            return true;
         }
+        return false;
     }
 
-    public void hasRightChild() {
+    public boolean hasRightChild() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
             BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
@@ -191,10 +216,12 @@ public class BSTView extends View {
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
+            return true;
         }
+        return false;
     }
 
-    public void hasLeftChild() {
+    public boolean hasLeftChild() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
             BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
@@ -204,10 +231,12 @@ public class BSTView extends View {
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
+            return true;
         }
+        return false;
     }
 
-    public void isRoot() {
+    public boolean isRoot() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
             BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
@@ -217,10 +246,12 @@ public class BSTView extends View {
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
+            return true;
         }
+        return false;
     }
 
-    public void isInternal() {
+    public boolean isInternal() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
             BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
@@ -230,10 +261,12 @@ public class BSTView extends View {
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
+            return true;
         }
+        return false;
     }
 
-    public void isExternal() {
+    public boolean isExternal() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
             BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
@@ -243,10 +276,12 @@ public class BSTView extends View {
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
+            return true;
         }
+        return false;
     }
 
-    public void getParentNode() {
+    public boolean getParentNode() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
             BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
             BinaryTreeNode parent = mActivity.getTree().getParentNode(n.getData());
@@ -256,10 +291,12 @@ public class BSTView extends View {
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText("-");
             }
+            return true;
         }
+        return false;
     }
 
-    public void getRightChild() {
+    public boolean getRightChild() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
             BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
@@ -269,10 +306,12 @@ public class BSTView extends View {
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText("-");
             }
+            return true;
         }
+        return false;
     }
 
-    public void getLeftChild() {
+    public boolean getLeftChild() {
         if(mPosition != -1 && mActivity.getTreeUser().get(mPosition).isSelected()) {
 
             BinaryTreeNode n = mActivity.getTreeUser().get(mPosition);
@@ -282,7 +321,60 @@ public class BSTView extends View {
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText("-");
             }
+            return true;
         }
+        return false;
+    }
+
+    public void inOrder() {
+        final Vector<BinaryTreeNode> inOrder = mActivity.getTree().toInOrder(true);
+        final StringBuilder builder = new StringBuilder();
+
+        ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), mSurfaceColor, mPrimaryColor);
+        animator.setRepeatCount(inOrder.size() - 1);
+        animator.setDuration(500);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mColor = (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                inOrder.get(mCount).setSelected(true);
+                builder.append(inOrder.get(mCount).getData());
+                mActivity.getBinding().BSTActivityVectorOutput.setText(builder.toString());
+                invalidate();
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                inOrder.get(mCount).setSelected(false);
+                invalidate();
+                mCount = 0;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                inOrder.get(mCount).setSelected(false);
+                mCount ++;
+                inOrder.get(mCount).setSelected(true);
+                builder.append("   ").append(inOrder.get(mCount).getData());
+                mActivity.getBinding().BSTActivityVectorOutput.setText(builder.toString());
+            }
+        });
+
+
+        animator.start();
+
     }
 
     @Override
@@ -308,36 +400,37 @@ public class BSTView extends View {
     }
 
     private void drawTree(Canvas _canvas) {
-        float topSpace = 80;
-        BinarySearchTree t = mActivity.getTree();
-        Vector<BinaryTreeNode> tv = t.toArrayPreOrder();
+        mTree = mActivity.getTree();
+        Vector<BinaryTreeNode> tv = mTree.toArrayPreOrder();
 
-        if(t.getRoot() != null) {
-            float x = mMaxWidth / 2;
-            float y = topSpace;
+        if(mTree.getRoot() != null) {
+            float x;
+            float y;
 
-            x = x + (mX);
-            y = y + (mY);
+            if (mX != 0 && mY != 0) {
+                x = mTree.getRoot().getPoint().x;
+                y = mTree.getRoot().getPoint().y;
+            } else {
+                x = mMaxWidth / 2;
+                y = mTopSpace;
+            }
 
-            t.getRoot().setPoint(x, y);
+            if(mMove) {
+                x = x + (mX);
+                y = y + (mY);
+            }
+
+            mTree.getRoot().setPoint(x, y);
         }
 
         if (tv != null) {
             for (int i = 0; i < mActivity.getTreeUser().size(); i++) {
 
                 BinaryTreeNode n = tv.get(i);
-                BinaryTreeNode nPre = t.getParentNode(n.getData());
+                BinaryTreeNode nPre = mTree.getParentNode(n.getData());
 
-                float direction = getDirection(n, nPre);
-
-                if(n != t.getRoot()) {
-                    float xPre = nPre.getPoint().x;
-
-                    float mMinDistanceX = 80;
-                    float x = (n.getChildCount() * mMinDistanceX * direction) + xPre;
-                    float y = (mMinDistanceX * t.getDepth(n.getData())) + topSpace + mY;
-                    n.setPoint(x,y);
-
+                if(n != mTree.getRoot()) {
+                    setPointOfNode(n, nPre);
                     prepareAndDrawLine(n, nPre, _canvas);
                 }
 
@@ -362,14 +455,73 @@ public class BSTView extends View {
         }
     }
 
-    private void prepareAndDrawLine(BinaryTreeNode _n, BinaryTreeNode _nPre, Canvas _canvas) {
-        float x = calculateX(_n, _nPre);
-        float y = calculateY(_n, _nPre);
+    private void drawArrows(BinaryTreeNode _n, BinaryTreeNode _nPre, float _x, float _y, Canvas _canvas) {
+
+        float x = calculateDiffX(_n, _nPre);
+        float y = calculateDiffY(_n, _nPre);
+
+        double alpha = Math.atan(y/x);
+
+        double beta = Math.toRadians(45) - alpha;
+        double yArrow = Math.sin(beta) * mLength;
+        double xArrow = Math.cos(beta) * mLength;
+
+        double ceta = Math.toRadians(180) - (alpha + Math.toRadians(45));
+        double yArrow2 = Math.sin(ceta) * mLength;
+        double xArrow2 = Math.cos(ceta) * mLength;
 
         float direction = getDirection(_n, _nPre);
 
-        double lengthX = Math.cos(calculateAngle(y,x));
-        double lengthY = Math.cos(calculateAngle(x,y));
+        float lengthX = (float) (_x - (xArrow) * direction);
+        float lengthY = (float) (_y - yArrow);
+
+        float lengthX2 = (float) (_x + (xArrow2) * direction);
+        float lengthY2 = (float) (_y - yArrow2);
+
+        if(alpha != Math.toRadians(-45) && alpha != Math.toRadians(45)) {
+            if(direction == 1) {
+                lengthY = (float) (_y + yArrow);
+            } else {
+                lengthY2 = (float) (_y + yArrow2);
+                lengthY = (float) (_y - yArrow);
+            }
+        }
+            _canvas.drawLine(_x, _y, lengthX2, lengthY2, mItemPaint);
+            _canvas.drawLine(lengthX, lengthY, _x, _y, mItemPaint);
+
+    }
+
+    private void setPointOfNode(BinaryTreeNode _n, BinaryTreeNode _nPre) {
+        float direction = getDirection(_n, _nPre);
+
+        float xPre = _nPre.getPoint().x;
+        float yPre = _nPre.getPoint().y;
+
+        int minDistanceX;
+        if(mSwitch) {
+            minDistanceX = 100;
+        } else {
+            minDistanceX = 80;
+        }
+        float x = (_n.getChildCount() * minDistanceX * direction) + xPre;
+        float y;
+        if(mY == 0) {
+            y = (minDistanceX * mTree.getDepth(_n.getData())) + mTopSpace + mY;
+        } else {
+            y = yPre + minDistanceX;
+        }
+        _n.setPoint(x,y);
+    }
+
+    private void prepareAndDrawLine(BinaryTreeNode _n, BinaryTreeNode _nPre, Canvas _canvas) {
+
+        float x = calculateDiffX(_n, _nPre);
+        float y = calculateDiffY(_n, _nPre);
+
+        float direction = getDirection(_n, _nPre);
+
+        double lengthX = Math.cos(Math.atan(y/x));
+        double lengthY = Math.cos(Math.atan(x/y));
 
         float xPre = (float) (_nPre.getPoint().x + (lengthX * direction) * mRadius);
         float yPre = (float) (_nPre.getPoint().y + lengthY * mRadius);
@@ -378,17 +530,44 @@ public class BSTView extends View {
         y = (float) (_n.getPoint().y - lengthY * mRadius);
 
         _canvas.drawLine(xPre, yPre, x, y, mItemPaint);
+
+        if(mSwitch) {
+            drawArrows(_n, _nPre, x, y, _canvas);
+
+            double angle = Math.toRadians(45);
+            float smallLength = mLength/2f;
+
+            y = (float) (Math.sin(angle) * mRadius);
+            x = (float) (Math.cos(angle) * mRadius);
+            y = _n.getPoint().y + y;
+
+            if (_n.getRight() == null) {
+                float xEnd = _n.getPoint().x + x;
+                _canvas.drawLine(xEnd, y, xEnd + mLength, y + mLength, mItemPaint);
+
+                float smallY = (float) (Math.sin(angle) * smallLength);
+                float smallX = (float) (Math.cos(angle) * smallLength);
+
+                _canvas.drawLine((xEnd + mLength) - smallX, (y + mLength) + smallY, (xEnd + mLength) + smallX, (y + mLength) - smallY, mItemPaint);
+            }
+
+            if (_n.getLeft() == null) {
+                float xEnd = _n.getPoint().x - x;
+                _canvas.drawLine(xEnd, y, xEnd - mLength, y + mLength, mItemPaint);
+
+                float smallY = (float) (Math.sin(angle) * smallLength);
+                float smallX = (float) (Math.cos(angle) * smallLength);
+
+                _canvas.drawLine((xEnd - mLength) - smallX, (y + mLength) - smallY, (xEnd - mLength) + smallX, (y + mLength) + smallY, mItemPaint);
+            }
+        }
     }
 
-    private double calculateAngle(float _a, float _b) {
-        return Math.atan(_a / _b);
-    }
-
-    private float calculateX (BinaryTreeNode _n, BinaryTreeNode _nPre) {
+    private float calculateDiffX(BinaryTreeNode _n, BinaryTreeNode _nPre) {
         return _n.getPoint().x - _nPre.getPoint().x;
     }
 
-    private float calculateY (BinaryTreeNode _n, BinaryTreeNode _nPre) {
+    private float calculateDiffY(BinaryTreeNode _n, BinaryTreeNode _nPre) {
         return _n.getPoint().y - _nPre.getPoint().y;
     }
 
@@ -421,6 +600,8 @@ public class BSTView extends View {
     public boolean onTouchEvent(MotionEvent _event) {
 
         if (_event.getAction() == MotionEvent.ACTION_DOWN) {
+            mDown = true;
+
             float x = _event.getX();
             float y = _event.getY();
             if(!mMove) {
@@ -437,6 +618,13 @@ public class BSTView extends View {
                 float x = _event.getX();
                 float y = _event.getY();
 
+                if(mDown) {
+                    mDown = false;
+                } else {
+                    mBegin.x = mEnd.x;
+                    mBegin.y = mEnd.y;
+                }
+
                 mEnd.x = x;
                 mEnd.y = y;
 
@@ -446,7 +634,6 @@ public class BSTView extends View {
                 invalidate();
             }
         }
-
         return true;
     }
 

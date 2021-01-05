@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Stack_Activity"
+    style="@style/Surface"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/Surface"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -203,11 +204,12 @@
         android:id="@+id/Stack_Activity_ViewContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/Stack_Activity_InputValue"
         app:layout_constraintEnd_toStartOf="@+id/Stack_Activity_ScrollViewButtons"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_InputSlider"
-        app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Switch">
+        app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Toolbar">
 
         <at.fhooe.mc.datadora.Stack.StackView
             android:id="@+id/Stack_Activity_StackView"
@@ -235,15 +237,6 @@
         android:text="@string/Slider_Current_Value"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_ViewContainer"
         app:layout_constraintTop_toTopOf="@+id/Stack_Activity_InputSlider" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/Stack_Activity_Switch"
-        style="@style/AppTheme.Switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/Stack_Activity_Guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Stack_Activity_Toolbar" />
 
     <ImageView
         android:id="@+id/Stack_Activity_Line"

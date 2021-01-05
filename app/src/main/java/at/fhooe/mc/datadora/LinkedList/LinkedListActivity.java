@@ -21,15 +21,16 @@ import com.google.android.material.slider.Slider;
 import java.util.Random;
 import java.util.Vector;
 
+import at.fhooe.mc.datadora.Animation;
 import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityLinkedListBinding;
 
-public class LinkedListActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class LinkedListActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = "LinkedListActivity : ";
 
     private ActivityLinkedListBinding mBinding;
-    private Vector<Integer> mLinkedList = new Vector<>();
+    private final Vector<Integer> mLinkedList = new Vector<>();
 
     //Shared Preferences setup
     private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.LinkedListSharedPreferenceFile.LinkedList";
@@ -38,6 +39,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
     private boolean mDelete;
     private boolean mRandom;
+    private Animation mAnimation;
 
     public void setDelete(boolean _delete) {
         mDelete = _delete;
@@ -58,6 +60,9 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         View view = mBinding.getRoot();
         setContentView(view);
 
+        View layout = mBinding.LinkedListActivity;
+        mAnimation = new Animation(layout, getIntent(), this);
+
         mBinding.LinkedListActivityLinkedListView.setActivity(this);
         mBinding.LinkedListActivityAddPositionSlider.setVisibility(View.INVISIBLE);
         mBinding.LinkedListActivityDeletePositionSlider.setVisibility(View.INVISIBLE);
@@ -66,15 +71,32 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
         head();
+        setUpToolbar();
+        setUpSlider();
 
-        // setup Toolbar
+        mBinding.LinkedListActivityTypeRadioGroup.setOnCheckedChangeListener(this);
+        mBinding.LinkedListActivityAddRadioGroup.setOnCheckedChangeListener(this);
+        mBinding.LinkedListActivityDeleteRadioGroup.setOnCheckedChangeListener(this);
+        mBinding.LinkedListActivityGetRadioGroup.setOnCheckedChangeListener(this);
+        mBinding.LinkedListActivityRandomBackground.setOnClickListener(this);
+
+        mBinding.LinkedListActivitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
+                mBinding.LinkedListActivityLinkedListView.setSwitch(_isChecked);
+            }
+        });
+    }
+
+    private void setUpToolbar() {
         Toolbar myToolbar = mBinding.LinkedListActivityToolbar;
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle(R.string.All_Data_Activity_Single_LinkedList);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
 
-        // set up the slider
+    private void setUpSlider() {
         Slider slider = mBinding.LinkedListActivityInputSlider;
         slider.setLabelFormatter(new LabelFormatter() {
             @NonNull
@@ -89,13 +111,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                 mBinding.LinkedListActivityInputValue.setText(String.valueOf((int) value));
             }
         });
-
-        mBinding.LinkedListActivityTypeRadioGroup.setOnCheckedChangeListener(this);
-        mBinding.LinkedListActivityAddRadioGroup.setOnCheckedChangeListener(this);
-        mBinding.LinkedListActivityDeleteRadioGroup.setOnCheckedChangeListener(this);
-        mBinding.LinkedListActivityGetRadioGroup.setOnCheckedChangeListener(this);
-        mBinding.LinkedListActivitySwitch.setOnCheckedChangeListener(this);
-        mBinding.LinkedListActivityRandomBackground.setOnClickListener(this);
     }
 
     /**
@@ -144,7 +159,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         // Convert the vector containing the integers to a string
-        Vector<Integer> vector = mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers;
+        Vector<Integer> vector = mBinding.LinkedListActivityLinkedListView.getLinkedListNumbers();
         StringBuilder vectorStr = new StringBuilder();
 
         // transform the vector into a string
@@ -217,7 +232,6 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
      *
      */
     private void preparePositionSlider(){
-
 
         if (mLinkedList.size() == 0) {
 
@@ -397,7 +411,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                 @Override
                 public void run() {
                     mBinding.LinkedListActivityReturnValue.setText(
-                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size()));
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.getLinkedListNumbers().size()));
                 }
             }, (600 * mLinkedList.size() - 1));
 
@@ -407,12 +421,12 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
     }
 
     private void getPredecessor() {
-        mBinding.LinkedListActivityReturnText.setText(R.string.LinkedList_Activity_Pre_Succ_Hint);
+        Toast.makeText(this, R.string.LinkedList_Activity_Pre_Succ_Hint, Toast.LENGTH_SHORT).show();
         mBinding.LinkedListActivityLinkedListView.predecessor();
     }
 
     private void getSuccessor() {
-        mBinding.LinkedListActivityReturnText.setText(R.string.LinkedList_Activity_Pre_Succ_Hint);
+        Toast.makeText(this, R.string.LinkedList_Activity_Pre_Succ_Hint, Toast.LENGTH_SHORT).show();
         mBinding.LinkedListActivityLinkedListView.successor();
     }
 
@@ -424,7 +438,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                 @Override
                 public void run() {
                     mBinding.LinkedListActivityReturnValue.setText(
-                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(0).toString()));
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.getLinkedListNumbers().get(0).toString()));
                 }
             }, 500);
 
@@ -441,8 +455,8 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                 @Override
                 public void run() {
                     mBinding.LinkedListActivityReturnValue.setText(
-                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(
-                                    mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.size() - 1).toString()));
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.getLinkedListNumbers().get(
+                                    mBinding.LinkedListActivityLinkedListView.getLinkedListNumbers().size() - 1).toString()));
                 }
             }, 500);
         } else {
@@ -463,7 +477,7 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
                     Log.d(TAG, "----- position getAt: "+ pos);
 
                     mBinding.LinkedListActivityReturnValue.setText(
-                            String.format("%s", mBinding.LinkedListActivityLinkedListView.mLinkedListNumbers.get(pos).toString()));
+                            String.format("%s", mBinding.LinkedListActivityLinkedListView.getLinkedListNumbers().get(pos).toString()));
                 }
             }, 500);
 
@@ -502,38 +516,14 @@ public class LinkedListActivity extends AppCompatActivity implements CompoundBut
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        mAnimation.circularUnreveal();
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return true;
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
-        if (_buttonView == mBinding.LinkedListActivitySwitch) {
-            if (_isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-
-        }
-        /*else if (_buttonView == mBinding.LinkedListActivityTypeSortedSwitch) {
-            if (_isChecked) {
-                sorted();
-            } else {
-                unsorted();
-            }
-        }
-
-         */
-
-
     }
 
     @Override

@@ -5,7 +5,7 @@
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
         <item name="colorSurface">@color/colorSurface</item>
-        <item name="android:colorBackground">@color/colorBackground</item>
+       <item name="android:colorBackground">@color/colorBackground</item>
 
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
@@ -29,8 +29,31 @@
 
     </style>
 
+    <style name="AppTheme_Mode" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/secondaryDarkColor</item>
+        <item name="colorPrimaryVariant">@color/secondaryColor</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryLightColor</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+
+    </style>
+
     <style name="AppTheme.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
         <item name="enforceMaterialTheme">false</item>
         <item name="useMaterialThemeColors">false</item>
     </style>
+
+    <style name="AppTheme.Transparent" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
 </resources>

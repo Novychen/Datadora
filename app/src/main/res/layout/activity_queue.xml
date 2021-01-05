@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Queue_Activity"
+    style="@style/Surface"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/Surface"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -17,15 +18,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/Queue_Activity_Switch"
-        style="@style/AppTheme.Switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/Queue_Activity_Guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Toolbar" />
 
     <ImageView
         android:id="@+id/Queue_Activity_Box_Return"
@@ -146,11 +138,11 @@
                 android:layout_marginStart="64dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="64dp"
+                android:contentDescription="@string/Content_Description_Queue_FlowIcon"
                 app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="@+id/Queue_Activity_Button_Random"
                 app:layout_constraintStart_toStartOf="@+id/Queue_Activity_Button_Random"
-                app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Button_Random"
-                android:contentDescription="@string/Content_Description_Queue_FlowIcon" />
+                app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Button_Random" />
 
             <TextView
                 android:id="@+id/Queue_Activity_FlowText"
@@ -198,11 +190,12 @@
         android:id="@+id/Queue_Activity_ViewContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/Queue_Activity_InputValue"
         app:layout_constraintEnd_toStartOf="@+id/Queue_Activity_ScrollViewButtons"
         app:layout_constraintStart_toStartOf="@+id/Queue_Activity_InputSlider"
-        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Switch">
+        app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_Toolbar">
 
         <at.fhooe.mc.datadora.Queue.QueueView
             android:id="@+id/Queue_Activity_QueueView"
@@ -216,11 +209,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:contentDescription="@string/Content_Description_Queue_Line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Queue_Activity_CurrentValue"
-        app:srcCompat="@drawable/line"
-        android:contentDescription="@string/Content_Description_Queue_Line" />
+        app:srcCompat="@drawable/line" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/Queue_Activity_InputSlider"

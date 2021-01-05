@@ -52,13 +52,13 @@ public class QueueView extends View {
     private int mPositionAnimation;
 
     // Vector that gets the random generated Queue
-    private Vector<Integer> mRandomQueue = new Vector<>();
+    private final Vector<Integer> mRandomQueue = new Vector<>();
 
     // Animator for the last enqueued element
-    private ValueAnimator mAnimatorEnqueue = new ValueAnimator();
+    private final ValueAnimator mAnimatorEnqueue = new ValueAnimator();
 
     // Animator for the last dequeued element
-    private ValueAnimator mAnimatorDequeue = new ValueAnimator();
+    private final ValueAnimator mAnimatorDequeue = new ValueAnimator();
 
     // Animator for the operation peek (for the area of one item)
     private ValueAnimator mAnimatorPeekArea = new ValueAnimator();
@@ -67,19 +67,19 @@ public class QueueView extends View {
     private ValueAnimator mAnimatorPeekText = new ValueAnimator();
 
     // Animator for the operation random
-    private ValueAnimator mAnimatorRandom = new ValueAnimator();
+    private final ValueAnimator mAnimatorRandom = new ValueAnimator();
 
     // Vector that contains all Rects, that are drawn
-    private Vector<RectF> mQueue = new Vector<>();
+    private final Vector<RectF> mQueue = new Vector<>();
 
     // Vector that contains all Integers, that are drawn / the user put in
-    private Vector<Integer> mQueueNumbers = new Vector<>();
+    private final Vector<Integer> mQueueNumbers = new Vector<>();
 
     // Vector for the animation of the operation random
-    private Vector<Integer> mQueueAnimation = new Vector<>();
+    private final Vector<Integer> mQueueAnimation = new Vector<>();
 
     // Rect in order to save the TextBounds from the current number
-    private Rect mBounds = new Rect();
+    private final Rect mBounds = new Rect();
 
     // factor for the change of height of the Queue item boxes, when the Queue is too high
     private float mScale = 1;
@@ -109,19 +109,19 @@ public class QueueView extends View {
     private int mColorTextPeek;
 
     // the current primary color of the currently used theme
-    private int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
+    private final int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
 
     // the current surface color of the currently used theme
-    private int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
+    private final int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
 
     // the current colorOnPrimary color of the currently used theme - for text
-    private int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
+    private final int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
 
     // the current colorOnSurface color of the currently used theme - for text
-    private int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
+    private final int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
 
-    private Paint mQueueItemPaint = new Paint();
-    private Paint mQueueItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mQueueItemPaint = new Paint();
+    private final Paint mQueueItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     // current width of the QueueView within the layout
     private float mMaxWidthQueue;
@@ -149,7 +149,6 @@ public class QueueView extends View {
     protected Vector<Integer> getQueueNumbers(){
         return mQueueNumbers;
     }
-
 
     /**
      * Initializes the key components such as Paint
