@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Datadora</string>
+
+    // Error Messages
+    <string name="NumberInvalid">Ungültige Zahl!</string>
+    <string name="EmptyNumber">Bitte gib eine Zahl ein</string>
+    <string name="Overflow">Überlauf</string>
+    <string name="Underflow">Unterlauf</string>
+
+    // All Data structures Activity
+    <string name="All_Data_Activity_Stack">Stack</string>
+    <string name="All_Data_Activity_Queue">Queue</string>
+    <string name="All_Data_Activity_Single_LinkedList">Einfach verkettete Liste</string>
+    <string name="All_Data_Activity_Double_LinkedList">Doppelt verkettete Liste</string>
+    <string name="All_Data_Activity_BST">Binärer Suchbaum</string>
+
+    <string name="All_Data_Activity_Text_Return">Rückgabewert</string>
+    <string name="All_Data_Activity_Text_Random">Zufällig</string>
+    <string name="All_Data_Activity_Text_Clear">Alles löschen</string>
+    <string name="All_Data_Activity_Text_Size">Größe</string>
+
+    <string name="All_Data_Activity_Text_Saved">Datenstruktur erfolgreich gespeichert</string>
+    <string name="All_Data_Activity_Text_FromSave">Letzte Datensturktur wiederhergestellt</string>
+
+    <string name="All_Data_Activity_True">wahr</string>
+    <string name="All_Data_Activity_False">falsch</string>
+
+    <string name="All_Data_Activity_Text_Animation">Bitte warte bis die Animation vorbei ist :)</string>
+    <string name="All_Data_Activity_Root">Die Wurzel hat keinen Elternteil</string>
+
+    // Main Activity
+    <string name="Main_Activity_About">Über Datadora</string>
+
+    // About Activity
+    <string name="About_Activity_Slogan">Wir lieben Datenstrukturen!</string>
+    <string name="About_Activity_Description">Diese App hilft beim Verstehen und Lernen von Datenstrukturen. Viel Spaß beim Hantieren mit den Knoten und verschiedenen Datenstrukturen.\n\nSpare Papier - verwende Datadora!</string>
+    <string name="About_Activity_Developer">Folgende Entwickler haben an diesen Projekt gearbeitet:</string>
+    <string name="About_Activity_Yvonne">Yvonne Kathrin Eder</string>
+    <string name="About_Activity_Ines">Ines Langbauer</string>
+    <string name="About_Activity_Gerald">Gerald Lehner</string>
+    <string name="About_Activity_University">FH Hagenberg Mobile Computing</string>
+
+    // Stack Activity
+    <string name="Stack_Activity_Text_Peek">nachschauen</string>
+    <string name="Stack_Activity_Text_Empty">ist leer</string>
+
+    <string name="Stack_Activity_Full">Stack ist voll</string>
+    <string name="Stack_Activity_Empty">Stack ist leer</string>
+
+    <string name="Stack_Activity_Text_Push">einkellern</string>
+    <string name="Stack_Activity_Text_Pop">auskellern</string>
+
+    // Queue Activity
+    <string name="Queue_Activity_Text_Peek">nachschauen</string>
+    <string name="Queue_Activity_Text_Empty">ist leer</string>
+
+    <string name="Queue_Activity_Full">Queue ist voll</string>
+    <string name="Queue_Activity_Empty">Queue ist leer</string>
+
+    <string name="Queue_Activity_Text_Dequeue">dequeue</string>
+    <string name="Queue_Activity_Text_Enqueue">enqueue</string>
+
+    // SingleLinkedList Activity
+    <string name="LinkedList_Activity_Type_Title">Typ</string>
+    <string name="LinkedList_Activity_Type_Sorted">Sortiert</string>
+    <string name="LinkedList_Activity_Type_Unsorted">Unsortiert</string>
+    <string name="LinkedList_Activity_Type_Head">Head</string>
+    <string name="LinkedList_Activity_Type_Tail">Tail</string>
+    <string name="LinkedList_Activity_Type_Both">Head &amp; Tail</string>
+
+    <string name="LinkedList_Activity_Add_Title">Hinzufügen</string>
+    <string name="LinkedList_Activity_Add_Prepend">Voranstellen</string>
+    <string name="LinkedList_Activity_Add_Append">Anhängen</string>
+    <string name="LinkedList_Activity_Add_At">Einfügen bei </string>
+
+    <string name="LinkedList_Activity_Delete_Title">Löschen</string>
+    <string name="LinkedList_Activity_Delete_First">Erstes Löschen</string>
+    <string name="LinkedList_Activity_Delete_Last">Letztes Löschen</string>
+    <string name="LinkedList_Activity_Delete_At">Löschen bei </string>
+    <string name="LinkedList_Activity_Delete_All">Alles löschen</string>
+
+    <string name="LinkedList_Activity_Get_Title">Abrufen</string>
+    <string name="LinkedList_Activity_Get_Predecessor">Vorgänger</string>
+    <string name="LinkedList_Activity_Get_Successor">Nachfolger</string>
+    <string name="LinkedList_Activity_Get_First">Erstes Abrufen</string>
+    <string name="LinkedList_Activity_Get_Last">Letztes Abrufen</string>
+    <string name="LinkedList_Activity_Get_At">Abrufen bei</string>
+
+    <string name="LinkedList_Activity_Toast_Full">Liste ist voll!</string>
+    <string name="LinkedList_Activity_Toast_Empty">Liste ist leer!</string>
+    <string name="LinkedList_Activity_Toast_Feature">Dieses feature kommt bald</string>
+
+    // BinarySearchTree
+    <string name="BST_Activity_Empty">Baum ist leer</string>
+
+    <string name="BST_Activity_Text_Inorder">Inorder</string>
+    <string name="BST_Activity_Text_Preorder">Preorder</string>
+    <string name="BST_Activity_Text_Postorder">Postorder</string>
+
+    <string name="BST_Activity_Standard_Title">Standard</string>
+    <string name="BST_Activity_Standard_Add">Hinzufügen</string>
+    <string name="BST_Activity_Standard_Remove">Entfernen</string>
+    <string name="BST_Activity_Standard_Random">Zufälliges Hinzufügen</string>
+    <string name="BST_Activity_Standard_Random_tree">Zufälliger Baum</string>
+
+    <string name="BST_Activity_Structure_Title">Struktur</string>
+    <string name="BST_Activity_Structure_Size">Größe</string>
+    <string name="BST_Activity_Structure_Height">Höhe</string>
+    <string name="BST_Activity_Structure_Depth">Tiefe</string>
+
+    <string name="BST_Activity_Check_Title">Checken</string>
+    <string name="BST_Activity_Check_Root">Ist Wurzel</string>
+    <string name="BST_Activity_Check_External">Ist externer Knoten</string>
+    <string name="BST_Activity_Check_Internal">Ist interner Knoten</string>
+    <string name="BST_Activity_Check_LeftChild">Hat linkes Kind</string>
+    <string name="BST_Activity_Check_RightChild">Hat rechtes Kind</string>
+    <string name="BST_Activity_Check_Child">Hat Kind</string>
+    <string name="BST_Activity_Check_Parent">Hat Elternteil</string>
+    <string name="BST_Activity_Check_Empty">Ist leer</string>
+    <string name="BST_Activity_Check_NotEmpty">Ist nicht leer</string>
+
+    <string name="BST_Activity_Get_Title">Abrufen</string>
+    <string name="BST_Activity_Get_LeftChild">Linkes Kind</string>
+    <string name="BST_Activity_Get_RightChild">Rechtes Kind</string>
+    <string name="BST_Activity_Get_Parent">Elternteil</string>
+    <string name="BST_Activity_Get_Root">Wurzel</string>
+    <string name="BST_Activity_Get_External">Externer Knoten</string>
+    <string name="BST_Activity_Get_Internal">Interner Knoten</string>
+    <string name="BST_Activity_Get_Max">Maximum</string>
+    <string name="BST_Activity_Get_Min">Minimum</string>
+
+    <string name="BST_Activity_Center">Baum ist bereits zentriert</string>
+    <string name="BST_Activity_Select_Toast">Bitte wähle einen Knoten</string>
+    <string name="BST_Activity_Add_Toast">Diese Zahl ist bereits im Baum</string>
+
+
+    // Toolbar
+    <string name="Toolbar_Action_Settings">Einstellungen</string>
+    <string name="Toolbar_Action_ModeSwitch">Modi wechseln</string>
+    <string name="Toolbar_action_Save">Speichern</string>
+
+    // Slider
+    <string name="Slider_Current_Value">Aktueller Wert: </string>
+    <string name="Slider_Default_Value">0</string>
+
+    <string name="Content_Description_Queue_Line">A line that is used to split the display into two visual parts, one for the queue and one for the input of the queue</string>
+    <string name="Content_Description_Queue_FlowIcon">An icon used to display an x if the queue is empty or a check-mark if the queue is full</string>
+    <string name="Content_Description_Queue_Return_Background">A rectangle that serves as the background of the returned values of the available operations</string>
+
+    <string name="Content_Description_LinkedList_Type_Background">A rectangle that serves as the background of the operation group type</string>
+    <string name="Content_Description_LinkedList_Type_Arrow">An arrow that opens and closes the available operations of the group type</string>
+
+    <string name="Content_Description_LinkedList_Add_Background">A rectangle that serves as the background of the operation group add</string>
+    <string name="Content_Description_LinkedList_Add_Arrow">An arrow that opens and closes the available operations of the group add</string>
+    <string name="Content_Description_LinkedList_Add_Check">A check sign that conforms the chosen adding operation for the current value selected by the slider</string>
+
+    <string name="Content_Description_LinkedList_Delete_Background">A rectangle that serves as the background of the operation group delete</string>
+    <string name="Content_Description_LinkedList_Delete_Arrow">An arrow that opens and closes the available operations of the group delete</string>
+
+    <string name="Content_Description_LinkedList_Get_Background">A rectangle that serves as the background of the operation group get</string>
+    <string name="Content_Description_LinkedList_Get_Arrow">An arrow that opens and closes the available operations of the group get</string>
+    <string name="LinkedList_Activity_Pre_Succ_Hint">Element auswählen</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="LinkedList_Activity_Pre_Empty">This node has no predecessor</string>
+    <string name="LinkedList_Activity_Succ_Empty">This node has no successor</string>
+
+
+
+</resources>
