@@ -1,4 +1,4 @@
-package at.fhooe.mc.datadora.LinkedList;
+ package at.fhooe.mc.datadora.LinkedList;
 
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
@@ -13,7 +13,6 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -718,20 +717,12 @@ public class LinkedListView extends View {
             animateOperation(_canvas, i);
 
             String type;
-            if (mCurrentType == Type.HEAD && i == 0){
+            if (i == 0 && (mCurrentType == Type.HEAD || mCurrentType == Type.HEAD_TAIL)){
                 type = getResources().getString(R.string.LinkedList_Activity_Type_Head);
-                drawType(_canvas, 0, type);
-            } else if (mCurrentType == Type.TAIL && i == mLinkedList.size() - 1) {
+                drawType(_canvas, i, type);
+            } else if (i == mLinkedList.size() - 1 && (mCurrentType == Type.TAIL || mCurrentType == Type.HEAD_TAIL)) {
                 type = getResources().getString(R.string.LinkedList_Activity_Type_Tail);
                 drawType(_canvas, i, type);
-            } else if (mCurrentType == Type.HEAD_TAIL) {
-                if(i == 0) {
-                    type = getResources().getString(R.string.LinkedList_Activity_Type_Head);
-                    drawType(_canvas, 0, type);
-                } else if(i == mLinkedList.size() - 1) {
-                    type = getResources().getString(R.string.LinkedList_Activity_Type_Tail);
-                    drawType(_canvas, mLinkedList.size() - 1, type);
-                }
             }
         }
 
@@ -768,7 +759,13 @@ public class LinkedListView extends View {
         mTypeTextPaint.getTextBounds(_type, 0, _type.length(), mBounds);
         int padding = 15;
 
-       float topLeft = (getExactCenterY(mLinkedList.get(_pos)) - mBounds.exactCenterY()) + 9;
+        float topLeft;
+
+        if (_type.equals(getResources().getString(R.string.LinkedList_Activity_Type_Head))) {
+            topLeft = mMaxHeight - ((mMaxWidth / 8) * mScale);
+        } else {
+            topLeft = (mMaxHeight - ((mMaxWidth / 8) + (mMaxWidth / 4 * _pos)) * mScale);
+        }
 
         mTypeRect.top = topLeft - mBounds.height() - padding;
         mTypeRect.bottom = mTypeRect.top + mBounds.height() + (padding * 2);
@@ -906,7 +903,7 @@ public class LinkedListView extends View {
         mLinkedList.get(_pos).bottom = (int) (mLinkedList.get(_pos).top + ((mMaxWidth / 4) * mScale) - 10);
 
         if(mSwitch) {
-            drawArrows(_canvas, _pos);
+            drawPointers(_canvas, _pos);
         }
 
         // get BoundingBox from Text & draw Text + LinkedList item
@@ -915,7 +912,7 @@ public class LinkedListView extends View {
 
     }
 
-    private void drawArrows(Canvas _canvas, int _pos) {
+    private void drawPointers(Canvas _canvas, int _pos) {
 
         float length;
         double angle = Math.toRadians(45);
@@ -951,7 +948,7 @@ public class LinkedListView extends View {
         x = (float) (Math.cos(Math.toRadians(180) - angle) * length);
 
         mItemPaint.setColor(mSecondaryColor);
-        p = drawLine(_canvas, _pos, height - mLinkedList.get(_pos).height(), lineHeight, lineWidth, false, end);
+        p = drawLine(_canvas, _pos, height - mLinkedList.get(_pos).height() - 10 , lineHeight, lineWidth, false, end);
         drawArrow(_canvas, p, x, y, false, end);
 
         mItemPaint.setColor(mPrimaryColor);
