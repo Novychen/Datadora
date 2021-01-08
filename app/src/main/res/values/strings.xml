@@ -161,7 +161,7 @@
     <string name="Content_Description_LinkedList_Get_Arrow">An arrow that opens and closes the available operations of the group get</string>
     <string name="LinkedList_Activity_Pre_Succ_Hint">Select element</string>
 
-    
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="LinkedList_Activity_Pre_Empty">This node has no predecessor</string>
     <string name="LinkedList_Activity_Succ_Empty">This node has no successor</string>

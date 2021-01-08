@@ -6,13 +6,16 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -25,7 +28,10 @@ import java.util.Vector;
 
 import at.fhooe.mc.datadora.R;
 
-public class LinkedListView extends View {
+public class LinkedListView extends View implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
+
+    //TODO: Tail & Head animation aus/einblenden statt "springen"
+    //TODO: Animation von add und remove von den Pfeilen
 
     private static final String TAG = "LinkedListView : ";
     private static final String PROPERTY_TRANSLATE_Y_APPEND = "PROPERTY_TRANSLATE_APPEND";
@@ -42,6 +48,7 @@ public class LinkedListView extends View {
     private static final String PROPERTY_ALPHA_DELETE_FIRST = "PROPERTY_ALPHA_DELETE_FIRST";
     private static final String PROPERTY_TRANSLATE_Y_RANDOM = "PROPERTY_TRANSLATE_RANDOM";
     private static final String PROPERTY_ALPHA_RANDOM = "PROPERTY_ALPHA_RANDOM";
+    private static final String PROPERTY_DRAW_LINE = "PROPERTY_DRAW_LINE_RIGHT";
 
 
     private final Paint mItemPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -72,16 +79,19 @@ public class LinkedListView extends View {
     private final ValueAnimator mAnimatorDeleteAtAlpha = new ValueAnimator();
 
     // Animator for the deleteLast element
-    private final ValueAnimator mAnimatorDeleteLast  = new ValueAnimator();
+    private final ValueAnimator mAnimatorDeleteLast = new ValueAnimator();
 
     // Animator for the get operations
-    private ValueAnimator mAnimatorGetText  = new ValueAnimator();
+    private ValueAnimator mAnimatorGetText = new ValueAnimator();
 
     // Animator for the get operations
-    private ValueAnimator mAnimatorGetArea  = new ValueAnimator();
+    private ValueAnimator mAnimatorGetArea = new ValueAnimator();
 
     // Animator for the created random list
-    private final ValueAnimator mAnimatorRandom  = new ValueAnimator();
+    private final ValueAnimator mAnimatorRandom = new ValueAnimator();
+
+    // Animator for the drawing animation
+    private final ValueAnimator mAnimatorDrawLine = new ValueAnimator();
 
     // the current translation on the y-axis - used for the append animation
     private  int mTranslateYAppend;
@@ -130,6 +140,9 @@ public class LinkedListView extends View {
 
     // the current translation on the y-axis - used for the random animation
     private int mTranslateYRandom;
+
+    // the current draw process - used for the drawing animation
+    private int mDrawProcess;
 
     // checks if a list item was touched
     private boolean mTouched;
@@ -224,6 +237,10 @@ public class LinkedListView extends View {
     // Path of the drawn triangle used in the background to display the type of the linked list
     private final Path mTriangle = new Path();
 
+    private final PathMeasure mPathMeasure = new PathMeasure();
+
+    private boolean mDraw;
+
     private boolean mSwitch;
 
     public LinkedListView(Context context) {
@@ -268,6 +285,7 @@ public class LinkedListView extends View {
     }
 
     public void setSwitch(boolean isChecked) {
+        mDraw = !isChecked;
         mSwitch = isChecked;
         invalidate();
     }
@@ -301,12 +319,12 @@ public class LinkedListView extends View {
 
     protected void prepend(int _value){
         mCurrentOperation = Operation.PREPEND;
-
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(0,_value);
         reScale();
         mAnimatorPrepend.start();
+        mDraw = false;
     }
 
     protected void append(int _value){
@@ -316,11 +334,11 @@ public class LinkedListView extends View {
         mLinkedListNumbers.add(_value);
         reScale();
         mAnimatorAppend.start();
+        mDraw = false;
     }
 
     protected void insertAt(int _value, int _pos){
         mCurrentOperation = Operation.INSERT_AT;
-
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(_pos,_value);
@@ -459,247 +477,178 @@ public class LinkedListView extends View {
         invalidate();
     }
 
+    @Override
+    public void onAnimationUpdate(ValueAnimator _animation) {
+
+        if(_animation == mAnimatorDrawLine){
+            mDrawProcess = (int) _animation.getAnimatedValue(PROPERTY_DRAW_LINE);
+        } else if(_animation == mAnimatorAppend) {
+            mTranslateYAppend = (int) _animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_APPEND);
+            mAlphaAppend = (int) _animation.getAnimatedValue(PROPERTY_ALPHA_APPEND);
+        } else if(_animation == mAnimatorPrepend) {
+            mTranslateYPrepend = (int) _animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_PREPEND);
+            mAlphaPrepend = (int) _animation.getAnimatedValue(PROPERTY_ALPHA_PREPEND);
+        } else if(_animation == mAnimatorInsert) {
+            mTranslateYInsert = (int) _animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_INSERT);
+        } else if(_animation == mAnimatorInsertAlpha) {
+            mAlphaInsert = (int) _animation.getAnimatedValue(PROPERTY_ALPHA_INSERT);
+        } else if(_animation == mAnimatorDeleteAt) {
+            mTranslateYDeleteAt = (int) _animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_DELETE_AT);
+        } else if(_animation == mAnimatorDeleteAtAlpha) {
+            mAlphaDeleteAt = (int) _animation.getAnimatedValue(PROPERTY_ALPHA_DELETE_AT);
+        } else if(_animation == mAnimatorDeleteFirst) {
+            mTranslateYDeleteFirst = (int) _animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_DELETE_FIRST);
+            mAlphaDeleteFirst = (int) _animation.getAnimatedValue(PROPERTY_ALPHA_DELETE_FIRST);
+        } else if(_animation == mAnimatorDeleteLast) {
+            mTranslateYDeleteLast = (int) _animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_DELETE_LAST);
+            mAlphaDeleteLast = (int) _animation.getAnimatedValue(PROPERTY_ALPHA_DELETE_LAST);
+        } else if(_animation == mAnimatorGetArea) {
+            mColorAreaGet = (int) _animation.getAnimatedValue();
+        } else if(_animation == mAnimatorGetText) {
+            mColorTextGet = (int) _animation.getAnimatedValue();
+        } else if(_animation == mAnimatorRandom) {
+            mTranslateYRandom = (int) _animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_RANDOM);
+            mAlphaRandom = (int) _animation.getAnimatedValue(PROPERTY_ALPHA_RANDOM);
+        }
+        invalidate();
+    }
+
+    @Override
+    public void onAnimationStart(Animator _animation) {
+        if(_animation == mAnimatorRandom) {
+            mLinkedListNumbers.add(mLinkedListAnimation.get(mPositionAnimation));
+            mLinkedList.add(new RectF());
+            mPositionAnimation++;
+        }
+    }
+
+    @Override
+    public void onAnimationEnd(Animator _animation) {
+        if(_animation == mAnimatorGetText) {
+            if(mCurrentOperation == Operation.PREDECESSOR || mCurrentOperation == Operation.SUCCESSOR) {
+                if (mCurrentOperation == Operation.PREDECESSOR && mPosition < 0) {
+                    Toast.makeText(mActivity, R.string.LinkedList_Activity_Pre_Empty, Toast.LENGTH_SHORT).show();
+                } else if (mCurrentOperation == Operation.SUCCESSOR && mPosition >= mLinkedListNumbers.size()) {
+                    Toast.makeText(mActivity, R.string.LinkedList_Activity_Succ_Empty, Toast.LENGTH_SHORT).show();
+                } else {
+                    mActivity.getBinding().LinkedListActivityReturnValue.setText(String.format("%s", mLinkedListNumbers.get(mPosition).toString()));
+                }
+                mTouched = false;
+            }
+        } else if (_animation == mAnimatorDeleteLast) {
+            if (mCurrentOperation == Operation.CLEAR) {
+                mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
+                mLinkedList.remove(mLinkedList.size() - 1);
+            }
+            mActivity.setDelete(false);
+        }
+    }
+
+    @Override
+    public void onAnimationCancel(Animator _animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator _animation) {
+        if(_animation == mAnimatorRandom) {
+            mLinkedListNumbers.add(mLinkedListAnimation.get(mPositionAnimation));
+            mLinkedList.add(new RectF());
+            mPositionAnimation++;
+        } else if(_animation == mAnimatorGetText) {
+            if (mCurrentOperation == Operation.PREDECESSOR) { mPosition--;
+            } else if (mCurrentOperation == Operation.SUCCESSOR) { mPosition++;
+            } else { mPositionAnimation++; }
+
+            mColorTextGet = 0;
+            mColorAreaGet = 0;
+        } else if(_animation == mAnimatorDeleteLast) {
+            mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
+            mLinkedList.remove(mLinkedList.size() - 1);
+            reScaleUndo();
+        }
+    }
+
+
     private void setUpAnimation(){
         PropertyValuesHolder propertyTranslateYAppend = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_APPEND, -200, 0);
         PropertyValuesHolder propertyAlphaAppend = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_APPEND, 0, 255);
-
-        mAnimatorAppend.setValues(propertyTranslateYAppend, propertyAlphaAppend);
-        mAnimatorAppend.setDuration(700);
-        mAnimatorAppend.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorAppend.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYAppend = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_APPEND);
-                mAlphaAppend = (int) animation.getAnimatedValue(PROPERTY_ALPHA_APPEND);
-                invalidate();
-            }
-        });
 
         int number = (int) (((mMaxWidth / 4) * mScale) - 10);
         PropertyValuesHolder propertyTranslateYPrepend = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_PREPEND, -number, 0);
         PropertyValuesHolder propertyAlphaPrepend = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_PREPEND, 0, 255);
 
-        mAnimatorPrepend.setValues(propertyTranslateYPrepend, propertyAlphaPrepend);
-        mAnimatorPrepend.setDuration(700);
-        mAnimatorPrepend.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorPrepend.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYPrepend = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_PREPEND);
-                mAlphaPrepend = (int) animation.getAnimatedValue(PROPERTY_ALPHA_PREPEND);
-                invalidate();
-            }
-        });
-
         PropertyValuesHolder propertyTranslateYInsert = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_INSERT, -number, 0);
         PropertyValuesHolder propertyAlphaInsert = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_INSERT, 0, 255);
-
-        mAnimatorInsert.setValues(propertyTranslateYInsert);
-        mAnimatorInsert.setDuration(700);
-        mAnimatorInsert.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorInsert.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYInsert = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_INSERT);
-                invalidate();
-            }
-        });
-
-        mAnimatorInsertAlpha.setValues(propertyAlphaInsert);
-        mAnimatorInsertAlpha.setDuration(900);
-        mAnimatorInsertAlpha.setInterpolator(new AccelerateInterpolator());
-        mAnimatorInsertAlpha.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mAlphaInsert = (int) animation.getAnimatedValue(PROPERTY_ALPHA_INSERT);
-                invalidate();
-            }
-        });
 
         PropertyValuesHolder propertyTranslateYDeleteAt = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_DELETE_AT, 0, -number - 10);
         PropertyValuesHolder propertyAlphaDeleteAt = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_DELETE_AT, 255, 0);
 
-        mAnimatorDeleteAt.setValues(propertyTranslateYDeleteAt);
-        mAnimatorDeleteAt.setDuration(900);
-        mAnimatorDeleteAt.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorDeleteAt.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYDeleteAt = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_DELETE_AT);
-                invalidate();
-            }
-        });
-
-        mAnimatorDeleteAtAlpha.setValues(propertyAlphaDeleteAt);
-        mAnimatorDeleteAtAlpha.setDuration(700);
-        mAnimatorDeleteAtAlpha.setInterpolator(new AccelerateInterpolator());
-        mAnimatorDeleteAtAlpha.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mAlphaDeleteAt = (int) animation.getAnimatedValue(PROPERTY_ALPHA_DELETE_AT);
-                invalidate();
-            }
-        });
-
         PropertyValuesHolder propertyTranslateYDeleteFirst = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_DELETE_FIRST, 0, number + 10);
         PropertyValuesHolder propertyAlphaDeleteFirst = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_DELETE_FIRST, 255, 0);
-
-        mAnimatorDeleteFirst.setValues(propertyTranslateYDeleteFirst, propertyAlphaDeleteFirst);
-        mAnimatorDeleteFirst.setDuration(700);
-        mAnimatorDeleteFirst.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorDeleteFirst.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYDeleteFirst = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_DELETE_FIRST);
-                mAlphaDeleteFirst = (int) animation.getAnimatedValue(PROPERTY_ALPHA_DELETE_FIRST);
-                invalidate();
-            }
-        });
 
         PropertyValuesHolder propertyTranslateYDeleteLast = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_DELETE_LAST, 0, -200);
         PropertyValuesHolder propertyAlphaDeleteLast = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_DELETE_LAST, 255, 0);
 
+        PropertyValuesHolder propertyTranslateYRandom = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_RANDOM, -200, 0);
+        PropertyValuesHolder propertyAlphaRandom = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_RANDOM, 0, 255);
+
+        mAnimatorAppend.setValues(propertyTranslateYAppend, propertyAlphaAppend);
+        mAnimatorAppend.setDuration(700);
+        mAnimatorAppend.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorAppend.addUpdateListener(this);
+
+        mAnimatorPrepend.setValues(propertyTranslateYPrepend, propertyAlphaPrepend);
+        mAnimatorPrepend.setDuration(700);
+        mAnimatorPrepend.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorPrepend.addUpdateListener(this);
+
+        mAnimatorInsert.setValues(propertyTranslateYInsert);
+        mAnimatorInsert.setDuration(700);
+        mAnimatorInsert.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorInsert.addUpdateListener(this);
+
+        mAnimatorInsertAlpha.setValues(propertyAlphaInsert);
+        mAnimatorInsertAlpha.setDuration(900);
+        mAnimatorInsertAlpha.setInterpolator(new AccelerateInterpolator());
+        mAnimatorInsertAlpha.addUpdateListener(this);
+
+        mAnimatorDeleteAt.setValues(propertyTranslateYDeleteAt);
+        mAnimatorDeleteAt.setDuration(900);
+        mAnimatorDeleteAt.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorDeleteAt.addUpdateListener(this);
+
+        mAnimatorDeleteAtAlpha.setValues(propertyAlphaDeleteAt);
+        mAnimatorDeleteAtAlpha.setDuration(700);
+        mAnimatorDeleteAtAlpha.setInterpolator(new AccelerateInterpolator());
+        mAnimatorDeleteAtAlpha.addUpdateListener(this);
+
+        mAnimatorDeleteFirst.setValues(propertyTranslateYDeleteFirst, propertyAlphaDeleteFirst);
+        mAnimatorDeleteFirst.setDuration(700);
+        mAnimatorDeleteFirst.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimatorDeleteFirst.addUpdateListener(this);
+
         mAnimatorDeleteLast.setValues(propertyTranslateYDeleteLast, propertyAlphaDeleteLast);
         mAnimatorDeleteLast.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorDeleteLast.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYDeleteLast = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_DELETE_LAST);
-                mAlphaDeleteLast = (int) animation.getAnimatedValue(PROPERTY_ALPHA_DELETE_LAST);
-                invalidate();
-            }
-        });
-
-        mAnimatorDeleteLast.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                if(mCurrentOperation == Operation.CLEAR) {
-                    mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
-                    mLinkedList.remove(mLinkedList.size() - 1);
-                }
-                mActivity.setDelete(false);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-                mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
-                mLinkedList.remove(mLinkedList.size() - 1);
-                reScaleUndo();
-            }
-        });
+        mAnimatorDeleteLast.addUpdateListener(this);
+        mAnimatorDeleteLast.addListener(this);
 
         mAnimatorGetArea = ValueAnimator.ofObject(new ArgbEvaluator(), mSurfaceColor, mPrimaryColor);
         mAnimatorGetArea.setDuration(500);
         mAnimatorGetArea.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorGetArea.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mColorAreaGet = (int) animation.getAnimatedValue();
-                invalidate();
-            }
-        });
+        mAnimatorGetArea.addUpdateListener(this);
 
         mAnimatorGetText = ValueAnimator.ofObject(new ArgbEvaluator(), mOnSurfaceColor, mOnPrimaryColor);
         mAnimatorGetText.setDuration(500);
         mAnimatorGetText.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorGetText.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mColorTextGet = (int) animation.getAnimatedValue();
-                invalidate();
-            }
-        });
-
-        mAnimatorGetText.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                if(mCurrentOperation == Operation.PREDECESSOR || mCurrentOperation == Operation.SUCCESSOR) {
-
-                    if (mCurrentOperation == Operation.PREDECESSOR && mPosition < 0) {
-                        Toast.makeText(mActivity, R.string.LinkedList_Activity_Pre_Empty, Toast.LENGTH_SHORT).show();
-                    } else if (mCurrentOperation == Operation.SUCCESSOR && mPosition >= mLinkedListNumbers.size()) {
-                        Toast.makeText(mActivity, R.string.LinkedList_Activity_Succ_Empty, Toast.LENGTH_SHORT).show();
-                    } else {
-                        mActivity.getBinding().LinkedListActivityReturnValue.setText(String.format("%s", mLinkedListNumbers.get(mPosition).toString()));
-                    }
-                    mTouched = false;
-
-                }
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-                if(mCurrentOperation == Operation.PREDECESSOR) {
-                    mPosition--;
-                } else if(mCurrentOperation == Operation.SUCCESSOR) {
-                    mPosition++;
-                } else {
-                    mPositionAnimation++;
-                }
-                mColorTextGet = 0;
-                mColorAreaGet = 0;
-            }
-        });
-
-        PropertyValuesHolder propertyTranslateYRandom = PropertyValuesHolder.ofInt(PROPERTY_TRANSLATE_Y_RANDOM, -200, 0);
-        PropertyValuesHolder propertyAlphaRandom = PropertyValuesHolder.ofInt(PROPERTY_ALPHA_RANDOM, 0, 255);
+        mAnimatorGetText.addUpdateListener(this);
+        mAnimatorGetText.addListener(this);
 
         mAnimatorRandom.setValues(propertyTranslateYRandom, propertyAlphaRandom);
         mAnimatorRandom.setDuration(350);
         mAnimatorRandom.setInterpolator(new AccelerateInterpolator());
-        mAnimatorRandom.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYRandom = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_RANDOM);
-                mAlphaRandom = (int) animation.getAnimatedValue(PROPERTY_ALPHA_RANDOM);
-                invalidate();
-            }
-        });
-
-        mAnimatorRandom.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-                mLinkedListNumbers.add(mLinkedListAnimation.get(mPositionAnimation));
-                mLinkedList.add(new RectF());
-                mPositionAnimation++;
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                mActivity.setRandom(false);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-                mLinkedListNumbers.add(mLinkedListAnimation.get(mPositionAnimation));
-                mLinkedList.add(new RectF());
-                mPositionAnimation++;
-            }
-        });
+        mAnimatorRandom.addUpdateListener(this);
+        mAnimatorRandom.addListener(this);
     }
 
     @Override
@@ -955,8 +904,9 @@ public class LinkedListView extends View {
     }
 
     private PointF drawLine(Canvas _canvas, int _pos, float _height, float _lineHeight, float _lineWidth, boolean right, boolean end) {
+
         float x;
-        float y = mLinkedList.get(_pos).top - _height;
+        int y = (int) (mLinkedList.get(_pos).top - _height);
 
         if (right) { x = mLinkedList.get(_pos).right;
         } else { x = mLinkedList.get(_pos).left; }
@@ -967,20 +917,52 @@ public class LinkedListView extends View {
             mPath.cubicTo(x, y + _lineHeight, x , y + _lineHeight, x + (_lineWidth / 2 ), y + _lineHeight);
         } else if (right) {
             mPath.cubicTo(x + _lineWidth, y + _lineHeight, x + _lineWidth, y, x, y);
+            animateLines(_pos);
         } else if (end) {
             mPath.moveTo(x, y);
             mPath.cubicTo(x, y, x - _lineWidth, y, x, y);
         } else {
-            mPath.cubicTo(x - _lineWidth, y + _lineHeight, x - _lineWidth, y, x, y);
+            mPath.moveTo(x, y);
+            mPath.cubicTo(x - _lineWidth, y, x - _lineWidth, y + _lineHeight, x, y + _lineHeight);
+            animateLines(_pos);
         }
 
         _canvas.drawPath(mPath, mItemPaint);
         mPath.reset();
+        mItemPaint.setPathEffect(null);
 
         if (right && end) { return new PointF(x + _lineWidth / 2, y + _lineHeight);
         } else if (right) { return new PointF(x, y);
         } else if (end) { return new PointF(x - _lineWidth / 2, y);
         } else { return new PointF(x, y + _lineHeight); }
+    }
+
+    private void animateLines(int _pos) {
+        if(mSwitch) {
+            if(mCurrentOperation == Operation.PREPEND && _pos == 0
+                    || mCurrentOperation == Operation.APPEND && _pos == mLinkedListNumbers.size() - 1) {
+
+                if(!mDraw) { startDrawAnimator(); }
+
+                DashPathEffect drawEffect = new DashPathEffect(new float[]{mDrawProcess, getLength(mPath)}, 0);
+                mItemPaint.setPathEffect(drawEffect);
+            }
+        }
+    }
+
+    private void startDrawAnimator() {
+        float length = getLength(mPath);
+            PropertyValuesHolder propertyDrawLine = PropertyValuesHolder.ofInt(PROPERTY_DRAW_LINE, 0, (int) length);
+            mAnimatorDrawLine.setValues(propertyDrawLine);
+            mAnimatorDrawLine.addUpdateListener(this);
+            mAnimatorDrawLine.setDuration(700);
+            mAnimatorDrawLine.start();
+            mDraw = true;
+    }
+
+    private float getLength(Path _path) {
+        mPathMeasure.setPath(_path,false);
+        return mPathMeasure.getLength();
     }
 
     private void drawArrow(Canvas _canvas, PointF _p, float x, float y, boolean right, boolean _end) {

@@ -71,6 +71,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_Y, y);
             startActivity(i);
 
+        } else if (_v == mBinding.MainActivitySingleListCard) {
+            Intent i = new Intent(this, TestActivity.class);
+            i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_X, x);
+            i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_Y, y);
+            startActivity(i);
+
         } else if (_v == mBinding.MainActivityDoubleListCard) {
             Intent i = new Intent(this, LinkedListActivity.class);
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_X, x);
