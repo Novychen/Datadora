@@ -1903,6 +1903,7 @@ id beginning
 id blocking
 id bottom
 id bounce
+id button
 id buttonPanel
 id cancel_action
 id cancel_button
@@ -2000,6 +2001,7 @@ id ifRoom
 id ignore
 id ignoreRequest
 id image
+id imageView
 id info
 id invisible
 id italic
@@ -2261,6 +2263,7 @@ layout activity_linked_list
 layout activity_main
 layout activity_queue
 layout activity_stack
+layout activity_test
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
