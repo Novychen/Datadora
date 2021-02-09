@@ -30,6 +30,8 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "StackActivity : ";
     private ActivityStackBinding mBinding;
 
+    private int test = 0; //test delete
+
     private final Vector<Integer> mStack = new Vector<>();
     private boolean mPressedRandom;
     private boolean mPressedPop;
