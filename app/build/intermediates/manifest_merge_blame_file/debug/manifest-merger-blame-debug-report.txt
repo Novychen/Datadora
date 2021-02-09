@@ -24,76 +24,75 @@
 17-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:8:9-54
 18        android:supportsRtl="true"
 18-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:9:9-35
-19        android:testOnly="true"
-20        android:theme="@style/AppTheme" >
-20-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:10:9-40
-21        <activity
-21-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:11:9-15:58
-22            android:name="at.fhooe.mc.datadora.AboutActivity"
-22-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:12:13-42
-23            android:screenOrientation="portrait"
-23-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:13:13-49
-24            android:theme="@style/AppTheme.Transparent"
-24-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:14:13-56
-25            android:windowSoftInputMode="adjustResize" />
-25-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:15:13-55
-26        <activity
-26-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:16:9-20:58
-27            android:name="at.fhooe.mc.datadora.LinkedList.LinkedListActivity"
-27-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:17:13-58
-28            android:screenOrientation="portrait"
-28-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:18:13-49
-29            android:theme="@style/AppTheme.Transparent"
-29-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:19:13-56
-30            android:windowSoftInputMode="adjustResize" />
-30-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:20:13-55
-31        <activity
-31-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:21:9-24:58
-32            android:name="at.fhooe.mc.datadora.Queue.QueueActivity"
-32-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:22:13-48
-33            android:screenOrientation="portrait"
-33-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:23:13-49
-34            android:windowSoftInputMode="adjustResize" />
-34-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:24:13-55
-35        <activity
-35-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:25:9-29:58
-36            android:name="at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity"
-36-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:26:13-70
-37            android:screenOrientation="sensor"
-37-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:27:13-47
-38            android:theme="@style/AppTheme.Transparent"
-38-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:28:13-56
-39            android:windowSoftInputMode="adjustResize" />
-39-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:29:13-55
-40        <activity
-40-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:30:9-34:58
-41            android:name="at.fhooe.mc.datadora.Stack.StackActivity"
-41-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:31:13-48
-42            android:screenOrientation="portrait"
-42-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:32:13-49
-43            android:theme="@style/AppTheme.Transparent"
-43-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:33:13-56
-44            android:windowSoftInputMode="adjustResize" />
-44-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:34:13-55
-45        <activity
-45-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:35:9-44:20
-46            android:name="at.fhooe.mc.datadora.MainActivity"
-46-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:36:13-41
-47            android:screenOrientation="portrait"
-47-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:37:13-49
-48            android:windowSoftInputMode="adjustResize" >
-48-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:38:13-55
-49            <intent-filter>
-49-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:39:13-43:29
-50                <action android:name="android.intent.action.MAIN" />
-50-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:40:17-69
-50-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:40:25-66
-51
-52                <category android:name="android.intent.category.LAUNCHER" />
-52-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:42:17-77
-52-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:42:27-74
-53            </intent-filter>
-54        </activity>
-55    </application>
-56
-57</manifest>
+19        android:theme="@style/AppTheme" >
+19-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:10:9-40
+20        <activity
+20-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:11:9-15:58
+21            android:name="at.fhooe.mc.datadora.AboutActivity"
+21-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:12:13-42
+22            android:screenOrientation="portrait"
+22-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:13:13-49
+23            android:theme="@style/AppTheme.Transparent"
+23-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:14:13-56
+24            android:windowSoftInputMode="adjustResize" />
+24-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:15:13-55
+25        <activity
+25-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:16:9-20:58
+26            android:name="at.fhooe.mc.datadora.LinkedList.LinkedListActivity"
+26-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:17:13-58
+27            android:screenOrientation="portrait"
+27-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:18:13-49
+28            android:theme="@style/AppTheme.Transparent"
+28-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:19:13-56
+29            android:windowSoftInputMode="adjustResize" />
+29-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:20:13-55
+30        <activity
+30-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:21:9-24:58
+31            android:name="at.fhooe.mc.datadora.Queue.QueueActivity"
+31-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:22:13-48
+32            android:screenOrientation="portrait"
+32-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:23:13-49
+33            android:windowSoftInputMode="adjustResize" />
+33-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:24:13-55
+34        <activity
+34-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:25:9-29:58
+35            android:name="at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity"
+35-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:26:13-70
+36            android:screenOrientation="sensor"
+36-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:27:13-47
+37            android:theme="@style/AppTheme.Transparent"
+37-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:28:13-56
+38            android:windowSoftInputMode="adjustResize" />
+38-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:29:13-55
+39        <activity
+39-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:30:9-34:58
+40            android:name="at.fhooe.mc.datadora.Stack.StackActivity"
+40-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:31:13-48
+41            android:screenOrientation="portrait"
+41-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:32:13-49
+42            android:theme="@style/AppTheme.Transparent"
+42-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:33:13-56
+43            android:windowSoftInputMode="adjustResize" />
+43-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:34:13-55
+44        <activity
+44-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:35:9-44:20
+45            android:name="at.fhooe.mc.datadora.MainActivity"
+45-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:36:13-41
+46            android:screenOrientation="portrait"
+46-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:37:13-49
+47            android:windowSoftInputMode="adjustResize" >
+47-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:38:13-55
+48            <intent-filter>
+48-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:39:13-43:29
+49                <action android:name="android.intent.action.MAIN" />
+49-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:40:17-69
+49-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:40:25-66
+50
+51                <category android:name="android.intent.category.LAUNCHER" />
+51-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:42:17-77
+51-->C:\Gerald\Dokumente\FH Hagenberg\5. Semester\BAC\BachelorProjectDatadora\Datadora\app\src\main\AndroidManifest.xml:42:27-74
+52            </intent-filter>
+53        </activity>
+54    </application>
+55
+56</manifest>

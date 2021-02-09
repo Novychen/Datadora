@@ -24,7 +24,6 @@ import at.fhooe.mc.datadora.Animation;
 import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityQueueBinding;
 
-
 public class QueueActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -149,6 +148,24 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         mBinding = null;
     }
 
+    @Override
+    public void onClick(View v) {
+        if (!mPressedDequeue && !mPressedRandom) {
+            if (v == mBinding.QueueActivityButtonEnqueue) { enqueue();
+            } else if (v == mBinding.QueueActivityButtonDequeue) { dequeue();
+            } else if(v == mBinding.QueueActivityButtonPeek) { peek();
+            } else if (v == mBinding.QueueActivityButtonSize) { size();
+            } else if (v == mBinding.QueueActivityButtonEmpty) { isEmpty();
+            } else if (v == mBinding.QueueActivityButtonClear) { clear();
+            } else if (v == mBinding.QueueActivityButtonRandom) {
+                mPressedRandom = true;
+                random();
+            }
+        } else {
+            Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     /**
      * Saves the current vector (input from the user) into the SharedPreferences.
      */
@@ -207,23 +224,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        if (!mPressedDequeue && !mPressedRandom) {
-            if (v == mBinding.QueueActivityButtonEnqueue) { enqueue();
-            } else if (v == mBinding.QueueActivityButtonDequeue) { dequeue();
-            } else if(v == mBinding.QueueActivityButtonPeek) { peek();
-            } else if (v == mBinding.QueueActivityButtonSize) { size();
-            } else if (v == mBinding.QueueActivityButtonEmpty) { isEmpty();
-            } else if (v == mBinding.QueueActivityButtonClear) { clear();
-            } else if (v == mBinding.QueueActivityButtonRandom) {
-                mPressedRandom = true;
-                random();
-            }
-        } else {
-            Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
     /**
      * show the size of the queue

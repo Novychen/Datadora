@@ -1,4 +1,4 @@
-#Thu Jan 07 18:32:46 CET 2021
+#Mon Jan 11 21:53:30 CET 2021
 base.0=C\:\\Gerald\\Dokumente\\FH Hagenberg\\5. Semester\\BAC\\BachelorProjectDatadora\\Datadora\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex
