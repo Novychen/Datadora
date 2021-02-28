@@ -18,7 +18,6 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="at.fhooe.mc.datadora.TestActivity" />
         <activity
             android:name="at.fhooe.mc.datadora.AboutActivity"
             android:screenOrientation="portrait"

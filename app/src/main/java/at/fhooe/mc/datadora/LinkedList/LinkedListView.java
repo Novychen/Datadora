@@ -317,7 +317,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         invalidate();
     }
 
-    protected void prepend(int _value){
+    public void prepend(int _value){
         mCurrentOperation = Operation.PREPEND;
         RectF r = new RectF();
         mLinkedList.add(r);
@@ -327,7 +327,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mDraw = false;
     }
 
-    protected void append(int _value){
+    public void append(int _value){
         mCurrentOperation = Operation.APPEND;
         RectF r = new RectF();
         mLinkedList.add(r);
@@ -337,7 +337,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mDraw = false;
     }
 
-    protected void insertAt(int _value, int _pos){
+    public void insertAt(int _value, int _pos){
         mCurrentOperation = Operation.INSERT_AT;
         RectF r = new RectF();
         mLinkedList.add(r);
@@ -348,13 +348,13 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mAnimatorInsertAlpha.start();
     }
 
-    protected void deleteFirst() {
+    public void deleteFirst() {
         mCurrentOperation = Operation.DELETE_FIRST;
         mAnimatorDeleteFirst.start();
         reScaleUndo();
     }
 
-    protected void deleteLast() {
+    public void deleteLast() {
         mCurrentOperation = Operation.DELETE_LAST;
         mAnimatorDeleteLast.setDuration(700);
         mAnimatorDeleteLast.setRepeatCount(0);
@@ -362,7 +362,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         reScaleUndo();
     }
 
-    protected void deleteAt(int _pos) {
+    public void deleteAt(int _pos) {
         mCurrentOperation = Operation.DELETE_AT;
         reScaleUndo();
         mPosition = _pos;
@@ -370,7 +370,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mAnimatorDeleteAtAlpha.start();
     }
 
-    protected void clear(){
+    public void clear(){
         mCurrentOperation = Operation.CLEAR;
         mAnimatorDeleteLast.setDuration(200);
         mAnimatorDeleteLast.setRepeatCount(mLinkedListNumbers.size()-1);
@@ -379,17 +379,17 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
     }
 
 
-    protected void predecessor(){
+    public void predecessor(){
         mCurrentOperation = Operation.PREDECESSOR;
         mPosition = 0;
     }
 
-    protected void successor(){
+    public void successor(){
         mCurrentOperation = Operation.SUCCESSOR;
         mPosition = 0;
     }
 
-    protected void getSize(){
+    public void getSize(){
         mCurrentOperation = Operation.GET_SIZE;
         mPositionAnimation = 0;
         mAnimatorGetArea.setRepeatCount(mLinkedListNumbers.size()-1);
@@ -401,7 +401,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mAnimatorGetText.start();
     }
 
-    protected void getFirst(){
+    public void getFirst(){
         mCurrentOperation = Operation.GET_FIRST;
         mAnimatorGetText.setRepeatCount(0);
         mAnimatorGetArea.setRepeatCount(0);
@@ -409,7 +409,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mAnimatorGetText.start();
     }
 
-    protected void getLast(){
+    public void getLast(){
         mCurrentOperation = Operation.GET_LAST;
         mAnimatorGetText.setRepeatCount(0);
         mAnimatorGetArea.setRepeatCount(0);
@@ -417,7 +417,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mAnimatorGetText.start();
     }
 
-    protected void getAt(int _pos){
+    public void getAt(int _pos){
         mCurrentOperation = Operation.GET_AT;
         mPosition = _pos;
         mAnimatorGetArea.start();
@@ -540,7 +540,6 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
                 mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
                 mLinkedList.remove(mLinkedList.size() - 1);
             }
-            mActivity.setDelete(false);
         }
     }
 
@@ -678,11 +677,9 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         if (mCurrentOperation == Operation.DELETE_AT && !mAnimatorDeleteAt.isRunning()) {
             mLinkedList.remove(mPosition);
             mLinkedListNumbers.remove(mPosition);
-            mActivity.setDelete(false);
         } else if (mCurrentOperation == Operation.DELETE_FIRST && !mAnimatorDeleteFirst.isRunning()) {
             mLinkedList.remove(0);
             mLinkedListNumbers.remove(0);
-            mActivity.setDelete(false);
         } else if(mCurrentOperation == Operation.DELETE_LAST && !mAnimatorDeleteLast.isRunning()) {
             mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
             mLinkedList.remove(mLinkedList.size() - 1);

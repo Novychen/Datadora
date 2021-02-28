@@ -3,10 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinkedList_Activity"
-    style="@style/Surface"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LinkedList.LinkedListActivity">
+    tools:context=".TestActivity">
+
+    <Button
+        android:id="@+id/LinkedList_Activity_Random"
+        style="@style/Tree_Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/All_Data_Activity_Text_Random"
+        app:layout_constraintBottom_toTopOf="@+id/LinkedList_Activity_InputSlider"
+        app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_ViewPager"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Guideline" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/LinkedList_Activity_Toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/LinkedList_Activity_Box_Return"
+        style="@style/Return"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/Content_Description_Queue_Return_Background"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Guideline"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Toolbar" />
+
+    <TextView
+        android:id="@+id/LinkedList_Activity_ReturnText"
+        style="@style/Primary.Text.Return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/All_Data_Activity_Text_Return"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Box_Return"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Toolbar" />
+
+    <TextView
+        android:id="@+id/LinkedList_Activity_InputValue"
+        style="@style/Surface.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/Slider_Default_Value"
+        app:layout_constraintBaseline_toBaselineOf="@+id/LinkedList_Activity_CurrentValue"
+        app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_CurrentValue" />
 
     <ToggleButton
         android:id="@+id/LinkedList_Activity_Switch"
@@ -23,17 +77,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Toolbar" />
 
-    <ImageView
-        android:id="@+id/LinkedList_Activity_Box_Return"
-        style="@style/Return"
+    <FrameLayout
+        android:id="@+id/LinkedList_Activity_ViewContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:contentDescription="@string/Content_Description_Queue_Return_Background"
-        app:layout_constraintDimensionRatio="2:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Guideline"
-        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Toolbar" />
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/LinkedList_Activity_InputSlider"
+        app:layout_constraintEnd_toStartOf="@+id/LinkedList_Activity_Guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Switch"
+        app:layout_constraintVertical_bias="1.0">
+
+        <at.fhooe.mc.datadora.LinkedList.LinkedListView
+            android:id="@+id/LinkedList_Activity_View"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/LinkedList_Activity_ReturnValue"
@@ -51,556 +112,6 @@
         app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Box_Return"
         app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Box_Return"
         app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_ReturnText" />
-
-    <TextView
-        android:id="@+id/LinkedList_Activity_ReturnText"
-        style="@style/Primary.Text.Return"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/All_Data_Activity_Text_Return"
-        app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Box_Return"
-        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Box_Return"
-        app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Box_Return" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/LinkedList_Activity_Toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/LinkedList_Activity_ViewContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/LinkedList_Activity_CurrentValue"
-        app:layout_constraintEnd_toStartOf="@+id/LinkedList_Activity_Guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Switch">
-
-        <at.fhooe.mc.datadora.LinkedList.LinkedListView
-            android:id="@+id/LinkedList_Activity_LinkedListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
-
-    <ScrollView
-        android:id="@+id/DLL_Activity_Container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/LinkedList_Activity_InputSlider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Guideline"
-        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Box_Return">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.constraintlayout.motion.widget.MotionLayout
-                android:id="@+id/LinkedList_Activity_Type_MotionLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layoutDescription="@xml/activity_linked_list_type_scene"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/LinkedList_Activity_Type_Background"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/Content_Description_LinkedList_Type_Background"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/background_list_item" />
-
-                <TextView
-                    android:id="@+id/LinkedList_Activity_Type_Title"
-                    style="@style/Primary.Text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/LinkedList_Activity_Type_Title"
-                    app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Type_Background"
-                    app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Type_Background"
-                    app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Type_Background" />
-
-                <ImageView
-                    android:id="@+id/LinkedList_Activity_Type_Arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/Content_Description_LinkedList_Type_Arrow"
-                    app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Type_Background"
-                    app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Type_Background"
-                    app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Type_Background"
-                    app:srcCompat="@drawable/ic_arrow_drop_down" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/LinkedList_Activity_Type_ConstraintLayout"
-                    android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Type_Background"
-                    app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Type_Background"
-                    app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Type_Background">
-
-                    <!--
-
-                   <com.google.android.material.switchmaterial.SwitchMaterial
-                       android:id="@+id/LinkedList_Activity_Type_Sorted_Switch"
-                       style="@style/AppTheme.Switch"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginStart="8dp"
-                       app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_Type_Sorted"
-                       app:layout_constraintTop_toTopOf="parent" />
-
-
-                   <TextView
-                       android:id="@+id/LinkedList_Activity_Type_Sorted"
-                       style="@style/Surface.Text"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginStart="8dp"
-                       android:text="@string/LinkedList_Activity_Type_Sorted"
-                       app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Type_Sorted_Switch"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toTopOf="parent" />
-
-                   <TextView
-                       android:id="@+id/LinkedList_Activity_Type_Unsorted"
-                       style="@style/Surface.Text"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginStart="8dp"
-                       android:text="@string/LinkedList_Activity_Type_Unsorted"
-                       app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Type_Sorted_Switch"
-                       app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_Type_Sorted_Switch"
-                       app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Type_Sorted_Switch" />
-
-                       -->
-
-                    <RadioGroup
-                        android:id="@+id/LinkedList_Activity_Type_RadioGroup"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:checkedButton="@id/LinkedList_Activity_Type_Head_RadioButton"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Type_Head_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Type_Head" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Type_Tail_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Type_Tail" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Type_Both_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Type_Both" />
-
-                    </RadioGroup>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.motion.widget.MotionLayout>
-
-            <androidx.constraintlayout.motion.widget.MotionLayout
-                android:id="@+id/LinkedList_Activity_Add_MotionLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layoutDescription="@xml/activity_linked_list_add_scene"
-                app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Type_MotionLayout"
-                app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Type_MotionLayout"
-                app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Type_MotionLayout">
-
-                <ImageView
-                    android:id="@+id/LinkedList_Activity_Add_Background"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/Content_Description_LinkedList_Add_Background"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/background_list_item" />
-
-                <TextView
-                    android:id="@+id/LinkedList_Activity_Add_Title"
-                    style="@style/Primary.Text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/LinkedList_Activity_Add_Title"
-                    app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Add_Background"
-                    app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Add_Background"
-                    app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Add_Background" />
-
-                <ImageView
-                    android:id="@+id/LinkedList_Activity_Add_Arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/Content_Description_LinkedList_Add_Arrow"
-                    app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Add_Background"
-                    app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Add_Background"
-                    app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Add_Background"
-                    app:srcCompat="@drawable/ic_arrow_drop_down" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/LinkedList_Activity_Add_ConstraintLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Add_Background"
-                    app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Add_Background"
-                    app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Add_Background"
-                    tools:showPaths="true">
-
-
-                    <RadioGroup
-                        android:id="@+id/LinkedList_Activity_Add_RadioGroup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Add_Prepend_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Add_Prepend" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Add_Append_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Add_Append" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Add_At_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Add_At" />
-                    </RadioGroup>
-
-                    <com.google.android.material.slider.Slider
-                        android:id="@+id/LinkedList_Activity_Add_Position_Slider"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:stepSize="1"
-                        app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Add_RadioGroup"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_Add_RadioGroup"
-                        app:srcCompat="@drawable/background_list_item" />
-
-                    <TextView
-                        android:id="@+id/LinkedList_Activity_Add_Position_Zero"
-                        style="@style/Surface.Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/Slider_Default_Value"
-                        app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Add_RadioGroup"
-                        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Add_Position_Slider"
-                        app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Add_Position_Slider" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.constraintlayout.motion.widget.MotionLayout>
-
-            <androidx.constraintlayout.motion.widget.MotionLayout
-                android:id="@+id/LinkedList_Activity_Delete_MotionLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layoutDescription="@xml/activity_linked_list_delete_scene"
-                app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Add_MotionLayout"
-                app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Add_MotionLayout"
-                app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Add_MotionLayout">
-
-                <ImageView
-                    android:id="@+id/LinkedList_Activity_Delete_Background"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/Content_Description_LinkedList_Delete_Background"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/background_list_item" />
-
-                <TextView
-                    android:id="@+id/LinkedList_Activity_Delete_Title"
-                    style="@style/Primary.Text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/LinkedList_Activity_Delete_Title"
-                    app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Delete_Background"
-                    app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Delete_Background"
-                    app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Delete_Background" />
-
-                <ImageView
-                    android:id="@+id/LinkedList_Activity_Delete_Arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/Content_Description_LinkedList_Delete_Arrow"
-                    app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Delete_Background"
-                    app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Delete_Background"
-                    app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Delete_Background"
-                    app:srcCompat="@drawable/ic_arrow_drop_down" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/LinkedList_Activity_Delete_ConstraintLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Delete_Background"
-                    app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Delete_Background"
-                    app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Delete_Background">
-
-                    <TextView
-                        android:id="@+id/LinkedList_Activity_Delete_Position_Zero"
-                        style="@style/Surface.Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Slider_Default_Value"
-                        app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Delete_Position_Slider"
-                        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Delete_Position_Slider"
-                        app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Delete_Position_Slider" />
-
-                    <com.google.android.material.slider.Slider
-                        android:id="@+id/LinkedList_Activity_Delete_Position_Slider"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="0dp"
-                        android:stepSize="1"
-                        app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Delete_RadioGroup"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_Delete_RadioGroup" />
-
-                    <RadioGroup
-                        android:id="@+id/LinkedList_Activity_Delete_RadioGroup"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Delete_All_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Delete_All" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Delete_First_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Delete_First" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Delete_Last_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Delete_Last" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Delete_At_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Delete_At" />
-
-
-                    </RadioGroup>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.motion.widget.MotionLayout>
-
-            <androidx.constraintlayout.motion.widget.MotionLayout
-                android:id="@+id/LinkedList_Activity_Get_MotionLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layoutDescription="@xml/activity_linked_list_get_scene"
-                app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Delete_MotionLayout"
-                app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Delete_MotionLayout"
-                app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Delete_MotionLayout">
-
-                <ImageView
-                    android:id="@+id/LinkedList_Activity_Get_Background"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/Content_Description_LinkedList_Get_Background"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/background_list_item" />
-
-                <TextView
-                    android:id="@+id/LinkedList_Activity_Get_Title"
-                    style="@style/Primary.Text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/LinkedList_Activity_Get_Title"
-                    app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Get_Background"
-                    app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Get_Background"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/LinkedList_Activity_Get_Arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/Content_Description_LinkedList_Get_Arrow"
-                    app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Get_Background"
-                    app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Get_Background"
-                    app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Get_Background"
-                    app:srcCompat="@drawable/ic_arrow_drop_down" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/LinkedList_Activity_Get_ConstraintLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Get_Background"
-                    app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Get_Background"
-                    app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Get_Background">
-
-                    <com.google.android.material.slider.Slider
-                        android:id="@+id/LinkedList_Activity_Get_Position_Slider"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:stepSize="1"
-                        app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Get_RadioGroup"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_Get_RadioGroup" />
-
-                    <RadioGroup
-                        android:id="@+id/LinkedList_Activity_Get_RadioGroup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Get_Size_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/All_Data_Activity_Text_Size" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Get_Pre_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Get_Predecessor" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Get_Succ_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Get_Successor" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Get_First_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Get_First" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Get_Last_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Get_Last" />
-
-                        <RadioButton
-                            android:id="@+id/LinkedList_Activity_Get_At_RadioButton"
-                            style="@style/Surface.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LinkedList_Activity_Get_At" />
-
-                    </RadioGroup>
-
-                    <TextView
-                        android:id="@+id/LinkedList_Activity_Get_Position_Zero"
-                        style="@style/Surface.Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/Slider_Default_Value"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Get_RadioGroup"
-                        app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Get_Position_Slider" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.motion.widget.MotionLayout>
-
-            <ImageView
-                android:id="@+id/LinkedList_Activity_Random_Background"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/background_list_item"
-                app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Get_MotionLayout"
-                app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Get_MotionLayout"
-                app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Get_MotionLayout" />
-
-            <TextView
-                android:id="@+id/LinkedList_Activity_Random_Text"
-                style="@style/Primary.Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/All_Data_Activity_Text_Random"
-                app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Activity_Random_Background"
-                app:layout_constraintEnd_toEndOf="@+id/LinkedList_Activity_Random_Background"
-                app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Random_Background"
-                app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Random_Background" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 
     <com.google.android.material.slider.Slider
         android:id="@+id/LinkedList_Activity_InputSlider"
@@ -623,20 +134,10 @@
         style="@style/Surface.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:text="@string/Slider_Current_Value"
         app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_ViewContainer"
         app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_InputSlider" />
-
-    <TextView
-        android:id="@+id/LinkedList_Activity_InputValue"
-        style="@style/Surface.Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/Slider_Default_Value"
-        app:layout_constraintBaseline_toBaselineOf="@+id/LinkedList_Activity_CurrentValue"
-        app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_CurrentValue" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/LinkedList_Activity_Guideline"
@@ -644,5 +145,94 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.45" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/LinkedList_Activity_TabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Guideline"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_RadioGroup_Type">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Standard_Add" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/LinkedList_Activity_Delete_Title" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BST_Activity_Get_Title" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <TextView
+        android:id="@+id/LinkedList_Activity_Type_Title"
+        style="@style/TextAppearance.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingStart="12dp"
+        android:text="@string/LinkedList_Activity_Type_Title"
+        android:textColor="@color/primaryColor"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Box_Return"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Box_Return" />
+
+    <RadioGroup
+        android:id="@+id/LinkedList_Activity_RadioGroup_Type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Box_Return"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Type_Title">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RadioButton
+                android:id="@+id/LinkedList_Activity_Tail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/LinkedList_Activity_Type_Tail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/LinkedList_Activity_Head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/LinkedList_Activity_Type_Head"
+                app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_Tail"
+                app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Tail" />
+
+            <RadioButton
+                android:id="@+id/LinkedList_Activity_Head_Tail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Both"
+                app:layout_constraintStart_toEndOf="@+id/LinkedList_Activity_Head"
+                app:layout_constraintTop_toTopOf="@+id/LinkedList_Activity_Head" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RadioGroup>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/LinkedList_Activity_ViewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/LinkedList_Activity_Random"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Activity_Guideline"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_TabLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

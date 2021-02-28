@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/LinkedList_Fragment_Add_Zero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Slider_Default_Value"
+        app:layout_constraintBottom_toTopOf="@+id/LinkedList_Fragment_Add_Slider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/LinkedList_Fragment_Append"
+        app:layout_constraintTop_toTopOf="@+id/LinkedList_Fragment_Prepend" />
+
+    <Button
+        android:id="@+id/LinkedList_Fragment_Prepend"
+        style="@style/Tree_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/LinkedList_Activity_Add_Prepend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BST_Fragment_HasLeftChild" />
+
+    <Button
+        android:id="@+id/LinkedList_Fragment_Append"
+        style="@style/Tree_Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/LinkedList_Activity_Add_Append"
+        app:layout_constraintEnd_toEndOf="@+id/LinkedList_Fragment_Prepend"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Fragment_Prepend"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Fragment_Prepend" />
+
+    <TextView
+        android:id="@+id/LinkedList_Fragment_At"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/LinkedList_Activity_Add_At"
+        android:textAppearance="@style/Text.Item"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Fragment_Append"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Fragment_Append" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/LinkedList_Fragment_Add_Slider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="50dp"
+        android:theme="@style/AppTheme"
+        android:value="0.0"
+        android:valueFrom="-100.0"
+        android:valueTo="100.0"
+        app:labelBehavior="withinBounds"
+        app:layout_constraintDimensionRatio=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/LinkedList_Fragment_At"
+        app:layout_constraintTop_toBottomOf="@+id/LinkedList_Fragment_At" />
+
+    <ImageButton
+        android:id="@+id/LinkedList_Fragment_Add_Button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ic_check"
+        app:layout_constraintBottom_toBottomOf="@+id/LinkedList_Fragment_Add_Slider"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/LinkedList_Fragment_Add_Slider"
+        app:layout_constraintTop_toTopOf="@+id/LinkedList_Fragment_Add_Slider" />
+</androidx.constraintlayout.widget.ConstraintLayout>
