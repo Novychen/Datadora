@@ -10,8 +10,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
 
 import java.util.Vector;
@@ -25,7 +27,7 @@ public class LinkedListGetFragment extends Fragment implements View.OnClickListe
 
     LinkedListActivity mActivity;
     Slider mSlider;
-    TextView mZero;
+    Button mInsert;
     Vector<Integer> mLinkedList;
 
     @Override
@@ -36,13 +38,37 @@ public class LinkedListGetFragment extends Fragment implements View.OnClickListe
 
         mSlider = view.findViewById(R.id.LinkedList_Fragment_Get_Slider);
         mSlider.setVisibility(View.INVISIBLE);
+        setUpSlider();
 
-        mZero = view.findViewById(R.id.LinkedList_Fragment_Get_Zero);
+        mInsert = view.findViewById(R.id.LinkedList_Fragment_Get_At);
 
         mLinkedList = mActivity.getLinkedList();
         preparePositionSlider();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        preparePositionSlider();
+    }
+
+    private void setUpSlider() {
+        mSlider.setLabelFormatter(new LabelFormatter() {
+            @NonNull
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);    // converting the float value to an int value
+            }
+        });
+        mSlider.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                String s = getString(R.string.LinkedList_Activity_Get_At) + " " + (int) mSlider.getValue();
+                mInsert.setText(s);
+            }
+        });
     }
 
     private void setUpOnClickListeners(View _view) {
@@ -62,8 +88,8 @@ public class LinkedListGetFragment extends Fragment implements View.OnClickListe
         b = _view.findViewById(R.id.LinkedList_Fragment_Get_Last);
         b.setOnClickListener(this);
 
-        ImageButton i = _view.findViewById(R.id.LinkedList_Fragment_Get_Button);
-        i.setOnClickListener(this);
+        b = _view.findViewById(R.id.LinkedList_Fragment_Get_At);
+        b.setOnClickListener(this);
     }
 
     @Override
@@ -81,7 +107,7 @@ public class LinkedListGetFragment extends Fragment implements View.OnClickListe
                 getFirst();
             } else if (_view.getId() == R.id.LinkedList_Fragment_Get_Last) {
                 getLast();
-            } else if (_view.getId() == R.id.LinkedList_Fragment_Get_Button) {
+            } else if (_view.getId() == R.id.LinkedList_Fragment_Get_At) {
                 getAt();
             }
             preparePositionSlider();
@@ -173,27 +199,27 @@ public class LinkedListGetFragment extends Fragment implements View.OnClickListe
      * If the linked list is empty the slider will be hidden and a text field displaying "0" will be shown
      *
      */
-    private void preparePositionSlider(){
-
+    public void preparePositionSlider(){
+        String s = getString(R.string.LinkedList_Activity_Get_At);
         if (mLinkedList.size() == 0) {
             mSlider.setVisibility(View.INVISIBLE);
-            mZero.setVisibility(View.VISIBLE);
-
+            s = s + " 0" ;
+            mInsert.setText(s);
         } else if (mLinkedList.size() == 1){
             mSlider.setVisibility(View.INVISIBLE);
-            mZero.setVisibility(View.GONE);
-
+            s = s + " " + (int) mSlider.getValue();
+            mInsert.setText(s);
         } else if (mLinkedList.size() == 2) {
-
-            mZero.setVisibility(View.GONE);
+            s = s + " " + (int) mSlider.getValue();
+            mInsert.setText(s);
             mSlider.setVisibility(View.VISIBLE);
             mSlider.setValueFrom(0);
             mSlider.setStepSize(1);
             mSlider.setValueTo(mLinkedList.size() - 1);
-
         } else {
             mSlider.setVisibility(View.VISIBLE);
-            mZero.setVisibility(View.GONE);
+            s = s + " " + (int) mSlider.getValue();
+            mInsert.setText(s);
             mSlider.setValueFrom(0);
             mSlider.setStepSize(1);
             mSlider.setValueTo(mLinkedList.size() - 1);

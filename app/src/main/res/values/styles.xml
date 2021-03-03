@@ -11,6 +11,13 @@
         <item name="android:textColor">@color/colorOnPrimary</item>
     </style>
 
+    <style name="List_Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:backgroundTint">@color/colorOnPrimary</item>
+        <item name="android:textColor">@color/primaryColor</item>
+    </style>
+
     <style name="Pan_selected">
         <item name="android:backgroundTint">@color/primaryColor</item>
         <item name="android:background">@drawable/ic_pan_tool</item>

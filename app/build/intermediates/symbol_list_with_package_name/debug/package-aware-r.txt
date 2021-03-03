@@ -1728,23 +1728,18 @@ id LinkedList_Activity_Type_Title
 id LinkedList_Activity_View
 id LinkedList_Activity_ViewContainer
 id LinkedList_Activity_ViewPager
-id LinkedList_Fragment_Add_Button
+id LinkedList_Fragment_Add_At
 id LinkedList_Fragment_Add_Slider
-id LinkedList_Fragment_Add_Zero
 id LinkedList_Fragment_Append
-id LinkedList_Fragment_At
 id LinkedList_Fragment_Clear
-id LinkedList_Fragment_Delete_Button
+id LinkedList_Fragment_Delete_At
 id LinkedList_Fragment_Delete_First
 id LinkedList_Fragment_Delete_Last
 id LinkedList_Fragment_Delete_Slider
-id LinkedList_Fragment_Delete_Zero
 id LinkedList_Fragment_Get_At
-id LinkedList_Fragment_Get_Button
 id LinkedList_Fragment_Get_First
 id LinkedList_Fragment_Get_Last
 id LinkedList_Fragment_Get_Slider
-id LinkedList_Fragment_Get_Zero
 id LinkedList_Fragment_Predec
 id LinkedList_Fragment_Prepend
 id LinkedList_Fragment_Size
@@ -1766,6 +1761,7 @@ id Main_Activity_SingleList_Text
 id Main_Activity_Stack_Card
 id Main_Activity_Stack_Icon
 id Main_Activity_Stack_Text
+id Main_Activity_Test
 id Main_Activity_Toolbar
 id Main_Activity_Tree_Card
 id Main_Activity_Tree_Icon
@@ -2005,7 +2001,6 @@ id left
 id line1
 id line3
 id linear
-id linkedList_Fragment_Delete_At
 id listMode
 id list_item
 id masked
@@ -2254,6 +2249,7 @@ layout activity_linked_list
 layout activity_main
 layout activity_queue
 layout activity_stack
+layout activity_test
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
@@ -2781,6 +2777,7 @@ style CardView
 style CardView_Dark
 style CardView_Light
 style EmptyTheme
+style List_Button
 style MaterialAlertDialog_MaterialComponents
 style MaterialAlertDialog_MaterialComponents_Body_Text
 style MaterialAlertDialog_MaterialComponents_Picker_Date_Calendar

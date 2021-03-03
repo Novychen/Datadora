@@ -8,13 +8,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
 
 import java.util.Vector;
 
-import at.fhooe.mc.datadora.LinkedList.LinkedList;
 import at.fhooe.mc.datadora.LinkedList.LinkedListActivity;
 import at.fhooe.mc.datadora.R;
 
@@ -24,7 +25,7 @@ public class LinkedListDeleteFragment extends Fragment implements View.OnClickLi
 
     LinkedListActivity mActivity;
     Slider mSlider;
-    TextView mZero;
+    Button mInsert;
     Vector<Integer> mLinkedList;
 
     @Override
@@ -35,13 +36,37 @@ public class LinkedListDeleteFragment extends Fragment implements View.OnClickLi
 
         mSlider = view.findViewById(R.id.LinkedList_Fragment_Delete_Slider);
         mSlider.setVisibility(View.INVISIBLE);
+        setUpSlider();
 
-        mZero = view.findViewById(R.id.LinkedList_Fragment_Delete_Zero);
+        mInsert = view.findViewById(R.id.LinkedList_Fragment_Delete_At);
 
         mLinkedList = mActivity.getLinkedList();
         preparePositionSlider();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        preparePositionSlider();
+    }
+
+    private void setUpSlider() {
+        mSlider.setLabelFormatter(new LabelFormatter() {
+            @NonNull
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);    // converting the float value to an int value
+            }
+        });
+        mSlider.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                String s = getString(R.string.LinkedList_Activity_Delete_At) + " " + (int) mSlider.getValue();
+                mInsert.setText(s);
+            }
+        });
     }
 
     private void setUpOnClickListeners(View _view) {
@@ -55,26 +80,25 @@ public class LinkedListDeleteFragment extends Fragment implements View.OnClickLi
         b = _view.findViewById(R.id.LinkedList_Fragment_Delete_Last);
         b.setOnClickListener(this);
 
-        ImageButton i = _view.findViewById(R.id.LinkedList_Fragment_Delete_Button);
-        i.setOnClickListener(this);
+        b = _view.findViewById(R.id.LinkedList_Fragment_Delete_At);
+        b.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View _view) {
         mActivity.getBinding().LinkedListActivityReturnValue.setText("");
 
-        if (mActivity.isInputValid()) {
-            if (_view.getId() == R.id.LinkedList_Fragment_Clear) {
-                clear();
-            } if (_view.getId() == R.id.LinkedList_Fragment_Delete_First) {
-                deleteFirst();
-            } else if (_view.getId() == R.id.LinkedList_Fragment_Delete_Last) {
-                deleteLast();
-            } else if (_view.getId() == R.id.LinkedList_Fragment_Delete_Button) {
-                deleteAt();
-            }
-            preparePositionSlider();
+        if (_view.getId() == R.id.LinkedList_Fragment_Clear) {
+            clear();
+        } if (_view.getId() == R.id.LinkedList_Fragment_Delete_First) {
+            deleteFirst();
+        } else if (_view.getId() == R.id.LinkedList_Fragment_Delete_Last) {
+            deleteLast();
+        } else if (_view.getId() == R.id.LinkedList_Fragment_Delete_At) {
+            deleteAt();
         }
+        preparePositionSlider();
+
     }
 
     private void clear(){
@@ -125,16 +149,21 @@ public class LinkedListDeleteFragment extends Fragment implements View.OnClickLi
      * If the linked list is empty the slider will be hidden and a text field displaying "0" will be shown
      *
      */
-    private void preparePositionSlider(){
+    public void preparePositionSlider(){
+
+        String s = getString(R.string.LinkedList_Activity_Delete_At);
 
         if (mLinkedList.size() == 0) {
             mSlider.setVisibility(View.INVISIBLE);
-            mZero.setVisibility(View.VISIBLE);
+            s = s + " 0";
+            mInsert.setText(s);
         } else if (mLinkedList.size() == 1){
             mSlider.setVisibility(View.INVISIBLE);
-            mZero.setVisibility(View.VISIBLE);
+
+            mInsert.setVisibility(View.VISIBLE);
         } else if (mLinkedList.size() == 2) {
-            mZero.setVisibility(View.GONE);
+            s = s + " " + (int) mSlider.getValue();
+            mInsert.setText(s);
             mSlider.setVisibility(View.VISIBLE);
             mSlider.setValueFrom(0);
             mSlider.setStepSize(1);
@@ -143,7 +172,8 @@ public class LinkedListDeleteFragment extends Fragment implements View.OnClickLi
             }
             mSlider.setValueTo(mLinkedList.size() - 1);
         } else {
-            mZero.setVisibility(View.GONE);
+            s = s + " " + (int) mSlider.getValue();
+            mInsert.setText(s);
             mSlider.setVisibility(View.VISIBLE);
             mSlider.setValueFrom(0);
             mSlider.setStepSize(1);

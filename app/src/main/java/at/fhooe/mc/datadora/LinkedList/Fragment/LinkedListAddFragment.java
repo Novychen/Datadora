@@ -1,6 +1,7 @@
 package at.fhooe.mc.datadora.LinkedList.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
 
 import java.util.Random;
@@ -20,11 +23,11 @@ import at.fhooe.mc.datadora.R;
 
 public class LinkedListAddFragment extends Fragment implements View.OnClickListener{
 
-    private static final String TAG = "LinkedListAddFragment :: ";
+    private static final String TAG = "LLAddFragment :: ";
 
     LinkedListActivity mActivity;
     Slider mSlider;
-    TextView mZero;
+    Button mInsert;
     Vector<Integer> mLinkedList;
 
     @Override
@@ -34,14 +37,21 @@ public class LinkedListAddFragment extends Fragment implements View.OnClickListe
         mActivity = (LinkedListActivity) getActivity();
 
         mSlider = view.findViewById(R.id.LinkedList_Fragment_Add_Slider);
+        setUpSlider();
         mSlider.setVisibility(View.INVISIBLE);
 
-        mZero = view.findViewById(R.id.LinkedList_Fragment_Add_Zero);
+        mInsert = view.findViewById(R.id.LinkedList_Fragment_Add_At);
 
         mLinkedList = mActivity.getLinkedList();
         preparePositionSlider();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        preparePositionSlider();
     }
 
     private void setUpOnClickListeners(View _view) {
@@ -52,8 +62,8 @@ public class LinkedListAddFragment extends Fragment implements View.OnClickListe
         b = _view.findViewById(R.id.LinkedList_Fragment_Prepend);
         b.setOnClickListener(this);
 
-        ImageButton i = _view.findViewById(R.id.LinkedList_Fragment_Add_Button);
-        i.setOnClickListener(this);
+        b = _view.findViewById(R.id.LinkedList_Fragment_Add_At);
+        b.setOnClickListener(this);
     }
 
     @Override
@@ -65,7 +75,7 @@ public class LinkedListAddFragment extends Fragment implements View.OnClickListe
                 prepend();
             } else if (_view.getId() == R.id.LinkedList_Fragment_Append) {
                 append();
-            }  else if (_view.getId() == R.id.LinkedList_Fragment_Add_Button) {
+            }  else if (_view.getId() == R.id.LinkedList_Fragment_Add_At) {
                 insertAt();
             }
             preparePositionSlider();
@@ -91,6 +101,22 @@ public class LinkedListAddFragment extends Fragment implements View.OnClickListe
         mActivity.getBinding().LinkedListActivityView.insertAt(value, pos);
     }
 
+    private void setUpSlider() {
+        mSlider.setLabelFormatter(new LabelFormatter() {
+            @NonNull
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);    // converting the float value to an int value
+            }
+        });
+        mSlider.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                String s = getString(R.string.LinkedList_Activity_Add_At) + " " + (int) mSlider.getValue();
+                mInsert.setText(s);
+            }
+        });
+    }
 
     /**
      * prepares the position slider of the operations add.
@@ -99,20 +125,26 @@ public class LinkedListAddFragment extends Fragment implements View.OnClickListe
      * If the linked list is empty the slider will be hidden and a text field displaying "0" will be shown
      *
      */
-    private void preparePositionSlider(){
+    public void preparePositionSlider(){
+
+        String s = getString(R.string.LinkedList_Activity_Add_At);
 
         if (mLinkedList.size() == 0) {
             mSlider.setVisibility(View.INVISIBLE);
-            mZero.setVisibility(View.VISIBLE);
+            s = s + " 0" ;
+            mInsert.setText(s);
         } else if (mLinkedList.size() == 1){
-            mZero.setVisibility(View.GONE);
+            s = s + " " + (int) mSlider.getValue();
+            mInsert.setText(s);
             mSlider.setVisibility(View.VISIBLE);
             mSlider.setValueFrom(0);
             mSlider.setStepSize(1);
+            mSlider.setValueTo(mLinkedList.size());
         } else if (mLinkedList.size() == 2) {
             mSlider.setValueTo(mLinkedList.size());
         } else {
-            mZero.setVisibility(View.GONE);
+            s = s + " " + (int) mSlider.getValue();
+            mInsert.setText(s);
             mSlider.setVisibility(View.VISIBLE);
             mSlider.setValueFrom(0);
             mSlider.setStepSize(1);

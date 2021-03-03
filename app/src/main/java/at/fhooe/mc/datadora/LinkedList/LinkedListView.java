@@ -28,7 +28,7 @@ import java.util.Vector;
 
 import at.fhooe.mc.datadora.R;
 
-public class LinkedListView extends View implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
+ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
 
     //TODO: Tail & Head animation aus/einblenden statt "springen"
     //TODO: Animation von add und remove von den Pfeilen
@@ -155,14 +155,14 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
 
     private final Path mPath = new Path();
 
-    enum Operation {
+     enum Operation {
         PREPEND, APPEND, INSERT_AT,
 
         CLEAR, DELETE_FIRST, DELETE_LAST, DELETE_AT,
 
         GET_SIZE, PREDECESSOR, SUCCESSOR, GET_FIRST, GET_LAST, GET_AT,
 
-        RANDOM, SAVE
+        RANDOM, NONE
     }
 
     enum Filter {SORTED, UNSORTED}
@@ -433,6 +433,8 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mCurrentOperation = Operation.RANDOM;
         mAnimatorRandom.setRepeatCount(_list.size() - 1);
         mAnimatorRandom.start();
+        mScale = 1;
+        reScale();
     }
 
     private void reScale() {
@@ -469,7 +471,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
                 mLinkedListNumbers.add(v.get(i));
                 mLinkedList.add(new RectF());
             }
-            mCurrentOperation = Operation.SAVE;
+            mCurrentOperation = Operation.NONE;
             reScale();
         }
 
@@ -680,6 +682,8 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         } else if (mCurrentOperation == Operation.DELETE_FIRST && !mAnimatorDeleteFirst.isRunning()) {
             mLinkedList.remove(0);
             mLinkedListNumbers.remove(0);
+            mCurrentOperation = Operation.NONE;
+            invalidate();
         } else if(mCurrentOperation == Operation.DELETE_LAST && !mAnimatorDeleteLast.isRunning()) {
             mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
             mLinkedList.remove(mLinkedList.size() - 1);
@@ -892,12 +896,11 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
 
         y = (float) (Math.sin(Math.toRadians(180) - angle) * length);
         x = (float) (Math.cos(Math.toRadians(180) - angle) * length);
-
-        mItemPaint.setColor(mSecondaryColor);
+    //    mItemPaint.setColor(mSecondaryColor);     TODO: If 2 color then need to make new mItemPaint for second one and give it in the methods params otherwise alpha of animation is overwritten
         p = drawLine(_canvas, _pos, height - mLinkedList.get(_pos).height() - 10 , lineHeight, lineWidth, false, end);
         drawArrow(_canvas, p, x, y, false, end);
 
-        mItemPaint.setColor(mPrimaryColor);
+       // mItemPaint.setColor(mPrimaryColor);
     }
 
     private PointF drawLine(Canvas _canvas, int _pos, float _height, float _lineHeight, float _lineWidth, boolean right, boolean end) {

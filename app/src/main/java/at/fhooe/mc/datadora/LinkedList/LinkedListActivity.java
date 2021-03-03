@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.google.android.material.slider.LabelFormatter;
@@ -33,10 +34,11 @@ import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTStructureFragment;
 import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListAddFragment;
 import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListDeleteFragment;
 import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListGetFragment;
+import at.fhooe.mc.datadora.MainActivity;
 import at.fhooe.mc.datadora.R;
 import at.fhooe.mc.datadora.databinding.ActivityLinkedListBinding;
 
-public class LinkedListActivity extends AppCompatActivity implements View.OnClickListener {
+public class LinkedListActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = "LinkedListActivity : ";
 
@@ -49,6 +51,11 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     private SharedPreferences mSharedPreferences;
 
     private Animation mAnimation;
+
+    TabLayout mTabLayout;
+    LinkedListAddFragment mAdd = new LinkedListAddFragment();
+    LinkedListDeleteFragment mDelete = new LinkedListDeleteFragment();
+    LinkedListGetFragment mGet = new LinkedListGetFragment();
 
     public Vector<Integer> getLinkedList() { return mLinkedList; }
 
@@ -76,6 +83,8 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
         setUpSlider();
 
         mBinding.LinkedListActivityRandom.setOnClickListener(this);
+        mBinding.LinkedListActivityRadioGroupType.setOnCheckedChangeListener(this);
+        mBinding.LinkedListActivityHead.setChecked(true);
 
         mBinding.LinkedListActivitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -88,27 +97,33 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     private void setUpToolbar() {
         Toolbar myToolbar = mBinding.LinkedListActivityToolbar;
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle(R.string.All_Data_Activity_Single_LinkedList);
+        float type = getIntent().getExtras().getFloat(MainActivity.LINKED_LIST_TYPE);
+
+        if(type == 1) {
+            getSupportActionBar().setTitle(R.string.All_Data_Activity_Single_LinkedList);
+        } else {
+            getSupportActionBar().setTitle(R.string.All_Data_Activity_Double_LinkedList);
+        }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
 
     private void setUpTabLayout() {
-        TabLayout tabLayout = findViewById(R.id.LinkedList_Activity_TabLayout);
-        tabLayout.setTabGravity(TabLayout.GRAVITY_START);
+        mTabLayout = findViewById(R.id.LinkedList_Activity_TabLayout);
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_START);
 
         LinkedListTabAdapter adapter = new LinkedListTabAdapter(this);
-        LinkedListAddFragment fragmentStandard = new LinkedListAddFragment();
 
-        adapter.addFragment(fragmentStandard);
-        adapter.addFragment(new LinkedListDeleteFragment());
-        adapter.addFragment(new LinkedListGetFragment());
+        adapter.addFragment(mAdd);
+        adapter.addFragment(mDelete);
+        adapter.addFragment(mGet);
 
         ViewPager2 viewPager = findViewById(R.id.LinkedList_Activity_ViewPager);
         viewPager.setAdapter(adapter);
 
-        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+        new TabLayoutMediator(mTabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab _tab, int _position) {
                 if(_position == 0) {
@@ -246,6 +261,15 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
         mBinding.LinkedListActivityReturnValue.setText("");
         createRandomList();
         mBinding.LinkedListActivityView.random(mLinkedList);
+
+        int i = mTabLayout.getSelectedTabPosition();
+        if(i == 0) {
+            mAdd.preparePositionSlider();
+        } else if (i == 1) {
+            mDelete.preparePositionSlider();
+        } else {
+            mGet.preparePositionSlider();
+        }
     }
 
     /**
@@ -292,5 +316,16 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup _group, int _checkedId) {
+        if(_checkedId == R.id.LinkedList_Activity_Head) {
+            head();
+        } else if(_checkedId == R.id.LinkedList_Activity_Tail) {
+            tail();
+        } else if(_checkedId == R.id.LinkedList_Activity_Head_Tail) {
+            both();
+        }
     }
 }

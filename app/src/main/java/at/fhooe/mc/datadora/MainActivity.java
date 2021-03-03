@@ -27,7 +27,9 @@ import at.fhooe.mc.datadora.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity : ";
-
+    private static final float LINKED_LIST_SINGLE = 1;
+    private static final float LINKED_LIST_DOUBLE = 2;
+    public static final String LINKED_LIST_TYPE = "LINKED_LIST_TYPE";
 
     private ActivityMainBinding mBinding;
 
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBinding.MainActivitySingleListCard.setOnClickListener(this);
         mBinding.MainActivityTreeCard.setOnClickListener(this);
         mBinding.MainActivityAbout.setOnClickListener(this);
+        mBinding.MainActivityTest.setOnClickListener(this);
+
     }
 
     @Override
@@ -75,6 +79,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent i = new Intent(this, LinkedListActivity.class);
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_X, x);
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_Y, y);
+            if (_v == mBinding.MainActivitySingleListCard) {
+                i.putExtra(LINKED_LIST_TYPE, LINKED_LIST_SINGLE);
+            } else {
+                i.putExtra(LINKED_LIST_TYPE, LINKED_LIST_DOUBLE);
+            }
             startActivity(i);
 
         } else if(_v == mBinding.MainActivityTreeCard){
@@ -88,7 +97,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_X, x);
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_Y, y);
             startActivity(i);
-        }
+        } else if(_v == mBinding.MainActivityTest){
+        Intent i = new Intent(this, TestActivity.class);
+        i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_X, x);
+        i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_Y, y);
+        startActivity(i);
+    }
         overridePendingTransition(0, 0);
     }
 }
