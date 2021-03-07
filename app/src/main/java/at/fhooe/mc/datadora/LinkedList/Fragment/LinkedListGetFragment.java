@@ -25,10 +25,20 @@ public class LinkedListGetFragment extends Fragment implements View.OnClickListe
 
     private static final String TAG = "LinkedListGetFragment :: ";
 
-    LinkedListActivity mActivity;
-    Slider mSlider;
-    Button mInsert;
-    Vector<Integer> mLinkedList;
+    private LinkedListActivity mActivity;
+    private Slider mSlider;
+    private Button mInsert;
+    private Vector<Integer> mLinkedList;
+
+    private boolean mPointer;
+
+    public boolean isPointer() {
+        return mPointer;
+    }
+
+    public void setPointer(boolean _pointer) {
+        mPointer = _pointer;
+    }
 
     @Override
     public View onCreateView(LayoutInflater _inflater, ViewGroup _container, Bundle _savedInstanceState) {
@@ -121,7 +131,7 @@ public class LinkedListGetFragment extends Fragment implements View.OnClickListe
                 @Override
                 public void run() {
                     mActivity.getBinding().LinkedListActivityReturnValue.setText(
-                            String.format("%s",  mActivity.getBinding().LinkedListActivityView.getLinkedListNumbers().size()));
+                            String.format("%s",  mActivity.getBinding().LinkedListActivityView.getValues().getLinkedListNum().size()));
                 }
             }, (600 * mLinkedList.size() - 1));
 
@@ -132,23 +142,35 @@ public class LinkedListGetFragment extends Fragment implements View.OnClickListe
 
     private void getPredecessor() {
         Toast.makeText(mActivity, R.string.LinkedList_Activity_Pre_Succ_Hint, Toast.LENGTH_SHORT).show();
-        mActivity.getBinding().LinkedListActivityView.predecessor();
+        if(mPointer) {
+            mActivity.getBinding().LinkedListActivityViewPointer.predecessor();
+        } else {
+            mActivity.getBinding().LinkedListActivityView.predecessor();
+        }
     }
 
     private void getSuccessor() {
         Toast.makeText(mActivity, R.string.LinkedList_Activity_Pre_Succ_Hint, Toast.LENGTH_SHORT).show();
-        mActivity.getBinding().LinkedListActivityView.successor();
-    }
+        if(mPointer) {
+            mActivity.getBinding().LinkedListActivityViewPointer.successor();
+        } else {
+            mActivity.getBinding().LinkedListActivityView.successor();
+        }    }
 
     private void getFirst() {
 
         if(!mLinkedList.isEmpty()){
-            mActivity.getBinding().LinkedListActivityView.getFirst();
+            if(mPointer) {
+                mActivity.getBinding().LinkedListActivityViewPointer.getFirst();
+            } else {
+                mActivity.getBinding().LinkedListActivityView.getFirst();
+            }
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mActivity.getBinding().LinkedListActivityReturnValue.setText(
-                            String.format("%s", mActivity.getBinding().LinkedListActivityView.getLinkedListNumbers().get(0).toString()));
+                            String.format("%s", mActivity.getBinding().LinkedListActivityView.getValues().getLinkedListNum().get(0).toString()));
                 }
             }, 500);
 
@@ -160,13 +182,17 @@ public class LinkedListGetFragment extends Fragment implements View.OnClickListe
     private void getLast() {
 
         if(!mLinkedList.isEmpty()){
-            mActivity.getBinding().LinkedListActivityView.getLast();
+            if(mPointer) {
+                mActivity.getBinding().LinkedListActivityViewPointer.getLast();
+            } else {
+                mActivity.getBinding().LinkedListActivityView.getLast();
+            }
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mActivity.getBinding().LinkedListActivityReturnValue.setText(
-                            String.format("%s", mActivity.getBinding().LinkedListActivityView.getLinkedListNumbers().get(
-                                    mActivity.getBinding().LinkedListActivityView.getLinkedListNumbers().size() - 1).toString()));
+                            String.format("%s", mActivity.getBinding().LinkedListActivityView.getValues().getLinkedListNum().get(
+                                    mActivity.getBinding().LinkedListActivityView.getValues().getLinkedListNum().size() - 1).toString()));
                 }
             }, 500);
         } else {
@@ -181,9 +207,12 @@ public class LinkedListGetFragment extends Fragment implements View.OnClickListe
                 @Override
                 public void run() {
                     int pos = (int) mSlider.getValue();
-                    mActivity.getBinding().LinkedListActivityView.getAt(pos);
-                    mActivity.getBinding().LinkedListActivityReturnValue.setText(
-                            String.format("%s", mActivity.getBinding().LinkedListActivityView.getLinkedListNumbers().get(pos).toString()));
+                    if(mPointer) {
+                        mActivity.getBinding().LinkedListActivityViewPointer.getAt(pos);
+                    } else {
+                        mActivity.getBinding().LinkedListActivityView.getAt(pos);
+                    }                    mActivity.getBinding().LinkedListActivityReturnValue.setText(
+                            String.format("%s", mActivity.getBinding().LinkedListActivityView.getValues().getLinkedListNum().get(pos).toString()));
                 }
             }, 500);
 

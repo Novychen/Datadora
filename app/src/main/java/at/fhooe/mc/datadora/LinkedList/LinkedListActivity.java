@@ -2,19 +2,16 @@ package at.fhooe.mc.datadora.LinkedList;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
-import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.google.android.material.slider.LabelFormatter;
@@ -26,11 +23,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import at.fhooe.mc.datadora.Animation;
-import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeTabAdapter;
-import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTCheckFragment;
-import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTGetFragment;
-import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTStandardFragment;
-import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTStructureFragment;
+import at.fhooe.mc.datadora.LinkedList.Animation.LLValue;
 import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListAddFragment;
 import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListDeleteFragment;
 import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListGetFragment;
@@ -64,7 +57,7 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    protected void onCreate(Bundle _savedInstanceState) {
+    protected void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
         mBinding = ActivityLinkedListBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
@@ -72,10 +65,11 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
 
         View layout = mBinding.LinkedListActivity;
         mAnimation = new Animation(layout, getIntent(), this);
-
         mBinding.LinkedListActivityView.setActivity(this);
+        mBinding.LinkedListActivityViewPointer.setActivity(this);
 
         mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
+        mBinding.LinkedListActivityViewPointer.setVisibility(View.GONE);
 
         head();
         setUpToolbar();
@@ -89,6 +83,9 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
         mBinding.LinkedListActivitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
+                mAdd.setPointer(_isChecked);
+                mDelete.setPointer(_isChecked);
+                mGet.setPointer(_isChecked);
                 mBinding.LinkedListActivityView.setSwitch(_isChecked);
             }
         });
@@ -99,7 +96,7 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
         setSupportActionBar(myToolbar);
         float type = getIntent().getExtras().getFloat(MainActivity.LINKED_LIST_TYPE);
 
-        if(type == 1) {
+        if(type == MainActivity.LINKED_LIST_SINGLE) {
             getSupportActionBar().setTitle(R.string.All_Data_Activity_Single_LinkedList);
         } else {
             getSupportActionBar().setTitle(R.string.All_Data_Activity_Double_LinkedList);
@@ -198,7 +195,7 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         // Convert the vector containing the integers to a string
-        Vector<Integer> vector = mBinding.LinkedListActivityView.getLinkedListNumbers();
+        Vector<Integer> vector = mBinding.LinkedListActivityView.getValues().getLinkedListNum();
         StringBuilder vectorStr = new StringBuilder();
 
         // transform the vector into a string

@@ -72,6 +72,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final TextView MainActivityStackText;
 
   @NonNull
+  public final ImageButton MainActivityTest;
+
+  @NonNull
   public final Toolbar MainActivityToolbar;
 
   @NonNull
@@ -101,10 +104,11 @@ public final class ActivityMainBinding implements ViewBinding {
       @NonNull TextView MainActivityQueueText, @NonNull ImageButton MainActivitySingleListCard,
       @NonNull ImageView MainActivitySingleListIcon, @NonNull TextView MainActivitySingleListText,
       @NonNull ImageButton MainActivityStackCard, @NonNull ImageView MainActivityStackIcon,
-      @NonNull TextView MainActivityStackText, @NonNull Toolbar MainActivityToolbar,
-      @NonNull ImageButton MainActivityTreeCard, @NonNull ImageView MainActivityTreeIcon,
-      @NonNull TextView MainActivityTreeText, @NonNull Guideline guideline,
-      @NonNull Guideline guideline2, @NonNull ScrollView scrollView3) {
+      @NonNull TextView MainActivityStackText, @NonNull ImageButton MainActivityTest,
+      @NonNull Toolbar MainActivityToolbar, @NonNull ImageButton MainActivityTreeCard,
+      @NonNull ImageView MainActivityTreeIcon, @NonNull TextView MainActivityTreeText,
+      @NonNull Guideline guideline, @NonNull Guideline guideline2,
+      @NonNull ScrollView scrollView3) {
     this.rootView = rootView;
     this.MainActivity = MainActivity;
     this.MainActivityAbout = MainActivityAbout;
@@ -122,6 +126,7 @@ public final class ActivityMainBinding implements ViewBinding {
     this.MainActivityStackCard = MainActivityStackCard;
     this.MainActivityStackIcon = MainActivityStackIcon;
     this.MainActivityStackText = MainActivityStackText;
+    this.MainActivityTest = MainActivityTest;
     this.MainActivityToolbar = MainActivityToolbar;
     this.MainActivityTreeCard = MainActivityTreeCard;
     this.MainActivityTreeIcon = MainActivityTreeIcon;
@@ -250,6 +255,12 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.Main_Activity_Test;
+      ImageButton MainActivityTest = rootView.findViewById(id);
+      if (MainActivityTest == null) {
+        break missingId;
+      }
+
       id = R.id.Main_Activity_Toolbar;
       Toolbar MainActivityToolbar = rootView.findViewById(id);
       if (MainActivityToolbar == null) {
@@ -297,8 +308,9 @@ public final class ActivityMainBinding implements ViewBinding {
           MainActivityDoubleListIcon, MainActivityDoubleListText, MainActivityQueueCard,
           MainActivityQueueIcon, MainActivityQueueText, MainActivitySingleListCard,
           MainActivitySingleListIcon, MainActivitySingleListText, MainActivityStackCard,
-          MainActivityStackIcon, MainActivityStackText, MainActivityToolbar, MainActivityTreeCard,
-          MainActivityTreeIcon, MainActivityTreeText, guideline, guideline2, scrollView3);
+          MainActivityStackIcon, MainActivityStackText, MainActivityTest, MainActivityToolbar,
+          MainActivityTreeCard, MainActivityTreeIcon, MainActivityTreeText, guideline, guideline2,
+          scrollView3);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

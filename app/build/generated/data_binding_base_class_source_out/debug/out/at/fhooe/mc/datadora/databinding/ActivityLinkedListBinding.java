@@ -18,7 +18,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewpager2.widget.ViewPager2;
-import at.fhooe.mc.datadora.LinkedList.LinkedListView;
+import at.fhooe.mc.datadora.LinkedList.LLNoPointerView;
+import at.fhooe.mc.datadora.LinkedList.LLPointerView;
 import at.fhooe.mc.datadora.R;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.tabs.TabLayout;
@@ -82,13 +83,16 @@ public final class ActivityLinkedListBinding implements ViewBinding {
   public final TextView LinkedListActivityTypeTitle;
 
   @NonNull
-  public final LinkedListView LinkedListActivityView;
+  public final LLNoPointerView LinkedListActivityView;
 
   @NonNull
   public final FrameLayout LinkedListActivityViewContainer;
 
   @NonNull
   public final ViewPager2 LinkedListActivityViewPager;
+
+  @NonNull
+  public final LLPointerView LinkedListActivityViewPointer;
 
   private ActivityLinkedListBinding(@NonNull ConstraintLayout rootView,
       @NonNull ConstraintLayout LinkedListActivity, @NonNull ImageView LinkedListActivityBoxReturn,
@@ -102,9 +106,10 @@ public final class ActivityLinkedListBinding implements ViewBinding {
       @NonNull ToggleButton LinkedListActivitySwitch,
       @NonNull TabLayout LinkedListActivityTabLayout, @NonNull RadioButton LinkedListActivityTail,
       @NonNull Toolbar LinkedListActivityToolbar, @NonNull TextView LinkedListActivityTypeTitle,
-      @NonNull LinkedListView LinkedListActivityView,
+      @NonNull LLNoPointerView LinkedListActivityView,
       @NonNull FrameLayout LinkedListActivityViewContainer,
-      @NonNull ViewPager2 LinkedListActivityViewPager) {
+      @NonNull ViewPager2 LinkedListActivityViewPager,
+      @NonNull LLPointerView LinkedListActivityViewPointer) {
     this.rootView = rootView;
     this.LinkedListActivity = LinkedListActivity;
     this.LinkedListActivityBoxReturn = LinkedListActivityBoxReturn;
@@ -126,6 +131,7 @@ public final class ActivityLinkedListBinding implements ViewBinding {
     this.LinkedListActivityView = LinkedListActivityView;
     this.LinkedListActivityViewContainer = LinkedListActivityViewContainer;
     this.LinkedListActivityViewPager = LinkedListActivityViewPager;
+    this.LinkedListActivityViewPointer = LinkedListActivityViewPointer;
   }
 
   @Override
@@ -254,7 +260,7 @@ public final class ActivityLinkedListBinding implements ViewBinding {
       }
 
       id = R.id.LinkedList_Activity_View;
-      LinkedListView LinkedListActivityView = rootView.findViewById(id);
+      LLNoPointerView LinkedListActivityView = rootView.findViewById(id);
       if (LinkedListActivityView == null) {
         break missingId;
       }
@@ -271,6 +277,12 @@ public final class ActivityLinkedListBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.LinkedList_Activity_View_Pointer;
+      LLPointerView LinkedListActivityViewPointer = rootView.findViewById(id);
+      if (LinkedListActivityViewPointer == null) {
+        break missingId;
+      }
+
       return new ActivityLinkedListBinding((ConstraintLayout) rootView, LinkedListActivity,
           LinkedListActivityBoxReturn, LinkedListActivityCurrentValue, LinkedListActivityGuideline,
           LinkedListActivityHead, LinkedListActivityHeadTail, LinkedListActivityInputSlider,
@@ -278,7 +290,7 @@ public final class ActivityLinkedListBinding implements ViewBinding {
           LinkedListActivityReturnText, LinkedListActivityReturnValue, LinkedListActivitySwitch,
           LinkedListActivityTabLayout, LinkedListActivityTail, LinkedListActivityToolbar,
           LinkedListActivityTypeTitle, LinkedListActivityView, LinkedListActivityViewContainer,
-          LinkedListActivityViewPager);
+          LinkedListActivityViewPager, LinkedListActivityViewPointer);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

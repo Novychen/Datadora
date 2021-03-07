@@ -27,8 +27,8 @@ import at.fhooe.mc.datadora.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity : ";
-    private static final float LINKED_LIST_SINGLE = 1;
-    private static final float LINKED_LIST_DOUBLE = 2;
+    public static final float LINKED_LIST_SINGLE = 1;
+    public static final float LINKED_LIST_DOUBLE = 2;
     public static final String LINKED_LIST_TYPE = "LINKED_LIST_TYPE";
 
     private ActivityMainBinding mBinding;
@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBinding.MainActivityTreeCard.setOnClickListener(this);
         mBinding.MainActivityAbout.setOnClickListener(this);
         mBinding.MainActivityTest.setOnClickListener(this);
-
     }
 
     @Override

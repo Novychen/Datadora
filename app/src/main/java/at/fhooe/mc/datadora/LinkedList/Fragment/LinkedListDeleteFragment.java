@@ -1,6 +1,7 @@
 package at.fhooe.mc.datadora.LinkedList.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,22 @@ import at.fhooe.mc.datadora.R;
 
 public class LinkedListDeleteFragment extends Fragment implements View.OnClickListener {
 
-    private static final String TAG = "LinkedListDeleteFragment :: ";
+    private static final String TAG = "LLDeleteFragment :: ";
 
-    LinkedListActivity mActivity;
-    Slider mSlider;
-    Button mInsert;
-    Vector<Integer> mLinkedList;
+    private LinkedListActivity mActivity;
+    private Slider mSlider;
+    private Button mInsert;
+    private Vector<Integer> mLinkedList;
+
+    private boolean mPointer;
+
+    public boolean isPointer() {
+        return mPointer;
+    }
+
+    public void setPointer(boolean _pointer) {
+        mPointer = _pointer;
+    }
 
     @Override
     public View onCreateView(LayoutInflater _inflater, ViewGroup _container, Bundle _savedInstanceState) {
@@ -103,7 +114,11 @@ public class LinkedListDeleteFragment extends Fragment implements View.OnClickLi
 
     private void clear(){
         if(!mLinkedList.isEmpty()){
-            mActivity.getBinding().LinkedListActivityView.clear();
+            if(mPointer) {
+                mActivity.getBinding().LinkedListActivityViewPointer.clear();
+            } else {
+                mActivity.getBinding().LinkedListActivityView.clear();
+            }
             mLinkedList.clear();
         } else {
             mActivity.isEmptyMessage();
@@ -112,7 +127,11 @@ public class LinkedListDeleteFragment extends Fragment implements View.OnClickLi
 
     private void deleteFirst() {
         if(!mLinkedList.isEmpty()){
-            mActivity.getBinding().LinkedListActivityView.deleteFirst();
+            if(mPointer) {
+                mActivity.getBinding().LinkedListActivityViewPointer.deleteFirst();
+            } else {
+                mActivity.getBinding().LinkedListActivityView.deleteFirst();
+            }
             mLinkedList.remove(0);
 
         } else {
@@ -122,7 +141,11 @@ public class LinkedListDeleteFragment extends Fragment implements View.OnClickLi
 
     private void deleteLast() {
         if(!mLinkedList.isEmpty()){
-            mActivity.getBinding().LinkedListActivityView.deleteLast();
+            if(mPointer) {
+                mActivity.getBinding().LinkedListActivityViewPointer.deleteLast();
+            } else {
+                mActivity.getBinding().LinkedListActivityView.deleteLast();
+            }
             mLinkedList.remove(mLinkedList.size() - 1);
 
         } else {
@@ -133,7 +156,11 @@ public class LinkedListDeleteFragment extends Fragment implements View.OnClickLi
     private void deleteAt() {
         if (!mLinkedList.isEmpty() && mLinkedList.size() > 1) {
             int pos = (int) mSlider.getValue();
-            mActivity.getBinding().LinkedListActivityView.deleteAt(pos);
+            if(mPointer) {
+                mActivity.getBinding().LinkedListActivityViewPointer.deleteAt(pos);
+            } else {
+                mActivity.getBinding().LinkedListActivityView.deleteAt(pos);
+            }
             mLinkedList.remove(pos);
         } else if (mLinkedList.size() == 1) {
             clear();

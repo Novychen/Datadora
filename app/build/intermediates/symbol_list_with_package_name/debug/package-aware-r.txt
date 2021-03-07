@@ -1728,6 +1728,7 @@ id LinkedList_Activity_Type_Title
 id LinkedList_Activity_View
 id LinkedList_Activity_ViewContainer
 id LinkedList_Activity_ViewPager
+id LinkedList_Activity_View_Pointer
 id LinkedList_Fragment_Add_At
 id LinkedList_Fragment_Add_Slider
 id LinkedList_Fragment_Append

@@ -90,7 +90,12 @@
         app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Switch"
         app:layout_constraintVertical_bias="1.0">
 
-        <at.fhooe.mc.datadora.LinkedList.LinkedListView
+        <at.fhooe.mc.datadora.LinkedList.LLPointerView
+            android:id="@+id/LinkedList_Activity_View_Pointer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <at.fhooe.mc.datadora.LinkedList.LLNoPointerView
             android:id="@+id/LinkedList_Activity_View"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

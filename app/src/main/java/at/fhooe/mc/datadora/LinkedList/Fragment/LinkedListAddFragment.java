@@ -25,10 +25,20 @@ public class LinkedListAddFragment extends Fragment implements View.OnClickListe
 
     private static final String TAG = "LLAddFragment :: ";
 
-    LinkedListActivity mActivity;
-    Slider mSlider;
-    Button mInsert;
-    Vector<Integer> mLinkedList;
+    private LinkedListActivity mActivity;
+    private Slider mSlider;
+    private Button mInsert;
+    private Vector<Integer> mLinkedList;
+
+    private boolean mPointer;
+
+    public boolean isPointer() {
+        return mPointer;
+    }
+
+    public void setPointer(boolean _pointer) {
+        mPointer = _pointer;
+    }
 
     @Override
     public View onCreateView(LayoutInflater _inflater, ViewGroup _container, Bundle _savedInstanceState) {
@@ -85,20 +95,32 @@ public class LinkedListAddFragment extends Fragment implements View.OnClickListe
     private void prepend(){
         int value = (int) mActivity.getBinding().LinkedListActivityInputSlider.getValue();
         mActivity.getLinkedList().add(0,value);
-        mActivity.getBinding().LinkedListActivityView.prepend(value);
+        if(mPointer) {
+            mActivity.getBinding().LinkedListActivityViewPointer.prepend(value);
+        } else {
+            mActivity.getBinding().LinkedListActivityView.prepend(value);
+        }
     }
 
     private void append(){
         int value = (int) mActivity.getBinding().LinkedListActivityInputSlider.getValue();
         mActivity.getLinkedList().add(value);
-        mActivity.getBinding().LinkedListActivityView.append(value);
+        if(mPointer) {
+            mActivity.getBinding().LinkedListActivityViewPointer.append(value);
+        } else {
+            mActivity.getBinding().LinkedListActivityView.append(value);
+        }
     }
 
     private void insertAt(){
         int value = (int) mActivity.getBinding().LinkedListActivityInputSlider.getValue();
         int pos = (int)  mSlider.getValue();
         mActivity.getLinkedList().add(value);
-        mActivity.getBinding().LinkedListActivityView.insertAt(value, pos);
+        if(mPointer) {
+            mActivity.getBinding().LinkedListActivityViewPointer.insertAt(value, pos);
+        } else {
+            mActivity.getBinding().LinkedListActivityView.insertAt(value, pos);
+        }
     }
 
     private void setUpSlider() {
