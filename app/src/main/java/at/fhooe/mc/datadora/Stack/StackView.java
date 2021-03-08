@@ -10,13 +10,18 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.Nullable;
+
 import java.util.Vector;
 
+import androidx.lifecycle.ViewModelProvider;
 import at.fhooe.mc.datadora.R;
+import at.fhooe.mc.datadora.RoomDatabase.StackRoom;
+import at.fhooe.mc.datadora.RoomDatabase.DatadoraViewModel;
 
 /**
  * Class StackView, implements the animation for the stack in normal mode
@@ -66,7 +71,11 @@ public class StackView extends View {
     private final Vector<RectF> mStack = new Vector<>();
 
     // Vector that contains all Integers, that are drawn / the user put in
-    private final Vector<Integer> mStackNumbers = new Vector<>();
+    public final Vector<Integer> mStackNumbers = new Vector<>();
+    //TODO MAKE A GETTER LATER
+
+    //ROOM SETUP
+    private DatadoraViewModel mDatadoraViewModel;
 
     // Vector for the animation of the operation random
     private final Vector<Integer> mStackAnimation = new Vector<>();
@@ -157,7 +166,43 @@ public class StackView extends View {
 
     protected void setActivity (StackActivity _activity) {
         mStackActivity = _activity;
+        mDatadoraViewModel = new ViewModelProvider(mStackActivity).get(DatadoraViewModel.class);
     }
+
+    public void sendInputStackValuesToDatabase(int value){
+        mDatadoraViewModel.insert(new StackRoom(value)); //new entry in the table
+
+    }
+
+    /**
+     * Loads the saved integers from the database
+     * There is an observer that observes the LiveData from
+     * the database and is notified when they change.
+     */
+    public void loadStackFromDatabase(){
+        Log.i(TAG, "StackView: loadStackFromDatabase" + mStackNumbers);
+
+        mDatadoraViewModel.getmAllStackValues().observe(mStackActivity, stackRooms -> {
+            //after every push or pop operation the observer is called and the for loop
+            // adds everything newly to the mstack
+            if(mStackNumbers.isEmpty() && mCurrentOperation != Operation.RANDOM) {
+                for (StackRoom r : stackRooms) {
+                    //Log.i(TAG, "StackView: loadStackFromDatabase value loaded into mStack: " + r.getVal());
+
+                    mStack.add(new RectF());
+                    mStackNumbers.add(r.getVal());
+                    Log.i(TAG, "STACK RANDOM DATA: " + mStackAnimation);
+                    //Log.i(TAG, "StackView: loadStackFromDatabase mStack size was: " + mStack.size());
+                }
+                Log.i(TAG, "StackView: loadStackFromDatabase mStack was: " + mStackNumbers);
+                Log.i(TAG, "StackView: loadStackFromDatabase mStack size was: " + mStackNumbers.size());
+            }
+            reScale();
+            invalidate();
+        });
+    }
+
+
 
     /**
      * marks the latest element of the stack
@@ -169,6 +214,7 @@ public class StackView extends View {
         invalidate();
     }
 
+
     /**
      * clears the stack
      */
@@ -178,6 +224,7 @@ public class StackView extends View {
         mAnimatorPop.setRepeatCount(mStackNumbers.size()-1);
         mAnimatorPop.start();
         reScaleUndo();
+        mDatadoraViewModel.deleteAllStackDatabaseEntries();
     }
 
     /**
@@ -186,11 +233,34 @@ public class StackView extends View {
     protected void random(Vector<Integer> _stack) {
         mCurrentOperation = Operation.RANDOM;
         mStackNumbers.clear();
-        mStack.clear();
+        mStack.clear(); //TODO vorher clearen, stacknumbers auch?
         mStackAnimation.clear();
-        mPositionAnimation = 0;
+        mPositionAnimation = 0; //TODO was 0
+      //  Log.i(TAG, "StackView random mStackNumbers BEFORE was: " + mStackNumbers);
         mStackAnimation.addAll(_stack);
-        mAnimatorRandom.setRepeatCount(_stack.size() - 1);
+      //  mStackNumbers.clear(); //_stack will be empty when mStackNumbers gets cleared
+      //  mStack.clear();
+        mDatadoraViewModel.deleteAllStackDatabaseEntries(); //clear the db before adding randoms
+
+        //Log.i(TAG, "StackView random _stack was: " + _stack); //empty
+       // Log.i(TAG, "StackView random mStackAnimation was: " + mStackAnimation);
+       // Log.i(TAG, "StackView random mStackAnimation SIZE was: " + mStackAnimation.size());
+
+        //TODO check if works - nope
+        //List l = Arrays.asList(mStackAnimation.toArray());
+        //mDatadoraViewModel.insertAll(l);
+
+
+         //TODO Datenbank zum schluss befuellen - besser oder nicht?
+        // TODO es wird nach onAnimaitonStart immer die loadStackFromDatabase gecalled smh
+        for (int i = 0; i < mStackAnimation.size(); i++){
+            //mStack.add(new RectF());
+            sendInputStackValuesToDatabase(mStackAnimation.elementAt(i));
+           // Log.i(TAG, "StackView random ADDED TO DATABASE: " + mStackAnimation.elementAt(i));
+
+        }
+
+        mAnimatorRandom.setRepeatCount(mStackAnimation.size() - 1);
         mAnimatorRandom.start();
     }
 
@@ -215,6 +285,7 @@ public class StackView extends View {
         mStack.add(r);
         mStackNumbers.add(_value);
         mAnimatorPush.start();
+        sendInputStackValuesToDatabase(_value);
         reScale();
     }
 
@@ -248,16 +319,12 @@ public class StackView extends View {
 
         setUpAnimation();
 
-        //Visualize the vector in the Shared Preferences
-        Vector<Integer> v = mStackActivity.loadFromSave();
-        if(v != null) {
-            for (int i = 0; i < v.size(); i++) {
-                mStackNumbers.add(v.get(i));
-                mStack.add(new RectF());
-            }
-            mCurrentOperation = Operation.SAVE;
-            reScale();
-        }
+        Log.i(TAG, "------onSizeChanged was called, mStack and mStackNumbers was cleared and vals loadedFromDatabase again-------");
+        mStack.clear();
+        mStackNumbers.clear();
+        loadStackFromDatabase();
+        mCurrentOperation = Operation.SAVE;
+        reScale();
     }
 
     private void setUpAnimation() {
@@ -302,6 +369,9 @@ public class StackView extends View {
                 if(mCurrentOperation == Operation.CLEAR ) {
                     mStackNumbers.remove(mStackNumbers.size() - 1);
                     mStack.remove( mStack.size() - 1);
+                    //Log.i(TAG, "StackView mAnimatorPop onAnimationEnd mStack after: " + mStack);
+                    //Log.i(TAG, "StackView mAnimatorPop onAnimationEnd mStackNumbers after: " + mStackNumbers);
+                    //Log.i(TAG, "StackView mAnimatorPop onAnimationEnd mStackNumbers size after: " + mStackNumbers.size());
                 }
             }
 
@@ -320,12 +390,9 @@ public class StackView extends View {
         mAnimatorPeekArea = ValueAnimator.ofObject(new ArgbEvaluator(), mSurfaceColor, mPrimaryColor);
         mAnimatorPeekArea.setDuration(1000);
         mAnimatorPeekArea.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorPeekArea.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mColorAreaPeek = (int) animation.getAnimatedValue();
-                invalidate();
-            }
+        mAnimatorPeekArea.addUpdateListener(animation -> {
+            mColorAreaPeek = (int) animation.getAnimatedValue();
+            invalidate();
         });
 
         mAnimatorPeekText = ValueAnimator.ofObject(new ArgbEvaluator(), mOnSurfaceColor, mOnPrimaryColor);
@@ -346,26 +413,52 @@ public class StackView extends View {
         mAnimatorRandom.setValues(propertyTranslateYRandom, propertyAlphaRandom);
         mAnimatorRandom.setDuration(350);
         mAnimatorRandom.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimatorRandom.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateYRandom = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_RANDOM);
-                mAlphaRandom = (int) animation.getAnimatedValue(PROPERTY_ALPHA_RANDOM);
-                invalidate();
-            }
+
+        mAnimatorRandom.addUpdateListener(animation -> {
+            mTranslateYRandom = (int) animation.getAnimatedValue(PROPERTY_TRANSLATE_Y_RANDOM);
+            mAlphaRandom = (int) animation.getAnimatedValue(PROPERTY_ALPHA_RANDOM);
+            invalidate();
         });
 
         mAnimatorRandom.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-                mStackNumbers.add(mStackAnimation.get(mPositionAnimation));
-                mStack.add(new RectF());
-                mPositionAnimation++;
+
+                //TODO: selbes problem hier bei mRandom wie beim clearen - die ANIMATION FUNKTIONIERT NICHT MEHR
+
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mStack: " + mStack);
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mStack SIZE: " + mStack.size());
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mStackNumbers: " + mStackNumbers);
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mStackNumbers size: " + mStackNumbers.size());
+//
+//                //Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mPositionAnimation: " + mStackNumbers.add(mStackAnimation.get(mPositionAnimation)));
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mPositionAnimation: " + mPositionAnimation);
+//
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mStackAnimation: " + mStackAnimation);
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mStackAnimation size: " + mStackAnimation.size());
+
+                //mStackNumbers.clear(); //TODO mal schauen ob das funkt
+                //if (mStackNumbers.size() == 0){
+                    //mStackNumbers.add(mStackAnimation.get(mPositionAnimation)); //TODO wieso wird der erste wert doppelt eingefügt?
+                //}
+                Log.i(TAG, "STACK RANDOM START: " + mStackAnimation);
+                Log.i(TAG, "STACK RANDOM START: " + mStackNumbers);
+
+                //mStack.add(new RectF()); //TODO warum wird hier wieder +1 retangle gemacht?
+              //  mPositionAnimation++;
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mStack SIZE: " + mStack.size());
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mStackNumbers: " + mStackNumbers);
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mStackNumbers size: " + mStackNumbers.size());
+//                Log.i(TAG, "StackView mAnimatorRandom onAnimationStart mPositionAnimation: " + mPositionAnimation);
             }
 
             @Override
             public void onAnimationEnd(Animator animator) {
-
+                mStackNumbers.add(mStackAnimation.get(mPositionAnimation));
+                mStack.add(new RectF());
+                Log.i(TAG, "STACK RANDOM END: " + mStackNumbers);
+                mCurrentOperation = Operation.SAVE;
+                mStackActivity.setPressedRandom(false);
             }
 
             @Override
@@ -375,8 +468,23 @@ public class StackView extends View {
 
             @Override
             public void onAnimationRepeat(Animator animator) {
+
+             //   Log.i(TAG, "StackView mAnimatorRandom onAnimationRepeat mStack: " + mStack);
+             //  Log.i(TAG, "StackView mAnimatorRandom onAnimationRepeat mStack SIZE: " + mStack.size());
+             //   Log.i(TAG, "StackView mAnimatorRandom onAnimationRepeat mStackNumbers: " + mStackNumbers);
+
+                //  Log.i(TAG, "StackView mAnimatorRandom onAnimationRepeat mPositionAnimation: " + mPositionAnimation);
+
                 mStackNumbers.add(mStackAnimation.get(mPositionAnimation));
                 mStack.add(new RectF());
+
+                Log.i(TAG, "STACK RANDOM REP: " + mStackAnimation);
+                Log.i(TAG, "STACK RANDOM REP: " + mStackNumbers);
+                Log.i(TAG, "STACK RANDOM REP" + mPositionAnimation);
+
+                Log.i(TAG, "StackView mAnimatorRandom onAnimationRepeat mPositionAnimation: " + mPositionAnimation);
+                    //mStack.add(new RectF());
+                //}
                 mPositionAnimation++;
             }
         });
@@ -386,6 +494,12 @@ public class StackView extends View {
     @Override
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
+
+        //Log.i(TAG, "onDraw mStack was: " + mStack);
+        //Log.i(TAG, "onDraw mStack size was: " + mStack.size());
+        //Log.i(TAG, "onDraw mStackNumbers was: " + mStackNumbers);
+        //Log.i(TAG, "onDraw mStackNumbers size was: " + mStackNumbers.size());
+
         for (int i = 0; i < mStackNumbers.size(); i++) {
 
             mStack.get(i).top = (int) (mMaxHeight - ((mMaxWidth / 4) + (mMaxWidth / 4 * i)) * mScale);
@@ -398,7 +512,7 @@ public class StackView extends View {
         }
         if (mCurrentOperation == Operation.POP && !mAnimatorPop.isRunning()) {
             mStackActivity.setPressedPop(false);
-
+            mDatadoraViewModel.deleteByIDStack((mStackNumbers.get(mStackNumbers.size() - 1))); //remove from database
             mStackNumbers.remove(mStackNumbers.size() - 1);
             mStack.remove( mStack.size() - 1);
 
@@ -408,6 +522,7 @@ public class StackView extends View {
                     mScale = 1;
                 }
             }
+            mCurrentOperation = Operation.SAVE;
         } else if(mCurrentOperation == Operation.RANDOM && !mAnimatorRandom.isRunning()) {
             mStackActivity.setPressedRandom(false);
         }
