@@ -53,13 +53,6 @@ public class DatadoraViewModel extends AndroidViewModel {
         mRepository.insert(queueVal);
     }
 
-    public void insertAllStack(List<StackRoom> stackValues) {
-        mRepository.insertAllStack(stackValues);
-    }
-
-    public void insertAllQueue(List<QueueRoom> queueValues) {
-        mRepository.insertAllQueue(queueValues);
-    }
 
     public void delete(StackRoom stackVal){
         mRepository.delete(stackVal);
@@ -72,7 +65,7 @@ public class DatadoraViewModel extends AndroidViewModel {
         mRepository.deleteByIDStack(stackVal);
     }
     public void deleteByIDQueue(int queueVal){
-        mRepository.deleteByIDStack(queueVal);
+        mRepository.deleteByIDQueue(queueVal);
     }
 
     public void deleteAllStackDatabaseEntries(){

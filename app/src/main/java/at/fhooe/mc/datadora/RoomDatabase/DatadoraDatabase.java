@@ -65,23 +65,25 @@ public abstract class DatadoraDatabase extends RoomDatabase {
 
     /**
      * Pre-populate the database right when created so the user is already provided with pre-filled
-     * example of ADTs when the app is being used for the first time.
+     * example of ADTs when the app is being used for the very first time.
      * Also instantiate each DAO and do not forget to add the callback above in the constructor.
      */
     private static final RoomDatabase.Callback roomCB = new RoomDatabase.Callback(){
 
         public void onOpen(@NonNull SupportSQLiteDatabase db){
             super.onOpen(db);
+        }
 
-            // If you want to keep data through app restarts,
-            // comment out the following block
+        /**
+         * Called when the database is created for the first time (after installing the app)
+         * This is called after all the tables are created.
+         * @param db the database
+         */
+        public void onCreate(SupportSQLiteDatabase db){
+            super.onCreate(db);
+
             databaseWriteExecutor.execute(() -> {
-
-
-
                 StackDAO stackDAO = mInstance.stackDAO();
-
-                /*
                 stackDAO.deleteAllStackDBEntries(); //clear it the first time
                 StackRoom newVal = new StackRoom(2);
                 stackDAO.insert(newVal);
@@ -92,13 +94,19 @@ public abstract class DatadoraDatabase extends RoomDatabase {
                 newVal = new StackRoom(4);
                 stackDAO.insert(newVal);
 
-                 */
-
                 QueueDAO queueDAO = mInstance.queueDAO();
-                //TODO prepoulate queue db e.g. 1337 later
-
+                queueDAO.deleteAllQueueDBEntries();
+                QueueRoom qVal = new QueueRoom(1);
+                queueDAO.insert(qVal);
+                qVal = new QueueRoom(3);
+                queueDAO.insert(qVal);
+                qVal = new QueueRoom(3);
+                queueDAO.insert(qVal);
+                qVal = new QueueRoom(7);
+                queueDAO.insert(qVal);
 
             });
+
 
         }
 

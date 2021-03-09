@@ -25,20 +25,10 @@ public interface BaseDAO<T> {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(T val);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertAll(List<T> values);
-
     @Update
     void update(T val);
 
     @Delete
     void delete(T val);
-
-    /**
-     * Deletes a specific value from the table
-     * @param val an integer to be deleted
-     */
-    @Query("DELETE FROM stack_table WHERE val = :val")
-    void deleteByID(int val);
 
 }

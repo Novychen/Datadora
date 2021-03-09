@@ -26,10 +26,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "StackActivity : ";
     private ActivityStackBinding mBinding;
 
-
-  //TODO: mStack komplett weg und nur mit dem int Vecotr mStackNumbers vom StackView klasse arbeiten!
-    //dann is nimma alles doppelt
-  //  public Vector<Integer> mStack = new Vector<>();
     private boolean mPressedRandom;
     private boolean mPressedPop;
     private Animation mAnimation;
@@ -66,7 +62,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
 
         View layout = mBinding.StackActivity;
         mAnimation = new Animation(layout, getIntent(), this);
-
 
         // set up the slider
         Slider slider = mBinding.StackActivityInputSlider;
@@ -185,12 +180,12 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
      * @return true if the input is valid, false if its not
      */
     private boolean isInputValid() {
-        if (mBinding.StackActivityStackView.mStackNumbers.size() > 14) {
+        if (mBinding.StackActivityStackView.getStackNumbers().size() > 14) {
             Toast.makeText(this, R.string.Overflow, Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "isInputValid: Stack size >= 15: " + mBinding.StackActivityStackView.mStackNumbers.size());
+            Log.i(TAG, "isInputValid: Stack size >= 15: " + mBinding.StackActivityStackView.getStackNumbers().size());
             showFull();
             return false;
-        } else if (mBinding.StackActivityStackView.mStackNumbers.size() == 14) {
+        } else if (mBinding.StackActivityStackView.getStackNumbers().size() == 14) {
             //Log.i(TAG, "isInputValid: Stack size equals 14: " + mStack.size());
             showFull();
         }
@@ -212,17 +207,15 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
      * This method handles the operation pop
      */
     private void pop(){
-        if (!mBinding.StackActivityStackView.mStackNumbers.isEmpty()) {
+        if (!mBinding.StackActivityStackView.getStackNumbers().isEmpty()) {
             mPressedPop = true;
             //delete the last element of the stack (mStack), then let it be (visually) removed by the StackView
-            mBinding.StackActivityReturnValue.setText(String.format("%s", mBinding.StackActivityStackView.mStackNumbers.
-                    get(mBinding.StackActivityStackView.mStackNumbers.size() - 1).toString()));
+            mBinding.StackActivityReturnValue.setText(String.format("%s", mBinding.StackActivityStackView.getStackNumbers().
+                    get(mBinding.StackActivityStackView.getStackNumbers().size() - 1).toString()));
 
             mBinding.StackActivityStackView.pop();
-
-
             makeInVisible();
-            if (mBinding.StackActivityStackView.mStackNumbers.isEmpty()) {
+            if (mBinding.StackActivityStackView.getStackNumbers().isEmpty()) {
                 showEmpty();
             }
         } else {
@@ -236,7 +229,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
      * This method handles the operation peek
      */
     private void peek(){
-        if (!mBinding.StackActivityStackView.mStackNumbers.isEmpty()) {
+        if (!mBinding.StackActivityStackView.getStackNumbers().isEmpty()) {
             mBinding.StackActivityStackView.peek();
             new Handler().postDelayed(new Runnable() {
                 public void run() {
@@ -256,7 +249,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
      */
     private void size(){
         mBinding.StackActivityReturnValue.setText("");
-        if (!mBinding.StackActivityStackView.mStackNumbers.isEmpty()) {
+        if (!mBinding.StackActivityStackView.getStackNumbers().isEmpty()) {
             showSize();
         } else {
             mBinding.StackActivityReturnValue.setText("0");
@@ -268,7 +261,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
      * This method handles the operation isEmpty
      */
     private void isEmpty(){
-        if (!mBinding.StackActivityStackView.mStackNumbers.isEmpty()) {
+        if (!mBinding.StackActivityStackView.getStackNumbers().isEmpty()) {
             mBinding.StackActivityReturnValue.setText(R.string.All_Data_Activity_False);
         } else {
             mBinding.StackActivityReturnValue.setText(R.string.All_Data_Activity_True);
@@ -280,7 +273,7 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
      */
     private void clear(){
         mBinding.StackActivityReturnValue.setText("");
-        if (!mBinding.StackActivityStackView.mStackNumbers.isEmpty()) {
+        if (!mBinding.StackActivityStackView.getStackNumbers().isEmpty()) {
             mBinding.StackActivityStackView.clear();
         } else {
             Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
@@ -294,12 +287,8 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     private void random(){
         mPressedRandom = true;
         mBinding.StackActivityReturnValue.setText("");
-
         makeInVisible();
-
-        Log.i(TAG, "StackActivity random mStackNumbers were: " + mBinding.StackActivityStackView.mStackNumbers);
         mBinding.StackActivityStackView.random(createRandomStack());
-        //TODO random not working properly with the animations
     }
 
     /**
@@ -307,7 +296,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
      */
     private Vector<Integer> createRandomStack(){
 
-        Log.i(TAG, "createRandomStack");
         Vector<Integer> v = new Vector<>();
         Random r = new Random();
         int size = 4 + r.nextInt(6);

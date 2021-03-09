@@ -21,17 +21,14 @@ public abstract class StackDAO implements BaseDAO<StackRoom> {
     @Insert
     abstract public void insert(StackRoom val);
 
-    @Insert
-    abstract public void insertAll(List<StackRoom> values);
-
     @Update
     abstract public void update(StackRoom val);
 
     @Delete
     abstract public void delete(StackRoom val);
 
-
-    @Query("DELETE FROM stack_table WHERE val = :val")
+    //when lots of duplicate values are inserted the highest ID only deletes the very top value
+    @Query("DELETE FROM stack_table WHERE val = :val AND id = (SELECT max(id) FROM stack_table)")
     abstract public void deleteByID(int val);
 
     @Query("DELETE FROM stack_table")

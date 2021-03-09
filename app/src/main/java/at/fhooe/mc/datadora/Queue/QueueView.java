@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -19,7 +20,12 @@ import androidx.annotation.Nullable;
 
 import java.util.Vector;
 
+import androidx.lifecycle.ViewModelProvider;
 import at.fhooe.mc.datadora.R;
+import at.fhooe.mc.datadora.RoomDatabase.DatadoraViewModel;
+import at.fhooe.mc.datadora.RoomDatabase.QueueRoom;
+import at.fhooe.mc.datadora.RoomDatabase.StackRoom;
+import at.fhooe.mc.datadora.Stack.StackView;
 
 /**
  * Class QueueView, implements the animation for the Queue in normal mode
@@ -51,9 +57,6 @@ public class QueueView extends View {
     // int that counts how often the operator enqueued was used (by operator random)
     private int mPositionAnimation;
 
-    // Vector that gets the random generated Queue
-    private final Vector<Integer> mRandomQueue = new Vector<>();
-
     // Animator for the last enqueued element
     private final ValueAnimator mAnimatorEnqueue = new ValueAnimator();
 
@@ -74,6 +77,14 @@ public class QueueView extends View {
 
     // Vector that contains all Integers, that are drawn / the user put in
     private final Vector<Integer> mQueueNumbers = new Vector<>();
+
+    //Getter for the mQueueNumbers
+    protected Vector<Integer> getQueueNumbers(){
+        return mQueueNumbers;
+    }
+
+    //Room database setup
+    private DatadoraViewModel mDatadoraViewModel;
 
     // Vector for the animation of the operation random
     private final Vector<Integer> mQueueAnimation = new Vector<>();
@@ -146,9 +157,7 @@ public class QueueView extends View {
         init();
     }
 
-    protected Vector<Integer> getQueueNumbers(){
-        return mQueueNumbers;
-    }
+
 
     /**
      * Initializes the key components such as Paint
@@ -164,6 +173,38 @@ public class QueueView extends View {
 
     protected void setActivity(QueueActivity _activity) {
         mQueueActivity = _activity;
+        mDatadoraViewModel = new ViewModelProvider(mQueueActivity).get(DatadoraViewModel.class);
+    }
+
+    /**
+     * New entry in the queue table
+     * @param value the value to be added into the database
+     */
+    private void sendInputQueueValuesToDatabase(int value){
+        mDatadoraViewModel.insert(new QueueRoom(value));
+    }
+
+
+    /**
+     * Loads the saved integers from the database
+     * There is an observer that observes the LiveData from
+     * the database and is notified when they change.
+     */
+    private void loadQueueFromDatabase(){
+
+        mDatadoraViewModel.getmAllQueueValues().observe(mQueueActivity, queueRooms -> {
+
+            if(mQueueNumbers.isEmpty() && mCurrentOperation != QueueView.Operation.RANDOM) {
+                for (QueueRoom r : queueRooms) {
+                    mQueue.add(new RectF());
+                    mQueueNumbers.add(r.getVal());
+                }
+                Log.i(TAG, "QueueView: loadStackFromDatabase mQueueNumbers" + mQueueNumbers);
+                Log.i(TAG, "QueueView: loadStackFromDatabase mQueueNumbers size was: " + mQueueNumbers.size());
+            }
+            reScale();
+            invalidate();
+        });
     }
 
     /**
@@ -186,6 +227,7 @@ public class QueueView extends View {
         mAnimatorDequeue.setDuration(200);
         mAnimatorDequeue.setRepeatCount(mQueueNumbers.size() -1);
         mAnimatorDequeue.start();
+        mDatadoraViewModel.deleteAllQueueDatabaseEntries();
     }
 
     /**
@@ -198,9 +240,17 @@ public class QueueView extends View {
         mQueueAnimation.clear();
         mPositionAnimation = 0;
         mQueueAnimation.addAll(_queue);
+
+        mDatadoraViewModel.deleteAllQueueDatabaseEntries();
+        reScaleUndo();
+
+        for (int i = 0; i < _queue.size(); i++){
+            sendInputQueueValuesToDatabase(_queue.elementAt(i));
+        }
+
         mAnimatorRandom.setRepeatCount(_queue.size() - 1);
         mAnimatorRandom.start();
-        reScaleUndo();
+
     }
 
     /**
@@ -266,6 +316,7 @@ public class QueueView extends View {
         mQueue.add(r);
         mQueueNumbers.add(_value);
         mAnimatorEnqueue.start();
+        sendInputQueueValuesToDatabase(_value);
         reScaleUndo();
         reScale();
     }
@@ -296,19 +347,15 @@ public class QueueView extends View {
         // size of parent of this view
         mMaxHeightQueue = (float) _h - ypad - 6;
         mMaxWidthQueue = (float) _w - xpad - 6;
-        reScale();
+
         setUpAnimation();
 
-        //Visualize the vector in the Shared Preferences
-        Vector<Integer> v = mQueueActivity.loadFromSave();
-        if(v != null) {
-            for (int i = 0; i < v.size(); i++) {
-                mQueueNumbers.add(v.get(i));
-                mQueue.add(new RectF());
-            }
-            mCurrentOperation = Operation.SAVE;
-            reScale();
-        }
+        Log.i(TAG, "------onSizeChanged was called, mQueue and mQueueNumbers was cleared and vals loadedFromDatabase again-------");
+        mQueue.clear();
+        mQueueNumbers.clear();
+        loadQueueFromDatabase();
+        mCurrentOperation = Operation.SAVE;
+        reScale();
     }
 
     private void setUpAnimation(){
@@ -409,8 +456,10 @@ public class QueueView extends View {
 
         if(mCurrentOperation == Operation.DEQUEUE && !mAnimatorDequeue.isRunning()){
             mQueueActivity.setPressedDequeue(false);
+            mDatadoraViewModel.deleteByIDQueue(mQueueNumbers.get(0)); //remove from database
             mQueueNumbers.remove(0);
             mQueue.remove(0);
+            mCurrentOperation = Operation.SAVE;
 
         } else if (mCurrentOperation == Operation.RANDOM && !mAnimatorRandom.isRunning()){
             mQueueActivity.setPressedRandom(false);

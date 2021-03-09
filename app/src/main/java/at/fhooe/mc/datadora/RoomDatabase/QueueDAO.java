@@ -25,16 +25,13 @@ public abstract class QueueDAO implements BaseDAO<QueueRoom> {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract public void insert(QueueRoom val);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract public void insertAll(List<QueueRoom> values);
-
     @Update
     abstract public void update(QueueRoom val);
 
     @Delete
     abstract public void delete(QueueRoom val);
 
-    @Query("DELETE FROM queue_table WHERE val = :val")
+    @Query("DELETE FROM queue_table WHERE val = :val AND id = (SELECT min(id) FROM queue_table)")
     abstract public void deleteByID(int val);
 
     @Query("DELETE FROM queue_table")

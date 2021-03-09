@@ -76,24 +76,6 @@ public class DatadoraRepository {
         });
     }
 
-    //TODO check if insertAll is even needed in the end
-    void insertAllStack(List<StackRoom> stackValues){
-        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
-            for (StackRoom sr : stackValues){
-                mStackDao.insert(sr);
-            }
-        });
-    }
-
-
-    void insertAllQueue(List<QueueRoom> queueValues){
-        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
-            for (QueueRoom qr : queueValues){
-                mQueueDao.insert(qr);
-            }
-        });
-    }
-
     void delete(StackRoom stackVal){
         DatadoraDatabase.databaseWriteExecutor.execute(() -> {
             mStackDao.delete(stackVal);
@@ -117,8 +99,6 @@ public class DatadoraRepository {
             mQueueDao.deleteByID(queueVal);
         });
     }
-
-
 
     void deleteAllStack(){
         DatadoraDatabase.databaseWriteExecutor.execute(mStackDao::deleteAllStackDBEntries);

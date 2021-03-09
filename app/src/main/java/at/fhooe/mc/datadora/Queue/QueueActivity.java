@@ -30,7 +30,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "QueueActivity : ";
     private ActivityQueueBinding mBinding;
 
-    private final Vector<Integer> mQueue = new Vector<>();
     private boolean mPressedRandom;
     private boolean mPressedDequeue;
     private Animation mAnimation;
@@ -52,11 +51,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         mPressedDequeue = _pressedDequeue;
     }
 
-    //Shared Preferences setup
-    private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.QueueSharedPreferenceFile.Queue";
-    private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.QueueKey2020";
-    private SharedPreferences mSharedPreferences;
-
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
@@ -72,8 +66,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
 
         View layout = mBinding.QueueActivity;
         mAnimation = new Animation(layout, getIntent(), this);
-
-        mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
         // set up the slider
         Slider slider = mBinding.QueueActivityInputSlider;
@@ -126,17 +118,11 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        Vector<Integer> v = loadFromSave();
-        if(v != null) {
-            mQueue.clear();
-            mQueue.addAll(v);
-        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        save();
     }
 
     @Override
@@ -163,64 +149,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
             }
         } else {
             Toast.makeText(this, R.string.All_Data_Activity_Text_Animation, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Saves the current vector (input from the user) into the SharedPreferences.
-     */
-    private void save() {
-
-        // init the SP object
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-
-        // Convert the vector containing the integers to a string
-        Vector<Integer> vector = mBinding.QueueActivityQueueView.getQueueNumbers();
-        StringBuilder vectorStr = new StringBuilder();
-
-        // transform the vector into a string
-        for (int i = 0; i < vector.size(); i++) {
-            if (i != vector.size() - 1) {
-                vectorStr.append(vector.get(i)).append(",");
-            } else {
-                vectorStr.append(vector.get(i));
-            }
-        }
-
-        editor.putString(SP_VALUE_KEY, String.valueOf(vectorStr));
-        editor.apply();
-    }
-
-    /**
-     * Gets the saved vector (user input) from the SharedPreferences.
-     * @return the saved vector or null if there is none
-     */
-    protected Vector<Integer> loadFromSave() {
-
-        // get the saved string (vector)
-        String defaultValue = "empty";
-        String vectorStr = mSharedPreferences.getString(SP_VALUE_KEY, defaultValue);
-        Vector<Integer> vector = new Vector<>();
-
-        // check if it was successful -> transform to vector, or if not -> return null
-        int begin;
-        int end = 0;
-        int i;
-        if(vectorStr == null || vectorStr.contains(defaultValue) || vectorStr.equals("")) {
-            return null;
-        } else {
-            while(end > -1) {
-                begin = end;
-                end = vectorStr.indexOf(',', begin);
-                if(end == -1) {
-                    i = Integer.parseInt(vectorStr.substring(begin));
-                } else {
-                    i = Integer.parseInt(vectorStr.substring(begin, end));
-                    end++;
-                }
-                vector.add(i);
-            }
-            return vector;
         }
     }
 
@@ -268,11 +196,11 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      * @return true if the input is valid, false if its not
      */
     private boolean isInputValid() {
-        if (mQueue.size() > 14) {
+        if (mBinding.QueueActivityQueueView.getQueueNumbers().size() > 14) {
             Toast.makeText(this, R.string.Overflow, Toast.LENGTH_SHORT).show();
             showFull();
             return false;
-        } else if (mQueue.size() == 14) {
+        } else if (mBinding.QueueActivityQueueView.getQueueNumbers().size() == 14) {
             showFull();
         }
         return true;
@@ -285,7 +213,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     private void enqueue(){
         if (isInputValid()) {
             // parse the input to an int and store it into the Queue (mQueue), then let it be drawn by the QueueView
-            mQueue.add((int) mBinding.QueueActivityInputSlider.getValue());
             mBinding.QueueActivityReturnValue.setText("");
             mBinding.QueueActivityQueueView.enqueue((int) mBinding.QueueActivityInputSlider.getValue());
             makeInVisible();
@@ -297,14 +224,15 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      * This method handles the operation dequeue
      */
     private void dequeue() {
-        if (!mQueue.isEmpty()) {
+        if (!mBinding.QueueActivityQueueView.getQueueNumbers().isEmpty()) {
             mPressedDequeue = true;
             //delete the last element of the Queue (mQueue), then let it be (visually) removed by the QueueView
-            mBinding.QueueActivityReturnValue.setText(String.format("%s", mQueue.get(0)));
-            mQueue.removeElementAt(0);
+            mBinding.QueueActivityReturnValue.setText(String.format("%s",
+                    mBinding.QueueActivityQueueView.getQueueNumbers().get(0)));
+
             mBinding.QueueActivityQueueView.dequeue();
             makeInVisible();
-            if (mQueue.isEmpty()) {
+            if (mBinding.QueueActivityQueueView.getQueueNumbers().isEmpty()) {
                 showEmpty();
             }
         } else {
@@ -318,7 +246,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      * This method handles the operation peek
      */
     private void peek(){
-        if (!mQueue.isEmpty()) {
+        if (!mBinding.QueueActivityQueueView.getQueueNumbers().isEmpty()) {
             mBinding.QueueActivityQueueView.peek();
             new Handler().postDelayed(new Runnable() {
                 public void run() {
@@ -337,7 +265,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      */
     private void size(){
         mBinding.QueueActivityReturnValue.setText("");
-        if (!mQueue.isEmpty()) {
+        if (!mBinding.QueueActivityQueueView.getQueueNumbers().isEmpty()) {
             showSize();
         } else {
             mBinding.QueueActivityReturnValue.setText("0");
@@ -349,7 +277,7 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      * This method handles the operation isEmpty
      */
     private void isEmpty(){
-        if (!mQueue.isEmpty()) {
+        if (!mBinding.QueueActivityQueueView.getQueueNumbers().isEmpty()) {
             mBinding.QueueActivityReturnValue.setText(R.string.All_Data_Activity_False);
         } else {
             mBinding.QueueActivityReturnValue.setText(R.string.All_Data_Activity_True);
@@ -361,9 +289,8 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
      */
     private void clear(){
         mBinding.QueueActivityReturnValue.setText("");
-        if (!mQueue.isEmpty()) {
+        if (!mBinding.QueueActivityQueueView.getQueueNumbers().isEmpty()) {
             mBinding.QueueActivityQueueView.clear();
-            mQueue.clear();
         } else {
             Toast.makeText(this, R.string.Underflow, Toast.LENGTH_SHORT).show();
             showEmpty();
@@ -376,23 +303,23 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     private void random(){
         mPressedRandom = true;
         mBinding.QueueActivityReturnValue.setText("");
-        createRandomQueue();
         makeInVisible();
-        mBinding.QueueActivityQueueView.random(mQueue);
+        mBinding.QueueActivityQueueView.random(createRandomQueue());
     }
 
     /**
      * Creates a random queue with its size being min 4 and max 7
      */
-    private void createRandomQueue(){
-        mQueue.clear();
+    private Vector<Integer> createRandomQueue(){
+        Vector<Integer> v = new Vector<>();
         Random r = new Random();
         int size = 4 + r.nextInt(6);
 
         for(int i = 0; i < size; i++){
             int x = -5 + r.nextInt(100);
-            mQueue.add(x);
+            v.add(x);
         }
+        return v;
     }
 
     @Override
@@ -406,4 +333,5 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         onBackPressed();
         return true;
     }
+
 }
