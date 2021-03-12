@@ -10,9 +10,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -23,7 +21,7 @@ import androidx.annotation.Nullable;
 import java.util.Vector;
 
 import at.fhooe.mc.datadora.LinkedList.Animation.LLValue;
-import at.fhooe.mc.datadora.MainActivity;
+import at.fhooe.mc.datadora.Operation;
 import at.fhooe.mc.datadora.R;
 
 public class LinkedListView extends View implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
@@ -52,8 +50,6 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
     private int mPosition = 0;
 
     enum Filter {SORTED, UNSORTED}
-
-    enum Type {HEAD, TAIL, HEAD_TAIL}
 
     protected LinkedListActivity mActivity;
 
@@ -89,9 +85,6 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
 
     // the current operation
     private int mCurrentOperation;
-
-    // the current type
-    protected Type mCurrentType;
 
     // the current filter (sorted or unsorted)
     protected Filter mCurrentFilter;
@@ -150,7 +143,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         Paint itemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Paint positionTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        mValues = LLValue.getInstance(itemPaint, itemTextPaint, new Vector<RectF>(), new Vector<Integer>(), new Vector<Integer>(), 1, mMaxHeight, mMaxWidth, mPosition, mCurrentOperation);
+        mValues = LLValue.getInstance(itemPaint, itemTextPaint, new Vector<RectF>(), new Vector<Integer>(), new Vector<Integer>(), 1, mMaxHeight, mMaxWidth, mPosition, mCurrentOperation, Type.HEAD);
         mValues.getItemPaint().setColor(mPrimaryColor);
         mValues.getItemPaint().setStyle(Paint.Style.STROKE);
         mValues.getItemPaint().setStrokeCap(Paint.Cap.ROUND);
@@ -182,26 +175,19 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
     }
 
     protected void head() {
-        mCurrentType = Type.HEAD;
-        invalidate();
+        mValues.setCurrentType(Type.HEAD);
     }
 
     protected void tail() {
-        mCurrentType = Type.TAIL;
-        invalidate();
+        mValues.setCurrentType(Type.TAIL);
     }
 
     protected void both() {
-        mCurrentType = Type.HEAD_TAIL;
-        invalidate();
+        mValues.setCurrentType(Type.HEAD_TAIL);
     }
 
     public void append(int _value) {
         mCurrentOperation = Operation.APPEND;
-        RectF r = new RectF();
-        mValues.getLinkedListRec().add(r);
-        mValues.getLinkedListNum().add(_value);
-        reScale();
         mValues.setCurrentOperation(mCurrentOperation);
     }
 
@@ -370,11 +356,11 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
     public void onAnimationRepeat(Animator _animation) {
         if (_animation == mAnimatorGetText) {
             if (mCurrentOperation == Operation.PREDECESSOR) {
-                mPosition--;
+                mValues.setPosition(mValues.getPosition() - 1);
             } else if (mCurrentOperation == Operation.SUCCESSOR) {
-                mPosition++;
+                mValues.setPosition(mValues.getPosition() + 1);
             } else {
-                mPosition++;
+                mValues.setPosition(mValues.getPosition() + 1);
             }
 
             mColorTextGet = 0;
@@ -420,10 +406,10 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
 
     protected void drawType(Canvas _canvas, int _pos) {
         String type;
-        if (_pos == 0 && (mCurrentType == Type.HEAD || mCurrentType == Type.HEAD_TAIL)) {
+        if (_pos == 0 && (mValues.getCurrentType() == Type.HEAD || mValues.getCurrentType() == Type.HEAD_TAIL)) {
             type = getResources().getString(R.string.LinkedList_Activity_Type_Head);
             drawTypeIcon(_canvas, _pos, type);
-        } else if (_pos == mValues.getLinkedListRec().size() - 1 && (mCurrentType == Type.TAIL || mCurrentType == Type.HEAD_TAIL)) {
+        } else if (_pos == mValues.getLinkedListRec().size() - 1 && (mValues.getCurrentType() == Type.TAIL || mValues.getCurrentType() == Type.HEAD_TAIL)) {
             type = getResources().getString(R.string.LinkedList_Activity_Type_Tail);
             drawTypeIcon(_canvas, _pos, type);
         }

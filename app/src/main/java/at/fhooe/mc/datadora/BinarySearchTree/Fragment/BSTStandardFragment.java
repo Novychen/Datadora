@@ -26,7 +26,15 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
     private Vector<BinaryTreeNode> mTreeUser;
 
     private boolean mRandom = false;
+    private boolean mPointer;
 
+    public boolean isPointer() {
+        return mPointer;
+    }
+
+    public void setPointer(boolean _pointer) {
+        mPointer = _pointer;
+    }
     @Override
     public View onCreateView(LayoutInflater _inflater, ViewGroup _container, Bundle _savedInstanceState) {
         View view = _inflater.inflate(R.layout.fragment_bst_standard, _container, false);
@@ -83,7 +91,13 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
             BinaryTreeNode n = mTree.insertNode(_value);
             mTree.updateChildCount(mTree.getRoot());
             mTreeUser.add(n);
-            mActivity.getBinding().BSTActivityView.add();
+
+            if(mPointer) {
+                mActivity.getBinding().BSTActivityPointerView.add();
+            } else {
+                mActivity.getBinding().BSTActivityView.add();
+            }
+
             mRandom = false;
         } else if (!mRandom) {
             Toast.makeText(getContext(), R.string.BST_Activity_Add_Toast, Toast.LENGTH_SHORT).show();
@@ -94,7 +108,7 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
      * removes a Node form the tree defined by the key value
      */
     public void remove() {
-        if(!mActivity.getBinding().BSTActivityView.remove()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.remove() || mPointer && !mActivity.getBinding().BSTActivityPointerView.remove() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
@@ -114,7 +128,12 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
     private void randomTree() {
         clear();
         int size = createRandomNumber(5, 10);
-        mActivity.getBinding().BSTActivityView.setTranslate(0,0);
+        if(mPointer) {
+            mActivity.getBinding().BSTActivityPointerView.setTranslate(0, 0);
+        } else {
+            mActivity.getBinding().BSTActivityView.setTranslate(0, 0);
+        }
+
         for (int i = 0; i <= size; i++) {
             random();
         }
@@ -126,8 +145,14 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
     private void clear() {
         mTree.clear();
         mTreeUser.clear();
-        mActivity.getBinding().BSTActivityView.clear();
-        mActivity.getBinding().BSTActivityView.setTranslate(0,0);
+        if(mPointer) {
+            mActivity.getBinding().BSTActivityPointerView.clear();
+            mActivity.getBinding().BSTActivityPointerView.setTranslate(0,0);
+        } else {
+            mActivity.getBinding().BSTActivityView.clear();
+            mActivity.getBinding().BSTActivityView.setTranslate(0,0);
+        }
+
     }
 
     private int createRandomNumber(int _min, int _max) {

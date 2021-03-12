@@ -20,6 +20,15 @@ public class BSTStructureFragment extends Fragment implements View.OnClickListen
 
     private static final String TAG = "BSTStructureFragment ::";
     private BinarySearchTreeActivity mActivity;
+    private boolean mPointer;
+
+    public boolean isPointer() {
+        return mPointer;
+    }
+
+    public void setPointer(boolean _pointer) {
+        mPointer = _pointer;
+    }
 
     @Override
     public View onCreateView(LayoutInflater _inflater, ViewGroup _container, Bundle _savedInstanceState) {
@@ -77,25 +86,27 @@ public class BSTStructureFragment extends Fragment implements View.OnClickListen
         } else {
             size = "0";
         }
-
         mActivity.getBinding().BSTActivityReturnValue.setText(size);
-
     }
 
     private void height() {
-        if(!mActivity.getBinding().BSTActivityView.height()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.height() || mPointer && !mActivity.getBinding().BSTActivityPointerView.height() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void depth() {
-        if(!mActivity.getBinding().BSTActivityView.depth()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.depth() || mPointer && !mActivity.getBinding().BSTActivityPointerView.depth() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void inorder() {
-        mActivity.getBinding().BSTActivityView.inOrder();
+        if(mPointer) {
+            mActivity.getBinding().BSTActivityPointerView.inOrder();
+        } else {
+            mActivity.getBinding().BSTActivityView.inOrder();
+        }
     }
 
     private void preorder() {

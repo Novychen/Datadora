@@ -1,7 +1,6 @@
 package at.fhooe.mc.datadora.BinarySearchTree;
 
 import android.animation.Animator;
-import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,10 +8,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.Nullable;
 
@@ -24,102 +20,33 @@ import at.fhooe.mc.datadora.BinarySearchTree.Animation.InOrder;
 import at.fhooe.mc.datadora.Operation;
 import at.fhooe.mc.datadora.R;
 
-public class BSTView extends View implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
+public class BSTNoPointerView extends BSTView {
 
-    private static final String TAG = "BSTView : ";
+    private static final String TAG = "BSTNoPointerView : ";
 
-    // the current primary color of the currently used theme
-    protected final int mPrimaryColor = getResources().getColor(R.color.primaryColor, this.getContext().getTheme());
+    private Add mAdd;
+    private InOrder mInOrder;
 
-    // the current surface color of the currently used theme
-    protected final int mSurfaceColor = getResources().getColor(R.color.colorSurface, this.getContext().getTheme());
-
-    // the current colorOnPrimary color of the currently used theme - for text
-    protected final int mOnPrimaryColor = getResources().getColor(R.color.colorOnPrimary, this.getContext().getTheme());
-
-    // the current colorOnSurface color of the currently used theme - for text
-    protected final int mOnSurfaceColor = getResources().getColor(R.color.colorOnSurface, this.getContext().getTheme());
-
-    protected BinarySearchTreeActivity mActivity;
-    protected int mCount = 0;
-
-    protected final PointF mBegin = new PointF();
-    protected final PointF mEnd = new PointF();
-
-    protected BinarySearchTree mTree;
-    protected float mLength = 25;
-
-    protected float mX;
-    protected float mY;
-
-    // Rect in order to save the TextBounds from the current number
-    protected final Rect mBounds = new Rect();
-    protected boolean mMove = false;
-    protected boolean mDown = false;
-
-    protected BSTValue mValues;
-
-    public BSTView(Context context) {
+    public BSTNoPointerView(Context context) {
         super(context);
         init();
     }
 
-    public BSTView(Context context, @Nullable AttributeSet attrs) {
+    public BSTNoPointerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public BSTView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public BSTNoPointerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    public void setSwitch(boolean _pointer){
-        if(_pointer) {
-            mActivity.getBinding().BSTActivityView.setVisibility(GONE);
-            mActivity.getBinding().BSTActivityPointerView.setVisibility(VISIBLE);
-        } else {
-            mActivity.getBinding().BSTActivityView.setVisibility(VISIBLE);
-            mActivity.getBinding().BSTActivityPointerView.setVisibility(GONE);
-        }
-    }
-
-    protected void init() {
-        mActivity = ((BinarySearchTreeActivity) getContext());
-
-        Paint mItemPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-        mItemPaint.setColor(mPrimaryColor);
-        mItemPaint.setStyle(Paint.Style.STROKE);
-        mItemPaint.setStrokeCap(Paint.Cap.ROUND);
-        mItemPaint.setStrokeWidth(6);
-
-        mItemTextPaint.setColor(mOnSurfaceColor);
-        mItemTextPaint.setTextSize(50);
-
-        mValues = BSTValue.getInstance(mItemPaint, mItemTextPaint, -1, Operation.NONE);
-    }
-
-    public void move(boolean _selected) {
-        mMove = _selected;
-    }
-
-    public void setTranslate(float _x, float _y) {
-        mX = _x;
-        mY = _y;
-    }
-
-    public float getTranslateX() {
-        return mX;
-    }
-
-    public float getTranslateY() {
-        return mY;
-    }
-
     public void add() {
         mValues.setCurrentOperation(Operation.ADD);
+        mCount = 0;
+        mAdd.getAddPath(mActivity.getTree(), mActivity.getTreeUser().get(mActivity.getTreeUser().size() - 1).getData());
+        mAdd.start();
     }
 
     public boolean remove() {
@@ -313,6 +240,11 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
 
     public void inOrder() {
         mValues.setCurrentOperation(Operation.INORDER);
+        mCount = 0;
+        mInOrder = new InOrder(mSurfaceColor, mPrimaryColor, mActivity.getTree().toInOrder(true));
+        mInOrder.addUpdateListener((Animator.AnimatorListener) this);
+        mInOrder.addUpdateListener((ValueAnimator.AnimatorUpdateListener) this);
+        mInOrder.start();
     }
 
     @Override
@@ -335,130 +267,6 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
         drawTree(_canvas);
-    }
-
-    protected void drawTree(Canvas _canvas) {
-
-        mTree = mActivity.getTree();
-        Vector<BinaryTreeNode> tv = mTree.toArrayPreOrder();
-
-        if (mTree.getRoot() != null) {
-            float x;
-            float y;
-
-            if (mX != 0 && mY != 0) {
-                x = mTree.getRoot().getPoint().x;
-                y = mTree.getRoot().getPoint().y;
-            } else {
-                x = mValues.getMaxWidth() / 2;
-                y = mValues.getTopSpace();
-            }
-
-            if (mMove) {
-                x = x + (mX);
-                y = y + (mY);
-            }
-            mTree.getRoot().setPoint(x, y);
-        }
-
-        if (tv != null) {
-            for (int i = 0; i < mActivity.getTreeUser().size(); i++) {
-
-                BinaryTreeNode n = tv.get(i);
-                BinaryTreeNode nPre = mTree.getParentNode(n.getData());
-
-                if (n != mTree.getRoot()) {
-                    setPointOfNode(n, nPre);
-                    prepareAndDrawLine(n, nPre, _canvas);
-                }
-
-                String s = String.valueOf(n.getData());
-                mValues.getItemTextPaint().getTextBounds(s, 0, s.length(), mBounds);
-
-                if (n.isSelected()) {
-                    mValues.getItemPaint().setColor(mPrimaryColor);
-                    mValues.getItemPaint().setStyle(Paint.Style.FILL_AND_STROKE);
-                    mValues.getItemTextPaint().setColor(mOnPrimaryColor);
-                } else {
-                    mValues.getItemPaint().setColor(mPrimaryColor);
-                    mValues.getItemPaint().setStrokeWidth(6);
-                    mValues.getItemPaint().setStyle(Paint.Style.STROKE);
-
-                    mValues.getItemTextPaint().setColor(mOnSurfaceColor);
-                }
-
-                _canvas.drawCircle(n.getPoint().x, n.getPoint().y, mValues.getRadius(), mValues.getItemPaint());
-                _canvas.drawText(s, n.getPoint().x - 3 - mBounds.width() / 2f, n.getPoint().y + mBounds.height() / 2f, mValues.getItemTextPaint());
-            }
-        }
-    }
-
-    protected void setPointOfNode(BinaryTreeNode _n, BinaryTreeNode _nPre) {
-        float direction = getDirection(_n, _nPre);
-
-        float xPre = _nPre.getPoint().x;
-        float yPre = _nPre.getPoint().y;
-
-        int minDistanceX = 80;
-
-        float x = (_n.getChildCount() * minDistanceX * direction) + xPre;
-        float y;
-        if (mY == 0) {
-            y = (minDistanceX * mTree.getDepth(_n.getData())) + mValues.getTopSpace() + mY;
-        } else {
-            y = yPre + minDistanceX;
-        }
-        _n.setPoint(x, y);
-    }
-
-    protected void prepareAndDrawLine(BinaryTreeNode _n, BinaryTreeNode _nPre, Canvas _canvas) {
-
-        float x = calculateDiffX(_n, _nPre);
-        float y = calculateDiffY(_n, _nPre);
-
-        float direction = getDirection(_n, _nPre);
-
-        double lengthX = Math.cos(Math.atan(y / x));
-        double lengthY = Math.cos(Math.atan(x / y));
-
-        float xPre = (float) (_nPre.getPoint().x + (lengthX * direction) * mValues.getRadius());
-        float yPre = (float) (_nPre.getPoint().y + lengthY * mValues.getRadius());
-
-        x = (float) (_n.getPoint().x - (lengthX * direction) * mValues.getRadius());
-        y = (float) (_n.getPoint().y - lengthY * mValues.getRadius());
-
-        _canvas.drawLine(xPre, yPre, x, y, mValues.getItemPaint());
-    }
-
-    protected float calculateDiffX(BinaryTreeNode _n, BinaryTreeNode _nPre) {
-        return _n.getPoint().x - _nPre.getPoint().x;
-    }
-
-    protected float calculateDiffY(BinaryTreeNode _n, BinaryTreeNode _nPre) {
-        return _n.getPoint().y - _nPre.getPoint().y;
-    }
-
-    protected float getDirection(BinaryTreeNode _n, BinaryTreeNode _nPre) {
-        if (_nPre != null && _n.getData() < _nPre.getData()) {
-            return -1;
-        } else {
-            return 1;
-        }
-    }
-
-    protected void selectNode(float _x, float _y) {
-        int i = 0;
-        float space = mValues.getRadius() / 1.5f;
-        for (BinaryTreeNode n : mActivity.getTreeUser()) {
-            if (_x < n.getPoint().x + space && _x > n.getPoint().x - space && _y < n.getPoint().y + space && _y > n.getPoint().y - space) {
-                n.setSelected(true);
-                mValues.setPosition(i);
-                invalidate();
-            } else {
-                n.setSelected(false);
-            }
-            i++;
-        }
     }
 
     @Override
@@ -505,12 +313,19 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
 
     @Override
     public void onAnimationStart(Animator _animation) {
-
+        mInOrder.animStart(_animation, mActivity.getBinding().BSTActivityVectorOutput, mCount);
+        mAdd.animStart(_animation, mCount);
+        invalidate();
     }
 
     @Override
     public void onAnimationEnd(Animator _animation) {
-
+        if (mValues.getCurrentOperation() == Operation.ADD) {
+            mCount = mAdd.animEnd(_animation, mCount);
+        } else if(mValues.getCurrentOperation() == Operation.INORDER) {
+            mCount = mInOrder.animEnd(_animation, mCount);
+        }
+        invalidate();
     }
 
     @Override
@@ -520,11 +335,21 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
 
     @Override
     public void onAnimationRepeat(Animator _animation) {
-
+        if (mValues.getCurrentOperation() == Operation.ADD) {
+            mCount = mAdd.animRepeat(_animation, mCount);
+        } else if(mValues.getCurrentOperation() == Operation.INORDER) {
+            mCount = mInOrder.animRepeat(_animation, mActivity.getBinding().BSTActivityVectorOutput, mCount);
+        }
+        invalidate();
     }
 
     @Override
     public void onAnimationUpdate(ValueAnimator _animation) {
-
+        if (mValues.getCurrentOperation() == Operation.ADD) {
+            mAdd.update(_animation);
+        } else if(mValues.getCurrentOperation() == Operation.INORDER) {
+            mInOrder.update(_animation);
+        }
+        invalidate();
     }
 }

@@ -17,6 +17,15 @@ public class BSTCheckFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "BSTCheckFragment :: ";
 
     BinarySearchTreeActivity mActivity;
+    private boolean mPointer;
+
+    public boolean isPointer() {
+        return mPointer;
+    }
+
+    public void setPointer(boolean _pointer) {
+        mPointer = _pointer;
+    }
 
     @Override
     public View onCreateView(LayoutInflater _inflater, ViewGroup _container, Bundle _savedInstanceState) {
@@ -73,25 +82,25 @@ public class BSTCheckFragment extends Fragment implements View.OnClickListener{
     }
 
     private void hasParent() {
-        if(!mActivity.getBinding().BSTActivityView.hasParent()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.hasParent() || mPointer && !mActivity.getBinding().BSTActivityPointerView.hasParent() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
          }
     }
 
     private void hasRightChild() {
-        if(!mActivity.getBinding().BSTActivityView.hasRightChild()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.hasRightChild() || mPointer && !mActivity.getBinding().BSTActivityPointerView.hasRightChild() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void hasLeftChild() {
-        if(!mActivity.getBinding().BSTActivityView.hasLeftChild()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.hasLeftChild() || mPointer && !mActivity.getBinding().BSTActivityPointerView.hasLeftChild() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void isRoot() {
-        if(!mActivity.getBinding().BSTActivityView.isRoot()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.isRoot() || mPointer && !mActivity.getBinding().BSTActivityPointerView.isRoot() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
@@ -100,7 +109,7 @@ public class BSTCheckFragment extends Fragment implements View.OnClickListener{
      * returns a boolean if the node given by the key is an external node
      */
     public void isExternal() {
-        if(!mActivity.getBinding().BSTActivityView.isExternal()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.isExternal() || mPointer && !mActivity.getBinding().BSTActivityPointerView.isExternal() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
@@ -109,7 +118,7 @@ public class BSTCheckFragment extends Fragment implements View.OnClickListener{
      * returns a boolean if the node given by the key is an internal node
      */
     public void isInternal() {
-        if(!mActivity.getBinding().BSTActivityView.isInternal()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.isInternal() || mPointer && !mActivity.getBinding().BSTActivityPointerView.isInternal() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }

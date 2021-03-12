@@ -40,12 +40,21 @@ import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
 public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "BSTActivity :: ";
+
     private final BinarySearchTree mTree = new BinarySearchTree();
     private final Vector<BinaryTreeNode> mTreeUser = new Vector<>();
     private ActivityBinarySearchTreeBinding mBinding;
+
     private boolean mSelected = false;
     private final String mDefaultValue = "empty";
     private Animation mAnimation;
+
+    BSTStandardFragment mStandard = new BSTStandardFragment();
+    BSTStructureFragment mStructure = new BSTStructureFragment();
+    BSTCheckFragment mCheck = new BSTCheckFragment();
+    BSTGetFragment mGet = new BSTGetFragment();
+
+    private boolean mHasPointer;
 
     private SharedPreferences mSharedPreferences;
     private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.BSTSharedPreferenceFile.BST";
@@ -73,7 +82,12 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         View layout = mBinding.BSTActivity;
         mAnimation = new Animation(layout, getIntent(), this);
 
-        mBinding.BSTActivityView.setActivity(this);
+        if(mHasPointer) {
+          //  mBinding.BSTActivityPointerView.setActivity(this);
+        } else {
+          //  mBinding.BSTActivityView.setActivity(this);
+        }
+       // mBinding.BSTActivityView.setActivity(this);
 
         setUpToolbar();
         setUpTabLayout();
@@ -91,8 +105,13 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         mBinding.BSTActivityCenter.setOnClickListener(this);
         mBinding.BSTActivitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mBinding.BSTActivityView.setSwitch(isChecked);
+            public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
+                mStandard.setPointer(_isChecked);
+                mStructure.setPointer(_isChecked);
+                mCheck.setPointer(_isChecked);
+                mGet.setPointer(_isChecked);
+                mBinding.BSTActivityView.setSwitch(_isChecked);
+                mHasPointer = _isChecked;
             }
         });
 
@@ -159,12 +178,11 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         tabLayout.setTabGravity(TabLayout.GRAVITY_START);
 
         BinarySearchTreeTabAdapter adapter = new BinarySearchTreeTabAdapter(this);
-        BSTStandardFragment fragmentStandard = new BSTStandardFragment();
 
-        adapter.addFragment(fragmentStandard);
-        adapter.addFragment(new BSTStructureFragment());
-        adapter.addFragment(new BSTCheckFragment());
-        adapter.addFragment(new BSTGetFragment());
+        adapter.addFragment(mStandard);
+        adapter.addFragment(mStructure);
+        adapter.addFragment(mCheck);
+        adapter.addFragment(mGet);
 
         ViewPager2 viewPager = findViewById(R.id.BST_Activity_ViewPager);
         viewPager.setAdapter(adapter);

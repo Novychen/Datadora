@@ -5,7 +5,7 @@ import android.animation.ValueAnimator;
 public interface LinkedListAnimation
 {
     void start();
-    void animate(int _pos);
-    void addUpdate(ValueAnimator.AnimatorUpdateListener _listener);
+    void animateNoPointer(int _pos);
+    void addUpdateValueAnimator(ValueAnimator.AnimatorUpdateListener _listener);
     void update(ValueAnimator _animation);
 }

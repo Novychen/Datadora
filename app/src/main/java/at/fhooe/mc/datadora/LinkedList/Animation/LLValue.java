@@ -22,6 +22,8 @@ public class LLValue {
     private float mMaxWidth;
     private int mPosition;
     private int mCurrentOperation;
+    private int mCurrentType;
+    private boolean mSingleList;
 
     public static LLValue mInstance;
 
@@ -29,14 +31,14 @@ public class LLValue {
 
     }
 
-    public static LLValue getInstance(Paint _item, Paint _text, Vector<RectF> _recs, Vector<Integer> _num, Vector<Integer> _rand, float _scale, float _height, float _width, int _pos, int _operation) {
+    public static LLValue getInstance(Paint _item, Paint _text, Vector<RectF> _recs, Vector<Integer> _num, Vector<Integer> _rand, float _scale, float _height, float _width, int _pos, int _operation, int _type) {
         if(mInstance == null) {
-            mInstance = new LLValue(_item, _text, _recs, _num, _rand, _scale, _height, _width, _pos,_operation);
+            mInstance = new LLValue(_item, _text, _recs, _num, _rand, _scale, _height, _width, _pos,_operation, _type);
         }
         return mInstance;
     }
 
-    private LLValue(Paint _item, Paint _text, Vector<RectF> _recs, Vector<Integer> _num, Vector<Integer> _rand, float _scale, float _height, float _width, int _pos, int _operation) {
+    private LLValue(Paint _item, Paint _text, Vector<RectF> _recs, Vector<Integer> _num, Vector<Integer> _rand, float _scale, float _height, float _width, int _pos, int _operation, int _type) {
             mItemPaint = _item;
             mItemTextPaint = _text;
             mLinkedListRec = _recs;
@@ -48,6 +50,7 @@ public class LLValue {
             mMaxWidth = _width;
             mPosition = _pos;
             mCurrentOperation = _operation;
+            mCurrentType = _type;
     }
 
     public Vector<RectF> getLinkedListRec() {
@@ -129,4 +132,16 @@ public class LLValue {
     public void setCurrentOperation(int _operation) {
         mCurrentOperation = _operation;
     }
+
+    public int getCurrentType() {
+        return mCurrentType;
+    }
+
+    public void setCurrentType(int _type) {
+        mCurrentType = _type;
+    }
+
+    public boolean isSingleList() { return mSingleList; }
+
+    public void setSingleList(boolean _singleList) { mSingleList = _singleList; }
 }

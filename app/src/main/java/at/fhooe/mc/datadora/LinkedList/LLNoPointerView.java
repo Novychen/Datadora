@@ -5,9 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -18,9 +16,9 @@ import at.fhooe.mc.datadora.LinkedList.Animation.DeleteAt;
 import at.fhooe.mc.datadora.LinkedList.Animation.DeleteFirst;
 import at.fhooe.mc.datadora.LinkedList.Animation.DeleteLast;
 import at.fhooe.mc.datadora.LinkedList.Animation.InsertAt;
-import at.fhooe.mc.datadora.LinkedList.Animation.LLValue;
 import at.fhooe.mc.datadora.LinkedList.Animation.Prepend;
 import at.fhooe.mc.datadora.LinkedList.Animation.Random;
+import at.fhooe.mc.datadora.Operation;
 
 public class LLNoPointerView extends LinkedListView {
 
@@ -75,25 +73,26 @@ public class LLNoPointerView extends LinkedListView {
 
     private void setUp() {
         mAppend = new Append(mValues);
-        mAppend.addUpdate(this);
+        mAppend.addUpdateValueAnimator((ValueAnimator.AnimatorUpdateListener) this);
+        mAppend.setPointer(false);
 
         mPrepend = new Prepend(mValues);
-        mPrepend.addUpdate(this);
+        mPrepend.addUpdateValueAnimator(this);
 
         mInsertAt = new InsertAt(mValues);
-        mInsertAt.addUpdate(this);
+        mInsertAt.addUpdateValueAnimator(this);
 
         mDeleteFirst = new DeleteFirst(mValues);
-        mDeleteFirst.addUpdate(this);
+        mDeleteFirst.addUpdateValueAnimator(this);
 
         mDeleteLast = new DeleteLast(mValues);
-        mDeleteLast.addUpdate(this);
+        mDeleteLast.addUpdateValueAnimator(this);
 
         mDeleteAt = new DeleteAt(mValues);
-        mDeleteAt.addUpdate(this);
+        mDeleteAt.addUpdateValueAnimator(this);
 
         mRandom = new Random(mValues);
-        mRandom.addUpdate((ValueAnimator.AnimatorUpdateListener) this);
+        mRandom.addUpdateValueAnimator((ValueAnimator.AnimatorUpdateListener) this);
         mRandom.addUpdate((Animator.AnimatorListener) this);
     }
 
@@ -122,28 +121,28 @@ public class LLNoPointerView extends LinkedListView {
     protected void animateOperation(Canvas _canvas, int _pos) {
         switch (mValues.getCurrentOperation()) {
             case Operation.APPEND: {
-                mAppend.animate(_pos);
+                mAppend.animateNoPointer(_pos);
             }
             break;
             case Operation.PREPEND: {
-                mPrepend.animate(_pos);
+                mPrepend.animateNoPointer(_pos);
             }
             break;
             case Operation.INSERT_AT: {
-                mInsertAt.animate(_pos);
+                mInsertAt.animateNoPointer(_pos);
             }
             break;
             case Operation.DELETE_FIRST: {
-                mDeleteFirst.animate(_pos);
+                mDeleteFirst.animateNoPointer(_pos);
             }
             break;
             case Operation.DELETE_AT: {
-                mDeleteAt.animate(_pos);
+                mDeleteAt.animateNoPointer(_pos);
             }
             break;
             case Operation.CLEAR:
             case Operation.DELETE_LAST: {
-                mDeleteLast.animate(_pos);
+                mDeleteLast.animateNoPointer(_pos);
             }
             break;
             case Operation.SUCCESSOR:
@@ -173,7 +172,7 @@ public class LLNoPointerView extends LinkedListView {
             }
             break;
             case Operation.RANDOM: {
-                mRandom.animate(_pos);
+                mRandom.animateNoPointer(_pos);
             }
             break;
         }
@@ -204,6 +203,10 @@ public class LLNoPointerView extends LinkedListView {
 
     public void append(int _value) {
         super.append(_value);
+        RectF r = new RectF();
+        mValues.getLinkedListRec().add(r);
+        mValues.getLinkedListNum().add(_value);
+        reScale();
         mAppend.start();
     }
 

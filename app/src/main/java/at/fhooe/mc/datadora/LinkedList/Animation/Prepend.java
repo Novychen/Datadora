@@ -43,7 +43,7 @@ public class Prepend implements LinkedListAnimation {
         mAnimatorPrepend.start();
     }
 
-    public void animate(int _pos){
+    public void animateNoPointer(int _pos){
         if (_pos == 0) {
             mValues.getItemTextPaint().setAlpha(mAlphaPrepend);
             mValues.getItemPaint().setAlpha(mAlphaPrepend);
@@ -53,7 +53,7 @@ public class Prepend implements LinkedListAnimation {
     }
 
     @Override
-    public void addUpdate(ValueAnimator.AnimatorUpdateListener _listener) {
+    public void addUpdateValueAnimator(ValueAnimator.AnimatorUpdateListener _listener) {
         mAnimatorPrepend.addUpdateListener(_listener);
     }
 

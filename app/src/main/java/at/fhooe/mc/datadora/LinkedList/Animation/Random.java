@@ -48,7 +48,7 @@ public class Random implements LinkedListAnimation {
     }
 
     @Override
-    public void animate(int _pos) {
+    public void animateNoPointer(int _pos) {
         if (_pos == mValues.getLinkedListRec().size() - 1) {
             mValues.getLinkedListRec().get(_pos).top = (int) (mValues.getMaxHeight() - ((mValues.getMaxWidth() / 4) + (mValues.getMaxWidth() / 4 * _pos)) * mValues.getScale()) + mTranslateYRandom;
             mValues.getItemTextPaint().setAlpha(mAlphaRandom);
@@ -57,7 +57,7 @@ public class Random implements LinkedListAnimation {
     }
 
     @Override
-    public void addUpdate(ValueAnimator.AnimatorUpdateListener _listener) {
+    public void addUpdateValueAnimator(ValueAnimator.AnimatorUpdateListener _listener) {
         mAnimatorRandom.addUpdateListener(_listener);
     }
 

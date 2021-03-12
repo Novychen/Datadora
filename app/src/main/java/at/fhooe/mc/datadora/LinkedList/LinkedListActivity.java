@@ -8,7 +8,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
@@ -23,7 +22,6 @@ import java.util.Random;
 import java.util.Vector;
 
 import at.fhooe.mc.datadora.Animation;
-import at.fhooe.mc.datadora.LinkedList.Animation.LLValue;
 import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListAddFragment;
 import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListDeleteFragment;
 import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListGetFragment;
@@ -49,6 +47,8 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     LinkedListAddFragment mAdd = new LinkedListAddFragment();
     LinkedListDeleteFragment mDelete = new LinkedListDeleteFragment();
     LinkedListGetFragment mGet = new LinkedListGetFragment();
+
+    private boolean mHasPointer;
 
     public Vector<Integer> getLinkedList() { return mLinkedList; }
 
@@ -86,6 +86,7 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
                 mAdd.setPointer(_isChecked);
                 mDelete.setPointer(_isChecked);
                 mGet.setPointer(_isChecked);
+                mHasPointer = _isChecked;
                 mBinding.LinkedListActivityView.setSwitch(_isChecked);
             }
         });
@@ -98,7 +99,9 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
 
         if(type == MainActivity.LINKED_LIST_SINGLE) {
             getSupportActionBar().setTitle(R.string.All_Data_Activity_Single_LinkedList);
+            mBinding.LinkedListActivityViewPointer.setSingleList(true);
         } else {
+            mBinding.LinkedListActivityViewPointer.setSingleList(false);
             getSupportActionBar().setTitle(R.string.All_Data_Activity_Double_LinkedList);
         }
 
@@ -288,15 +291,27 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     private void unsorted() { }
 
     private void head(){
-        mBinding.LinkedListActivityView.head();
+        if (mHasPointer) {
+            mBinding.LinkedListActivityViewPointer.head();
+        } else {
+            mBinding.LinkedListActivityView.head();
+        }
     }
 
     private void tail(){
-        mBinding.LinkedListActivityView.tail();
+        if (mHasPointer) {
+            mBinding.LinkedListActivityViewPointer.tail();
+        } else {
+            mBinding.LinkedListActivityView.tail();
+        }
     }
 
     private void both(){
-        mBinding.LinkedListActivityView.both();
+        if (mHasPointer) {
+            mBinding.LinkedListActivityViewPointer.both();
+        } else {
+            mBinding.LinkedListActivityView.both();
+        }
     }
 
     public void isEmptyMessage(){

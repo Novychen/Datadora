@@ -21,6 +21,16 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "BSTGetFragment :: ";
     private BinarySearchTreeActivity mActivity;
 
+    private boolean mPointer;
+
+    public boolean isPointer() {
+        return mPointer;
+    }
+
+    public void setPointer(boolean _pointer) {
+        mPointer = _pointer;
+    }
+
     @Override
     public View onCreateView(LayoutInflater _inflater, ViewGroup _container, Bundle _savedInstanceState) {
         View view = _inflater.inflate(R.layout.fragment_bst_get, _container, false);
@@ -87,13 +97,13 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getRightChild() {
-        if(!mActivity.getBinding().BSTActivityView.getRightChild()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.getRightChild() || mPointer && !mActivity.getBinding().BSTActivityPointerView.getRightChild() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void getLeftChild() {
-        if(!mActivity.getBinding().BSTActivityView.getLeftChild()) {
+        if(!mPointer && !mActivity.getBinding().BSTActivityView.getLeftChild() || mPointer && !mActivity.getBinding().BSTActivityPointerView.getLeftChild() ) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
@@ -104,18 +114,24 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
      * returns a String with all external nodes of the tree
      */
     public void getExternalNodes() {
-
         mActivity.getTree().getExternalNodes();
-        mActivity.getBinding().BSTActivityView.getExternal();
+        if(mPointer) {
+            mActivity.getBinding().BSTActivityView.getExternal();
+        } else {
+            mActivity.getBinding().BSTActivityPointerView.getExternal();
+        }
     }
 
     /**
      * returns a String with all internal nodes of the tree
      */
     public void getInternalNodes() {
-
         mActivity.getTree().getInternalNodes();
-        mActivity.getBinding().BSTActivityView.getInternal();
+        if(mPointer) {
+            mActivity.getBinding().BSTActivityView.getInternal();
+        } else {
+            mActivity.getBinding().BSTActivityPointerView.getInternal();
+        }
     }
 
     /**
@@ -124,7 +140,11 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
     private void max() {
         int max = mActivity.getTree().max();
         mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", max));
-        mActivity.getBinding().BSTActivityView.max(max);
+        if(mPointer) {
+            mActivity.getBinding().BSTActivityView.max(max);
+        } else {
+            mActivity.getBinding().BSTActivityPointerView.max(max);
+        }
     }
 
     /**
@@ -133,7 +153,10 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
     private void min() {
         int min = mActivity.getTree().min();
         mActivity.getBinding().BSTActivityReturnValue.setText(String.format("%s", min));
-        mActivity.getBinding().BSTActivityView.min(min);
-    }
+        if(mPointer) {
+            mActivity.getBinding().BSTActivityView.min(min);
+        } else {
+            mActivity.getBinding().BSTActivityPointerView.min(min);
+        }          }
 
 }

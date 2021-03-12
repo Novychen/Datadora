@@ -6,7 +6,7 @@ import android.animation.ValueAnimator;
 import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import at.fhooe.mc.datadora.LinkedList.Operation;
+import at.fhooe.mc.datadora.Operation;
 
 public class DeleteLast implements Animator.AnimatorListener, LinkedListAnimation{
 
@@ -51,7 +51,7 @@ public class DeleteLast implements Animator.AnimatorListener, LinkedListAnimatio
     }
 
     @Override
-    public void animate(int _pos) {
+    public void animateNoPointer(int _pos) {
         if (_pos ==  mValues.getLinkedListNum().size() - 1) {
             mValues.getLinkedListRec().get(_pos).top = (int) (mValues.getMaxHeight() - ((mValues.getMaxWidth() / 4) + (mValues.getMaxWidth() / 4 * _pos)) * mValues.getScale()) + mTranslateYDeleteLast;
             mValues.getItemTextPaint().setAlpha(mAlphaDeleteLast);
@@ -60,7 +60,7 @@ public class DeleteLast implements Animator.AnimatorListener, LinkedListAnimatio
     }
 
     @Override
-    public void addUpdate(ValueAnimator.AnimatorUpdateListener _listener) {
+    public void addUpdateValueAnimator(ValueAnimator.AnimatorUpdateListener _listener) {
         mAnimatorDeleteLast.addUpdateListener(_listener);
     }
 

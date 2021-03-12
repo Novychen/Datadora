@@ -92,6 +92,9 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   public final ImageView BSTActivityPan;
 
   @NonNull
+  public final BSTView BSTActivityPointerView;
+
+  @NonNull
   public final TextView BSTActivityReturnText;
 
   @NonNull
@@ -173,12 +176,12 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       @NonNull TextView BSTActivityFlowText, @NonNull Guideline BSTActivityGuidelineHor,
       @NonNull Guideline BSTActivityGuidelineVer, @Nullable Slider BSTActivityInputSlider,
       @NonNull TextView BSTActivityInputValue, @NonNull ImageView BSTActivityPan,
-      @NonNull TextView BSTActivityReturnText, @NonNull TextView BSTActivityReturnValue,
-      @Nullable VerticalSeekBar BSTActivitySeekBar, @NonNull ToggleButton BSTActivitySwitch,
-      @NonNull TabLayout BSTActivityTabLayout, @NonNull Toolbar BSTActivityToolbar,
-      @NonNull TextView BSTActivityVectorOutput, @NonNull BSTView BSTActivityView,
-      @NonNull ViewPager2 BSTActivityViewPager, @Nullable Guideline guideline3,
-      @Nullable Guideline guideline4) {
+      @NonNull BSTView BSTActivityPointerView, @NonNull TextView BSTActivityReturnText,
+      @NonNull TextView BSTActivityReturnValue, @Nullable VerticalSeekBar BSTActivitySeekBar,
+      @NonNull ToggleButton BSTActivitySwitch, @NonNull TabLayout BSTActivityTabLayout,
+      @NonNull Toolbar BSTActivityToolbar, @NonNull TextView BSTActivityVectorOutput,
+      @NonNull BSTView BSTActivityView, @NonNull ViewPager2 BSTActivityViewPager,
+      @Nullable Guideline guideline3, @Nullable Guideline guideline4) {
     this.rootView = rootView;
     this.BSTActivity = BSTActivity;
     this.BSTActivityBoxReturn = BSTActivityBoxReturn;
@@ -192,6 +195,7 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
     this.BSTActivityInputSlider = BSTActivityInputSlider;
     this.BSTActivityInputValue = BSTActivityInputValue;
     this.BSTActivityPan = BSTActivityPan;
+    this.BSTActivityPointerView = BSTActivityPointerView;
     this.BSTActivityReturnText = BSTActivityReturnText;
     this.BSTActivityReturnValue = BSTActivityReturnValue;
     this.BSTActivitySeekBar = BSTActivitySeekBar;
@@ -294,6 +298,12 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.BST_Activity_Pointer_View;
+      BSTView BSTActivityPointerView = rootView.findViewById(id);
+      if (BSTActivityPointerView == null) {
+        break missingId;
+      }
+
       id = R.id.BST_Activity_ReturnText;
       TextView BSTActivityReturnText = rootView.findViewById(id);
       if (BSTActivityReturnText == null) {
@@ -355,9 +365,9 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
           BSTActivityBoxReturn, BSTActivityCenter, BSTActivityCenterNode, BSTActivityCurrentValue,
           BSTActivityFlowIcon, BSTActivityFlowText, BSTActivityGuidelineHor,
           BSTActivityGuidelineVer, BSTActivityInputSlider, BSTActivityInputValue, BSTActivityPan,
-          BSTActivityReturnText, BSTActivityReturnValue, BSTActivitySeekBar, BSTActivitySwitch,
-          BSTActivityTabLayout, BSTActivityToolbar, BSTActivityVectorOutput, BSTActivityView,
-          BSTActivityViewPager, guideline3, guideline4);
+          BSTActivityPointerView, BSTActivityReturnText, BSTActivityReturnValue, BSTActivitySeekBar,
+          BSTActivitySwitch, BSTActivityTabLayout, BSTActivityToolbar, BSTActivityVectorOutput,
+          BSTActivityView, BSTActivityViewPager, guideline3, guideline4);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

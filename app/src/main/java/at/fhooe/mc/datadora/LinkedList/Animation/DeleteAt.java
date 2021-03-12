@@ -5,8 +5,6 @@ import android.animation.ValueAnimator;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 
-import at.fhooe.mc.datadora.LinkedList.Operation;
-
 public class DeleteAt implements LinkedListAnimation{
 
     private static final String PROPERTY_TRANSLATE_Y_DELETE_AT = "PROPERTY_TRANSLATE_Y_DELETE_AT";
@@ -50,7 +48,7 @@ public class DeleteAt implements LinkedListAnimation{
     }
 
     @Override
-    public void animate(int _pos) {
+    public void animateNoPointer(int _pos) {
         if (_pos == mValues.getPosition()) {
             mValues.getItemTextPaint().setAlpha(mAlphaDeleteAt);
             mValues.getItemPaint().setAlpha(mAlphaDeleteAt);
@@ -62,7 +60,7 @@ public class DeleteAt implements LinkedListAnimation{
     }
 
     @Override
-    public void addUpdate(ValueAnimator.AnimatorUpdateListener _listener) {
+    public void addUpdateValueAnimator(ValueAnimator.AnimatorUpdateListener _listener) {
         mAnimatorDeleteAt.addUpdateListener(_listener);
         mAnimatorDeleteAtAlpha.addUpdateListener(_listener);
     }

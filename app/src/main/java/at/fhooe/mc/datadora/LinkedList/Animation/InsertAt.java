@@ -42,7 +42,7 @@ public class InsertAt implements LinkedListAnimation {
         mAnimatorInsertAlpha.setInterpolator(new AccelerateInterpolator());
     }
 
-    public void addUpdate(ValueAnimator.AnimatorUpdateListener _listener) {
+    public void addUpdateValueAnimator(ValueAnimator.AnimatorUpdateListener _listener) {
         mAnimatorInsertAlpha.addUpdateListener(_listener);
         mAnimatorInsert.addUpdateListener(_listener);
     }
@@ -60,7 +60,7 @@ public class InsertAt implements LinkedListAnimation {
         mAnimatorInsertAlpha.start();
     }
 
-    public void animate(int _pos){
+    public void animateNoPointer(int _pos){
         if (mValues.getPosition() + 1 == mValues.getLinkedListRec().size()) {
             mValues.getLinkedListRec().get(_pos).top = (int) (mValues.getMaxHeight() - ((mValues.getMaxWidth() / 4) + (mValues.getMaxWidth() / 4 * _pos)) * mValues.getScale()) ;
         }

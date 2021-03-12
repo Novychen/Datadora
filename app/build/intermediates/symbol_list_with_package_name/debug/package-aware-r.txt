@@ -1653,6 +1653,7 @@ id BST_Activity_Guideline_Ver
 id BST_Activity_InputSlider
 id BST_Activity_InputValue
 id BST_Activity_Pan
+id BST_Activity_Pointer_View
 id BST_Activity_ReturnText
 id BST_Activity_ReturnValue
 id BST_Activity_SeekBar
