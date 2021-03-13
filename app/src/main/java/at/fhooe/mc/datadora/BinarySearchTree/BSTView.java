@@ -1,7 +1,6 @@
 package at.fhooe.mc.datadora.BinarySearchTree;
 
 import android.animation.Animator;
-import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,15 +11,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.Nullable;
 
 import java.util.Vector;
 
-import at.fhooe.mc.datadora.BinarySearchTree.Animation.Add;
 import at.fhooe.mc.datadora.BinarySearchTree.Animation.BSTValue;
-import at.fhooe.mc.datadora.BinarySearchTree.Animation.InOrder;
 import at.fhooe.mc.datadora.Operation;
 import at.fhooe.mc.datadora.R;
 
@@ -120,6 +116,7 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
 
     public void add() {
         mValues.setCurrentOperation(Operation.ADD);
+        invalidate();
     }
 
     public boolean remove() {
@@ -186,9 +183,9 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean hasRightChild() {
@@ -201,9 +198,9 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean hasLeftChild() {
@@ -216,9 +213,9 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean isRoot() {
@@ -231,9 +228,9 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean isInternal() {
@@ -246,9 +243,9 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean isExternal() {
@@ -261,9 +258,9 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText(R.string.All_Data_Activity_False);
             }
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean getParentNode() {
@@ -291,9 +288,9 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText("-");
             }
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean getLeftChild() {
@@ -306,9 +303,9 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
             } else {
                 mActivity.getBinding().BSTActivityReturnValue.setText("-");
             }
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public void inOrder() {

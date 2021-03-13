@@ -88,14 +88,11 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
      */
     public void add(int _value) {
         if(mTree != null && mTree.findNode(_value) == null) {
-            BinaryTreeNode n = mTree.insertNode(_value);
-            mTree.updateChildCount(mTree.getRoot());
-            mTreeUser.add(n);
 
             if(mPointer) {
                 mActivity.getBinding().BSTActivityPointerView.add();
             } else {
-                mActivity.getBinding().BSTActivityView.add();
+                mActivity.getBinding().BSTActivityView.add(_value);
             }
 
             mRandom = false;

@@ -8,6 +8,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
@@ -37,8 +40,11 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     private final Vector<Integer> mLinkedList = new Vector<>();
 
     //Shared Preferences setup
-    private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.LinkedListSharedPreferenceFile.LinkedList";
-    private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.LinkedListKey2020";
+    private static final String SP_FILE_KEY_SINGLE = "at.fhooe.mc.datadora.LinkedListSharedPreferenceFile.SingleLinkedList";
+    private static final String SP_VALUE_KEY_SINGLE = "at.fhooe.mc.datadora.SingleLinkedList_2021_Key_666";
+
+    private static final String SP_FILE_KEY_DOUBLE = "at.fhooe.mc.datadora.LinkedListSharedPreferenceFile.DoubleLinkedList";
+    private static final String SP_VALUE_KEY_DOUBLE = "at.fhooe.mc.datadora.DoubleLinkedList_2021_Key_666";
     private SharedPreferences mSharedPreferences;
 
     private Animation mAnimation;
@@ -49,6 +55,7 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     LinkedListGetFragment mGet = new LinkedListGetFragment();
 
     private boolean mHasPointer;
+    private float mType;
 
     public Vector<Integer> getLinkedList() { return mLinkedList; }
 
@@ -67,14 +74,15 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
         mAnimation = new Animation(layout, getIntent(), this);
         mBinding.LinkedListActivityView.setActivity(this);
         mBinding.LinkedListActivityViewPointer.setActivity(this);
-
-        mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
         mBinding.LinkedListActivityViewPointer.setVisibility(View.GONE);
+
+        mType =  getIntent().getExtras().getFloat(MainActivity.LINKED_LIST_TYPE);
 
         head();
         setUpToolbar();
         setUpTabLayout();
         setUpSlider();
+        setUpListType();
 
         mBinding.LinkedListActivityRandom.setOnClickListener(this);
         mBinding.LinkedListActivityRadioGroupType.setOnCheckedChangeListener(this);
@@ -92,23 +100,37 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    private void setUpToolbar() {
-        Toolbar myToolbar = mBinding.LinkedListActivityToolbar;
-        setSupportActionBar(myToolbar);
-        float type = getIntent().getExtras().getFloat(MainActivity.LINKED_LIST_TYPE);
+    private void setUpListType() {
 
-        if(type == MainActivity.LINKED_LIST_SINGLE) {
+        if(mType == MainActivity.LINKED_LIST_SINGLE) {
             getSupportActionBar().setTitle(R.string.All_Data_Activity_Single_LinkedList);
             mBinding.LinkedListActivityViewPointer.setSingleList(true);
+            mSharedPreferences = getSharedPreferences(SP_FILE_KEY_SINGLE, Context.MODE_PRIVATE);
         } else {
             mBinding.LinkedListActivityViewPointer.setSingleList(false);
             getSupportActionBar().setTitle(R.string.All_Data_Activity_Double_LinkedList);
+            mSharedPreferences = getSharedPreferences(SP_FILE_KEY_DOUBLE, Context.MODE_PRIVATE);
         }
+    }
 
+    private void setUpToolbar() {
+        Toolbar myToolbar = mBinding.LinkedListActivityToolbar;
+        setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu _menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_linked_list, _menu);
+        return super.onCreateOptionsMenu(_menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
     private void setUpTabLayout() {
         mTabLayout = findViewById(R.id.LinkedList_Activity_TabLayout);
@@ -210,7 +232,11 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
             }
         }
 
-        editor.putString(SP_VALUE_KEY, String.valueOf(vectorStr));
+        if(mType == MainActivity.LINKED_LIST_SINGLE) {
+            editor.putString(SP_VALUE_KEY_SINGLE, String.valueOf(vectorStr));
+        } else {
+            editor.putString(SP_VALUE_KEY_DOUBLE, String.valueOf(vectorStr));
+        }
         editor.apply();
     }
 
@@ -222,7 +248,14 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
 
         // get the saved string (vector)
         String defaultValue = "empty";
-        String vectorStr = mSharedPreferences.getString(SP_VALUE_KEY, defaultValue);
+        String vectorStr;
+
+        if(mType == MainActivity.LINKED_LIST_SINGLE) {
+            vectorStr = mSharedPreferences.getString(SP_VALUE_KEY_SINGLE, defaultValue);
+        } else {
+            vectorStr = mSharedPreferences.getString(SP_VALUE_KEY_DOUBLE, defaultValue);
+        }
+
         Vector<Integer> vector = new Vector<>();
 
         // check if it was successful -> transform to vector, or if not -> return null
@@ -340,4 +373,5 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
             both();
         }
     }
+
 }

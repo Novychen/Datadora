@@ -14,7 +14,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewpager2.widget.ViewPager2;
-import at.fhooe.mc.datadora.BinarySearchTree.BSTView;
+import at.fhooe.mc.datadora.BinarySearchTree.BSTNoPointerView;
+import at.fhooe.mc.datadora.BinarySearchTree.BSTPointerView;
 import at.fhooe.mc.datadora.CustomUIElements.VerticalSeekBar;
 import at.fhooe.mc.datadora.R;
 import com.google.android.material.slider.Slider;
@@ -38,6 +39,9 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
 
   @NonNull
   public final ImageView BSTActivityCenterNode;
+
+  @NonNull
+  public final ConstraintLayout BSTActivityContainer;
 
   /**
    * This binding is not available in all configurations.
@@ -92,7 +96,7 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   public final ImageView BSTActivityPan;
 
   @NonNull
-  public final BSTView BSTActivityPointerView;
+  public final BSTPointerView BSTActivityPointerView;
 
   @NonNull
   public final TextView BSTActivityReturnText;
@@ -130,7 +134,7 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   public final TextView BSTActivityVectorOutput;
 
   @NonNull
-  public final BSTView BSTActivityView;
+  public final BSTNoPointerView BSTActivityView;
 
   @NonNull
   public final ViewPager2 BSTActivityViewPager;
@@ -172,21 +176,23 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
   private ActivityBinarySearchTreeBinding(@NonNull ConstraintLayout rootView,
       @NonNull ConstraintLayout BSTActivity, @NonNull ImageView BSTActivityBoxReturn,
       @NonNull ImageView BSTActivityCenter, @NonNull ImageView BSTActivityCenterNode,
-      @Nullable TextView BSTActivityCurrentValue, @NonNull ImageView BSTActivityFlowIcon,
-      @NonNull TextView BSTActivityFlowText, @NonNull Guideline BSTActivityGuidelineHor,
-      @NonNull Guideline BSTActivityGuidelineVer, @Nullable Slider BSTActivityInputSlider,
-      @NonNull TextView BSTActivityInputValue, @NonNull ImageView BSTActivityPan,
-      @NonNull BSTView BSTActivityPointerView, @NonNull TextView BSTActivityReturnText,
-      @NonNull TextView BSTActivityReturnValue, @Nullable VerticalSeekBar BSTActivitySeekBar,
-      @NonNull ToggleButton BSTActivitySwitch, @NonNull TabLayout BSTActivityTabLayout,
-      @NonNull Toolbar BSTActivityToolbar, @NonNull TextView BSTActivityVectorOutput,
-      @NonNull BSTView BSTActivityView, @NonNull ViewPager2 BSTActivityViewPager,
-      @Nullable Guideline guideline3, @Nullable Guideline guideline4) {
+      @NonNull ConstraintLayout BSTActivityContainer, @Nullable TextView BSTActivityCurrentValue,
+      @NonNull ImageView BSTActivityFlowIcon, @NonNull TextView BSTActivityFlowText,
+      @NonNull Guideline BSTActivityGuidelineHor, @NonNull Guideline BSTActivityGuidelineVer,
+      @Nullable Slider BSTActivityInputSlider, @NonNull TextView BSTActivityInputValue,
+      @NonNull ImageView BSTActivityPan, @NonNull BSTPointerView BSTActivityPointerView,
+      @NonNull TextView BSTActivityReturnText, @NonNull TextView BSTActivityReturnValue,
+      @Nullable VerticalSeekBar BSTActivitySeekBar, @NonNull ToggleButton BSTActivitySwitch,
+      @NonNull TabLayout BSTActivityTabLayout, @NonNull Toolbar BSTActivityToolbar,
+      @NonNull TextView BSTActivityVectorOutput, @NonNull BSTNoPointerView BSTActivityView,
+      @NonNull ViewPager2 BSTActivityViewPager, @Nullable Guideline guideline3,
+      @Nullable Guideline guideline4) {
     this.rootView = rootView;
     this.BSTActivity = BSTActivity;
     this.BSTActivityBoxReturn = BSTActivityBoxReturn;
     this.BSTActivityCenter = BSTActivityCenter;
     this.BSTActivityCenterNode = BSTActivityCenterNode;
+    this.BSTActivityContainer = BSTActivityContainer;
     this.BSTActivityCurrentValue = BSTActivityCurrentValue;
     this.BSTActivityFlowIcon = BSTActivityFlowIcon;
     this.BSTActivityFlowText = BSTActivityFlowText;
@@ -256,6 +262,12 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.BST_Activity_Container;
+      ConstraintLayout BSTActivityContainer = rootView.findViewById(id);
+      if (BSTActivityContainer == null) {
+        break missingId;
+      }
+
       id = R.id.BST_Activity_CurrentValue;
       TextView BSTActivityCurrentValue = rootView.findViewById(id);
 
@@ -299,7 +311,7 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       }
 
       id = R.id.BST_Activity_Pointer_View;
-      BSTView BSTActivityPointerView = rootView.findViewById(id);
+      BSTPointerView BSTActivityPointerView = rootView.findViewById(id);
       if (BSTActivityPointerView == null) {
         break missingId;
       }
@@ -344,7 +356,7 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       }
 
       id = R.id.BST_Activity_View;
-      BSTView BSTActivityView = rootView.findViewById(id);
+      BSTNoPointerView BSTActivityView = rootView.findViewById(id);
       if (BSTActivityView == null) {
         break missingId;
       }
@@ -362,12 +374,13 @@ public final class ActivityBinarySearchTreeBinding implements ViewBinding {
       Guideline guideline4 = rootView.findViewById(id);
 
       return new ActivityBinarySearchTreeBinding((ConstraintLayout) rootView, BSTActivity,
-          BSTActivityBoxReturn, BSTActivityCenter, BSTActivityCenterNode, BSTActivityCurrentValue,
-          BSTActivityFlowIcon, BSTActivityFlowText, BSTActivityGuidelineHor,
-          BSTActivityGuidelineVer, BSTActivityInputSlider, BSTActivityInputValue, BSTActivityPan,
-          BSTActivityPointerView, BSTActivityReturnText, BSTActivityReturnValue, BSTActivitySeekBar,
-          BSTActivitySwitch, BSTActivityTabLayout, BSTActivityToolbar, BSTActivityVectorOutput,
-          BSTActivityView, BSTActivityViewPager, guideline3, guideline4);
+          BSTActivityBoxReturn, BSTActivityCenter, BSTActivityCenterNode, BSTActivityContainer,
+          BSTActivityCurrentValue, BSTActivityFlowIcon, BSTActivityFlowText,
+          BSTActivityGuidelineHor, BSTActivityGuidelineVer, BSTActivityInputSlider,
+          BSTActivityInputValue, BSTActivityPan, BSTActivityPointerView, BSTActivityReturnText,
+          BSTActivityReturnValue, BSTActivitySeekBar, BSTActivitySwitch, BSTActivityTabLayout,
+          BSTActivityToolbar, BSTActivityVectorOutput, BSTActivityView, BSTActivityViewPager,
+          guideline3, guideline4);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

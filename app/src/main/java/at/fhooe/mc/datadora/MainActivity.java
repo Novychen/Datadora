@@ -1,4 +1,5 @@
 package at.fhooe.mc.datadora;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -12,6 +13,9 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -52,6 +56,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBinding.MainActivityTreeCard.setOnClickListener(this);
         mBinding.MainActivityAbout.setOnClickListener(this);
         mBinding.MainActivityTest.setOnClickListener(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu _menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, _menu);
+        return super.onCreateOptionsMenu(_menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -103,5 +119,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBinding = null;
     }
 }

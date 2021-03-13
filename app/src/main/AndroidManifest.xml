@@ -8,7 +8,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".TestActivity" />
         <activity
             android:name=".AboutActivity"
             android:screenOrientation="portrait"

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -27,7 +30,6 @@ import at.fhooe.mc.datadora.databinding.ActivityQueueBinding;
 
 public class QueueActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     private static final String TAG = "QueueActivity : ";
     private ActivityQueueBinding mBinding;
 
@@ -35,7 +37,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     private boolean mPressedRandom;
     private boolean mPressedDequeue;
     private Animation mAnimation;
-
 
     public boolean getPressedRandom() {
         return mPressedRandom;
@@ -115,13 +116,15 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public boolean onCreateOptionsMenu(Menu _menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_stack_queue, _menu);
+        return super.onCreateOptionsMenu(_menu);
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -139,9 +142,6 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
         super.onPause();
         save();
     }
-
-    @Override
-    protected void onStop() { super.onStop(); }
 
     @Override
     protected void onDestroy() {

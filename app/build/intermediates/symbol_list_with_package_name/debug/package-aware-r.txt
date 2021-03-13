@@ -1642,6 +1642,7 @@ id BST_Activity_Center_Node
 id BST_Activity_Check_Arrow
 id BST_Activity_Check_Background
 id BST_Activity_Check_ConstraintLayout
+id BST_Activity_Container
 id BST_Activity_CurrentValue
 id BST_Activity_FlowIcon
 id BST_Activity_FlowText
@@ -2007,6 +2008,8 @@ id listMode
 id list_item
 id masked
 id media_actions
+id menu_setting
+id menu_type
 id message
 id middle
 id mini
@@ -2250,6 +2253,7 @@ layout activity_binary_search_tree
 layout activity_linked_list
 layout activity_main
 layout activity_queue
+layout activity_setting
 layout activity_stack
 layout activity_test
 layout custom_dialog
@@ -2336,6 +2340,10 @@ layout text_view_with_line_height_from_layout
 layout text_view_with_line_height_from_style
 layout text_view_with_theme_line_height
 layout text_view_without_line_height
+menu menu_linked_list
+menu menu_main
+menu menu_stack_queue
+menu menu_tree
 mipmap ic_launcher
 mipmap ic_launcher_foreground
 mipmap ic_launcher_round

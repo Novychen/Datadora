@@ -11,6 +11,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -107,6 +110,18 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
         mBinding.StackActivityButtonEmpty.setOnClickListener(this);
         mBinding.StackActivityButtonClear.setOnClickListener(this);
         mBinding.StackActivityButtonRandom.setOnClickListener(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu _menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_stack_queue, _menu);
+        return super.onCreateOptionsMenu(_menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

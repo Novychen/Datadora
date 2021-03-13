@@ -33,10 +33,6 @@ public class Add {
         return mAddPath;
     }
 
-    public void setAddPath(Vector<BinaryTreeNode> _addPath) {
-        mAddPath = _addPath;
-    }
-
     public Add(int _SurfaceColor, int _primaryColor, BSTValue _values) {
         mValues = _values;
 
@@ -117,5 +113,9 @@ public class Add {
             _count = 0;
         }
         return _count;
+    }
+
+    public boolean isRunning() {
+        return mAddArea.isRunning();
     }
 }

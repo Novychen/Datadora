@@ -1,7 +1,6 @@
 package at.fhooe.mc.datadora.BinarySearchTree.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import java.util.Vector;
-
 import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity;
-import at.fhooe.mc.datadora.BinarySearchTree.BinaryTreeNode;
 import at.fhooe.mc.datadora.R;
 
 public class BSTGetFragment extends Fragment implements View.OnClickListener {
@@ -97,13 +93,13 @@ public class BSTGetFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getRightChild() {
-        if(!mPointer && !mActivity.getBinding().BSTActivityView.getRightChild() || mPointer && !mActivity.getBinding().BSTActivityPointerView.getRightChild() ) {
+        if(!mPointer && mActivity.getBinding().BSTActivityView.getRightChild() || mPointer && mActivity.getBinding().BSTActivityPointerView.getRightChild()) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void getLeftChild() {
-        if(!mPointer && !mActivity.getBinding().BSTActivityView.getLeftChild() || mPointer && !mActivity.getBinding().BSTActivityPointerView.getLeftChild() ) {
+        if(!mPointer && mActivity.getBinding().BSTActivityView.getLeftChild() || mPointer && mActivity.getBinding().BSTActivityPointerView.getLeftChild()) {
             Toast.makeText(getContext(), R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }

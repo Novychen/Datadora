@@ -7,6 +7,9 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
@@ -54,8 +57,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     BSTCheckFragment mCheck = new BSTCheckFragment();
     BSTGetFragment mGet = new BSTGetFragment();
 
-    private boolean mHasPointer;
-
     private SharedPreferences mSharedPreferences;
     private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.BSTSharedPreferenceFile.BST";
     private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.BSTKey2020";
@@ -82,16 +83,10 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         View layout = mBinding.BSTActivity;
         mAnimation = new Animation(layout, getIntent(), this);
 
-        if(mHasPointer) {
-          //  mBinding.BSTActivityPointerView.setActivity(this);
-        } else {
-          //  mBinding.BSTActivityView.setActivity(this);
-        }
-       // mBinding.BSTActivityView.setActivity(this);
-
         setUpToolbar();
         setUpTabLayout();
 
+        mBinding.BSTActivityPointerView.setVisibility(View.GONE);
         mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
         int orientation = getResources().getConfiguration().orientation;
@@ -111,11 +106,22 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
                 mCheck.setPointer(_isChecked);
                 mGet.setPointer(_isChecked);
                 mBinding.BSTActivityView.setSwitch(_isChecked);
-                mHasPointer = _isChecked;
             }
         });
 
         setTheme(R.style.AppTheme);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu _menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_tree, _menu);
+        return super.onCreateOptionsMenu(_menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     private void setUpSeekBar() {
@@ -386,6 +392,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         onBackPressed();
         return true;
     }
+
 }
 
 
