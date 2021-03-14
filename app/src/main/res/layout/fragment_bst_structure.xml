@@ -20,7 +20,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_Size"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -33,7 +33,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_Inorder"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/BST_Activity_Text_Inorder"
@@ -44,7 +44,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_Preorder"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/BST_Activity_Text_Preorder"
@@ -55,7 +55,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_Postorder"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -69,7 +69,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_Height"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -82,7 +82,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_Depth"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +91,7 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
         if(mTree != null && mTree.findNode(_value) == null) {
 
             if(mPointer) {
-                mActivity.getBinding().BSTActivityPointerView.add();
+                mActivity.getBinding().BSTActivityPointerView.add(_value);
             } else {
                 mActivity.getBinding().BSTActivityView.add(_value);
             }
@@ -116,7 +117,20 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
     private void random() {
         int number = createRandomNumber(-100, 100);
         mRandom = true;
-        add(number);
+
+        if(mTree != null && mTree.findNode(number) == null) {
+            BinaryTreeNode n = mActivity.getTree().insertNode(number);
+            mActivity.getTree().updateChildCount(mActivity.getTree().getRoot());
+            mActivity.getTreeUser().add(n);
+
+            if(mPointer) {
+                mActivity.getBinding().BSTActivityPointerView.add();
+            } else {
+                mActivity.getBinding().BSTActivityView.random();
+            }
+        } else if (!mRandom) {
+            Toast.makeText(getContext(), R.string.BST_Activity_Add_Toast, Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -134,6 +148,7 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
         for (int i = 0; i <= size; i++) {
             random();
         }
+        mRandom = false;
     }
 
     /**

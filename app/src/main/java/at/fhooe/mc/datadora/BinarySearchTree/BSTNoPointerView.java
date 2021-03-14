@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -30,7 +31,8 @@ public class BSTNoPointerView extends BSTView {
     private Line mLine;
     private InOrder mInOrder;
 
-    private int mValue;
+    private Path mPath = new Path();
+    private boolean mStartLine = false;
 
     public BSTNoPointerView(Context context) {
         super(context);
@@ -49,21 +51,29 @@ public class BSTNoPointerView extends BSTView {
 
     protected void init() {
         super.init();
-        mAdd = new Add(mSurfaceColor,mPrimaryColor, mValues);
+        mAdd = new Add(mSurfaceColor,mPrimaryColor, mOnPrimaryColor, mOnSurfaceColor, mValues);
+        mAdd.setPointer(false);
         mAdd.addUpdateListener((Animator.AnimatorListener) this);
         mAdd.addUpdateListener((ValueAnimator.AnimatorUpdateListener) this);
 
         mLine = new Line(mValues);
-        mLine.addUpdateValueAnimator(this);
+        mLine.addUpdateValueAnimator((Animator.AnimatorListener) this);
+        mLine.addUpdateValueAnimator((ValueAnimator.AnimatorUpdateListener) this);
     }
 
 
     public void add(int _value) {
         super.add();
+        mStartLine = false;
         mCount = 0;
         mAdd.getAddPath(mActivity.getTree(), _value);
         mAdd.start();
         mValue = _value;
+    }
+
+    public void random() {
+        mValues.setCurrentOperation(Operation.RANDOM);
+        invalidate();
     }
 
     public void inOrder() {
@@ -78,10 +88,42 @@ public class BSTNoPointerView extends BSTView {
     @Override
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
-        if (mValues.getCurrentOperation() == Operation.ADD && mLine.isStarted() ) {
-            mLine.animateLines();
-        }
         drawTree(_canvas);
+    }
+
+    @Override
+    protected void prepareAndDrawLine(BinaryTreeNode _n, BinaryTreeNode _nPre, Canvas _canvas) {
+
+        float x = calculateDiffX(_n, _nPre);
+        float y = calculateDiffY(_n, _nPre);
+
+        float direction = getDirection(_n, _nPre);
+
+        double lengthX = Math.cos(Math.atan(y / x));
+        double lengthY = Math.cos(Math.atan(x / y));
+
+        float xPre = (float) (_nPre.getPoint().x + (lengthX * direction) * mValues.getRadius());
+        float yPre = (float) (_nPre.getPoint().y + lengthY * mValues.getRadius());
+
+        x = (float) (_n.getPoint().x - (lengthX * direction) * mValues.getRadius());
+        y = (float) (_n.getPoint().y - lengthY * mValues.getRadius());
+
+        if(_n.getData() == mValue && !mLine.isRunning() && mStartLine) {
+            mPath.reset();
+            mPath.moveTo(xPre, yPre);
+            mPath.lineTo(x, y);
+            mLine.setPath(mPath);
+            mLine.start();
+        }
+
+        if (_n.getData() == mValue && mLine.isRunning()) {
+            mLine.animateLines();
+            _canvas.drawLine(xPre, yPre, x, y, mValues.getAnimPaint());
+        } else if(_n.getData() != mValue && mLine.isRunning()) {
+            _canvas.drawLine(xPre, yPre, x, y, mValues.getItemPaint());
+        } else {
+            _canvas.drawLine(xPre, yPre, x, y, mValues.getItemPaint());
+        }
     }
 
     @Override
@@ -97,12 +139,9 @@ public class BSTNoPointerView extends BSTView {
     @Override
     public void onAnimationEnd(Animator _animation) {
         if (mValues.getCurrentOperation() == Operation.ADD) {
-            mCount = mAdd.animEnd(_animation, mCount);
-
-            BinaryTreeNode n = mActivity.getTree().insertNode(mValue);
-            mActivity.getTree().updateChildCount(mActivity.getTree().getRoot());
-            mActivity.getTreeUser().add(n);
-
+            mCount = mAdd.animEnd(_animation, mCount,mActivity,mValue);
+            mLine.animEnd(_animation);
+            mStartLine = !mStartLine;
         } else if(mValues.getCurrentOperation() == Operation.INORDER) {
             mCount = mInOrder.animEnd(_animation, mCount);
         }
@@ -111,9 +150,6 @@ public class BSTNoPointerView extends BSTView {
 
     @Override
     public void onAnimationCancel(Animator _animation) {
-        if( mValues.getCurrentOperation() == Operation.ADD && !mAdd.isRunning()) {
-            mLine.start();
-        }
     }
 
     @Override
@@ -130,8 +166,9 @@ public class BSTNoPointerView extends BSTView {
     public void onAnimationUpdate(ValueAnimator _animation) {
         if (mValues.getCurrentOperation() == Operation.ADD) {
             mAdd.update(_animation);
-
-
+            if(!mAdd.isRunning()) {
+                mLine.update(_animation);
+            }
         } else if(mValues.getCurrentOperation() == Operation.INORDER) {
             mInOrder.update(_animation);
         }

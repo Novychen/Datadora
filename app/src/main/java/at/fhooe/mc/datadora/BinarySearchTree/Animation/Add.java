@@ -4,13 +4,17 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.TextView;
 
 import java.util.Vector;
 
 import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTree;
+import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity;
 import at.fhooe.mc.datadora.BinarySearchTree.BinaryTreeNode;
 import at.fhooe.mc.datadora.Operation;
 
@@ -19,48 +23,140 @@ public class Add {
 
     private static final String TAG = "Add : ";
 
-    private static final String PROPERTY_ADD_AREA = "PROPERTY_ADD_AREA";
+    private final AnimatorSet mAddSet = new AnimatorSet();
 
-    private AnimatorSet mAddSet = new AnimatorSet();
+    private final ValueAnimator mAreaColorAnim;
+    private final ValueAnimator mTextColorAnim;
+    private ValueAnimator mAlphaElementAnim;
+    private ValueAnimator mAlphaCompAnim;
 
-    private ValueAnimator mAddArea;
     private int mColorArea;
-    private BSTValue mValues;
+    private int mColorText;
+    private int mAlphaElement;
+    private int mAlphaCompare;
+
+    private final BSTValue mValues;
+    private final Rect mBoundsAddedElement = new Rect();
+    private boolean mPointer;
 
     private Vector<BinaryTreeNode> mAddPath;
 
-    public Vector<BinaryTreeNode> getAddPath() {
-        return mAddPath;
+    public void setPointer(boolean _pointer) {
+        mPointer = _pointer;
     }
 
-    public Add(int _SurfaceColor, int _primaryColor, BSTValue _values) {
+    public void setPointerAnim() {
+        mAlphaElementAnim = ValueAnimator.ofInt(255, 0);
+        mAlphaElementAnim.setDuration(700);
+        mAlphaElementAnim.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        mAlphaCompAnim = ValueAnimator.ofInt(0, 255);
+        mAlphaCompAnim.setInterpolator(new AccelerateDecelerateInterpolator());
+    }
+
+    public Add(int _surfaceColor, int _primaryColor, int _onPrimaryColor, int _onSurfaceColor, BSTValue _values) {
         mValues = _values;
 
-        mAddArea = ValueAnimator.ofObject(new ArgbEvaluator(), _SurfaceColor, _primaryColor, _SurfaceColor);
-        mAddArea.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAddSet.play(mAddArea);
+        mAreaColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), _surfaceColor, _primaryColor, _surfaceColor);
+        mAreaColorAnim.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        mTextColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), _onSurfaceColor, _onPrimaryColor, _onSurfaceColor);
+        mTextColorAnim.setInterpolator(new AccelerateDecelerateInterpolator());
     }
 
     public void addUpdateListener(ValueAnimator.AnimatorUpdateListener _listener) {
-        mAddArea.addUpdateListener(_listener);
+        if(mPointer) { mAlphaElementAnim.addUpdateListener(_listener); }
+        mAreaColorAnim.addUpdateListener(_listener);
+        mTextColorAnim.addUpdateListener(_listener);
     }
 
     public void addUpdateListener(Animator.AnimatorListener _listener) {
-        mAddArea.addListener(_listener);
+        mAreaColorAnim.addListener(_listener);
+        if(mPointer) { mAlphaElementAnim.addListener(_listener); }
     }
 
     public void update(ValueAnimator _animation) {
-        mColorArea = (int) _animation.getAnimatedValue();
-    }
-
-    public void start() {
-        mAddArea.setDuration(200 * mAddPath.size() - 1);
-        mAddArea.setRepeatCount(mAddPath.size() - 1);
-        mAddArea.start();
+        if(_animation == mAreaColorAnim) {
+            mColorArea = (int) _animation.getAnimatedValue();
+        } else if(_animation == mAlphaElementAnim) {
+            mAlphaElement = (int) _animation.getAnimatedValue();
+        } else if(_animation == mTextColorAnim) {
+            mColorText = (int) _animation.getAnimatedValue();
+        }
     }
 
     public void animate() {
+        mValues.getAnimPaint().setColor(mColorArea);
+        mValues.getAnimPaint().setStyle(Paint.Style.FILL_AND_STROKE);
+        mValues.getItemTextPaint().setColor(mColorText);
+    }
 
+    public void animatePointer() {
+        if(mAlphaElementAnim.isRunning()) {
+            mValues.getAnimPaint().setAlpha(mAlphaElement);
+            mValues.getItemTextPaint().setAlpha(mAlphaElement);
+        }
+    }
+
+    public void start() {
+        int duration;
+        int repeat;
+
+        if (mAddPath.isEmpty()) {
+           repeat = 0;
+           duration = 200;
+        } else {
+           repeat = mAddPath.size() - 1;
+           duration = 700 * mAddPath.size() - 1;
+        }
+
+        mAreaColorAnim.setDuration(duration);
+        mAreaColorAnim.setRepeatCount(repeat);
+        mTextColorAnim.setDuration(duration);
+        mTextColorAnim.setRepeatCount(repeat);
+
+        if(mPointer) {
+            mAlphaCompAnim.setDuration(duration);
+            mAlphaCompAnim.setRepeatCount(repeat);
+
+            mAddSet.play(mAreaColorAnim).with(mTextColorAnim).with(mAlphaCompAnim).before(mAlphaElementAnim);
+            mAddSet.start();
+        } else {
+            mAreaColorAnim.start();
+            mTextColorAnim.start();
+        }
+    }
+
+    public void drawComparision(int _added, int _count, Canvas _canvas, int _onSurface, int _primary) {
+        mValues.getItemTextPaint().setColor(_onSurface);
+        String s = _added+ " > " + mAddPath.get(_count).getData();
+        mValues.getItemTextPaint().getTextBounds(s, 0, s.length(), mBoundsAddedElement);
+
+        float y = mValues.getTopSpace() + (mBoundsAddedElement.height() / 2f);
+        float x = mValues.getTopSpace() + ((mValues.getMaxWidth() / 2) - mValues.getTopSpace()) / 2 - (mBoundsAddedElement.width() / 2f);
+
+        mValues.getItemPaint().setColor(Color.WHITE);
+        mValues.getItemPaint().setStyle(Paint.Style.FILL_AND_STROKE);
+        _canvas.drawRoundRect(x - 20, y - mBoundsAddedElement.height() - 20, x + mBoundsAddedElement.width() + 20, y + 20, 8,8, mValues.getItemPaint());
+        _canvas.drawText(s, x, y, mValues.getItemTextPaint());
+
+        mValues.getItemPaint().setColor(_primary);
+        mValues.getItemPaint().setStyle(Paint.Style.STROKE);
+    }
+
+    public void drawAddedElement(int _value,  Canvas _canvas) {
+
+        String s = String.valueOf(_value);
+        mValues.getItemTextPaint().getTextBounds(s, 0, s.length(), mBoundsAddedElement);
+
+        _canvas.drawCircle(mValues.getTopSpace(), mValues.getTopSpace(), mValues.getRadius(), mValues.getAnimPaint());
+        _canvas.drawText(s, mValues.getTopSpace() - 3 - mBoundsAddedElement.width() / 2f, mValues.getTopSpace() + mBoundsAddedElement.height() / 2f, mValues.getItemTextPaint());
+
+        if(mAlphaElementAnim.isRunning()) {
+            _canvas.drawCircle(mValues.getTopSpace(), mValues.getTopSpace(), mValues.getRadius(), mValues.getAnimPaint());
+        } else {
+            _canvas.drawCircle(mValues.getTopSpace(), mValues.getTopSpace(), mValues.getRadius(), mValues.getItemPaint());
+        }
     }
 
     public void getAddPath(BinarySearchTree _tree, int _data){
@@ -93,13 +189,13 @@ public class Add {
     }
 
     public void animStart(Animator _animation, int _count) {
-        if( _animation == mAddArea) {
+        if( _animation == mAreaColorAnim && !mAddPath.isEmpty()) {
             mAddPath.get(_count).setSelected(true);
         }
     }
 
     public int animRepeat(Animator _animation, int _count) {
-        if(_animation == mAddArea) {
+        if(_animation == mAreaColorAnim && !mAddPath.isEmpty()) {
             mAddPath.get(_count).setSelected(false);
             _count++;
             mAddPath.get(_count).setSelected(true);
@@ -107,15 +203,25 @@ public class Add {
         return _count;
     }
 
-    public int animEnd(Animator _animation, int _count) {
-        if(_animation == mAddArea) {
+    public int animEnd(Animator _animation, int _count, BinarySearchTreeActivity _activity, int _value) {
+        if(_animation == mAreaColorAnim && !mAddPath.isEmpty()) {
             mAddPath.get(_count).setSelected(false);
             _count = 0;
         }
+
+        if((_animation == mAreaColorAnim && !mPointer) || (_animation == mAlphaElementAnim && mPointer)) {
+            BinaryTreeNode n = _activity.getTree().insertNode(_value);
+            _activity.getTree().updateChildCount(_activity.getTree().getRoot());
+            _activity.getTreeUser().add(n);
+            if(_animation == mAlphaElementAnim) { mValues.setCurrentOperation(Operation.NONE); }
+        }
+
         return _count;
     }
 
+
+
     public boolean isRunning() {
-        return mAddArea.isRunning();
+        return mAreaColorAnim.isRunning();
     }
 }

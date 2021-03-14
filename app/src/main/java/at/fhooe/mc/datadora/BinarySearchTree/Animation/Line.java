@@ -1,25 +1,25 @@
 package at.fhooe.mc.datadora.BinarySearchTree.Animation;
 
+import android.animation.Animator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.graphics.DashPathEffect;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 
-import at.fhooe.mc.datadora.LinkedList.Animation.LLValue;
+import at.fhooe.mc.datadora.Operation;
 
 public class Line {
 
     private static final String TAG = "Line : ";
 
     protected static final String PROPERTY_DRAW_LINE = "PROPERTY_DRAW_LINE_RIGHT";
-    protected static final String PROPERTY_DRAW_LINE_LONG = "PROPERTY_DRAW_LINE_LONG";
 
     private Path mPath = new Path();
     private final PathMeasure mPathMeasure = new PathMeasure();
 
     // the current draw process - used for the drawing animation
-    private int mDrawProcess;
+    private float mDrawProcess;
 
     private final BSTValue mValues;
 
@@ -41,28 +41,41 @@ public class Line {
 
     public void start() {
         float length = getLength(mPath);
-        PropertyValuesHolder propertyDrawLine = PropertyValuesHolder.ofInt(PROPERTY_DRAW_LINE, 0, (int) length);
+        PropertyValuesHolder propertyDrawLine = PropertyValuesHolder.ofFloat(PROPERTY_DRAW_LINE, 0, length);
         mAnimatorDrawLine.setValues(propertyDrawLine);
-        mAnimatorDrawLine.setDuration(700);
+        mAnimatorDrawLine.setDuration(300);
         mAnimatorDrawLine.start();
+        animateLines();
     }
 
     public void addUpdateValueAnimator(ValueAnimator.AnimatorUpdateListener _listener) {
         mAnimatorDrawLine.addUpdateListener(_listener);
     }
 
+    public void addUpdateValueAnimator(Animator.AnimatorListener _listener) {
+        mAnimatorDrawLine.addListener(_listener);
+    }
+
     public void update(ValueAnimator _animation) {
         if (_animation == mAnimatorDrawLine) {
-            mDrawProcess = (int) _animation.getAnimatedValue(PROPERTY_DRAW_LINE);
+            mDrawProcess = (float) _animation.getAnimatedValue(PROPERTY_DRAW_LINE);
         }
     }
 
     public void animateLines() {
         DashPathEffect drawEffect = new DashPathEffect(new float[]{mDrawProcess, getLength(mPath)}, 0);
-        mValues.getItemPaint().setPathEffect(drawEffect);
+        mValues.getAnimPaint().setPathEffect(drawEffect);
     }
 
-    public boolean isStarted() {
-        return mAnimatorDrawLine.isStarted();
+
+    public void animEnd(Animator _animator) {
+        if(_animator == mAnimatorDrawLine) {
+            mValues.setCurrentOperation(Operation.NONE);
+        }
+    }
+
+
+    public boolean isRunning() {
+        return mAnimatorDrawLine.isRunning();
     }
 }

@@ -19,7 +19,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_HasParent"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="126dp"
                 android:layout_height="wrap_content"
                 android:text="@string/BST_Activity_Check_Parent"
@@ -30,7 +30,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_HasRightChild"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/BST_Activity_Check_RightChild"
@@ -40,7 +40,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_HasLeftChild"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -52,7 +52,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_IsRoot"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -66,7 +66,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_IsInternal"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -78,7 +78,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_IsExternal"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -89,7 +89,7 @@
 
             <Button
                 android:id="@+id/BST_Fragment_IsEmpty"
-                style="@style/Tree_Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"

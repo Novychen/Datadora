@@ -54,6 +54,8 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
     protected boolean mDown = false;
 
     protected BSTValue mValues;
+    protected int mValue;
+
 
     public BSTView(Context context) {
         super(context);
@@ -78,6 +80,7 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
             mActivity.getBinding().BSTActivityView.setVisibility(VISIBLE);
             mActivity.getBinding().BSTActivityPointerView.setVisibility(GONE);
         }
+        mValues.setCurrentOperation(Operation.NONE);
     }
 
     protected void init() {
@@ -85,16 +88,22 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
 
         Paint mItemPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Paint mItemTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        Paint mAnimPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         mItemPaint.setColor(mPrimaryColor);
         mItemPaint.setStyle(Paint.Style.STROKE);
         mItemPaint.setStrokeCap(Paint.Cap.ROUND);
         mItemPaint.setStrokeWidth(6);
 
+        mAnimPaint.setColor(mPrimaryColor);
+        mAnimPaint.setStyle(Paint.Style.STROKE);
+        mAnimPaint.setStrokeCap(Paint.Cap.ROUND);
+        mAnimPaint.setStrokeWidth(6);
+
         mItemTextPaint.setColor(mOnSurfaceColor);
         mItemTextPaint.setTextSize(50);
 
-        mValues = BSTValue.getInstance(mItemPaint, mItemTextPaint, -1, Operation.NONE);
+        mValues = BSTValue.getInstance(mItemPaint, mItemTextPaint, mAnimPaint, -1, Operation.NONE);
     }
 
     public void move(boolean _selected) {
@@ -334,32 +343,36 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
         drawTree(_canvas);
     }
 
+    private void setUpRoot() {
+        float x;
+        float y;
+
+        if (mX != 0 && mY != 0) {
+            x = mTree.getRoot().getPoint().x;
+            y = mTree.getRoot().getPoint().y;
+        } else {
+            x = mValues.getMaxWidth() / 2;
+            y = mValues.getTopSpace();
+        }
+
+        if (mMove) {
+            x = x + (mX);
+            y = y + (mY);
+        }
+        mTree.getRoot().setPoint(x, y);
+    }
+
     protected void drawTree(Canvas _canvas) {
 
         mTree = mActivity.getTree();
         Vector<BinaryTreeNode> tv = mTree.toArrayPreOrder();
 
         if (mTree.getRoot() != null) {
-            float x;
-            float y;
-
-            if (mX != 0 && mY != 0) {
-                x = mTree.getRoot().getPoint().x;
-                y = mTree.getRoot().getPoint().y;
-            } else {
-                x = mValues.getMaxWidth() / 2;
-                y = mValues.getTopSpace();
-            }
-
-            if (mMove) {
-                x = x + (mX);
-                y = y + (mY);
-            }
-            mTree.getRoot().setPoint(x, y);
+           setUpRoot();
         }
 
         if (tv != null) {
-            for (int i = 0; i < mActivity.getTreeUser().size(); i++) {
+            for (int i = 0; i < tv.size(); i++) {
 
                 BinaryTreeNode n = tv.get(i);
                 BinaryTreeNode nPre = mTree.getParentNode(n.getData());
@@ -372,22 +385,25 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
                 String s = String.valueOf(n.getData());
                 mValues.getItemTextPaint().getTextBounds(s, 0, s.length(), mBounds);
 
-                if (n.isSelected()) {
-                    mValues.getItemPaint().setColor(mPrimaryColor);
-                    mValues.getItemPaint().setStyle(Paint.Style.FILL_AND_STROKE);
-                    mValues.getItemTextPaint().setColor(mOnPrimaryColor);
-                } else {
-                    mValues.getItemPaint().setColor(mPrimaryColor);
-                    mValues.getItemPaint().setStrokeWidth(6);
-                    mValues.getItemPaint().setStyle(Paint.Style.STROKE);
+                animateOperations(_canvas,n);
 
-                    mValues.getItemTextPaint().setColor(mOnSurfaceColor);
-                }
-
-                _canvas.drawCircle(n.getPoint().x, n.getPoint().y, mValues.getRadius(), mValues.getItemPaint());
                 _canvas.drawText(s, n.getPoint().x - 3 - mBounds.width() / 2f, n.getPoint().y + mBounds.height() / 2f, mValues.getItemTextPaint());
             }
         }
+    }
+
+    protected void animateOperations(Canvas _canvas, BinaryTreeNode _n) {
+        if (_n.isSelected()) {
+            mValues.getItemPaint().setColor(mPrimaryColor);
+            mValues.getItemPaint().setStyle(Paint.Style.FILL_AND_STROKE);
+            mValues.getItemTextPaint().setColor(mOnPrimaryColor);
+        } else {
+            mValues.getItemPaint().setColor(mPrimaryColor);
+            mValues.getItemPaint().setStrokeWidth(6);
+            mValues.getItemPaint().setStyle(Paint.Style.STROKE);
+            mValues.getItemTextPaint().setColor(mOnSurfaceColor);
+        }
+        _canvas.drawCircle(_n.getPoint().x, _n.getPoint().y, mValues.getRadius(), mValues.getItemPaint());
     }
 
     protected void setPointOfNode(BinaryTreeNode _n, BinaryTreeNode _nPre) {

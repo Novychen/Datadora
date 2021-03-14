@@ -49,33 +49,20 @@ public class BSTPointerView extends BSTView {
 
     protected void init() {
         super.init();
-        mAdd = new Add(mSurfaceColor, mPrimaryColor, mValues);
+        mAdd = new Add(mSurfaceColor, mPrimaryColor, mOnPrimaryColor, mOnSurfaceColor,  mValues);
+        mAdd.setPointer(true);
+        mAdd.setPointerAnim();
         mAdd.addUpdateListener((Animator.AnimatorListener) this);
         mAdd.addUpdateListener((ValueAnimator.AnimatorUpdateListener) this);
-
         mInOrder = new InOrder();
     }
 
-    @Override
-    protected void onSizeChanged(int _w, int _h, int _oldW, int _oldH) {
-        super.onSizeChanged(_w, _h, _oldW, _oldH);
-    }
-
-    public void move(boolean _selected) {
-        mMove = _selected;
-    }
-
-    public void setTranslate(float _x, float _y) {
-        mX = _x;
-        mY = _y;
-    }
-
-    public float getTranslateX() {
-        return mX;
-    }
-
-    public float getTranslateY() {
-        return mY;
+    public void add(int _value) {
+        super.add();
+        mCount = 0;
+        mAdd.getAddPath(mActivity.getTree(), _value);
+        mAdd.start();
+        mValue = _value;
     }
 
     public void inOrder() {
@@ -90,7 +77,29 @@ public class BSTPointerView extends BSTView {
 
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
+        if(mValues.getCurrentOperation() == Operation.ADD) {
+            mAdd.animate();
+            mAdd.animatePointer();
+            mAdd.drawAddedElement(mValue, _canvas);
+            mAdd.drawComparision(mValue, mCount, _canvas, mOnSurfaceColor, mPrimaryColor);
+        }
         drawTree(_canvas);
+    }
+
+    @Override
+    protected void animateOperations(Canvas _canvas, BinaryTreeNode _n) {
+        if (_n.isSelected()) {
+            if(mValues.getCurrentOperation() == Operation.ADD) {
+                mAdd.animate();
+                _canvas.drawCircle(_n.getPoint().x, _n.getPoint().y, mValues.getRadius(), mValues.getAnimPaint());
+            }
+        } else {
+            mValues.getItemPaint().setColor(mPrimaryColor);
+            mValues.getItemPaint().setStrokeWidth(6);
+            mValues.getItemPaint().setStyle(Paint.Style.STROKE);
+            mValues.getItemTextPaint().setColor(mOnSurfaceColor);
+        }
+        _canvas.drawCircle(_n.getPoint().x, _n.getPoint().y, mValues.getRadius(), mValues.getItemPaint());
     }
 
     private void drawArrows(BinaryTreeNode _n, BinaryTreeNode _nPre, float _x, float _y, Canvas _canvas) {
@@ -197,18 +206,20 @@ public class BSTPointerView extends BSTView {
         drawNull(_canvas, _n);
     }
 
-
     @Override
     public void onAnimationStart(Animator _animation) {
-        mInOrder.animStart(_animation, mActivity.getBinding().BSTActivityVectorOutput, mCount);
-        mAdd.animStart(_animation, mCount);
+        if (mValues.getCurrentOperation() == Operation.ADD) {
+            mAdd.animStart(_animation, mCount);
+        } else if(mValues.getCurrentOperation() == Operation.INORDER) {
+            mInOrder.animStart(_animation, mActivity.getBinding().BSTActivityVectorOutput, mCount);
+        }
         invalidate();
     }
 
     @Override
     public void onAnimationEnd(Animator _animation) {
         if (mValues.getCurrentOperation() == Operation.ADD) {
-            mCount = mAdd.animEnd(_animation, mCount);
+            mCount = mAdd.animEnd(_animation, mCount,mActivity, mValue);
         } else if(mValues.getCurrentOperation() == Operation.INORDER) {
             mCount = mInOrder.animEnd(_animation, mCount);
         }
@@ -217,7 +228,6 @@ public class BSTPointerView extends BSTView {
 
     @Override
     public void onAnimationCancel(Animator _animation) {
-
     }
 
     @Override

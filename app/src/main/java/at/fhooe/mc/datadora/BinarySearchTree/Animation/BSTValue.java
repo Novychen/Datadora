@@ -10,6 +10,7 @@ import at.fhooe.mc.datadora.BinarySearchTree.BinaryTreeNode;
 public class BSTValue {
 
     private Paint mItemPaint;
+    private Paint mAnimPaint;
     private Paint mItemTextPaint;
     private int mPosition;
     private int mCurrentOperation;
@@ -23,18 +24,19 @@ public class BSTValue {
 
     }
 
-    public static BSTValue getInstance(Paint _item, Paint _text, int _pos, int _operation) {
+    public static BSTValue getInstance(Paint _item, Paint _text, Paint _anim, int _pos, int _operation) {
         if(mInstance == null) {
-            mInstance = new BSTValue(_item, _text, _pos,_operation);
+            mInstance = new BSTValue(_item, _text, _anim, _pos,_operation);
         }
         return mInstance;
     }
 
-    private BSTValue(Paint _item, Paint _text, int _pos, int _operation) {
-            mItemPaint = _item;
-            mItemTextPaint = _text;
-            mPosition = _pos;
-            mCurrentOperation = _operation;
+    private BSTValue(Paint _item, Paint _text, Paint _anim, int _pos, int _operation) {
+        mItemPaint = _item;
+        mItemTextPaint = _text;
+        mAnimPaint = _anim;
+        mPosition = _pos;
+        mCurrentOperation = _operation;
     }
 
     public Paint getItemPaint() {
@@ -43,6 +45,14 @@ public class BSTValue {
 
     public void setItemPaint(Paint _itemPaint) {
         mItemPaint = _itemPaint;
+    }
+
+    public Paint getAnimPaint() {
+        return mAnimPaint;
+    }
+
+    public void setAnimPaint(Paint _animPaint) {
+        mAnimPaint = _animPaint;
     }
 
     public Paint getItemTextPaint() {
