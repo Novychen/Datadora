@@ -2,24 +2,14 @@ package at.fhooe.mc.datadora;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 
-import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTree;
 import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTreeActivity;
-import at.fhooe.mc.datadora.BinarySearchTree.BinaryTreeNode;
-import at.fhooe.mc.datadora.LinkedList.LinkedListActivity;
+import at.fhooe.mc.datadora.LinkedList.DoubleLinkedListActivity;
+import at.fhooe.mc.datadora.LinkedList.SingleLinkedListActivity;
 import at.fhooe.mc.datadora.Queue.QueueActivity;
 import at.fhooe.mc.datadora.Stack.StackActivity;
 import at.fhooe.mc.datadora.databinding.ActivityMainBinding;
@@ -72,13 +62,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(i);
 
         } else if (_v == mBinding.MainActivitySingleListCard) {
-            Intent i = new Intent(this, TestActivity.class);
+            Intent i = new Intent(this, SingleLinkedListActivity.class);
+
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_X, x);
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_Y, y);
             startActivity(i);
 
         } else if (_v == mBinding.MainActivityDoubleListCard) {
-            Intent i = new Intent(this, LinkedListActivity.class);
+            Intent i = new Intent(this, DoubleLinkedListActivity.class);
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_X, x);
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_Y, y);
             startActivity(i);

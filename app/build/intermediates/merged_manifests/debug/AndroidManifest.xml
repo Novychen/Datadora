@@ -18,14 +18,18 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="at.fhooe.mc.datadora.TestActivity" />
         <activity
             android:name="at.fhooe.mc.datadora.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="at.fhooe.mc.datadora.LinkedList.LinkedListActivity"
+            android:name="at.fhooe.mc.datadora.LinkedList.SingleLinkedListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="at.fhooe.mc.datadora.LinkedList.DoubleLinkedListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustResize" />

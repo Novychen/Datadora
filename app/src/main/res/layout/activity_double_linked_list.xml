@@ -6,7 +6,7 @@
     style="@style/Surface"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LinkedList.LinkedListActivity">
+    tools:context=".LinkedList.DoubleLinkedListActivity">
 
     <ToggleButton
         android:id="@+id/LinkedList_Activity_Switch"
@@ -84,12 +84,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LinkedList_Activity_Switch">
 
-        <at.fhooe.mc.datadora.LinkedList.LinkedListView
-            android:id="@+id/LinkedList_Activity_LinkedListView"
+        <at.fhooe.mc.datadora.LinkedList.DoubleLinkedListView
+            android:id="@+id/DoubleLinkedList_Activity_LinkedListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </FrameLayout>
+
 
     <ScrollView
         android:id="@+id/DLL_Activity_Container"

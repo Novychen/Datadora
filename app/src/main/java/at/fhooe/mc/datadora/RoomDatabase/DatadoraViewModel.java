@@ -26,6 +26,9 @@ public class DatadoraViewModel extends AndroidViewModel {
      */
     private final LiveData<List<StackRoom>> mAllStackValues;
     private final LiveData<List<QueueRoom>> mAllQueueValues;
+    private final LiveData<List<SingleLinkedListRoom>> mAllSingleLinkedListValues;
+    private final LiveData<List<DoubleLinkedListRoom>> mAllDoubleLinkedListValues;
+    private final LiveData<List<BinarySearchTreeRoom>> mAllBinarySearchTreeValues;
 
 
     /**
@@ -37,6 +40,9 @@ public class DatadoraViewModel extends AndroidViewModel {
         mRepository = new DatadoraRepository(application);
         mAllStackValues = mRepository.getAllStackValues(); //get the values from the repo class
         mAllQueueValues = mRepository.getAllQueueValues();
+        mAllSingleLinkedListValues = mRepository.getAllSingleLinkedListValues();
+        mAllDoubleLinkedListValues = mRepository.getAllDoubleLinkedListValues();
+        mAllBinarySearchTreeValues = mRepository.getAllBinarySearchTreeValues();
     }
 
     public LiveData<List<StackRoom>> getmAllStackValues(){
@@ -44,6 +50,15 @@ public class DatadoraViewModel extends AndroidViewModel {
     }
     public LiveData<List<QueueRoom>> getmAllQueueValues(){
         return mAllQueueValues;
+    }
+    public LiveData<List<SingleLinkedListRoom>> getmAllSingleLinkedListValues(){
+        return mAllSingleLinkedListValues;
+    }
+    public LiveData<List<DoubleLinkedListRoom>> getmAllDoubleLinkedListValues(){
+        return mAllDoubleLinkedListValues;
+    }
+    public LiveData<List<BinarySearchTreeRoom>> getmAllBinarySearchTreeValuesValues(){
+        return mAllBinarySearchTreeValues;
     }
 
     public void insert(StackRoom stackVal){
@@ -53,12 +68,65 @@ public class DatadoraViewModel extends AndroidViewModel {
         mRepository.insert(queueVal);
     }
 
+    public void insertLast(SingleLinkedListRoom singleListVal){
+        mRepository.append(singleListVal);
+    }
+
+    public void insertFirst(SingleLinkedListRoom singleListVal){
+        mRepository.prepend(singleListVal);
+    }
+
+    public void insertAt(SingleLinkedListRoom singleListVal) {
+        mRepository.insertAt(singleListVal);
+    }
+
+    /*
+    public void insertAt(SingleLinkedListRoom singleListVal, int position){
+        mRepository.insertAt(singleListVal, position);
+    }
+
+     */
+
+
+
+    /*
+    public void update(SingleLinkedListRoom singleListVal){
+        mRepository.update(singleListVal);
+    }
+
+     */
+
+    public void insertLast(DoubleLinkedListRoom doubleListVal){
+        mRepository.append(doubleListVal);
+    }
+
+    public void insertFirst(DoubleLinkedListRoom doubleListVal){
+        mRepository.prepend(doubleListVal);
+    }
+
+    public void insertAt(DoubleLinkedListRoom doubleListVal) {
+        mRepository.insertAt(doubleListVal);
+    }
+
+    public void insert(BinarySearchTreeRoom bstVal){
+        mRepository.insert(bstVal);
+    }
+
 
     public void delete(StackRoom stackVal){
         mRepository.delete(stackVal);
     }
     public void delete(QueueRoom queueVal){
         mRepository.delete(queueVal);
+    }
+    public void delete(SingleLinkedListRoom singleListVal){
+        mRepository.delete(singleListVal);
+    }
+    public void delete(DoubleLinkedListRoom doubleListVal){
+        mRepository.delete(doubleListVal);
+    }
+    public void delete(BinarySearchTreeRoom bstVal){
+        mRepository.delete(bstVal);
     }
 
     public void deleteByIDStack(int stackVal){
@@ -68,11 +136,53 @@ public class DatadoraViewModel extends AndroidViewModel {
         mRepository.deleteByIDQueue(queueVal);
     }
 
+    public void deleteByIdSLLFirst(int singleLinkedListVal){
+        mRepository.deleteByIDSingleListFirst(singleLinkedListVal);
+    }
+
+    public void deleteByIdSLLLast(int singleLinkedListVal){
+        mRepository.deleteByIDSingleListLast(singleLinkedListVal);
+    }
+
+    public void deleteByIdSLLAt(int singleLinkedListVal){
+        mRepository.deleteByIDSingleListAt(singleLinkedListVal);
+    }
+
+
+    public void deleteByIdDLLFirst(int doubleLinkedListVal){
+        mRepository.deleteByIDDoubleListFirst(doubleLinkedListVal);
+    }
+
+    public void deleteByIdDLLLast(int doubleLinkedListVal){
+        mRepository.deleteByIDDoubleListLast(doubleLinkedListVal);
+    }
+
+    public void deleteByIdDLLAt(int doubleLinkedListVal){
+        mRepository.deleteByIDDoubleListAt(doubleLinkedListVal);
+    }
+
+    public void deleteByIdBST(int bstVal){
+        mRepository.deleteByIDBinarySearchTree(bstVal);
+    }
+
+
     public void deleteAllStackDatabaseEntries(){
         mRepository.deleteAllStack();
     }
     public void deleteAllQueueDatabaseEntries(){
         mRepository.deleteAllQueue();
     }
+    public void deleteAllSingleLinkedListDatabaseEntries(){
+        mRepository.deleteAllSingleLinkedList();
+    }
+
+    public void deleteAllDoubleLinkedListDatabaseEntries(){
+        mRepository.deleteAllDoubleLinkedList();
+    }
+
+    public void deleteAllBSTDatabaseEntries(){
+        mRepository.deleteAllBinarySearchTree();
+    }
+
 
 }

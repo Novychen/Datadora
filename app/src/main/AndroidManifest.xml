@@ -8,14 +8,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestActivity"></activity>
         <activity
             android:name=".AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".LinkedList.LinkedListActivity"
+            android:name=".LinkedList.SingleLinkedListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".LinkedList.DoubleLinkedListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustResize" />

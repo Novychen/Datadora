@@ -209,7 +209,6 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
     private void pop(){
         if (!mBinding.StackActivityStackView.getStackNumbers().isEmpty()) {
             mPressedPop = true;
-            //delete the last element of the stack (mStack), then let it be (visually) removed by the StackView
             mBinding.StackActivityReturnValue.setText(String.format("%s", mBinding.StackActivityStackView.getStackNumbers().
                     get(mBinding.StackActivityStackView.getStackNumbers().size() - 1).toString()));
 

@@ -26,14 +26,14 @@ import androidx.annotation.Nullable;
 
 import java.util.Vector;
 
+import androidx.lifecycle.ViewModelProvider;
 import at.fhooe.mc.datadora.R;
+import at.fhooe.mc.datadora.RoomDatabase.DatadoraViewModel;
+import at.fhooe.mc.datadora.RoomDatabase.SingleLinkedListRoom;
 
-public class LinkedListView extends View implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
+ public class SingleLinkedListView extends View implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
 
-    //TODO: Tail & Head animation aus/einblenden statt "springen"
-    //TODO: Animation von add und remove von den Pfeilen
-
-    private static final String TAG = "LinkedListView : ";
+    private static final String TAG = "SingleLinkedListView : ";
     private static final String PROPERTY_TRANSLATE_Y_APPEND = "PROPERTY_TRANSLATE_APPEND";
     private static final String PROPERTY_ALPHA_APPEND = "PROPERTY_ALPHA_APPEND";
     private static final String PROPERTY_TRANSLATE_Y_PREPEND = "PROPERTY_TRANSLATE_Y_PREPEND";
@@ -169,7 +169,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
 
     enum Type {HEAD, TAIL, HEAD_TAIL}
 
-    private LinkedListActivity mActivity;
+    private SingleLinkedListActivity mLinkedListActivity;
 
     // Vector that contains all Rects, that are drawn
     private final Vector<RectF> mLinkedList = new Vector<>();
@@ -177,8 +177,15 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
     // Vector that contains all Integers, that are drawn / the user put in
     private final Vector<Integer> mLinkedListNumbers = new Vector<>();
 
+    //Getter for the mLinkedListNumbers
+    public Vector<Integer> getSingleLinkedListNumbers() {
+         return mLinkedListNumbers;
+     }
+
     // Vector used for animation
     private final Vector<Integer> mLinkedListAnimation = new Vector<>();
+
+    private DatadoraViewModel mDatadoraViewModel;
 
     // Rect in order to save the TextBounds from the current number
     private final Rect mBounds = new Rect();
@@ -243,17 +250,17 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
 
     private boolean mSwitch;
 
-    public LinkedListView(Context context) {
+    public SingleLinkedListView(Context context) {
         super(context);
         init();
     }
 
-    public LinkedListView(Context context, @Nullable AttributeSet attrs) {
+    public SingleLinkedListView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public LinkedListView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public SingleLinkedListView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -280,18 +287,16 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mPositionTextPaint.setTextSize(30);
     }
 
-    protected void setActivity(LinkedListActivity _activity) {
-        mActivity = _activity;
+    protected void setActivity(SingleLinkedListActivity _activity) {
+        mLinkedListActivity = _activity;
+        mDatadoraViewModel = new ViewModelProvider(mLinkedListActivity).get(
+                DatadoraViewModel.class);
     }
 
     public void setSwitch(boolean isChecked) {
         mDraw = !isChecked;
         mSwitch = isChecked;
         invalidate();
-    }
-
-    public Vector<Integer> getLinkedListNumbers() {
-        return mLinkedListNumbers;
     }
 
     protected void sorted(){
@@ -301,6 +306,29 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
     protected void unsorted(){
         mCurrentFilter = Filter.UNSORTED;
     }
+
+
+     /**
+      * Loads the saved integers from the database
+      * There is an observer that observes the LiveData from
+      * the database and is notified when they change.
+      */
+     private void loadSingleLinkedListFromDatabase(){
+
+         mDatadoraViewModel.getmAllSingleLinkedListValues().observe(mLinkedListActivity, listRooms -> {
+
+             if(mLinkedListNumbers.isEmpty() && mCurrentOperation != Operation.RANDOM) {
+                 for (SingleLinkedListRoom slr : listRooms) {
+                     mLinkedList.add(new RectF());
+                     mLinkedListNumbers.add(slr.getVal());
+
+
+                 }
+             }
+             reScale();
+             invalidate();
+         });
+     }
 
     protected void head(){
         mCurrentType = Type.HEAD;
@@ -322,6 +350,8 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(0,_value);
+        //sendInputSingleLinkedListValuesToDatabase(_value);
+        mDatadoraViewModel.insertFirst(new SingleLinkedListRoom(_value));
         reScale();
         mAnimatorPrepend.start();
         mDraw = false;
@@ -332,6 +362,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(_value);
+        mDatadoraViewModel.insertLast(new SingleLinkedListRoom(_value));
         reScale();
         mAnimatorAppend.start();
         mDraw = false;
@@ -342,6 +373,9 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(_pos,_value);
+        Log.i(TAG, "LLView: insertAt: value: " + _value);
+        Log.i(TAG, "LLView: insertAt: position : " + _pos);
+        mDatadoraViewModel.insertAt(new SingleLinkedListRoom(_value, _pos));
         reScale();
         mPosition = _pos;
         mAnimatorInsert.start();
@@ -376,6 +410,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mAnimatorDeleteLast.setRepeatCount(mLinkedListNumbers.size()-1);
         mAnimatorDeleteLast.start();
         reScaleUndo();
+        mDatadoraViewModel.deleteAllSingleLinkedListDatabaseEntries();
     }
 
 
@@ -425,12 +460,20 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
     }
 
     protected void random(Vector<Integer> _list) {
+        mCurrentOperation = Operation.RANDOM;
         mLinkedListNumbers.clear();
         mLinkedList.clear();
         mLinkedListAnimation.clear();
         mPositionAnimation = 0;
         mLinkedListAnimation.addAll(_list);
-        mCurrentOperation = Operation.RANDOM;
+
+        mDatadoraViewModel.deleteAllSingleLinkedListDatabaseEntries();
+        reScaleUndo();
+
+        for (int i = 0; i < _list.size(); i++){
+            mDatadoraViewModel.insertLast(new SingleLinkedListRoom(_list.elementAt(i)));
+        }
+
         mAnimatorRandom.setRepeatCount(_list.size() - 1);
         mAnimatorRandom.start();
     }
@@ -462,18 +505,15 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mMaxWidth = (float) _w - xpad - 6;
         mScale = 1;
 
-        //Visualize the vector in the Shared Preferences
-        Vector<Integer> v = mActivity.loadFromSave();
-        if(v != null) {
-            for (int i = 0; i < v.size(); i++) {
-                mLinkedListNumbers.add(v.get(i));
-                mLinkedList.add(new RectF());
-            }
-            mCurrentOperation = Operation.SAVE;
-            reScale();
-        }
-
         setUpAnimation();
+
+        Log.i(TAG, "------onSizeChanged was called, mLinkedList and mLinkedListNumbers " +
+                "was cleared and vals loadedFromDatabase again-------");
+        mLinkedList.clear();
+        mLinkedListNumbers.clear();
+        loadSingleLinkedListFromDatabase();
+        mCurrentOperation = Operation.SAVE;
+        reScale();
         invalidate();
     }
 
@@ -519,6 +559,10 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
             mLinkedListNumbers.add(mLinkedListAnimation.get(mPositionAnimation));
             mLinkedList.add(new RectF());
             mPositionAnimation++;
+
+            Log.i(TAG, "View mAnimatorRandom onAnimationStart mLinkedListAnimation: " + mLinkedListAnimation);
+            Log.i(TAG, "View mAnimatorRandom onAnimationStart mLinkedListNumbers: " + mLinkedListNumbers);
+            Log.i(TAG, "View mAnimatorRandom onAnimationStart mPositionAnimation: " + mPositionAnimation);
         }
     }
 
@@ -527,11 +571,11 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         if(_animation == mAnimatorGetText) {
             if(mCurrentOperation == Operation.PREDECESSOR || mCurrentOperation == Operation.SUCCESSOR) {
                 if (mCurrentOperation == Operation.PREDECESSOR && mPosition < 0) {
-                    Toast.makeText(mActivity, R.string.LinkedList_Activity_Pre_Empty, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mLinkedListActivity, R.string.LinkedList_Activity_Pre_Empty, Toast.LENGTH_SHORT).show();
                 } else if (mCurrentOperation == Operation.SUCCESSOR && mPosition >= mLinkedListNumbers.size()) {
-                    Toast.makeText(mActivity, R.string.LinkedList_Activity_Succ_Empty, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mLinkedListActivity, R.string.LinkedList_Activity_Succ_Empty, Toast.LENGTH_SHORT).show();
                 } else {
-                    mActivity.getBinding().LinkedListActivityReturnValue.setText(String.format("%s", mLinkedListNumbers.get(mPosition).toString()));
+                    mLinkedListActivity.getBinding().LinkedListActivityReturnValue.setText(String.format("%s", mLinkedListNumbers.get(mPosition).toString()));
                 }
                 mTouched = false;
             }
@@ -540,7 +584,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
                 mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
                 mLinkedList.remove(mLinkedList.size() - 1);
             }
-            mActivity.setDelete(false);
+            mLinkedListActivity.setPressedDelete(false);
         }
     }
 
@@ -552,9 +596,14 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
     @Override
     public void onAnimationRepeat(Animator _animation) {
         if(_animation == mAnimatorRandom) {
+
             mLinkedListNumbers.add(mLinkedListAnimation.get(mPositionAnimation));
             mLinkedList.add(new RectF());
             mPositionAnimation++;
+            Log.i(TAG, "View mAnimatorRandom onAnimationRepeat mLinkedListAnimation: " + mLinkedListAnimation);
+            Log.i(TAG, "View mAnimatorRandom onAnimationRepeat mLinkedListNumbers: " + mLinkedListNumbers);
+            Log.i(TAG, "View mAnimatorRandom onAnimationRepeat mPositionAnimation: " + mPositionAnimation);
+
         } else if(_animation == mAnimatorGetText) {
             if (mCurrentOperation == Operation.PREDECESSOR) { mPosition--;
             } else if (mCurrentOperation == Operation.SUCCESSOR) { mPosition++;
@@ -676,16 +725,26 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         }
 
         if (mCurrentOperation == Operation.DELETE_AT && !mAnimatorDeleteAt.isRunning()) {
+            mDatadoraViewModel.deleteByIdSLLAt(mLinkedListNumbers.get(mPosition)); //remove from database
             mLinkedList.remove(mPosition);
             mLinkedListNumbers.remove(mPosition);
-            mActivity.setDelete(false);
+            mLinkedListActivity.setPressedDelete(false);
+            mCurrentOperation = Operation.SAVE;
         } else if (mCurrentOperation == Operation.DELETE_FIRST && !mAnimatorDeleteFirst.isRunning()) {
+            Log.i(TAG, "LinkedListView onDraw: numbers: " + mLinkedListNumbers);
+            Log.i(TAG, "LinkedListView onDraw: delete first: " + mLinkedListNumbers.get(0));
+
+            mDatadoraViewModel.deleteByIdSLLFirst(mLinkedListNumbers.get(0)); //remove from database
             mLinkedList.remove(0);
             mLinkedListNumbers.remove(0);
-            mActivity.setDelete(false);
+            mLinkedListActivity.setPressedDelete(false);
+            mCurrentOperation = Operation.SAVE;
         } else if(mCurrentOperation == Operation.DELETE_LAST && !mAnimatorDeleteLast.isRunning()) {
+            mDatadoraViewModel.deleteByIdSLLLast(mLinkedListNumbers.get(
+                    mLinkedListNumbers.size() - 1)); //remove from database
             mLinkedListNumbers.remove(mLinkedListNumbers.size() - 1);
             mLinkedList.remove(mLinkedList.size() - 1);
+            mCurrentOperation = Operation.SAVE;
         } else if (mCurrentOperation == Operation.GET_SIZE && !mAnimatorGetText.isRunning()) {
             mItemPaint.setColor(mSurfaceColor);
             mItemPaint.setStyle(Paint.Style.FILL);
@@ -697,6 +756,8 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
             int pos = mLinkedList.size() - 1;
             mItemTextPaint.getTextBounds(mLinkedListNumbers.get(pos).toString(), 0, mLinkedListNumbers.get(pos).toString().length(), mBounds);
             _canvas.drawText(mLinkedListNumbers.get(pos).toString(), getExactCenterX(mLinkedList.get(pos)) - mBounds.exactCenterX(), (getExactCenterY(mLinkedList.get(pos)) - mBounds.exactCenterY()), mItemTextPaint);
+        } else if (mCurrentOperation == Operation.RANDOM && !mAnimatorRandom.isRunning()){
+            mLinkedListActivity.setPressedRandom(false);
         }
     }
 

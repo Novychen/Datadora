@@ -2,6 +2,7 @@ package at.fhooe.mc.datadora.RoomDatabase;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,6 +12,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTree;
 
 
 /**
@@ -19,7 +21,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  * Room is a database layer on top of an SQLite database.
  * There is only one instance needed of the database in the whole app.
  */
-@Database(entities = {StackRoom.class, QueueRoom.class}, version = 4, exportSchema = false)
+@Database(entities = {StackRoom.class, QueueRoom.class, SingleLinkedListRoom.class,
+        DoubleLinkedListRoom.class, BinarySearchTreeRoom.class}, version = 10, exportSchema = false)
 public abstract class DatadoraDatabase extends RoomDatabase {
 
 
@@ -44,6 +47,9 @@ public abstract class DatadoraDatabase extends RoomDatabase {
      */
     public abstract StackDAO stackDAO();
     public abstract QueueDAO queueDAO();
+    public abstract SingleLinkedListDAO singleLinkedListDAO();
+    public abstract DoubleLinkedListDAO doubleLinkedListDAO();
+    public abstract BinarySearchTreeDAO binarySearchTreeDAO();
 
     /**
      * Create the database. Only one instance possible because of singleton.
@@ -72,6 +78,31 @@ public abstract class DatadoraDatabase extends RoomDatabase {
 
         public void onOpen(@NonNull SupportSQLiteDatabase db){
             super.onOpen(db);
+
+            databaseWriteExecutor.execute(() -> {
+
+                //keep in mind that onOpen is only called when app started and database opened
+                SingleLinkedListDAO singleLinkedListDAO = mInstance.singleLinkedListDAO();
+                DoubleLinkedListDAO doubleLinkedListDAO = mInstance.doubleLinkedListDAO();
+
+                //continue the position counter after app restart (until the list is cleared)
+                int position = singleLinkedListDAO.getMaxPosition();
+                int pos2 = doubleLinkedListDAO.getMaxPosition();
+                Log.i("TAG", "DatadoraDatabase onOpen gerMaxPosition was: " + singleLinkedListDAO.getMaxPosition());
+
+                if (position != 0){
+                    singleLinkedListDAO.setLastPosition(position);
+                    Log.i("TAG", "DatadoraDatabase onOpen position was set to: " + position);
+                }
+
+                if (pos2 != 0){
+                    doubleLinkedListDAO.setLastPosition(pos2);
+                }
+
+
+            });
+
+
         }
 
         /**
@@ -104,6 +135,56 @@ public abstract class DatadoraDatabase extends RoomDatabase {
                 queueDAO.insert(qVal);
                 qVal = new QueueRoom(7);
                 queueDAO.insert(qVal);
+
+                SingleLinkedListDAO singleLinkedListDAO = mInstance.singleLinkedListDAO();
+                singleLinkedListDAO.deleteAllSingleLinkedListDBEntries();
+                SingleLinkedListRoom sllr = new SingleLinkedListRoom(2);
+                singleLinkedListDAO.insert(sllr);
+                sllr = new SingleLinkedListRoom(4);
+                singleLinkedListDAO.insert(sllr);
+                sllr = new SingleLinkedListRoom(6);
+                singleLinkedListDAO.insert(sllr);
+                sllr = new SingleLinkedListRoom(8);
+                singleLinkedListDAO.insert(sllr);
+                sllr = new SingleLinkedListRoom(10);
+                singleLinkedListDAO.insert(sllr);
+                sllr = new SingleLinkedListRoom(12);
+                singleLinkedListDAO.insert(sllr);
+
+                DoubleLinkedListDAO doubleLinkedListDAO = mInstance.doubleLinkedListDAO();
+                doubleLinkedListDAO.deleteAllDoubleLinkedListDBEntries();
+                DoubleLinkedListRoom dllr = new DoubleLinkedListRoom(1);
+                doubleLinkedListDAO.insert(dllr);
+                dllr = new DoubleLinkedListRoom(3);
+                doubleLinkedListDAO.insert(dllr);
+                dllr = new DoubleLinkedListRoom(5);
+                doubleLinkedListDAO.insert(dllr);
+                doubleLinkedListDAO.insert(dllr);
+                dllr = new DoubleLinkedListRoom(7);
+                doubleLinkedListDAO.insert(dllr);
+                doubleLinkedListDAO.insert(dllr);
+                dllr = new DoubleLinkedListRoom(9);
+                doubleLinkedListDAO.insert(dllr);
+
+                BinarySearchTreeDAO bstDAO = mInstance.binarySearchTreeDAO();
+                bstDAO.deleteAllBinarySearchTreeDBEntries();
+                BinarySearchTreeRoom bstr = new BinarySearchTreeRoom(88);
+                bstDAO.insert(bstr);
+                bstr = new BinarySearchTreeRoom(65);
+                bstDAO.insert(bstr);
+                bstr = new BinarySearchTreeRoom(97);
+                bstDAO.insert(bstr);
+                bstr = new BinarySearchTreeRoom(54);
+                bstDAO.insert(bstr);
+                bstr = new BinarySearchTreeRoom(82);
+                bstDAO.insert(bstr);
+                bstr = new BinarySearchTreeRoom(99);
+                bstDAO.insert(bstr);
+                bstr = new BinarySearchTreeRoom(76);
+                bstDAO.insert(bstr);
+                bstr = new BinarySearchTreeRoom(80);
+                bstDAO.insert(bstr);
+
 
             });
 

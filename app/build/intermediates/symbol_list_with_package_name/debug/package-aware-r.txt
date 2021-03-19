@@ -1703,6 +1703,7 @@ id BST_Fragment_Root
 id BST_Fragment_Size
 id CTRL
 id DLL_Activity_Container
+id DoubleLinkedList_Activity_LinkedListView
 id FUNCTION
 id LinkedList_Activity
 id LinkedList_Activity_Add_Append_RadioButton
@@ -1747,7 +1748,6 @@ id LinkedList_Activity_Get_Title
 id LinkedList_Activity_Guideline
 id LinkedList_Activity_InputSlider
 id LinkedList_Activity_InputValue
-id LinkedList_Activity_LinkedListView
 id LinkedList_Activity_Random_Background
 id LinkedList_Activity_Random_Text
 id LinkedList_Activity_ReturnText
@@ -1813,6 +1813,7 @@ id SHOW_ALL
 id SHOW_PATH
 id SHOW_PROGRESS
 id SYM
+id SingleLinkedList_Activity_LinkedListView
 id Stack_Activity
 id Stack_Activity_Box_Return
 id Stack_Activity_Button_Clear
@@ -1910,7 +1911,6 @@ id beginning
 id blocking
 id bottom
 id bounce
-id button
 id buttonPanel
 id cancel_action
 id cancel_button
@@ -2009,7 +2009,6 @@ id ifRoom
 id ignore
 id ignoreRequest
 id image
-id imageView
 id info
 id invisible
 id italic
@@ -2268,11 +2267,11 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_about
 layout activity_binary_search_tree
-layout activity_linked_list
+layout activity_double_linked_list
 layout activity_main
 layout activity_queue
+layout activity_single_linked_list
 layout activity_stack
-layout activity_test
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog

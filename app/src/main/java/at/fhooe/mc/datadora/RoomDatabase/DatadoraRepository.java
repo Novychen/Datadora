@@ -3,7 +3,6 @@ package at.fhooe.mc.datadora.RoomDatabase;
 import android.app.Application;
 
 import java.util.List;
-import java.util.Vector;
 
 import androidx.lifecycle.LiveData;
 
@@ -18,6 +17,15 @@ public class DatadoraRepository {
     private final QueueDAO mQueueDao;
     private final LiveData<List<QueueRoom>> mAllQueueValues;
 
+    private final SingleLinkedListDAO mSingleListDao;
+    private final LiveData<List<SingleLinkedListRoom>> mAllSingleListValues;
+
+    private final DoubleLinkedListDAO mDoubleListDao;
+    private final LiveData<List<DoubleLinkedListRoom>> mAllDoubleListValues;
+
+    private final BinarySearchTreeDAO mBSTDao;
+    private final LiveData<List<BinarySearchTreeRoom>> mAllBSTValues;
+
     /**
      * Constructor of the repository
      * The DAO is passed here because through the DAO the read/write methods can be accessed.
@@ -29,9 +37,15 @@ public class DatadoraRepository {
 
         mStackDao = db.stackDAO();
         mQueueDao = db.queueDAO();
+        mSingleListDao = db.singleLinkedListDAO();
+        mDoubleListDao = db.doubleLinkedListDAO();
+        mBSTDao = db.binarySearchTreeDAO();
 
         mAllStackValues = mStackDao.getAllStackValues();
         mAllQueueValues = mQueueDao.getAllQueueValues();
+        mAllSingleListValues = mSingleListDao.getAllSingleLinkedListValues();
+        mAllDoubleListValues = mDoubleListDao.getAllDoubleLinkedListValues();
+        mAllBSTValues = mBSTDao.getAllBSTValues();
 
     }
 
@@ -39,19 +53,26 @@ public class DatadoraRepository {
     /**
      * Room executes all queries on a separate thread.
      * Observed LiveData will notify the observer when the data has changed.
-     * @return all stack values in the stack table
+     * @return all the values of each table
      */
     LiveData<List<StackRoom>> getAllStackValues() {
         return mAllStackValues;
     }
 
-    /**
-     * Room executes all queries on a separate thread.
-     * Observed LiveData will notify the observer when the data has changed.
-     * @return all queue values in the queue table
-     */
     LiveData<List<QueueRoom>> getAllQueueValues() {
         return mAllQueueValues;
+    }
+
+    LiveData<List<SingleLinkedListRoom>> getAllSingleLinkedListValues() {
+        return mAllSingleListValues;
+    }
+
+    LiveData<List<DoubleLinkedListRoom>> getAllDoubleLinkedListValues() {
+        return mAllDoubleListValues;
+    }
+
+    LiveData<List<BinarySearchTreeRoom>> getAllBinarySearchTreeValues() {
+        return mAllBSTValues;
     }
 
 
@@ -76,6 +97,73 @@ public class DatadoraRepository {
         });
     }
 
+
+    void append(SingleLinkedListRoom singleListVal) {
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mSingleListDao.append(singleListVal);
+        });
+    }
+
+    void prepend(SingleLinkedListRoom singleListVal) {
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mSingleListDao.prepend(singleListVal);
+        });
+    }
+
+
+    void insertAt(SingleLinkedListRoom singleListVal, int position) {
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mSingleListDao.insertAt(singleListVal, position);
+        });
+    }
+
+    public void insertAt(SingleLinkedListRoom singleListVal) {
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mSingleListDao.insertAt(singleListVal);
+        });
+    }
+
+    /*
+    void update(SingleLinkedListRoom singleListVal) {
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mSingleListDao.updateTwo(singleListVal);
+        });
+    }
+
+     */
+
+
+    void append(DoubleLinkedListRoom doubleListVal) {
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mDoubleListDao.append(doubleListVal);
+        });
+    }
+
+    void prepend(DoubleLinkedListRoom doubleListVal) {
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mDoubleListDao.prepend(doubleListVal);
+        });
+    }
+
+
+    void insertAt(DoubleLinkedListRoom doubleListVal, int position) {
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mDoubleListDao.insertAt(doubleListVal, position);
+        });
+    }
+
+    public void insertAt(DoubleLinkedListRoom doubleListVal) {
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mDoubleListDao.insertAt(doubleListVal);
+        });
+    }
+
+    void insert(BinarySearchTreeRoom bstVal) {
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mBSTDao.insert(bstVal);
+        });
+    }
+
     void delete(StackRoom stackVal){
         DatadoraDatabase.databaseWriteExecutor.execute(() -> {
             mStackDao.delete(stackVal);
@@ -85,6 +173,25 @@ public class DatadoraRepository {
     void delete(QueueRoom queueVal){
         DatadoraDatabase.databaseWriteExecutor.execute(() -> {
             mQueueDao.delete(queueVal);
+        });
+    }
+
+    void delete(SingleLinkedListRoom singleListVal){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mSingleListDao.delete(singleListVal);
+        });
+    }
+
+    void delete(DoubleLinkedListRoom doubleListVal){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mDoubleListDao.delete(doubleListVal);
+        });
+    }
+
+
+    void delete(BinarySearchTreeRoom bstVal){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mBSTDao.delete(bstVal);
         });
     }
 
@@ -100,6 +207,55 @@ public class DatadoraRepository {
         });
     }
 
+    void deleteByIDSingleListFirst(int singleListVal){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mSingleListDao.deleteByIDFirst(singleListVal);
+            mSingleListDao.decrementPositionColumn();
+        });
+    }
+
+    void deleteByIDSingleListLast(int singleListVal){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mSingleListDao.deleteByIDLast(singleListVal);
+            mSingleListDao.setPositionDecrement();
+        });
+    }
+
+    void deleteByIDSingleListAt(int singleListVal){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mSingleListDao.deleteByIDAt(singleListVal);
+            //mSingleListDao.setPositionDecrement(); //TODO: check
+        });
+    }
+
+
+    void deleteByIDDoubleListFirst(int doubleListVal){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mDoubleListDao.deleteByIDFirst(doubleListVal);
+            mDoubleListDao.decrementPositionColumn();
+        });
+    }
+
+    void deleteByIDDoubleListLast(int doubleListVal){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mDoubleListDao.deleteByIDLast(doubleListVal);
+            mDoubleListDao.setPositionDecrement();
+        });
+    }
+
+    void deleteByIDDoubleListAt(int doubleListVal){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mDoubleListDao.deleteByIDAt(doubleListVal);
+            //mSingleListDao.setPositionDecrement(); //TODO: check
+        });
+    }
+
+    void deleteByIDBinarySearchTree(int bstVal){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mBSTDao.deleteByID(bstVal);
+        });
+    }
+
     void deleteAllStack(){
         DatadoraDatabase.databaseWriteExecutor.execute(mStackDao::deleteAllStackDBEntries);
     }
@@ -108,6 +264,23 @@ public class DatadoraRepository {
         DatadoraDatabase.databaseWriteExecutor.execute(mQueueDao::deleteAllQueueDBEntries);
     }
 
+    void deleteAllSingleLinkedList(){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mSingleListDao.deleteAllSingleLinkedListDBEntries();
+            mSingleListDao.resetPosition();
+        });
+    }
+
+    void deleteAllDoubleLinkedList(){
+        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
+            mDoubleListDao.deleteAllDoubleLinkedListDBEntries();
+            mDoubleListDao.resetPosition();
+        });
+    }
+
+    void deleteAllBinarySearchTree(){
+        DatadoraDatabase.databaseWriteExecutor.execute(mBSTDao::deleteAllBinarySearchTreeDBEntries);
+    }
 
 
 
