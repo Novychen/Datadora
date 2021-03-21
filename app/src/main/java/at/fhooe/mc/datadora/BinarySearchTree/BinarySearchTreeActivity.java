@@ -40,30 +40,20 @@ import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
 public class BinarySearchTreeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "BSTActivity :: ";
-    private final BinarySearchTree mTree = new BinarySearchTree(); //TODO: oder wird dieser hier überflüssig? let's see
-    private final Vector<BinaryTreeNode> mTreeUser = new Vector<>(); //TODO: so wie mStackNumbers, kann das hier weg oder?
+    private final BinarySearchTree mTree = new BinarySearchTree();
+    private final Vector<BinaryTreeNode> mTreeUser = new Vector<>();
     private ActivityBinarySearchTreeBinding mBinding;
     private boolean mSelected = false;
     private final String mDefaultValue = "empty";
     private Animation mAnimation;
 
-    //private SharedPreferences mSharedPreferences;
-    //private static final String SP_FILE_KEY = "at.fhooe.mc.datadora.BSTSharedPreferenceFile.BST";
-    //private static final String SP_VALUE_KEY = "at.fhooe.mc.datadora.BSTKey2020";
-
-    //TODO: getTree und getTreeUser werden sehr oft im View gecalled!
-    //TODO: Mit diesen beidne auch für die DB arbeiten oder?
-
     public BinarySearchTree getTree() {
         return mTree;
     }
 
-
     public Vector<BinaryTreeNode> getTreeUser() {
         return mTreeUser;
     }
-
-
 
     public ActivityBinarySearchTreeBinding getBinding() {
         return mBinding;
@@ -83,9 +73,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
         setUpToolbar();
         setUpTabLayout();
-
-        //TODO WEG
-        //mSharedPreferences = getSharedPreferences(SP_FILE_KEY, Context.MODE_PRIVATE);
 
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -191,13 +178,10 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         }).attach();
     }
 
-    /*
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
 
-        //String treeString = transformVectorToString();
-        // TODO WEG
-        //savedInstanceState.putString(SP_VALUE_KEY, treeString);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -205,16 +189,13 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     public void onRestoreInstanceState(Bundle savedInstanceState) {
 
         super.onRestoreInstanceState(savedInstanceState);
-        //loadData(savedInstanceState.getString(SP_VALUE_KEY));
     }
-
-     */
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //mBinding = null; //TODO: war einkommentiert??
+        mBinding = null;
     }
     @Override
     protected void onPause() {
@@ -224,10 +205,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     @Override
     protected void onResume() {
         super.onResume();
-
-        //TODO WEG
-        //String treeString = mSharedPreferences.getString(SP_VALUE_KEY, mDefaultValue);
-        //loadData(treeString);
      }
 
 
@@ -239,7 +216,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         mBinding.BSTActivityReturnValue.setText("");
         mBinding.BSTActivityVectorOutput.setText("");
 
-        //TODO: diesen mTree aus dieser Klasse dann mit mTree aus dem View ersetzen??
         if (mTree == null || mTree.getRoot() == null) {
             mBinding.BSTActivityFlowIcon.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear, this.getTheme()));
             mBinding.BSTActivityFlowText.setText(R.string.BST_Activity_Empty);
@@ -293,105 +269,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         onBackPressed();
         return true;
     }
-
-
-    ///////---------------------------------------AB HIER ALLES WEG DANN--------------------
-
-    /*
-
-    /**
-     * loads the saved data into the {@link BinarySearchTreeActivity#mTreeUser} and in the {@link BinarySearchTreeActivity#mTree} and displays it.
-     * @param _treeString the string that contains the saved data, which will be used to fill the tree
-     *
-    @Deprecated
-    private void loadData(String _treeString) {
-        Vector<Integer> v = transformStringToVector(_treeString);
-        if(v != null) {
-            mTreeUser.clear();
-            mTree.setRoot(null);
-            mTree.setSize(0);
-            for (int i = 0; i < v.size(); i++){
-                if(mTree.findNode(v.get(i)) == null) {
-                    BinaryTreeNode n = mTree.insertNode(v.get(i));
-                    mTree.updateChildCount(mTree.getRoot());
-                    mTreeUser.add(n);
-                    getBinding().BSTActivityView.add();
-                }
-            }
-        }
-    }
-
-    /**
-     * Takes the {@link BinarySearchTreeActivity#mTreeUser} and transforms it into a string
-     * @return the transformed string
-     *
-    @Deprecated
-    private String transformVectorToString() {
-        // Convert the vector containing the integers to a string
-        StringBuilder vectorStr = new StringBuilder();
-
-        // transform the vector into a string
-        for (int i = 0; i < mTreeUser.size(); i++) {
-            if (i != mTreeUser.size() - 1) {
-                vectorStr.append(mTreeUser.get(i).getData()).append(",");
-            } else {
-                vectorStr.append(mTreeUser.get(i).getData());
-            }
-        }
-
-        return String.valueOf(vectorStr);
-    }
-
-
-    /**
-     * Saves the current vector (input from the user) into the SharedPreferences.
-     */
-    /*
-    @Deprecated
-    private void save() {
-
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        String treeString = transformVectorToString();
-
-        editor.putString(SP_VALUE_KEY, treeString);
-        editor.apply();
-    }
-
-
-
-
-
-     * Transforms the given String into an Vector<Integer>
-     * @param _treeString the string that will be transformed
-     * @return the transformed vector, which represents the data, that the user put into this data structure.
-     *
-    @Deprecated
-    private Vector<Integer> transformStringToVector(String _treeString) {
-
-        if(_treeString == null || _treeString.contains(mDefaultValue) || _treeString.equals("")) {
-            return null;
-        }
-
-        Vector<Integer> vector = new Vector<>();
-
-        int begin;
-        int end = 0;
-        int i;
-
-        while(end > -1) {
-            begin = end;
-            end = _treeString.indexOf(',', begin);
-            if(end == -1) {
-                i = Integer.parseInt(_treeString.substring(begin));
-            } else {
-                i = Integer.parseInt(_treeString.substring(begin, end));
-                end++;
-            }
-            vector.add(i);
-        }
-        return vector;
-    }
-    */
 
 }
 

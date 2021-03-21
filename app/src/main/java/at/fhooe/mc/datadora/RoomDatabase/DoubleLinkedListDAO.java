@@ -61,9 +61,7 @@ public abstract class DoubleLinkedListDAO implements BaseDAO<DoubleLinkedListRoo
     }
 
     public void insertAt(DoubleLinkedListRoom val, int position){
-
         mPosition = position;
-
         insert(val);
     }
 
@@ -77,7 +75,6 @@ public abstract class DoubleLinkedListDAO implements BaseDAO<DoubleLinkedListRoo
     abstract public int getMaxPosition();
 
     public void setLastPosition(int position){
-
         mPosition = position;
         Log.i("TAG", "getLastPosition"+ position);
     }
@@ -101,7 +98,6 @@ public abstract class DoubleLinkedListDAO implements BaseDAO<DoubleLinkedListRoo
     @Query("DELETE FROM double_list_table WHERE val = :val AND id = (SELECT max(id) FROM double_list_table)")
     abstract public void deleteByIDLast(int val);
 
-    //TODO DOUBLE VALUES
     @Query("DELETE FROM double_list_table WHERE val = :val")
     abstract public void deleteByIDAt(int val);
 

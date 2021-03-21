@@ -29,7 +29,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".BinarySearchTree.BinarySearchTreeActivity"
-            android:screenOrientation="sensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustResize" />
         <activity

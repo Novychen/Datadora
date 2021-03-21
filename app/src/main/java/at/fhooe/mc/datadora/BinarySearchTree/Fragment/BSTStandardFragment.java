@@ -84,7 +84,6 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
             mTree.updateChildCount(mTree.getRoot());
             mTreeUser.add(n);
             mActivity.getBinding().BSTActivityView.add();
-            //TODO check if works
             mActivity.getBinding().BSTActivityView.sendInputBSTValuesToDatabase(_value); //add to database
             mRandom = false;
         } else if (!mRandom) {

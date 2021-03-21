@@ -80,22 +80,6 @@ public class DatadoraViewModel extends AndroidViewModel {
         mRepository.insertAt(singleListVal);
     }
 
-    /*
-    public void insertAt(SingleLinkedListRoom singleListVal, int position){
-        mRepository.insertAt(singleListVal, position);
-    }
-
-     */
-
-
-
-    /*
-    public void update(SingleLinkedListRoom singleListVal){
-        mRepository.update(singleListVal);
-    }
-
-     */
-
     public void insertLast(DoubleLinkedListRoom doubleListVal){
         mRepository.append(doubleListVal);
     }

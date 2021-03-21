@@ -8,6 +8,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper class for the Binary Search Tree. Stores the four different fragments in a list.
+ * The fragments are added in the setUpTabLayout() method in the BinarySearchTreeActivity
+ */
 public class BinarySearchTreeTabAdapter extends FragmentStateAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();

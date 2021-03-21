@@ -73,8 +73,7 @@ public class BSTView extends View {
     private final PointF mEnd = new PointF();
 
     private final float mTopSpace = 80;
-    private BinarySearchTree mTree; //TODO: das ist der tree, mal schauen wies weitergeht - wo wird der init?
-    //TODO: vielleicht kann man diesen binary tree umgehen und gleich mit denen aus der anderen klasse arbieten
+    private BinarySearchTree mTree;
     float mLength = 25;
 
     private float mX;
@@ -140,27 +139,18 @@ public class BSTView extends View {
 
         mDatadoraViewModel.getmAllBinarySearchTreeValuesValues().observe(mBSTActivity, treeRooms -> {
 
-            //if(mStackNumbers.isEmpty() && mCurrentOperation != StackView.Operation.RANDOM) {
-            //TODO: aber der mTree muss dann auch resetted werden - wo? in der onSizeChanged
-            //TODO: weiß nicht ob diesesmTree das richtige ist im if!
-
-            //Todo:
-
             if(mTree.size() == 0) {
                 for (BinarySearchTreeRoom tr : treeRooms) {
 
-                    mTree.insertNode(tr.getVal()); //Twould work too?
-                    //mBSTActivity.getTree().updateChildCount(mTree.getRoot()); //TODO check
+                    mTree.insertNode(tr.getVal());
                     mBSTActivity.getTree().insertNode(tr.getVal());
                     mBSTActivity.getTreeUser().add(new BinaryTreeNode(tr.getVal()));
-                    //mBSTActivity.getBinding().BSTActivityView.add(); //TODO check
                 }
                 Log.i(TAG, "BSTView: loadBinarySearchTreeFromDatabase mTree was: " + mTree);
                 Log.i(TAG, "BSTView: loadBinarySearchTreeFromDatabase mTree size was: " + mTree.size());
                 Log.i(TAG, "BSTView: loadBinarySearchTreeFromDatabase mBSTActivity.getTreeUser() was: " + mBSTActivity.getTreeUser());
                 Log.i(TAG, "BSTView: loadBinarySearchTreeFromDatabase mBSTActivity.getTreeUser() size was: " + mBSTActivity.getTreeUser().size());
 
-                Log.i(TAG, "BSTView: loadBinarySearchTreeFromDatabase mBSTActivity.getBinding().BSTActivityView was: " + mBSTActivity.getBinding().BSTActivityView);
             }
             invalidate();
         });
@@ -193,7 +183,6 @@ public class BSTView extends View {
 
     public void add() {
         mCurrentOperation = Operation.ADD;
-        //sendInputBSTValuesToDatabase(); //TODO: kacke, hier keine value :/
         invalidate();
     }
 
@@ -206,7 +195,6 @@ public class BSTView extends View {
             mBSTActivity.getTreeUser().remove(mPosition);
             invalidate();
             mPosition = -1;
-            //mCurrentOperation = Operation.SAVE; //TODO: remove if nothing changes, wasnt here
             return true;
         }
         return false;
@@ -450,20 +438,16 @@ public class BSTView extends View {
         // size of parent of this view
         mMaxWidth = (float) _w - xpad - 6;
 
-        //TODO: hier das mit der Datenbank rein so wie beim Stack???
 
         Log.i(TAG, "BSTView: onSizeChanged mTree was: " + mBSTActivity.getTree());
         Log.i(TAG, "BSTView: onSizeChanged mBSTActivity.getTreeUser() was: " + mBSTActivity.getTreeUser());
 
         Log.i(TAG, "------onSizeChanged was called, mTree and mTreeUser was cleared and vals loadedFromDatabase again-------");
 
-        //mTree.clear(); //ok das wirft nullpointer
-        //mBSTActivity.getTree().setRoot(null); //TODO check
-        //mBSTActivity.getTree().setSize(0); //TODO check
         mBSTActivity.getTree().clear();
         mBSTActivity.getTreeUser().clear();
         loadBinarySearchTreeFromDatabase();
-        mCurrentOperation = Operation.SAVE; //TODO: check, sonst vielleicht ein operation SAVE machen?
+        mCurrentOperation = Operation.SAVE;
         invalidate();
 
     }
@@ -476,24 +460,12 @@ public class BSTView extends View {
     @Override
     protected void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
-
-        //Log.i(TAG, "onDraw mTree was: " + mTree);
-        //Log.i(TAG, "onDraw mBSTActivity.getTree() was: " + mBSTActivity.getTree());
-        //Log.i(TAG, "onDraw mBSTActivity.getTree() size was: " + mBSTActivity.getTree().size());
-
-        //Log.i(TAG, "onDraw mBSTActivity.getTreeUser() was: " + mBSTActivity.getTreeUser());
-        //Log.i(TAG, "onDraw mBSTActivity.getTreeUser() size was: " + mBSTActivity.getTreeUser().size());
-
         drawTree(_canvas);
     }
 
     private void drawTree(Canvas _canvas) {
         mTree = mBSTActivity.getTree();
-        //Log.i(TAG, "drawTree: mTree was: " + mTree);
         Vector<BinaryTreeNode> tv = mTree.toArrayPreOrder();
-
-        Log.i(TAG, "drawTree mMove " + mMove);
-        Log.i(TAG, "drawTree mDown " + mDown);
 
         if(mTree.getRoot() != null) {
             float x;

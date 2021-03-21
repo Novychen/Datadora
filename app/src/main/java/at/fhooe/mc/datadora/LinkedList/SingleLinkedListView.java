@@ -350,7 +350,6 @@ import at.fhooe.mc.datadora.RoomDatabase.SingleLinkedListRoom;
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(0,_value);
-        //sendInputSingleLinkedListValuesToDatabase(_value);
         mDatadoraViewModel.insertFirst(new SingleLinkedListRoom(_value));
         reScale();
         mAnimatorPrepend.start();
@@ -373,8 +372,6 @@ import at.fhooe.mc.datadora.RoomDatabase.SingleLinkedListRoom;
         RectF r = new RectF();
         mLinkedList.add(r);
         mLinkedListNumbers.add(_pos,_value);
-        Log.i(TAG, "LLView: insertAt: value: " + _value);
-        Log.i(TAG, "LLView: insertAt: position : " + _pos);
         mDatadoraViewModel.insertAt(new SingleLinkedListRoom(_value, _pos));
         reScale();
         mPosition = _pos;
@@ -560,9 +557,9 @@ import at.fhooe.mc.datadora.RoomDatabase.SingleLinkedListRoom;
             mLinkedList.add(new RectF());
             mPositionAnimation++;
 
-            Log.i(TAG, "View mAnimatorRandom onAnimationStart mLinkedListAnimation: " + mLinkedListAnimation);
-            Log.i(TAG, "View mAnimatorRandom onAnimationStart mLinkedListNumbers: " + mLinkedListNumbers);
-            Log.i(TAG, "View mAnimatorRandom onAnimationStart mPositionAnimation: " + mPositionAnimation);
+            //Log.i(TAG, "View mAnimatorRandom onAnimationStart mLinkedListAnimation: " + mLinkedListAnimation);
+            //Log.i(TAG, "View mAnimatorRandom onAnimationStart mLinkedListNumbers: " + mLinkedListNumbers);
+            //Log.i(TAG, "View mAnimatorRandom onAnimationStart mPositionAnimation: " + mPositionAnimation);
         }
     }
 
@@ -600,9 +597,9 @@ import at.fhooe.mc.datadora.RoomDatabase.SingleLinkedListRoom;
             mLinkedListNumbers.add(mLinkedListAnimation.get(mPositionAnimation));
             mLinkedList.add(new RectF());
             mPositionAnimation++;
-            Log.i(TAG, "View mAnimatorRandom onAnimationRepeat mLinkedListAnimation: " + mLinkedListAnimation);
-            Log.i(TAG, "View mAnimatorRandom onAnimationRepeat mLinkedListNumbers: " + mLinkedListNumbers);
-            Log.i(TAG, "View mAnimatorRandom onAnimationRepeat mPositionAnimation: " + mPositionAnimation);
+            //Log.i(TAG, "View mAnimatorRandom onAnimationRepeat mLinkedListAnimation: " + mLinkedListAnimation);
+            //Log.i(TAG, "View mAnimatorRandom onAnimationRepeat mLinkedListNumbers: " + mLinkedListNumbers);
+            //Log.i(TAG, "View mAnimatorRandom onAnimationRepeat mPositionAnimation: " + mPositionAnimation);
 
         } else if(_animation == mAnimatorGetText) {
             if (mCurrentOperation == Operation.PREDECESSOR) { mPosition--;

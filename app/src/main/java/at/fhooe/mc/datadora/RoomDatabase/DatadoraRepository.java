@@ -28,7 +28,7 @@ public class DatadoraRepository {
 
     /**
      * Constructor of the repository
-     * The DAO is passed here because through the DAO the read/write methods can be accessed.
+     * The DAO is passed here because through here the DAO the read/write methods can be accessed.
      * There is no need to expose the entire database to the repository.
      * @param application the application dependency
      */
@@ -123,15 +123,6 @@ public class DatadoraRepository {
         });
     }
 
-    /*
-    void update(SingleLinkedListRoom singleListVal) {
-        DatadoraDatabase.databaseWriteExecutor.execute(() -> {
-            mSingleListDao.updateTwo(singleListVal);
-        });
-    }
-
-     */
-
 
     void append(DoubleLinkedListRoom doubleListVal) {
         DatadoraDatabase.databaseWriteExecutor.execute(() -> {
@@ -224,7 +215,6 @@ public class DatadoraRepository {
     void deleteByIDSingleListAt(int singleListVal){
         DatadoraDatabase.databaseWriteExecutor.execute(() -> {
             mSingleListDao.deleteByIDAt(singleListVal);
-            //mSingleListDao.setPositionDecrement(); //TODO: check
         });
     }
 
@@ -246,7 +236,6 @@ public class DatadoraRepository {
     void deleteByIDDoubleListAt(int doubleListVal){
         DatadoraDatabase.databaseWriteExecutor.execute(() -> {
             mDoubleListDao.deleteByIDAt(doubleListVal);
-            //mSingleListDao.setPositionDecrement(); //TODO: check
         });
     }
 

@@ -15,6 +15,9 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 
+/**
+ * This class helps to animate the opening and closing of an activity.
+ */
 public class Animation {
 
     public static final String EXTRA_CIRCULAR_REVEAL_Y = "EXTRA_CIRCULAR_REVEAL_Y";
