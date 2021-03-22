@@ -102,8 +102,6 @@ public class Add {
         int duration;
         int repeat;
 
-
-
         if (mAddPath.isEmpty()) {
            repeat = 0;
            duration = 200;

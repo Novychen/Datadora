@@ -121,8 +121,8 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         init();
     }
 
-    public void setSwitch(boolean _pointer){
-        if(_pointer) {
+    public void setSwitch(boolean _pointer) {
+        if (_pointer) {
             mActivity.getBinding().LinkedListActivityView.setVisibility(GONE);
             mActivity.getBinding().LinkedListActivityViewPointer.setVisibility(VISIBLE);
         } else {
@@ -168,19 +168,26 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
 
     protected void head() {
         mValues.setCurrentType(Type.HEAD);
+        invalidate();
+
     }
 
     protected void tail() {
         mValues.setCurrentType(Type.TAIL);
+        invalidate();
+
     }
 
     protected void both() {
         mValues.setCurrentType(Type.HEAD_TAIL);
+        invalidate();
+
     }
 
     public void append(int _value) {
         mCurrentOperation = Operation.APPEND;
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
     }
 
     public void prepend(int _value) {
@@ -190,6 +197,7 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mValues.getLinkedListNum().add(0, _value);
         reScale();
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
     }
 
     public void insertAt(int _value, int _pos) {
@@ -200,18 +208,22 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         reScale();
         mValues.setPosition(_pos);
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
     }
 
     public void deleteFirst() {
         mCurrentOperation = Operation.DELETE_FIRST;
         reScaleUndo();
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
     }
 
     public void deleteLast() {
         mCurrentOperation = Operation.DELETE_LAST;
         reScaleUndo();
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
+
     }
 
     public void deleteAt(int _pos) {
@@ -219,45 +231,61 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mValues.setPosition(_pos);
         reScaleUndo();
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
+
     }
 
     public void clear() {
         mCurrentOperation = Operation.CLEAR;
         reScaleUndo();
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
+
     }
 
     public void predecessor() {
         mCurrentOperation = Operation.PREDECESSOR;
         mValues.setPosition(0);
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
+
     }
 
     public void successor() {
         mCurrentOperation = Operation.SUCCESSOR;
         mValues.setPosition(0);
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
+
     }
 
     public void getSize() {
         mCurrentOperation = Operation.GET_SIZE;
         mValues.setPosition(0);
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
+
     }
 
     public void getFirst() {
         mCurrentOperation = Operation.GET_FIRST;
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
+
     }
 
     public void getLast() {
         mCurrentOperation = Operation.GET_LAST;
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
+
     }
 
     public void getAt(int _pos) {
         mCurrentOperation = Operation.GET_AT;
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
+
         mValues.setPosition(_pos);
     }
 
@@ -271,6 +299,8 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mValues.setScale(1);
         reScale();
         mValues.setCurrentOperation(mCurrentOperation);
+        invalidate();
+
     }
 
     protected void reScale() {
@@ -462,11 +492,11 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mValues.getItemTextPaint().setColor(mColorTextGet);
 
         mValues.getItemPaint().setStyle(Paint.Style.FILL);
-        _canvas.drawRoundRect(mValues.getLinkedListRec().get(_pos), mRadius, mRadius,  mValues.getItemPaint());
+        _canvas.drawRoundRect(mValues.getLinkedListRec().get(_pos), mRadius, mRadius, mValues.getItemPaint());
 
         mValues.getItemPaint().setStyle(Paint.Style.STROKE);
         mValues.getItemPaint().setColor(mPrimaryColor);
-        _canvas.drawRoundRect(mValues.getLinkedListRec().get(_pos), mRadius, mRadius,  mValues.getItemPaint());
+        _canvas.drawRoundRect(mValues.getLinkedListRec().get(_pos), mRadius, mRadius, mValues.getItemPaint());
     }
 
     @Override
