@@ -39,7 +39,7 @@ public class Add {
     private final Rect mBoundsAddedElement = new Rect();
     private boolean mPointer;
 
-    private Vector<BinaryTreeNode> mAddPath;
+    private Vector<BinaryTreeNode> mAddPath = new Vector<>();
 
     public void setPointer(boolean _pointer) {
         mPointer = _pointer;
@@ -102,17 +102,21 @@ public class Add {
         int duration;
         int repeat;
 
+
+
         if (mAddPath.isEmpty()) {
            repeat = 0;
            duration = 200;
         } else {
            repeat = mAddPath.size() - 1;
-           duration = 700 * mAddPath.size() - 1;
+            if(mPointer) { duration = 700 * mAddPath.size() - 1;
+            } else { duration = 500 * mAddPath.size() - 1; }
         }
 
         mAreaColorAnim.setDuration(duration);
-        mAreaColorAnim.setRepeatCount(repeat);
         mTextColorAnim.setDuration(duration);
+
+        mAreaColorAnim.setRepeatCount(repeat);
         mTextColorAnim.setRepeatCount(repeat);
 
         if(mPointer) {
@@ -128,20 +132,22 @@ public class Add {
     }
 
     public void drawComparision(int _added, int _count, Canvas _canvas, int _onSurface, int _primary) {
-        mValues.getItemTextPaint().setColor(_onSurface);
-        String s = _added+ " > " + mAddPath.get(_count).getData();
-        mValues.getItemTextPaint().getTextBounds(s, 0, s.length(), mBoundsAddedElement);
+        if(!mAddPath.isEmpty()) {
+            mValues.getItemTextPaint().setColor(_onSurface);
+            String s = _added + " > " + mAddPath.get(_count).getData();
+            mValues.getItemTextPaint().getTextBounds(s, 0, s.length(), mBoundsAddedElement);
 
-        float y = mValues.getTopSpace() + (mBoundsAddedElement.height() / 2f);
-        float x = mValues.getTopSpace() + ((mValues.getMaxWidth() / 2) - mValues.getTopSpace()) / 2 - (mBoundsAddedElement.width() / 2f);
+            float y = mValues.getTopSpace() + (mBoundsAddedElement.height() / 2f);
+            float x = mValues.getTopSpace() + ((mValues.getMaxWidth() / 2) - mValues.getTopSpace()) / 2 - (mBoundsAddedElement.width() / 2f);
 
-        mValues.getItemPaint().setColor(Color.WHITE);
-        mValues.getItemPaint().setStyle(Paint.Style.FILL_AND_STROKE);
-        _canvas.drawRoundRect(x - 20, y - mBoundsAddedElement.height() - 20, x + mBoundsAddedElement.width() + 20, y + 20, 8,8, mValues.getItemPaint());
-        _canvas.drawText(s, x, y, mValues.getItemTextPaint());
+            mValues.getItemPaint().setColor(Color.WHITE);
+            mValues.getItemPaint().setStyle(Paint.Style.FILL_AND_STROKE);
+            _canvas.drawRoundRect(x - 20, y - mBoundsAddedElement.height() - 20, x + mBoundsAddedElement.width() + 20, y + 20, 8, 8, mValues.getItemPaint());
+            _canvas.drawText(s, x, y, mValues.getItemTextPaint());
 
-        mValues.getItemPaint().setColor(_primary);
-        mValues.getItemPaint().setStyle(Paint.Style.STROKE);
+            mValues.getItemPaint().setColor(_primary);
+            mValues.getItemPaint().setStyle(Paint.Style.STROKE);
+        }
     }
 
     public void drawAddedElement(int _value,  Canvas _canvas) {
@@ -160,8 +166,6 @@ public class Add {
     }
 
     public void getAddPath(BinarySearchTree _tree, int _data){
-
-       mAddPath = new Vector<>();
 
        BinaryTreeNode n = _tree.getRoot();
 

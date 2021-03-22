@@ -1,12 +1,12 @@
 package at.fhooe.mc.datadora.BinarySearchTree;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +28,7 @@ import com.google.android.material.slider.Slider;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.Objects;
 import java.util.Vector;
 
 import at.fhooe.mc.datadora.Animation;
@@ -35,7 +36,9 @@ import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTCheckFragment;
 import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTGetFragment;
 import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTStandardFragment;
 import at.fhooe.mc.datadora.BinarySearchTree.Fragment.BSTStructureFragment;
+import at.fhooe.mc.datadora.Operation;
 import at.fhooe.mc.datadora.R;
+import at.fhooe.mc.datadora.SettingActivity;
 import at.fhooe.mc.datadora.databinding.ActivityBinarySearchTreeBinding;
 
 
@@ -48,6 +51,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     private ActivityBinarySearchTreeBinding mBinding;
 
     private boolean mSelected = false;
+    private boolean mPointer;
     private final String mDefaultValue = "empty";
     private Animation mAnimation;
 
@@ -97,6 +101,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
         mBinding.BSTActivityPan.setOnClickListener(this);
         mBinding.BSTActivityCenter.setOnClickListener(this);
+        mBinding.BSTActivityCenterNode.setOnClickListener(this);
         mBinding.BSTActivitySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton _buttonView, boolean _isChecked) {
@@ -105,6 +110,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
                 mCheck.setPointer(_isChecked);
                 mGet.setPointer(_isChecked);
                 mBinding.BSTActivityView.setSwitch(_isChecked);
+                mPointer = _isChecked;
             }
         });
 
@@ -120,8 +126,13 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == findViewById(R.id.menu_setting).getId()) {
+            Toast.makeText(this, R.string.LinkedList_Activity_Toast_Feature,Toast.LENGTH_SHORT).show();
+
+        }
         return super.onOptionsItemSelected(item);
     }
+
 
     private void setUpSeekBar() {
         assert mBinding.BSTActivitySeekBar != null;
@@ -130,13 +141,6 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 mBinding.BSTActivityInputValue.setText(String.valueOf(i - 100));
-                Resources.Theme theme = getTheme();
-                //TODO: Doesn't work
-                if(b) {
-                    theme.applyStyle(R.style.AppTheme_Mode, true);
-                } else {
-                    theme.applyStyle(R.style.AppTheme, true);
-                }
             }
 
             @Override
@@ -154,7 +158,8 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
     private void setUpSlider() {
         // set up the slider
           Slider slider = mBinding.BSTActivityInputSlider;
-            slider.setLabelFormatter(new LabelFormatter() {
+        assert slider != null;
+        slider.setLabelFormatter(new LabelFormatter() {
                 @NonNull
                 @Override
                 public String getFormattedValue(float value) {
@@ -173,7 +178,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
         // setup Toolbar
         Toolbar myToolbar = mBinding.BSTActivityToolbar;
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle(R.string.All_Data_Activity_BST);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.All_Data_Activity_BST);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -262,6 +267,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
                      getBinding().BSTActivityView.add();
                  }
              }
+             getBinding().BSTActivityView.mValues.setCurrentOperation(Operation.NONE);
          }
      }
 
@@ -334,6 +340,7 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
     @Override
     public void onClick(View _view) {
+        mBinding.BSTActivityView.mValues.setCenterNode(false);
 
         mBinding.BSTActivityReturnValue.setText("");
         mBinding.BSTActivityVectorOutput.setText("");
@@ -352,6 +359,8 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
             pan();
         } else if (_view == mBinding.BSTActivityCenter) {
             center();
+        } else if (_view == mBinding.BSTActivityCenterNode) {
+            centerNode();
         }
     }
 
@@ -360,24 +369,33 @@ public class BinarySearchTreeActivity extends AppCompatActivity implements View.
 
         if(!mSelected) {
             color = ContextCompat.getColor(this, R.color.primaryColor);
-            mBinding.BSTActivityView.move(true);
+            mBinding.BSTActivityView.mValues.setMove(true);
         } else {
             color = ContextCompat.getColor(this, R.color.secondaryColor);
-            mBinding.BSTActivityView.move(false);
+            mBinding.BSTActivityView.mValues.setMove(false);
         }
         mSelected = !mSelected;
         ImageViewCompat.setImageTintList( mBinding.BSTActivityPan, ColorStateList.valueOf(color));
     }
 
     private void center() {
-        float x = mBinding.BSTActivityView.getTranslateX();
-        float y = mBinding.BSTActivityView.getTranslateY();
+        float x = mBinding.BSTActivityView.mValues.getX();
+        float y = mBinding.BSTActivityView.mValues.getY();
 
         if (x == 0 && y == 0) {
             Toast.makeText(this, R.string.BST_Activity_Center, Toast.LENGTH_SHORT).show();
         } else {
-            mBinding.BSTActivityView.setTranslate(0,0);
+            mBinding.BSTActivityView.mValues.setY(0);
+            mBinding.BSTActivityView.mValues.setX(0);
+
             mBinding.BSTActivityView.invalidate();
+            mBinding.BSTActivityPointerView.invalidate();
+        }
+    }
+
+    private void centerNode() {
+        if(!mPointer && !mBinding.BSTActivityView.centerNode() || mPointer && !mBinding.BSTActivityPointerView.centerNode() ) {
+            Toast.makeText(this, R.string.BST_Activity_Select_Toast, Toast.LENGTH_SHORT).show();
         }
     }
 

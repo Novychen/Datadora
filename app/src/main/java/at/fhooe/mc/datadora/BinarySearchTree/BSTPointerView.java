@@ -26,9 +26,6 @@ public class BSTPointerView extends BSTView {
 
     private static final String TAG = "BSTPointerView : ";
 
-    private float mX;
-    private float mY;
-
     private Add mAdd;
     private InOrder mInOrder;
 
@@ -76,7 +73,6 @@ public class BSTPointerView extends BSTView {
 
 
     protected void onDraw(Canvas _canvas) {
-        super.onDraw(_canvas);
         if(mValues.getCurrentOperation() == Operation.ADD) {
             mAdd.animate();
             mAdd.animatePointer();
@@ -92,6 +88,10 @@ public class BSTPointerView extends BSTView {
             if(mValues.getCurrentOperation() == Operation.ADD) {
                 mAdd.animate();
                 _canvas.drawCircle(_n.getPoint().x, _n.getPoint().y, mValues.getRadius(), mValues.getAnimPaint());
+            } else {
+                mValues.getItemPaint().setColor(mPrimaryColor);
+                mValues.getItemPaint().setStyle(Paint.Style.FILL_AND_STROKE);
+                mValues.getItemTextPaint().setColor(mOnPrimaryColor);
             }
         } else {
             mValues.getItemPaint().setColor(mPrimaryColor);
@@ -166,7 +166,9 @@ public class BSTPointerView extends BSTView {
         }
     }
 
+    @Override
     protected void setPointOfNode(BinaryTreeNode _n, BinaryTreeNode _nPre) {
+        Log.i(TAG, "TREE SET POINT OF NODE");
         float direction = getDirection(_n, _nPre);
 
         float xPre = _nPre.getPoint().x;
@@ -176,8 +178,8 @@ public class BSTPointerView extends BSTView {
 
         float x = (_n.getChildCount() * minDistanceX * direction) + xPre;
         float y;
-        if (mY == 0) {
-            y = (minDistanceX * mTree.getDepth(_n.getData())) + mValues.getTopSpace() + mY;
+        if (mValues.getY()  == 0) {
+            y = (minDistanceX * mTree.getDepth(_n.getData())) + mValues.getTopSpace() + mValues.getY() ;
         } else {
             y = yPre + minDistanceX;
         }
@@ -186,6 +188,8 @@ public class BSTPointerView extends BSTView {
 
     @Override
     protected void prepareAndDrawLine(BinaryTreeNode _n, BinaryTreeNode _nPre, Canvas _canvas) {
+        Log.i(TAG, "TREE PREPARE AND DRAW LINE");
+
         float x = calculateDiffX(_n, _nPre);
         float y = calculateDiffY(_n, _nPre);
 

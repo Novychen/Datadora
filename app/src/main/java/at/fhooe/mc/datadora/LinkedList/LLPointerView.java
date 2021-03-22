@@ -15,7 +15,7 @@ import at.fhooe.mc.datadora.LinkedList.Animation.Append;
 import at.fhooe.mc.datadora.LinkedList.Animation.Pointer;
 import at.fhooe.mc.datadora.Operation;
 
-public class LLPointerView extends LinkedListView {
+public class   LLPointerView extends LinkedListView {
 
     private static final String TAG = "LLPointerView : ";
 
@@ -31,7 +31,9 @@ public class LLPointerView extends LinkedListView {
 
     public void setSingleList(boolean _list) {
         mSingleList = _list;
-    }
+        if(mPointer != null) { mPointer.setSingle(_list); }
+        invalidate();
+        }
 
     public LLPointerView(Context context) {
         super(context);

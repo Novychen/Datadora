@@ -166,14 +166,6 @@ public class LinkedListView extends View implements ValueAnimator.AnimatorUpdate
         mActivity = _activity;
     }
 
-    protected void sorted() {
-        mCurrentFilter = Filter.SORTED;
-    }
-
-    protected void unsorted() {
-        mCurrentFilter = Filter.UNSORTED;
-    }
-
     protected void head() {
         mValues.setCurrentType(Type.HEAD);
     }

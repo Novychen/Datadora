@@ -42,5 +42,4 @@ public class Operation {
     public static final int MAX = 33;
     public static final int MIN = 34;
     public static final int INORDER = 35;
-
 }

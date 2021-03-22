@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_type"
-        android:icon="@drawable/ic_arrow_drop_down"
+        android:icon="@drawable/ic_double_linked_list_small"
         android:title="Change to Double Linked List"
         app:showAsAction="ifRoom" />
     <item

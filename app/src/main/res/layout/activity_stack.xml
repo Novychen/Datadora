@@ -24,7 +24,7 @@
         style="@style/Return"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintDimensionRatio="1.8:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Guideline"
@@ -77,10 +77,11 @@
 
             <Button
                 android:id="@+id/Stack_Activity_Button_Peek"
-                style="@style/Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/Stack_Activity_Text_Peek"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,10 +89,9 @@
 
             <Button
                 android:id="@+id/Stack_Activity_Button_Size"
-                style="@style/Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="@string/All_Data_Activity_Text_Size"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Peek"
                 app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Button_Peek"
@@ -99,10 +99,9 @@
 
             <Button
                 android:id="@+id/Stack_Activity_Button_Empty"
-                style="@style/Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="@string/Stack_Activity_Text_Empty"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Size"
                 app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Button_Size"
@@ -110,10 +109,9 @@
 
             <Button
                 android:id="@+id/Stack_Activity_Button_Clear"
-                style="@style/Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="@string/All_Data_Activity_Text_Clear"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Size"
                 app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Button_Size"
@@ -121,10 +119,9 @@
 
             <Button
                 android:id="@+id/Stack_Activity_Button_Random"
-                style="@style/Button"
+                style="@style/List_Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="@string/All_Data_Activity_Text_Random"
                 app:layout_constraintEnd_toEndOf="@+id/Stack_Activity_Button_Clear"
                 app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Button_Clear"
@@ -157,24 +154,28 @@
 
     <Button
         android:id="@+id/Stack_Activity_Button_Push"
-        style="@style/Button"
-        android:layout_width="wrap_content"
+        style="@style/List_Button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:text="@string/Stack_Activity_Text_Push"
         app:layout_constraintBottom_toTopOf="@+id/Stack_Activity_Line"
+        app:layout_constraintEnd_toStartOf="@+id/Stack_Activity_Button_Pop"
         app:layout_constraintStart_toStartOf="@+id/Stack_Activity_Guideline" />
 
     <Button
         android:id="@+id/Stack_Activity_Button_Pop"
-        style="@style/Button"
-        android:layout_width="wrap_content"
+        style="@style/List_Button"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/Stack_Activity_Text_Pop"
         app:layout_constraintBottom_toBottomOf="@+id/Stack_Activity_Button_Push"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Stack_Activity_Button_Push"
         app:layout_constraintTop_toTopOf="@+id/Stack_Activity_Button_Push" />
 
     <androidx.constraintlayout.widget.Guideline

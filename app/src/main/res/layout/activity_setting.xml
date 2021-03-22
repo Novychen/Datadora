@@ -6,4 +6,100 @@
     android:layout_height="match_parent"
     tools:context=".SettingActivity">
 
+    <com.google.android.material.slider.Slider
+        android:id="@+id/Setting_Activity_AnimSlider"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:theme="@style/AppTheme"
+        android:value="0.0"
+        android:valueFrom="-2"
+        android:valueTo="2"
+        app:labelBehavior="withinBounds"
+        android:stepSize="0.5"
+        app:layout_constraintDimensionRatio=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Setting_Activity_CurrSpeed" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/Setting_Activity_Toolbar"
+        app:title="@string/Toolbar_Action_Settings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Setting_Activity_AnimTime"
+        style="@style/Text.SubTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/Setting_Activity_AnimSpeed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Setting_Activity_Toolbar" />
+
+    <TextView
+        android:id="@+id/setting_Activity_AnimTime5"
+        style="@style/Text.SubTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/Settings_Activity_Theme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+
+    <TextView
+        android:id="@+id/Setting_Activity_CurrSpeed"
+        style="@style/Text.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Current speed is"
+        app:layout_constraintStart_toStartOf="@+id/Setting_Activity_AnimTime"
+        app:layout_constraintTop_toBottomOf="@+id/Setting_Activity_AnimTime" />
+
+    <TextView
+        android:id="@+id/Setting_Activity_Speed_Val"
+        style="@style/Text.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="in its default state"
+        android:textColor="@color/primaryColor"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/Setting_Activity_CurrSpeed"
+        app:layout_constraintStart_toEndOf="@+id/Setting_Activity_CurrSpeed" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_Activity_AnimTime5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/setting_Activity_AnimTime5" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Setting_Activity_AnimSlider" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

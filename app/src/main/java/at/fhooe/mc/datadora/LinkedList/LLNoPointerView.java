@@ -50,8 +50,6 @@ public class LLNoPointerView extends LinkedListView {
     @Override
     protected void onSizeChanged(int _w, int _h, int _oldW, int _oldH) {
         super.onSizeChanged(_w, _h, _oldW, _oldH);
-     //   mValues.setMaxHeight(mMaxHeight);
-      //  mValues.setMaxWidth(mMaxWidth);
 
         Vector<Integer> v = null;
         if(mActivity != null) {

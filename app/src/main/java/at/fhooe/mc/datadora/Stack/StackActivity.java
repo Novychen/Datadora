@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +27,7 @@ import java.util.Vector;
 
 import at.fhooe.mc.datadora.Animation;
 import at.fhooe.mc.datadora.R;
+import at.fhooe.mc.datadora.SettingActivity;
 import at.fhooe.mc.datadora.databinding.ActivityStackBinding;
 
 public class StackActivity extends AppCompatActivity implements View.OnClickListener {
@@ -121,8 +123,13 @@ public class StackActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == findViewById(R.id.menu_setting).getId()) {
+            Intent i = new Intent(this, SettingActivity.class);
+            startActivity(i);
+        }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     protected void onResume() {

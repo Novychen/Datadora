@@ -130,6 +130,7 @@
     <string name="BST_Activity_Get_Min">Min</string>
 
     <string name="BST_Activity_Center">Tree is already in the center</string>
+    <string name="BST_Activity_Select_Move">To select a node please leave the move mode</string>
     <string name="BST_Activity_Select_Toast">Please choose a node</string>
     <string name="BST_Activity_Add_Toast">This number is already in the tree</string>
 
@@ -161,10 +162,10 @@
     <string name="Content_Description_LinkedList_Get_Arrow">An arrow that opens and closes the available operations of the group get</string>
     <string name="LinkedList_Activity_Pre_Succ_Hint">Select element</string>
 
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="LinkedList_Activity_Pre_Empty">This node has no predecessor</string>
     <string name="LinkedList_Activity_Succ_Empty">This node has no successor</string>
+    <string name="Setting_Activity_AnimSpeed">Animation speed</string>
+    <string name="Settings_Activity_Theme">Dark mode</string>
 
 
 </resources>

@@ -21,21 +21,23 @@ tools:context=".AboutActivity">
 
     <ImageView
         android:id="@+id/About_Activity_App_Icon"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/About_Activity_Toolbar"
-        app:srcCompat="@drawable/ic_icon_rectangle" />
+        app:srcCompat="@drawable/ic_logo" />
 
     <TextView
         android:id="@+id/About_Activity_App_Name"
         style="@style/Text.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/app_name"
-        app:layout_constraintBottom_toBottomOf="@+id/About_Activity_App_Icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/About_Activity_App_Icon" />

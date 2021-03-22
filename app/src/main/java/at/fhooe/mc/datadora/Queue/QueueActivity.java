@@ -1,6 +1,7 @@
 package at.fhooe.mc.datadora.Queue;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ import java.util.Vector;
 
 import at.fhooe.mc.datadora.Animation;
 import at.fhooe.mc.datadora.R;
+import at.fhooe.mc.datadora.SettingActivity;
 import at.fhooe.mc.datadora.databinding.ActivityQueueBinding;
 
 
@@ -124,6 +126,9 @@ public class QueueActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == findViewById(R.id.menu_setting).getId()) {
+            Toast.makeText(this, R.string.LinkedList_Activity_Toast_Feature,Toast.LENGTH_SHORT).show();
+        }
         return super.onOptionsItemSelected(item);
     }
 

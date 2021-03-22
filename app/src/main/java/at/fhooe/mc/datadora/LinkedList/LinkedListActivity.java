@@ -3,11 +3,14 @@ package at.fhooe.mc.datadora.LinkedList;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,6 +33,7 @@ import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListDeleteFragment;
 import at.fhooe.mc.datadora.LinkedList.Fragment.LinkedListGetFragment;
 import at.fhooe.mc.datadora.MainActivity;
 import at.fhooe.mc.datadora.R;
+import at.fhooe.mc.datadora.SettingActivity;
 import at.fhooe.mc.datadora.databinding.ActivityLinkedListBinding;
 
 public class LinkedListActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
@@ -54,8 +58,10 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     LinkedListDeleteFragment mDelete = new LinkedListDeleteFragment();
     LinkedListGetFragment mGet = new LinkedListGetFragment();
 
+    private Menu mMenu;
     private boolean mHasPointer;
     private float mType;
+    private float mFakeType;
 
     public Vector<Integer> getLinkedList() { return mLinkedList; }
 
@@ -77,6 +83,7 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
         mBinding.LinkedListActivityViewPointer.setVisibility(View.GONE);
 
         mType =  getIntent().getExtras().getFloat(MainActivity.LINKED_LIST_TYPE);
+        mFakeType =  getIntent().getExtras().getFloat(MainActivity.LINKED_LIST_TYPE);
 
         head();
         setUpToolbar();
@@ -101,7 +108,6 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setUpListType() {
-
         if(mType == MainActivity.LINKED_LIST_SINGLE) {
             getSupportActionBar().setTitle(R.string.All_Data_Activity_Single_LinkedList);
             mBinding.LinkedListActivityViewPointer.setSingleList(true);
@@ -111,6 +117,21 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
             getSupportActionBar().setTitle(R.string.All_Data_Activity_Double_LinkedList);
             mSharedPreferences = getSharedPreferences(SP_FILE_KEY_DOUBLE, Context.MODE_PRIVATE);
         }
+    }
+
+    private void setUpListFakeType() {
+        if(mFakeType == MainActivity.LINKED_LIST_SINGLE) {
+            getSupportActionBar().setTitle(R.string.All_Data_Activity_Single_LinkedList);
+            mBinding.LinkedListActivityViewPointer.setSingleList(true);
+        } else {
+            mBinding.LinkedListActivityViewPointer.setSingleList(false);
+            getSupportActionBar().setTitle(R.string.All_Data_Activity_Double_LinkedList);
+        }
+    }
+
+    private void setUpMenuIcon() {
+        if(mFakeType == MainActivity.LINKED_LIST_SINGLE) { mMenu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_double_linked_list_small));
+        } else { mMenu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_single_linked_list_small)); }
     }
 
     private void setUpToolbar() {
@@ -124,12 +145,26 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
     public boolean onCreateOptionsMenu(Menu _menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_linked_list, _menu);
+        mMenu = _menu;
+        setUpMenuIcon();
         return super.onCreateOptionsMenu(_menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
+    public boolean onOptionsItemSelected(@NonNull MenuItem _item) {
+        if(_item.getItemId() == findViewById(R.id.menu_type).getId()) {
+            if(mFakeType == MainActivity.LINKED_LIST_SINGLE) {
+                mFakeType = MainActivity.LINKED_LIST_DOUBLE;
+            } else {
+                mFakeType = MainActivity.LINKED_LIST_SINGLE;
+            }
+            setUpListFakeType();
+            setUpMenuIcon();
+        } else if(_item.getItemId() == findViewById(R.id.menu_setting).getId()) {
+            Toast.makeText(this, R.string.LinkedList_Activity_Toast_Feature,Toast.LENGTH_SHORT).show();
+
+        }
+        return super.onOptionsItemSelected(_item);
     }
 
     private void setUpTabLayout() {
@@ -318,10 +353,6 @@ public class LinkedListActivity extends AppCompatActivity implements View.OnClic
             mLinkedList.add(x);
         }
     }
-
-    private void sorted(){ }
-
-    private void unsorted() { }
 
     private void head(){
         if (mHasPointer) {

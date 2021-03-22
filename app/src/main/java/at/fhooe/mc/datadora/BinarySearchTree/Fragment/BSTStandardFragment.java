@@ -3,8 +3,6 @@ package at.fhooe.mc.datadora.BinarySearchTree.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +26,6 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
 
     private boolean mRandom = false;
     private boolean mPointer;
-
-    public boolean isPointer() {
-        return mPointer;
-    }
 
     public void setPointer(boolean _pointer) {
         mPointer = _pointer;
@@ -140,9 +134,11 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
         clear();
         int size = createRandomNumber(5, 10);
         if(mPointer) {
-            mActivity.getBinding().BSTActivityPointerView.setTranslate(0, 0);
+            mActivity.getBinding().BSTActivityPointerView.setX(0);
+            mActivity.getBinding().BSTActivityPointerView.setY(0);
         } else {
-            mActivity.getBinding().BSTActivityView.setTranslate(0, 0);
+            mActivity.getBinding().BSTActivityView.setX(0);
+            mActivity.getBinding().BSTActivityView.setY(0);
         }
 
         for (int i = 0; i <= size; i++) {
@@ -159,10 +155,12 @@ public class BSTStandardFragment extends Fragment implements View.OnClickListene
         mTreeUser.clear();
         if(mPointer) {
             mActivity.getBinding().BSTActivityPointerView.clear();
-            mActivity.getBinding().BSTActivityPointerView.setTranslate(0,0);
+            mActivity.getBinding().BSTActivityPointerView.setX(0);
+            mActivity.getBinding().BSTActivityPointerView.setY(0);
         } else {
             mActivity.getBinding().BSTActivityView.clear();
-            mActivity.getBinding().BSTActivityView.setTranslate(0,0);
+            mActivity.getBinding().BSTActivityView.setX(0);
+            mActivity.getBinding().BSTActivityView.setY(0);
         }
 
     }

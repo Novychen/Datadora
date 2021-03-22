@@ -1,4 +1,4 @@
-package at.fhooe.mc.datadora;
+ package at.fhooe.mc.datadora;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import at.fhooe.mc.datadora.BinarySearchTree.BinarySearchTree;
@@ -28,7 +29,7 @@ import at.fhooe.mc.datadora.Queue.QueueActivity;
 import at.fhooe.mc.datadora.Stack.StackActivity;
 import at.fhooe.mc.datadora.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnScrollChangeListener {
 
     private static final String TAG = "MainActivity : ";
     public static final float LINKED_LIST_SINGLE = 1;
@@ -55,7 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBinding.MainActivitySingleListCard.setOnClickListener(this);
         mBinding.MainActivityTreeCard.setOnClickListener(this);
         mBinding.MainActivityAbout.setOnClickListener(this);
-        mBinding.MainActivityTest.setOnClickListener(this);
+        mBinding.scrollView3.setOnScrollChangeListener(this);
+        mBinding.MainActivityGradiantAbove.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -67,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == findViewById(R.id.menu_setting).getId()) {
+            Toast.makeText(this, R.string.LinkedList_Activity_Toast_Feature,Toast.LENGTH_SHORT).show();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -112,12 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_X, x);
             i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_Y, y);
             startActivity(i);
-        } else if(_v == mBinding.MainActivityTest){
-        Intent i = new Intent(this, TestActivity.class);
-        i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_X, x);
-        i.putExtra(Animation.EXTRA_CIRCULAR_REVEAL_Y, y);
-        startActivity(i);
-    }
+        }
         overridePendingTransition(0, 0);
     }
 
@@ -125,5 +125,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         mBinding = null;
+    }
+
+    @Override
+    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        if(scrollY == 0) {
+            mBinding.MainActivityGradiantAbove.setVisibility(View.INVISIBLE);
+        } else {
+            mBinding.MainActivityGradiantAbove.setVisibility(View.VISIBLE);
+        }
+
+        View view = mBinding.scrollView3.getChildAt(mBinding.scrollView3.getChildCount() - 1);
+        int diff = (view.getBottom() - (mBinding.scrollView3.getHeight() + mBinding.scrollView3.getScrollY()));
+
+        if(diff == 0) {
+            mBinding.MainActivityGradiantBelow.setVisibility(View.INVISIBLE);
+        } else {
+            mBinding.MainActivityGradiantBelow.setVisibility(View.VISIBLE);
+        }
     }
 }

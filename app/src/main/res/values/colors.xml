@@ -9,8 +9,11 @@
     <color name="secondaryLightColor">#ffffff</color>
     <color name="secondaryDarkColor">#c9afa9</color>
 
-    <color name="colorSurface">#EFEFEF</color>
+    <color name="colorSurface">#ffffff</color>
     <color name="colorBackground">#EFEFEF</color>
+
+    <color name="colorBackgroundCenter">#80EFEFEF</color>
+    <color name="colorBackgroundTransparent">#00EFEFEF</color>
 
     <color name="colorOnSurface">#000000</color>
     <color name="colorOnPrimary">#ffffff</color>

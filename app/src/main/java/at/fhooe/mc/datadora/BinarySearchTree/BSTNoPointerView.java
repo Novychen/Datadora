@@ -86,14 +86,27 @@ public class BSTNoPointerView extends BSTView {
     }
 
     @Override
-    protected void onDraw(Canvas _canvas) {
-        super.onDraw(_canvas);
-        drawTree(_canvas);
+    protected void animateOperations(Canvas _canvas, BinaryTreeNode _n) {
+        if (_n.isSelected()) {
+            if(mValues.getCurrentOperation() == Operation.ADD) {
+                mAdd.animate();
+                _canvas.drawCircle(_n.getPoint().x, _n.getPoint().y, mValues.getRadius(), mValues.getAnimPaint());
+            } else {
+                mValues.getItemPaint().setColor(mPrimaryColor);
+                mValues.getItemPaint().setStyle(Paint.Style.FILL_AND_STROKE);
+                mValues.getItemTextPaint().setColor(mOnPrimaryColor);
+            }
+        } else {
+            mValues.getItemPaint().setColor(mPrimaryColor);
+            mValues.getItemPaint().setStrokeWidth(6);
+            mValues.getItemPaint().setStyle(Paint.Style.STROKE);
+            mValues.getItemTextPaint().setColor(mOnSurfaceColor);
+        }
+        _canvas.drawCircle(_n.getPoint().x, _n.getPoint().y, mValues.getRadius(), mValues.getItemPaint());
     }
 
     @Override
     protected void prepareAndDrawLine(BinaryTreeNode _n, BinaryTreeNode _nPre, Canvas _canvas) {
-
         float x = calculateDiffX(_n, _nPre);
         float y = calculateDiffY(_n, _nPre);
 

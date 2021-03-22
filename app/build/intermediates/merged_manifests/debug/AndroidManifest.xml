@@ -19,7 +19,6 @@
         android:testOnly="true"
         android:theme="@style/AppTheme" >
         <activity android:name="at.fhooe.mc.datadora.SettingActivity" />
-        <activity android:name="at.fhooe.mc.datadora.TestActivity" />
         <activity
             android:name="at.fhooe.mc.datadora.AboutActivity"
             android:screenOrientation="portrait"
@@ -46,6 +45,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="at.fhooe.mc.datadora.MainActivity"
+            android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>

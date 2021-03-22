@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -39,19 +40,11 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
     protected BinarySearchTreeActivity mActivity;
     protected int mCount = 0;
 
-    protected final PointF mBegin = new PointF();
-    protected final PointF mEnd = new PointF();
-
     protected BinarySearchTree mTree;
     protected float mLength = 25;
 
-    protected float mX;
-    protected float mY;
-
     // Rect in order to save the TextBounds from the current number
     protected final Rect mBounds = new Rect();
-    protected boolean mMove = false;
-    protected boolean mDown = false;
 
     protected BSTValue mValues;
     protected int mValue;
@@ -103,24 +96,35 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
         mItemTextPaint.setColor(mOnSurfaceColor);
         mItemTextPaint.setTextSize(50);
 
-        mValues = BSTValue.getInstance(mItemPaint, mItemTextPaint, mAnimPaint, -1, Operation.NONE);
+        mValues = BSTValue.getInstance(mItemPaint, mItemTextPaint, mAnimPaint, new PointF(), new PointF());
     }
 
-    public void move(boolean _selected) {
-        mMove = _selected;
-    }
+    public boolean centerNode() {
+        if (mValues.getPosition() != -1) {
+            float x = mActivity.getTreeUser().get(mValues.getPosition()).getPoint().x;
+            float y = mActivity.getTreeUser().get(mValues.getPosition()).getPoint().y;
 
-    public void setTranslate(float _x, float _y) {
-        mX = _x;
-        mY = _y;
-    }
+            if(x < mValues.getMaxWidth() / 2) {
+                x = (mTree.getRoot().getPoint().x) + ((mValues.getMaxWidth() / 2) - x);
+            } else {
+                x = (mTree.getRoot().getPoint().x) - (x - (mValues.getMaxWidth() / 2));
+            }
 
-    public float getTranslateX() {
-        return mX;
-    }
+            if(y < mValues.getMaxHeight() / 2) {
+                y = mTree.getRoot().getPoint().y + (mValues.getMaxHeight() / 2) - y;
+            } else {
+                y = mTree.getRoot().getPoint().y - (y - (mValues.getMaxHeight() / 2));
+            }
 
-    public float getTranslateY() {
-        return mY;
+            mValues.setX(x);
+            mValues.setY(y);
+            mValues.setCenterNode(true);
+            invalidate();
+            mActivity.getTreeUser().get(mValues.getPosition()).setSelected(false);
+            mValues.setPosition(-1);
+            return true;
+        }
+        return false;
     }
 
     public void add() {
@@ -327,9 +331,11 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
 
         // Account for padding
         float xpad = (float) (getPaddingLeft() + getPaddingRight());
+        float ypad = (float) (getPaddingTop() + getPaddingBottom());
 
         // size of parent of this view
         mValues.setMaxWidth(_w - xpad - 6);
+        mValues.setMaxHeight(_h - ypad - 6);
     }
 
     @Override
@@ -346,24 +352,25 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
     private void setUpRoot() {
         float x;
         float y;
-
-        if (mX != 0 && mY != 0) {
+        if(mValues.isCenterNode()) {
+            x = mValues.getX();
+            y = mValues.getY();
+        } else if (mValues.getX() != 0 && mValues.getY() != 0) {
             x = mTree.getRoot().getPoint().x;
             y = mTree.getRoot().getPoint().y;
-        } else {
+        }  else {
             x = mValues.getMaxWidth() / 2;
             y = mValues.getTopSpace();
         }
 
-        if (mMove) {
-            x = x + (mX);
-            y = y + (mY);
+        if (mValues.isMove()) {
+            x = x + (mValues.getX());
+            y = y + (mValues.getY());
         }
         mTree.getRoot().setPoint(x, y);
     }
 
     protected void drawTree(Canvas _canvas) {
-
         mTree = mActivity.getTree();
         Vector<BinaryTreeNode> tv = mTree.toArrayPreOrder();
 
@@ -392,19 +399,7 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
         }
     }
 
-    protected void animateOperations(Canvas _canvas, BinaryTreeNode _n) {
-        if (_n.isSelected()) {
-            mValues.getItemPaint().setColor(mPrimaryColor);
-            mValues.getItemPaint().setStyle(Paint.Style.FILL_AND_STROKE);
-            mValues.getItemTextPaint().setColor(mOnPrimaryColor);
-        } else {
-            mValues.getItemPaint().setColor(mPrimaryColor);
-            mValues.getItemPaint().setStrokeWidth(6);
-            mValues.getItemPaint().setStyle(Paint.Style.STROKE);
-            mValues.getItemTextPaint().setColor(mOnSurfaceColor);
-        }
-        _canvas.drawCircle(_n.getPoint().x, _n.getPoint().y, mValues.getRadius(), mValues.getItemPaint());
-    }
+    protected void animateOperations(Canvas _canvas, BinaryTreeNode _n) {    }
 
     protected void setPointOfNode(BinaryTreeNode _n, BinaryTreeNode _nPre) {
         float direction = getDirection(_n, _nPre);
@@ -416,8 +411,8 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
 
         float x = (_n.getChildCount() * minDistanceX * direction) + xPre;
         float y;
-        if (mY == 0) {
-            y = (minDistanceX * mTree.getDepth(_n.getData())) + mValues.getTopSpace() + mY;
+        if (mValues.getY() == 0) {
+            y = (minDistanceX * mTree.getDepth(_n.getData())) + mValues.getTopSpace() + mValues.getY();
         } else {
             y = yPre + minDistanceX;
         }
@@ -425,7 +420,6 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
     }
 
     protected void prepareAndDrawLine(BinaryTreeNode _n, BinaryTreeNode _nPre, Canvas _canvas) {
-
         float x = calculateDiffX(_n, _nPre);
         float y = calculateDiffY(_n, _nPre);
 
@@ -464,9 +458,13 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
         float space = mValues.getRadius() / 1.5f;
         for (BinaryTreeNode n : mActivity.getTreeUser()) {
             if (_x < n.getPoint().x + space && _x > n.getPoint().x - space && _y < n.getPoint().y + space && _y > n.getPoint().y - space) {
-                n.setSelected(true);
-                mValues.setPosition(i);
-                invalidate();
+                if(mValues.isMove()) {
+                    Toast.makeText(mActivity, R.string.BST_Activity_Select_Move, Toast.LENGTH_SHORT).show();
+                } else {
+                    n.setSelected(true);
+                    mValues.setPosition(i);
+                    invalidate();
+                }
             } else {
                 n.setSelected(false);
             }
@@ -476,38 +474,37 @@ public class BSTView extends View implements ValueAnimator.AnimatorUpdateListene
 
     @Override
     public boolean onTouchEvent(MotionEvent _event) {
-
         if (_event.getAction() == MotionEvent.ACTION_DOWN) {
-            mDown = true;
+            mValues.setDown(true);
 
             float x = _event.getX();
             float y = _event.getY();
-            if (!mMove) {
-                selectNode(x, y);
-            } else {
-                mBegin.x = x;
-                mBegin.y = y;
+            selectNode(x, y);
+
+            if(mValues.isMove()) {
+                mValues.getBegin().x = x;
+                mValues.getBegin().y = y;
             }
 
             mActivity.getBinding().BSTActivityReturnValue.setText("");
             invalidate();
         } else if (_event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (mMove) {
+            if (mValues.isMove()) {
                 float x = _event.getX();
                 float y = _event.getY();
 
-                if (mDown) {
-                    mDown = false;
+                if (mValues.isDown()) {
+                    mValues.setDown(false);
                 } else {
-                    mBegin.x = mEnd.x;
-                    mBegin.y = mEnd.y;
+                    mValues.getBegin().x = mValues.getEnd().x;
+                    mValues.getBegin().y = mValues.getEnd().y;
                 }
 
-                mEnd.x = x;
-                mEnd.y = y;
+                mValues.getEnd().x = x;
+                mValues.getEnd().y = y;
 
-                mX = mEnd.x - mBegin.x;
-                mY = mEnd.y - mBegin.y;
+                mValues.setX(mValues.getEnd().x - mValues.getBegin().x);
+                mValues.setY(mValues.getEnd().y - mValues.getBegin().y);
 
                 invalidate();
             }

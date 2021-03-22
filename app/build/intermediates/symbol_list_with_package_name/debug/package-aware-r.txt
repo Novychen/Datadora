@@ -30,6 +30,10 @@ anim design_snackbar_out
 anim mtrl_bottom_sheet_slide_in
 anim mtrl_bottom_sheet_slide_out
 anim mtrl_card_lowers_interpolator
+anim slide_in_down
+anim slide_in_up
+anim slide_out_down
+anim slide_out_up
 animator design_appbar_state_list_animator
 animator design_fab_hide_motion_spec
 animator design_fab_show_motion_spec
@@ -934,6 +938,8 @@ color cardview_shadow_end_color
 color cardview_shadow_start_color
 color checkbox_themeable_attribute_color
 color colorBackground
+color colorBackgroundCenter
+color colorBackgroundTransparent
 color colorOnPrimary
 color colorOnSecondary
 color colorOnSurface
@@ -1569,9 +1575,12 @@ drawable ic_center_normal
 drawable ic_center_pressed
 drawable ic_check
 drawable ic_clear
+drawable ic_datadora
+drawable ic_double_linked_list_small
 drawable ic_doublelinkedlist
-drawable ic_icon_rectangle
+drawable ic_gradient
 drawable ic_launcher_foreground
+drawable ic_logo
 drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
@@ -1581,6 +1590,7 @@ drawable ic_person
 drawable ic_queue
 drawable ic_save
 drawable ic_settings
+drawable ic_single_linked_list_small
 drawable ic_singlelinkedlist
 drawable ic_stack
 drawable line
@@ -1751,10 +1761,11 @@ id META
 id Main_Activity
 id Main_Activity_About
 id Main_Activity_App_Icon
-id Main_Activity_App_Name
 id Main_Activity_DoubleList_Card
 id Main_Activity_DoubleList_Icon
 id Main_Activity_DoubleList_Text
+id Main_Activity_Gradiant_Above
+id Main_Activity_Gradiant_Below
 id Main_Activity_Queue_Card
 id Main_Activity_Queue_Icon
 id Main_Activity_Queue_Text
@@ -1764,7 +1775,6 @@ id Main_Activity_SingleList_Text
 id Main_Activity_Stack_Card
 id Main_Activity_Stack_Icon
 id Main_Activity_Stack_Text
-id Main_Activity_Test
 id Main_Activity_Toolbar
 id Main_Activity_Tree_Card
 id Main_Activity_Tree_Icon
@@ -1797,6 +1807,11 @@ id SHOW_ALL
 id SHOW_PATH
 id SHOW_PROGRESS
 id SYM
+id Setting_Activity_AnimSlider
+id Setting_Activity_AnimTime
+id Setting_Activity_CurrSpeed
+id Setting_Activity_Speed_Val
+id Setting_Activity_Toolbar
 id Stack_Activity
 id Stack_Activity_Box_Return
 id Stack_Activity_Button_Clear
@@ -1981,6 +1996,8 @@ id guideline
 id guideline2
 id guideline3
 id guideline4
+id guideline5
+id guideline6
 id hideable
 id home
 id homeAsUp
@@ -1991,6 +2008,7 @@ id ifRoom
 id ignore
 id ignoreRequest
 id image
+id imageButton
 id info
 id invisible
 id italic
@@ -2101,6 +2119,7 @@ id search_src_text
 id search_voice_btn
 id select_dialog_listview
 id selected
+id setting_Activity_AnimTime5
 id shortcut
 id showCustom
 id showHome
@@ -2133,6 +2152,7 @@ id stop
 id stretch
 id submenuarrow
 id submit_area
+id switch1
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
@@ -2255,7 +2275,6 @@ layout activity_main
 layout activity_queue
 layout activity_setting
 layout activity_stack
-layout activity_test
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
@@ -2392,6 +2411,7 @@ string BST_Activity_Get_Parent
 string BST_Activity_Get_RightChild
 string BST_Activity_Get_Root
 string BST_Activity_Get_Title
+string BST_Activity_Select_Move
 string BST_Activity_Select_Toast
 string BST_Activity_Standard_Add
 string BST_Activity_Standard_Random
@@ -2454,6 +2474,8 @@ string Queue_Activity_Text_Dequeue
 string Queue_Activity_Text_Empty
 string Queue_Activity_Text_Enqueue
 string Queue_Activity_Text_Peek
+string Setting_Activity_AnimSpeed
+string Settings_Activity_Theme
 string Slider_Current_Value
 string Slider_Default_Value
 string Stack_Activity_Empty
@@ -2505,7 +2527,6 @@ string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
-string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string item_view_role_description
@@ -2564,7 +2585,6 @@ style Animation_MaterialComponents_BottomSheetDialog
 style AppTheme
 style AppTheme_Switch
 style AppTheme_Transparent
-style AppTheme_DarkMode
 style AppTheme_Mode
 style Base_AlertDialog_AppCompat
 style Base_AlertDialog_AppCompat_Light
@@ -2874,6 +2894,7 @@ style Text
 style Text_Detail
 style Text_Item
 style Text_Secondary
+style Text_SubTitle
 style Text_TextBlock
 style Text_Title
 style TextAppearance_AppCompat
